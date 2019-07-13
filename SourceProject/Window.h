@@ -5,8 +5,8 @@ class Window
 private:
 	static constexpr char* WINDOW_CLASS_NAME = "MainWindow" ;
 	static constexpr char* WINDOW_TITLE      = "SE102 - UIT";
-	static constexpr UINT  SCREEN_WIDTH      = 320;
-	static constexpr UINT  SCREEN_HEIGHT     = 240;
+	static constexpr UINT  SCREEN_WIDTH      = 256;
+	static constexpr UINT  SCREEN_HEIGHT     = 224;
 
 	HINSTANCE hInstance = nullptr;
 	HWND	  hWnd		= nullptr;

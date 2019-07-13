@@ -145,12 +145,12 @@ void Sounds::Draw()
 
 	static Font fontDraw(8, "Segoe MDL2 Assets Regular");
 	static auto texture = Textures::Get(TextureId::Bbox);	
-	static const RectF bgArea       = { 286.0f, 50.0f, 300.0f, 100.0f }; // gray background of displaying volume
-	static const RectF volBarArea   = { 290.0f, 52.0f, 296.0f, 92.0f  }; // white background of displaying volume bar
-	static const RectF bgNumberArea = { 286.0f, 92.0f, 300.0f, 100.0f }; // area of displaying volume number
+	static const RectF bgArea       = { 228.0f, 40.0f, 242.0f, 90.0f }; // gray background of displaying volume
+	static const RectF volBarArea   = { 232.0f, 42.0f, 238.0f, 82.0f }; // white background of displaying volume bar
+	static const RectF bgNumberArea = { 228.0f, 82.0f, 242.0f, 90.0f }; // area of displaying volume number
 
-	const float yPartition = floor(50.0f + 42 - liVolume * 40.0f);
-	const RectF fullPart   = { 290.0f, yPartition, 296.0f, 92.0f };
+	const float yPartition   = floor(40.0f + 42 - liVolume * 40.0f);
+	const RectF fullPart     = { 232.0f, yPartition, 238.0f, 82.0f };
 	const auto colorFullPart = isMute ? Colors::DimRed : Colors::DimBlue;
 	const auto colorNumber   = isMute ? Colors::DimRed : Colors::White;
 

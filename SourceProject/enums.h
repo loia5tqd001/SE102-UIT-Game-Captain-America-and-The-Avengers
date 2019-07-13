@@ -2,11 +2,12 @@
 
 enum class TextureId
 {
-	Bbox          = 0,
-	Greeting      = 1,
-	KeyCodeFont   = 2,
-	CrtEffect     = 3,
-	MapCharleston = 4,
+	Bbox              = 0,
+	Greeting          = 1,
+	KeyCodeFont       = 2,
+	CrtEffect         = 3,
+	MapCharleston     = 4,
+	MapBossCharleston = 5,
 	Count
 };
 
@@ -18,9 +19,11 @@ enum class SpriteId
 
 enum class SoundId
 {
-	Greeting = 0,
-	Cursor   = 1,
-	GamePlay   = 2,
+	Greeting       = 0,
+	Cursor         = 1,
+	CaptainTheme   = 2,
+	BossBattle     = 3,
+	RedAlert       = 4,
 	Count
 };
 
@@ -44,6 +47,7 @@ enum class Scene
 	Greeting,
 	Transition,
 	Charleston,
+	BossCharleston,
 };
 
 

@@ -13,6 +13,6 @@ public:
 	void Draw          () override;
 
 	void OnKeyDown(BYTE keyCode) override;
-	SoundId GetBgMusic() const override { return SoundId::GamePlay; }
+	SoundId GetBgMusic() const override { return SoundId::CaptainTheme; }
 };
 

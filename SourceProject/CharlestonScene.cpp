@@ -13,7 +13,7 @@ CharlestonScene::CharlestonScene()
 
 void CharlestonScene::LoadResources()
 {
-	const auto root = GetRootJson("Resources\\Data\\demo.json");
+	const auto root = GetRootJson("Resources\\Data\\scene-charleston.json");
 
 	map = std::make_unique<Map>( root );
 }
@@ -46,5 +46,10 @@ void CharlestonScene::OnKeyDown(BYTE keyCode)
 		case VK_CONTROL:
 			DebugDraw::ToggleDebugMode();
 			break;
+
+		case VK_RETURN:
+			SceneManager::Instance().SetScene( Scene::BossCharleston );
+			break;
+
 	}
 }

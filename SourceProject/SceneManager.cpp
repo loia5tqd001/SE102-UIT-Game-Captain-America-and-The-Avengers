@@ -2,6 +2,7 @@
 #include "GreetingScene.h"
 #include "TransitionScene.h"
 #include "CharlestonScene.h"
+#include "BossCharlestonScene.h"
 
 void SceneManager::ToggleMuteMode() const
 {
@@ -30,6 +31,9 @@ void SceneManager::LoadResources()
 
 void SceneManager::SetScene(Scene scene)
 {
+	if (curScene && curScene->HasMusic())
+		Sounds::StopAt( curScene->GetBgMusic() );
+
 	switch (scene)
 	{
 		case Scene::Greeting:
@@ -42,6 +46,10 @@ void SceneManager::SetScene(Scene scene)
 
 		case Scene::Charleston:
 			curScene = std::make_unique<CharlestonScene>();
+			break;
+
+		case Scene::BossCharleston:
+			curScene = std::make_unique<BossCharlestonScene>();
 			break;
 
 		default:

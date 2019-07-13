@@ -1,11 +1,12 @@
 {  
   "textures": [ 
     // textureId[0] - texturePath[1] - transparentColor[2]
-	[ 0, "Resources\\Textures\\bbox.png"                , 0             ],
-	[ 1, "Resources\\Textures\\remember.png"            , 0             ],
-	[ 2, "Resources\\Textures\\keycodefont.png"         , [0  ,0  ,0  ] ],
-	[ 3, "Resources\\Textures\\interlace.png"           , [255,255,255] ],
-	[ 4, "Resources\\Textures\\map_charleston_bank.png" , 0             ]
+	[ 0, "Resources\\Textures\\0. Bbox.png"                  , 0             ],
+	[ 1, "Resources\\Textures\\1. Remember.png"              , 0             ],
+	[ 2, "Resources\\Textures\\2. Keycodefont.png"           , [0  ,0  ,0  ] ],
+	[ 3, "Resources\\Textures\\3. Interlace.png"             , [230,230,230] ],
+	[ 4, "Resources\\Textures\\4. TileMapCharleston.png"     , 0             ],
+	[ 5, "Resources\\Textures\\5. TileMapBossCharleston.png" , 0             ]
   ],
   
   "sprites": [ 
@@ -17,7 +18,9 @@
 	// soundId[0] - waveFileLink[1]
 	[ 0, "Resources\\Sounds\\0. Greeting.wav"],
 	[ 1, "Resources\\Sounds\\1. Cursor.wav"],
-	[ 2, "Resources\\Sounds\\2. Theme of Captain America.wav"]
+	[ 2, "Resources\\Sounds\\2. Theme of Captain America.wav"],
+	[ 3, "Resources\\Sounds\\3. Boss Battle.wav"],
+	[ 4, "Resources\\Sounds\\4. Red Alert.wav"]
   ],	
  
    "keycodefonts": [ // keyCode[0] - left[1] - top[2] - right[3] - bottom[4]

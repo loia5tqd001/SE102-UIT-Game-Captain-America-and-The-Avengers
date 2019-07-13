@@ -5,7 +5,7 @@ void TextBlock::Draw(D3DCOLOR strColor, D3DCOLOR keyCodeColor) const
 	KeyCodeFonts::DrawString(strDraw, posDraw, strColor);
 	if (keyCode != NULL)
 	{
-		const Vector2 posDrawKeyCode = posDraw + Vector2{ 160.0f, 0.0f };
+		const Vector2 posDrawKeyCode = posDraw + Vector2{ 136.0f, 0.0f };
 		KeyCodeFonts::DrawKeyCode(keyCode, posDrawKeyCode, keyCodeColor);
 	}
 }
@@ -25,12 +25,12 @@ Settings::Settings()
 	for (int i = TextBlocks::Left; i < TextBlocks::Count; i++) {
 
 		if (i < TextBlocks::CountKCtrl) {
-			textblocks[i].posDraw.x = 70.0f;
-			textblocks[i].posDraw.y = 42.0f + i * 25.0f;
+			textblocks[i].posDraw.x = 52.0f;
+			textblocks[i].posDraw.y = 42.0f + i * 22.0f;
 		}
 		else { // TextBlocks::Default         
-			textblocks[i].posDraw.x = 120.0f;
-			textblocks[i].posDraw.y = 45.0f + i * 25.0f;
+			textblocks[i].posDraw.x = 92.0f;
+			textblocks[i].posDraw.y = 45.0f + i * 22.0f;
 		}
 	}
 
@@ -75,17 +75,17 @@ void Settings::Draw() const
 	if (!isSceneOpening) return;
 
 	// semi-transparent-black background
-	Game::Instance().DrawSolidRect( { 0.0f, 0.0f, 320.0f, 240.0f }, Colors::DarkTransparentBlack);
+	Game::Instance().FillColor(Colors::DarkTransparentBlack);
 	
 	// title 'Settings'
-	KeyCodeFonts::DrawString("Settings", { 126.0f, 10.0f }, Colors::White);
+	KeyCodeFonts::DrawString("Settings", { 90.0f, 10.0f }, Colors::White);
 
 	// Draw frame background
-	Game::Instance().DrawOutLine( {  27.0f,  29.0f, 293.0f, 215.0f }, 3, Colors::DimBlue); // center
-	Game::Instance().DrawOutLine( {  20.0f,  22.0f,  30.0f,  32.0f }, 3, Colors::DimBlue); // topleft
-	Game::Instance().DrawOutLine( { 290.0f,  22.0f, 300.0f,  32.0f }, 3, Colors::DimBlue); // topright
-	Game::Instance().DrawOutLine( {  20.0f, 212.0f,  30.0f, 222.0f }, 3, Colors::DimBlue); // bottomleft
-	Game::Instance().DrawOutLine( { 290.0f, 212.0f, 300.0f, 222.0f }, 3, Colors::DimBlue); // bottomright
+	Game::Instance().DrawOutLine( {  17.0f,  25.0f, 239.0f, 201.0f }, 3, Colors::DimBlue); // center
+	Game::Instance().DrawOutLine( {  10.0f,  18.0f,  20.0f,  28.0f }, 3, Colors::DimBlue); // topleft
+	Game::Instance().DrawOutLine( { 236.0f,  18.0f, 246.0f,  28.0f }, 3, Colors::DimBlue); // topright
+	Game::Instance().DrawOutLine( {  10.0f, 198.0f,  20.0f, 208.0f }, 3, Colors::DimBlue); // bottomleft
+	Game::Instance().DrawOutLine( { 236.0f, 198.0f, 246.0f, 208.0f }, 3, Colors::DimBlue); // bottomright
 
 	// Draw textblocks
 	for (int i = TextBlocks::Left; i < TextBlocks::Count; i++)
