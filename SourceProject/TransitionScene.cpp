@@ -5,7 +5,7 @@ void TransitionScene::Update(float dt)
 {
 	timePassed += GameTimer::Dt();
 	if (timePassed >= 0.5f)
-		SceneManager::Instance().SetScene(Scene::Demo);
+		SceneManager::Instance().SetScene(Scene::Charleston);
 }
 
 void TransitionScene::Draw()

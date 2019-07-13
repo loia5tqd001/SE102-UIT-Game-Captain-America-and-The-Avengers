@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GreetingScene.h"
 #include "TransitionScene.h"
-#include "DemoScene.h"
+#include "CharlestonScene.h"
 
 void SceneManager::ToggleMuteMode() const
 {
@@ -24,7 +24,6 @@ void SceneManager::LoadResources()
 	Textures     ::LoadResources(root);
 	Sprites      ::LoadResources(root);
 	Sounds       ::LoadResources(root);
-	Texts        ::LoadResources(root);
 	KeyCodeFonts ::LoadResources(root);
 	DebugDraw    ::InitDefaultFont();
 }
@@ -41,8 +40,8 @@ void SceneManager::SetScene(Scene scene)
 			curScene = std::make_unique<TransitionScene>();
 			break;
 
-		case Scene::Demo:
-			curScene = std::make_unique<DemoScene>();
+		case Scene::Charleston:
+			curScene = std::make_unique<CharlestonScene>();
 			break;
 
 		default:

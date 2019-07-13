@@ -183,6 +183,8 @@
     <ClCompile Include="AbstractScene.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Captain.cpp" />
+    <ClCompile Include="CharlestonScene.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="KeyCodeFonts.cpp" />
     <ClCompile Include="Settings.cpp" />
@@ -190,14 +192,11 @@
     <ClCompile Include="DebugDraw.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="DemoScene.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="GreetingScene.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="InvisibleObject.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Mario.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
@@ -212,7 +211,6 @@
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
-    <ClCompile Include="Texts.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="VisibleObject.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -220,8 +218,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="Block.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Captain.h" />
+    <ClInclude Include="CharlestonScene.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="KeyCodeFonts.h" />
@@ -229,20 +228,16 @@
     <ClInclude Include="TransitionScene.h" />
     <ClInclude Include="DebugDraw.h" />
     <ClInclude Include="DebugOut.h" />
-    <ClInclude Include="DemoScene.h" />
     <ClInclude Include="Font.h" />
-    <ClInclude Include="Goomba.h" />
     <ClInclude Include="GreetingScene.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="InvisibleObject.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Mario.h" />
     <ClInclude Include="MyException.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Sounds.h" />
-    <ClInclude Include="Texts.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VisibleObject.h" />
     <ClInclude Include="Window.h" />

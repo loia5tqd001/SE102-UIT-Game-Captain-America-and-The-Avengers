@@ -36,7 +36,6 @@
 #include "Textures.h"
 #include "Font.h"
 #include "KeyCodeFonts.h"
-#include "Texts.h"
 #include "Sounds.h"
 #include "Sprite.h"
 #include "Sprites.h"

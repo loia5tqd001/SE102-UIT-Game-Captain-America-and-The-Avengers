@@ -1,6 +1,4 @@
 #include "pch.h"
-#include "Goomba.h"
-#include "Block.h"
 
 Grid::Grid(const Json::Value& root)
 {
@@ -30,14 +28,6 @@ auto Grid::LoadObjects(const Json::Value& grid)
 		static std::unique_ptr<GameObject> object;
 		switch ((ClassId)classId)
 		{
-			case ClassId::Block:
-				object = std::make_unique<Block>( Vector2{x, y}, width, height );
-				break;
-
-			case ClassId::Goomba:
-				object = std::make_unique<Goomba>( Vector2{x, y}, Vector2{vx, 0.0f} );
-				break;
-
 			default:
 				ThrowMyException("Can't find class id:", classId);
 				break;

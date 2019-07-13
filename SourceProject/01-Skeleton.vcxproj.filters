@@ -48,15 +48,6 @@
     <ClCompile Include="..\Dependencies\JsonCpp\jsoncpp.cpp">
       <Filter>Framework\_ThirdParty</Filter>
     </ClCompile>
-    <ClCompile Include="Mario.cpp">
-      <Filter>Development\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="DemoScene.cpp">
-      <Filter>Development\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Development\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Development\Manager</Filter>
     </ClCompile>
@@ -93,9 +84,6 @@
     <ClCompile Include="Sprites.cpp">
       <Filter>Framework\ResourceManagers</Filter>
     </ClCompile>
-    <ClCompile Include="Texts.cpp">
-      <Filter>Framework\ResourceManagers</Filter>
-    </ClCompile>
     <ClCompile Include="Textures.cpp">
       <Filter>Framework\ResourceManagers</Filter>
     </ClCompile>
@@ -129,6 +117,12 @@
     <ClCompile Include="Window.cpp">
       <Filter>Framework\GameControllers</Filter>
     </ClCompile>
+    <ClCompile Include="Captain.cpp">
+      <Filter>Development\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CharlestonScene.cpp">
+      <Filter>Development\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -151,15 +145,6 @@
     </ClInclude>
     <ClInclude Include="Vector2.h">
       <Filter>Framework\_MyUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="Mario.h">
-      <Filter>Development\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="DemoScene.h">
-      <Filter>Development\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Development\Objects</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>Development\Manager</Filter>
@@ -190,12 +175,6 @@
     </ClInclude>
     <ClInclude Include="Settings.h">
       <Filter>Development\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Development\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Texts.h">
-      <Filter>Framework\ResourceManagers</Filter>
     </ClInclude>
     <ClInclude Include="Sprites.h">
       <Filter>Framework\ResourceManagers</Filter>
@@ -244,6 +223,12 @@
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>Framework\GameControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Captain.h">
+      <Filter>Development\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CharlestonScene.h">
+      <Filter>Development\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
