@@ -4,6 +4,7 @@
 #include "CharlestonScene.h"
 #include "BossCharlestonScene.h"
 #include "PittsburghScene.h"
+#include "RedAlertScene.h"
 
 void SceneManager::ToggleMuteMode() const
 {
@@ -55,6 +56,10 @@ void SceneManager::SetScene(Scene scene)
 
 		case Scene::Pittsburgh:
 			curScene = std::make_unique<PittsburghScene>();
+			break;
+
+		case Scene::RedAlert:
+			curScene = std::make_unique<RedAlertScene>();
 			break;
 
 		default:

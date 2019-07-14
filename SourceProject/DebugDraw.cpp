@@ -84,5 +84,5 @@ void DebugDraw::DrawCrt()
 	static const auto  crtTexture = Textures::Get(TextureId::CrtEffect);
 	static const Sprite crtSprite = { crtTexture, Window::Instance().GetWindowFrame() };
 
-	crtSprite.Draw( { 0.0f, 0.0f }, 0, { 1.0f, 1.0f }, 150 );
+	crtSprite.Draw( { 0.0f, 0.0f }, 0, { 1.0f, 1.0f }, 100 );
 }

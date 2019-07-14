@@ -118,12 +118,13 @@ void Sounds::StopAt(SoundId id)
 {
 	assert(soundDictionary.count(id) == 1);
 	soundDictionary.at(id).Stop();
+	soundDictionary.at(id).Reset();
 }
 
 void Sounds::StopAll()
 {
 	for (auto& [_, sound] : soundDictionary)
-		sound.Stop();
+		sound.Stop(), sound.Reset();
 }
 
 void Sounds::HandleInput()

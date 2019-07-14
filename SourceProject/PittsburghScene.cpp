@@ -45,8 +45,12 @@ void PittsburghScene::OnKeyDown(BYTE keyCode)
 {
 	switch (keyCode)
 	{
-		case VK_RETURN:
+		case VK_SPACE:
 			curMap = curMap == mapDark.get() ? mapLight.get() : mapDark.get();
+			break;
+
+		case VK_RETURN:
+			SceneManager::Instance().SetScene( Scene::RedAlert );
 			break;
 	}
 }

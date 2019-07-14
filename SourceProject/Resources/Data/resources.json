@@ -8,7 +8,8 @@
 	[ 4, "Resources\\Textures\\4. TileMapCharleston.png"     , 0             ],
 	[ 5, "Resources\\Textures\\5. TileMapBossCharleston.png" , 0             ],
 	[ 6, "Resources\\Textures\\6. TileMapPittsburghDark.png" , 0             ],
-	[ 7, "Resources\\Textures\\7. TileMapPittsburghLight.png", 0             ]
+	[ 7, "Resources\\Textures\\7. TileMapPittsburghLight.png", 0             ],
+	[ 8, "Resources\\Textures\\8. TileMapRedAlert.png"       , 0             ]
   ],
   
   "sprites": [ 
