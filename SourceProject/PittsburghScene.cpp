@@ -13,19 +13,21 @@ PittsburghScene::PittsburghScene()
 
 void PittsburghScene::LoadResources()
 {
-	const auto root = GetRootJson("Resources\\Data\\scene-pittsburgh-dark.json");
+	const auto root = GetRootJson("Resources\\Data\\scene-pittsburgh.json");
 
-	map = std::make_unique<Map>( root );
+	mapDark = std::make_unique<Map>( root["dark"] );
+	mapLight = std::make_unique<Map>( root["light"] );
+	curMap = mapDark.get();
 }
 
 void PittsburghScene::Update(float dt)
 {
-	cam.ClampWithin( map->GetWorldBoundary() );
+	cam.ClampWithin( curMap->GetWorldBoundary() );
 }
 
 void PittsburghScene::Draw()
 {
-	map->Render();
+	curMap->Render();
 
 	const auto& wnd = Window::Instance();
 	if (wnd.IsKeyPressed(VK_LEFT))
@@ -43,5 +45,8 @@ void PittsburghScene::OnKeyDown(BYTE keyCode)
 {
 	switch (keyCode)
 	{
+		case VK_RETURN:
+			curMap = curMap == mapDark.get() ? mapLight.get() : mapDark.get();
+			break;
 	}
 }

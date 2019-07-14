@@ -2,13 +2,14 @@
 
 enum class TextureId
 {
-	Bbox              = 0,
-	Greeting          = 1,
-	KeyCodeFont       = 2,
-	CrtEffect         = 3,
-	MapCharleston     = 4,
-	MapBossCharleston = 5,
-	MapPittsburghDark = 6,
+	Bbox               = 0,
+	Greeting           = 1,
+	KeyCodeFont        = 2,
+	CrtEffect          = 3,
+	MapCharleston      = 4,
+	MapBossCharleston  = 5,
+	MapPittsburghDark  = 6,
+	MapPittsburghLight = 7,
 	Count
 };
 
