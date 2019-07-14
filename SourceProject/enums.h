@@ -8,6 +8,7 @@ enum class TextureId
 	CrtEffect         = 3,
 	MapCharleston     = 4,
 	MapBossCharleston = 5,
+	MapPittsburghDark = 6,
 	Count
 };
 
@@ -48,6 +49,7 @@ enum class Scene
 	Transition,
 	Charleston,
 	BossCharleston,
+	Pittsburgh
 };
 
 

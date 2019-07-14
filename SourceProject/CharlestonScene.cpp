@@ -43,10 +43,6 @@ void CharlestonScene::OnKeyDown(BYTE keyCode)
 {
 	switch (keyCode)
 	{
-		case VK_CONTROL:
-			DebugDraw::ToggleDebugMode();
-			break;
-
 		case VK_RETURN:
 			SceneManager::Instance().SetScene( Scene::BossCharleston );
 			break;

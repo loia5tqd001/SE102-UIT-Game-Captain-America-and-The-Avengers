@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "BossCharlestonScene.h"
+#include "PittsburghScene.h"
 
 static auto& cam = Camera::Instance();
 
-BossCharlestonScene::BossCharlestonScene()
+PittsburghScene::PittsburghScene()
 {
 	LoadResources();
 
@@ -11,19 +11,19 @@ BossCharlestonScene::BossCharlestonScene()
 		Sounds::PlayLoop( GetBgMusic() );
 }
 
-void BossCharlestonScene::LoadResources()
+void PittsburghScene::LoadResources()
 {
-	const auto root = GetRootJson("Resources\\Data\\scene-boss-charleston.json");
+	const auto root = GetRootJson("Resources\\Data\\scene-pittsburgh-dark.json");
 
 	map = std::make_unique<Map>( root );
 }
 
-void BossCharlestonScene::Update(float dt)
+void PittsburghScene::Update(float dt)
 {
 	cam.ClampWithin( map->GetWorldBoundary() );
 }
 
-void BossCharlestonScene::Draw()
+void PittsburghScene::Draw()
 {
 	map->Render();
 
@@ -39,12 +39,9 @@ void BossCharlestonScene::Draw()
 
 }
 
-void BossCharlestonScene::OnKeyDown(BYTE keyCode)
+void PittsburghScene::OnKeyDown(BYTE keyCode)
 {
 	switch (keyCode)
 	{
-		case VK_RETURN:
-			SceneManager::Instance().SetScene( Scene::Pittsburgh );
-			break;
 	}
 }

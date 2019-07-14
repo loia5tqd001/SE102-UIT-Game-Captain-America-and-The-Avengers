@@ -6,7 +6,8 @@
 	[ 2, "Resources\\Textures\\2. Keycodefont.png"           , [0  ,0  ,0  ] ],
 	[ 3, "Resources\\Textures\\3. Interlace.png"             , [230,230,230] ],
 	[ 4, "Resources\\Textures\\4. TileMapCharleston.png"     , 0             ],
-	[ 5, "Resources\\Textures\\5. TileMapBossCharleston.png" , 0             ]
+	[ 5, "Resources\\Textures\\5. TileMapBossCharleston.png" , 0             ],
+	[ 6, "Resources\\Textures\\6. TileMapPittsburghDark.png" , 0             ]
   ],
   
   "sprites": [ 

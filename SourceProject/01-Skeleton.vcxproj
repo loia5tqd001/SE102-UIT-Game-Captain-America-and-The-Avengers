@@ -188,6 +188,7 @@
     <ClCompile Include="CharlestonScene.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="KeyCodeFonts.cpp" />
+    <ClCompile Include="PittsburghScene.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="TransitionScene.cpp" />
     <ClCompile Include="DebugDraw.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="KeyCodeFonts.h" />
+    <ClInclude Include="PittsburghScene.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="TransitionScene.h" />
     <ClInclude Include="DebugDraw.h" />

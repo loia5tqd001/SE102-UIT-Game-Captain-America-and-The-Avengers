@@ -3,6 +3,7 @@
 #include "TransitionScene.h"
 #include "CharlestonScene.h"
 #include "BossCharlestonScene.h"
+#include "PittsburghScene.h"
 
 void SceneManager::ToggleMuteMode() const
 {
@@ -52,6 +53,10 @@ void SceneManager::SetScene(Scene scene)
 			curScene = std::make_unique<BossCharlestonScene>();
 			break;
 
+		case Scene::Pittsburgh:
+			curScene = std::make_unique<PittsburghScene>();
+			break;
+
 		default:
 			ThrowMyException("Failed to change to unknown scene");
 	}
@@ -89,6 +94,10 @@ void SceneManager::OnKeyDown(BYTE keyCode)
 
 		case VK_MENU:
 			DebugDraw::ToggleCrtMode();
+			break;
+
+		case VK_CONTROL:
+			DebugDraw::ToggleDebugMode();
 			break;
 
 		case 'M':

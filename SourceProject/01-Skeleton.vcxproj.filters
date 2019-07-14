@@ -126,6 +126,9 @@
     <ClCompile Include="BossCharlestonScene.cpp">
       <Filter>Development\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="PittsburghScene.cpp">
+      <Filter>Development\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -234,6 +237,9 @@
       <Filter>Development\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="BossCharlestonScene.h">
+      <Filter>Development\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PittsburghScene.h">
       <Filter>Development\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
