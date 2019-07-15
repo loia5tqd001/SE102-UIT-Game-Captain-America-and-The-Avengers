@@ -138,6 +138,9 @@
     <ClCompile Include="EnemyGun.cpp">
       <Filter>Development\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyGunBullet.cpp">
+      <Filter>Development\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -252,6 +255,12 @@
       <Filter>Development\Scenes\Playable Scenes</Filter>
     </ClInclude>
     <ClInclude Include="EnemyGun.h">
+      <Filter>Development\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Counter.h">
+      <Filter>Framework\_MyUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGunBullet.h">
       <Filter>Development\Objects</Filter>
     </ClInclude>
   </ItemGroup>

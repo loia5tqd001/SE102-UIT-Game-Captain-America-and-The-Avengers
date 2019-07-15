@@ -12,6 +12,7 @@ enum class TextureId
 	MapPittsburghDark           = 7,
 	MapPittsburghLight          = 8,
 	MapRedAlert                 = 9,
+	enemy                       =10,
 	Count
 };
 
@@ -23,6 +24,7 @@ enum class SpriteId
 	EnemyGun_Stand			= 2,
 	EnemyGun_OnKnee			= 3,
 	EnemyGun_TakeDamage		= 4,
+	EnemyGunBullet			= 5,
 
 	Count
 };
@@ -54,6 +56,7 @@ enum class State
 	EnemyGun_Stand,
 	EnemyGun_OnKnee,
 	EnemyGun_TakeDamage,
+	EnemyGunBullet,
 
 	Count
 

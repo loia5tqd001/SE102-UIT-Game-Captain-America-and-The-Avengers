@@ -18,6 +18,8 @@ void RedAlertScene::LoadResources()
 	map = std::make_unique<Map>( root );
 }
 
+
+
 void RedAlertScene::Update(float dt)
 {
 	cam.ClampWithin( map->GetWorldBoundary() );

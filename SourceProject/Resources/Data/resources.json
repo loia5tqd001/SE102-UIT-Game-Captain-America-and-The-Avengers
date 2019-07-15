@@ -1,25 +1,28 @@
 {  
   "textures": [ 
     // textureId[0] - texturePath[1] - transparentColor[2]
-	[ 0, "Resources\\Textures\\0. Bbox.png"                       , 0             ],
-	[ 1, "Resources\\Textures\\1. Warning.png"                    , 0             ],
-	[ 2, "Resources\\Textures\\2. Keycodefont.png"                , [0  ,0  ,0  ] ],
-	[ 3, "Resources\\Textures\\3. Interlace.png"                  , [230,230,230] ],
-	[ 4, "Resources\\Textures\\4. TileMapCharleston.png"          , 0             ],
-	[ 5, "Resources\\Textures\\5. TileMapBossCharlestonLight.png" , 0             ],
-	[ 6, "Resources\\Textures\\6. TileMapBossCharlestonDark.png"  , 0             ],
-	[ 7, "Resources\\Textures\\7. TileMapPittsburghDark.png"      , 0             ],
-	[ 8, "Resources\\Textures\\8. TileMapPittsburghLight.png"     , 0             ],
-	[ 9, "Resources\\Textures\\9. TileMapRedAlert.png"            , 0             ]
-  ],
+	[ 0, "Resources\\Textures\\0. Bbox.png"                           , 0             ],
+	[ 1, "Resources\\Textures\\1. Remember.png"                       , 0             ],
+	[ 2, "Resources\\Textures\\2. Keycodefont.png"                    , [0  ,0  ,0  ] ],
+	[ 3, "Resources\\Textures\\3. Interlace.png"                      , [230,230,230] ],
+	[ 4, "Resources\\Textures\\4. TileMapCharleston.png"              , 0             ],
+	[ 5, "Resources\\Textures\\5. TileMapBossCharlestonLight.png"     , 0             ],
+	[ 6, "Resources\\Textures\\6. TileMapBossCharlestonDark.png"      , 0             ],
+	[ 7, "Resources\\Textures\\7. TileMapPittsburghDark.png"          , 0             ],
+	[ 8, "Resources\\Textures\\8. TileMapPittsburghLight.png"         , 0             ],
+  [ 9, "Resources\\Textures\\9. TileMapRedAlert.png"                , 0             ],
+  [10, "Resources\\Textures\\10.enemy.png"                          , [0  ,91 ,127] ],
+	[11, "Resources\\Textures\\11.captain.png"                        , [0  ,166,81 ] ]
+],
 
   "sprites": [
     // spriteId[0] - textureId[1] - left[2] - top[3] - spriteWidth[4] - spriteHeight[5] - count[6] - padding[7]
     [ 0, 0, 0, 0, 0, 0, 1, 0 ], // invisible
-    [ 1, 1, 168, 13, 24, 43, 1, 0 ], // enemygun-stand
-    [ 2, 1, 72, 16, 24, 40, 3, 8 ], // enemygun-walking
-    [ 3, 1, 247, 0, 12, 15, 1, 0 ], // enemygun-take-damage
-    [ 4, 1, 0, 0, 0, 0, 2, 0 ] // enemygun-on-knee
+    [ 1, 10, 248, 13, 24, 43, 1, 0 ], // enemygun-stand
+    [ 2, 10, 280, 16, 24, 40, 3, 8 ], // enemygun-walking
+    [ 3, 10, 184, 24, 24, 32, 1, 0 ], // enemygun-take-damage
+    [ 4, 10, 29, 240, 24, 27, 1, 0 ], // enemygun-on-knee
+    [ 5, 10, 169, 33, 6, 6, 1, 0 ] //EnemyGunBullet
   ],
   
   "sounds": [
