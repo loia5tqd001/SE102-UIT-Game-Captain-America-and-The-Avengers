@@ -135,6 +135,9 @@
     <ClCompile Include="RedAlertScene.cpp">
       <Filter>Development\Scenes\Playable Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyGun.cpp">
+      <Filter>Development\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="RedAlertScene.h">
       <Filter>Development\Scenes\Playable Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGun.h">
+      <Filter>Development\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

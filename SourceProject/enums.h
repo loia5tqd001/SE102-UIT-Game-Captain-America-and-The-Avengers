@@ -17,7 +17,13 @@ enum class TextureId
 
 enum class SpriteId
 {
-	Invisible         = 0,
+	Invisible			    = 0,
+
+	EnemyGun_Walking		= 1,
+	EnemyGun_Stand			= 2,
+	EnemyGun_OnKnee			= 3,
+	EnemyGun_TakeDamage		= 4,
+
 	Count
 };
 
@@ -43,6 +49,12 @@ enum class State
 {
 	Invisible,
 	Destroyed,
+
+	EnemyGun_Walking,
+	EnemyGun_Stand,
+	EnemyGun_OnKnee,
+	EnemyGun_TakeDamage,
+
 	Count
 
 

@@ -187,6 +187,7 @@
     <ClCompile Include="Captain.cpp" />
     <ClCompile Include="CharlestonScene.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="EnemyGun.cpp" />
     <ClCompile Include="KeyCodeFonts.cpp" />
     <ClCompile Include="PittsburghScene.cpp" />
     <ClCompile Include="RedAlertScene.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="CharlestonScene.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Colors.h" />
+    <ClInclude Include="EnemyGun.h" />
     <ClInclude Include="KeyCodeFonts.h" />
     <ClInclude Include="PittsburghScene.h" />
     <ClInclude Include="RedAlertScene.h" />
