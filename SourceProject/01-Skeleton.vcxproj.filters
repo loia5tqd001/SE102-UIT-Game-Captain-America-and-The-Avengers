@@ -120,9 +120,6 @@
     <ClCompile Include="Captain.cpp">
       <Filter>Development\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="TransitionScene.cpp">
-      <Filter>Development\Scenes\Extra Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="GreetingScene.cpp">
       <Filter>Development\Scenes\Extra Scenes</Filter>
     </ClCompile>
@@ -235,9 +232,6 @@
     </ClInclude>
     <ClInclude Include="Captain.h">
       <Filter>Development\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="TransitionScene.h">
-      <Filter>Development\Scenes\Extra Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GreetingScene.h">
       <Filter>Development\Scenes\Extra Scenes</Filter>

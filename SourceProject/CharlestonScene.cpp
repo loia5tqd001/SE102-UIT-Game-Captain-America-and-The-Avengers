@@ -44,7 +44,7 @@ void CharlestonScene::OnKeyDown(BYTE keyCode)
 	switch (keyCode)
 	{
 		case VK_RETURN:
-			SceneManager::Instance().SetScene( Scene::BossCharleston );
+			DoTransitionScene(Scene::BossCharleston);
 			break;
 
 	}

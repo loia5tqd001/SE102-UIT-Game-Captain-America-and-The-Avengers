@@ -50,7 +50,7 @@ void BossCharlestonScene::OnKeyDown(BYTE keyCode)
 			break;
 
 		case VK_RETURN:
-			SceneManager::Instance().SetScene( Scene::Pittsburgh );
+			DoTransitionScene(Scene::Pittsburgh);
 			break;
 	}
 }

@@ -28,6 +28,8 @@ enum class SoundId
 	CaptainTheme   = 2,
 	BossBattle     = 3,
 	RedAlert       = 4,
+	Ambush         = 5,
+	Death          = 6,
 	Count
 };
 
@@ -49,7 +51,6 @@ enum class State
 enum class Scene
 {
 	Greeting,
-	Transition,
 	Charleston,
 	BossCharleston,
 	Pittsburgh,

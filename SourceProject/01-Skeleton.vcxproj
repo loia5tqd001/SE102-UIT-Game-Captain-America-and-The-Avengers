@@ -191,7 +191,6 @@
     <ClCompile Include="PittsburghScene.cpp" />
     <ClCompile Include="RedAlertScene.cpp" />
     <ClCompile Include="Settings.cpp" />
-    <ClCompile Include="TransitionScene.cpp" />
     <ClCompile Include="DebugDraw.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -231,7 +230,6 @@
     <ClInclude Include="PittsburghScene.h" />
     <ClInclude Include="RedAlertScene.h" />
     <ClInclude Include="Settings.h" />
-    <ClInclude Include="TransitionScene.h" />
     <ClInclude Include="DebugDraw.h" />
     <ClInclude Include="DebugOut.h" />
     <ClInclude Include="Font.h" />

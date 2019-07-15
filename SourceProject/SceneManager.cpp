@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "GreetingScene.h"
-#include "TransitionScene.h"
 #include "CharlestonScene.h"
 #include "BossCharlestonScene.h"
 #include "PittsburghScene.h"
@@ -42,10 +41,6 @@ void SceneManager::SetScene(Scene scene)
 			curScene = std::make_unique<GreetingScene>();
 			break;
 
-		case Scene::Transition:
-			curScene = std::make_unique<TransitionScene>();
-			break;
-
 		case Scene::Charleston:
 			curScene = std::make_unique<CharlestonScene>();
 			break;
@@ -73,12 +68,24 @@ void SceneManager::Update(float dt)
 		curScene->Update(dt);
 
 	Sounds::HandleInput();
+
+	if (curScene->IsDoingTransitionSceneEffect()) {
+		curScene->DoTransitionScene(); // update transition scene, not "do", "update"
+	}
+	if (curScene->GetNextScene()) {
+		SetScene(*curScene->GetNextScene());
+	}
 }
 
 void SceneManager::Draw()
 {
-	curScene->Draw();
-	DebugDraw::DrawCrt();
+	if (curScene->IsDoingTransitionSceneEffect()) {
+		Game::Instance().FillColor(Colors::Black);
+	}
+	else {
+		curScene->Draw();
+		DebugDraw::DrawCrt();
+	}
 	settingScene.Draw();
 	Sounds::Draw();
 }

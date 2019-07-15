@@ -18,7 +18,7 @@ void GreetingScene::LoadResources()
 void GreetingScene::Update(float dt)
 {
 	if (Sounds::IsPlayingAt(SoundId::Greeting) == false)
-		SceneManager::Instance().SetScene(Scene::Transition);
+		SceneManager::Instance().SetScene(Scene::Charleston);
 }
 
 void GreetingScene::Draw()

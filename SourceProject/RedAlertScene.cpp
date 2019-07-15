@@ -44,7 +44,7 @@ void RedAlertScene::OnKeyDown(BYTE keyCode)
 	switch (keyCode)
 	{
 		case VK_RETURN:
-			SceneManager::Instance().SetScene( Scene::Charleston );
+			DoTransitionScene(Scene::Charleston);
 			break;
 	}
 }

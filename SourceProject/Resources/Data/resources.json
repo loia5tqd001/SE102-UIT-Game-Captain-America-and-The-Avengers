@@ -2,7 +2,7 @@
   "textures": [ 
     // textureId[0] - texturePath[1] - transparentColor[2]
 	[ 0, "Resources\\Textures\\0. Bbox.png"                       , 0             ],
-	[ 1, "Resources\\Textures\\1. Remember.png"                   , 0             ],
+	[ 1, "Resources\\Textures\\1. Warning.png"                    , 0             ],
 	[ 2, "Resources\\Textures\\2. Keycodefont.png"                , [0  ,0  ,0  ] ],
 	[ 3, "Resources\\Textures\\3. Interlace.png"                  , [230,230,230] ],
 	[ 4, "Resources\\Textures\\4. TileMapCharleston.png"          , 0             ],
@@ -24,7 +24,9 @@
 	[ 1, "Resources\\Sounds\\1. Cursor.wav"],
 	[ 2, "Resources\\Sounds\\2. Theme of Captain America.wav"],
 	[ 3, "Resources\\Sounds\\3. Boss Battle.wav"],
-	[ 4, "Resources\\Sounds\\4. Red Alert.wav"]
+	[ 4, "Resources\\Sounds\\4. Red Alert.wav"],
+	[ 5, "Resources\\Sounds\\5. Ambush.wav"],
+	[ 6, "Resources\\Sounds\\6. Death.wav"]
   ],	
  
    "keycodefonts": [ // keyCode[0] - left[1] - top[2] - right[3] - bottom[4]
