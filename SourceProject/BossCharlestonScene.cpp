@@ -15,17 +15,19 @@ void BossCharlestonScene::LoadResources()
 {
 	const auto root = GetRootJson("Resources\\Data\\scene-boss-charleston.json");
 
-	map = std::make_unique<Map>( root );
+	mapDark = std::make_unique<Map>( root["dark"] );
+	mapLight = std::make_unique<Map>( root["light"] );
+	curMap = mapLight.get();
 }
 
 void BossCharlestonScene::Update(float dt)
 {
-	cam.ClampWithin( map->GetWorldBoundary() );
+	cam.ClampWithin( curMap->GetWorldBoundary() );
 }
 
 void BossCharlestonScene::Draw()
 {
-	map->Render();
+	curMap->Render();
 
 	const auto& wnd = Window::Instance();
 	if (wnd.IsKeyPressed(VK_LEFT))
@@ -43,6 +45,10 @@ void BossCharlestonScene::OnKeyDown(BYTE keyCode)
 {
 	switch (keyCode)
 	{
+		case VK_SPACE:
+			curMap = curMap == mapDark.get() ? mapLight.get() : mapDark.get();
+			break;
+
 		case VK_RETURN:
 			SceneManager::Instance().SetScene( Scene::Pittsburgh );
 			break;

@@ -1,15 +1,16 @@
 {  
   "textures": [ 
     // textureId[0] - texturePath[1] - transparentColor[2]
-	[ 0, "Resources\\Textures\\0. Bbox.png"                  , 0             ],
-	[ 1, "Resources\\Textures\\1. Remember.png"              , 0             ],
-	[ 2, "Resources\\Textures\\2. Keycodefont.png"           , [0  ,0  ,0  ] ],
-	[ 3, "Resources\\Textures\\3. Interlace.png"             , [230,230,230] ],
-	[ 4, "Resources\\Textures\\4. TileMapCharleston.png"     , 0             ],
-	[ 5, "Resources\\Textures\\5. TileMapBossCharleston.png" , 0             ],
-	[ 6, "Resources\\Textures\\6. TileMapPittsburghDark.png" , 0             ],
-	[ 7, "Resources\\Textures\\7. TileMapPittsburghLight.png", 0             ],
-	[ 8, "Resources\\Textures\\8. TileMapRedAlert.png"       , 0             ]
+	[ 0, "Resources\\Textures\\0. Bbox.png"                       , 0             ],
+	[ 1, "Resources\\Textures\\1. Remember.png"                   , 0             ],
+	[ 2, "Resources\\Textures\\2. Keycodefont.png"                , [0  ,0  ,0  ] ],
+	[ 3, "Resources\\Textures\\3. Interlace.png"                  , [230,230,230] ],
+	[ 4, "Resources\\Textures\\4. TileMapCharleston.png"          , 0             ],
+	[ 5, "Resources\\Textures\\5. TileMapBossCharlestonLight.png" , 0             ],
+	[ 6, "Resources\\Textures\\6. TileMapBossCharlestonDark.png"  , 0             ],
+	[ 7, "Resources\\Textures\\7. TileMapPittsburghDark.png"      , 0             ],
+	[ 8, "Resources\\Textures\\8. TileMapPittsburghLight.png"     , 0             ],
+	[ 9, "Resources\\Textures\\9. TileMapRedAlert.png"            , 0             ]
   ],
   
   "sprites": [ 

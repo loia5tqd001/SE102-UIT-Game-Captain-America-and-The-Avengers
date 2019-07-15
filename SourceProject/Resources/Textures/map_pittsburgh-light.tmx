@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
  <tileset firstgid="1" name="nes-avengers-pittsburgh-light-map-pts_bank.png" tilewidth="16" tileheight="16" tilecount="121" columns="11">
-  <image source="7. TileMapPittsburghLight.png" width="176" height="176"/>
+  <image source="8. TileMapPittsburghLight.png" width="176" height="176"/>
  </tileset>
  <layer id="1" name="ShoeBox Tile Grab" width="64" height="76">
   <data encoding="csv">

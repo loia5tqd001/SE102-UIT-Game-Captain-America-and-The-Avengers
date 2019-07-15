@@ -4,7 +4,8 @@
 class BossCharlestonScene : public AbstractScene
 {
 private:
-	std::unique_ptr<Map>   map; // responsible for drawing map background
+	std::unique_ptr<Map> mapDark, mapLight; 
+	Map* curMap = nullptr;
 
 public:
 	BossCharlestonScene();
