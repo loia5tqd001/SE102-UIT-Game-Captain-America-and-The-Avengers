@@ -2,7 +2,7 @@
   "textures": [ 
     // textureId[0] - texturePath[1] - transparentColor[2]
 	[ 0, "Resources\\Textures\\0. Bbox.png"                           , 0             ],
-	[ 1, "Resources\\Textures\\1. Remember.png"                       , 0             ],
+	[ 1, "Resources\\Textures\\1. Warning.png"                        , 0             ],
 	[ 2, "Resources\\Textures\\2. Keycodefont.png"                    , [0  ,0  ,0  ] ],
 	[ 3, "Resources\\Textures\\3. Interlace.png"                      , [230,230,230] ],
 	[ 4, "Resources\\Textures\\4. TileMapCharleston.png"              , 0             ],
@@ -10,9 +10,10 @@
 	[ 6, "Resources\\Textures\\6. TileMapBossCharlestonDark.png"      , 0             ],
 	[ 7, "Resources\\Textures\\7. TileMapPittsburghDark.png"          , 0             ],
 	[ 8, "Resources\\Textures\\8. TileMapPittsburghLight.png"         , 0             ],
-  [ 9, "Resources\\Textures\\9. TileMapRedAlert.png"                , 0             ],
-  [10, "Resources\\Textures\\10.enemy.png"                          , [0  ,91 ,127] ],
-	[11, "Resources\\Textures\\11.captain.png"                        , [0  ,166,81 ] ]
+    [ 9, "Resources\\Textures\\9. TileMapRedAlert.png"                , 0             ],
+    [10, "Resources\\Textures\\10.enemy.png"                          , [0  ,91 ,127] ],
+	[11, "Resources\\Textures\\11.captain.png"                        , [0  ,166,81 ] ],
+	[12, "Resources\\Textures\\12.explode.png"                        , [0  ,166,81 ] ]
 ],
 
   "sprites": [
@@ -22,7 +23,14 @@
     [ 2, 10, 280, 16, 24, 40, 3, 8 ], // enemygun-walking
     [ 3, 10, 184, 24, 24, 32, 1, 0 ], // enemygun-take-damage
     [ 4, 10, 29, 240, 24, 27, 1, 0 ], // enemygun-on-knee
-    [ 5, 10, 169, 33, 6, 6, 1, 0 ] //EnemyGunBullet
+    [ 5, 10, 169, 33, 6, 6, 1, 0 ], //EnemyGunBullet
+	[ 6, 10, 281, 66, 23, 46, 1, 0 ], // enemyrocket-stand
+    [ 7, 10, 281, 66, 23, 46, 3, 9 ], // enemyrocket-walking
+    [ 8, 10, 248, 81, 24, 31, 1, 0 ], // enemyrocket-take-damage
+    [ 9, 10, 216, 72, 24, 40, 1, 0 ], // enemyrocket-on-knee
+    [ 10, 10, 171, 74, 15, 7, 2, 7 ], //EnemyrocketBullet-Horizontal
+	[ 11, 10, 168, 96, 12, 13, 2, 13 ], //EnemyrocketBullet-Cross
+	[ 12, 12, 237, 266, 30, 28, 2, 2 ] //explode
   ],
   
   "sounds": [

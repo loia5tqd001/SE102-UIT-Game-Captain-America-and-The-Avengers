@@ -3,7 +3,7 @@
 enum class TextureId
 {
 	Bbox                        = 0,
-	Greeting                    = 1,
+	Warning                     = 1,
 	KeyCodeFont                 = 2,
 	CrtEffect                   = 3,
 	MapCharleston               = 4,
@@ -12,7 +12,9 @@ enum class TextureId
 	MapPittsburghDark           = 7,
 	MapPittsburghLight          = 8,
 	MapRedAlert                 = 9,
-	enemy                       =10,
+	enemy                       = 10,
+	captain                     = 11,
+	explode                     = 12,
 	Count
 };
 
@@ -25,7 +27,13 @@ enum class SpriteId
 	EnemyGun_OnKnee			= 3,
 	EnemyGun_TakeDamage		= 4,
 	EnemyGunBullet			= 5,
-
+	EnemyRocket_Walking     = 6,
+	EnemyRocket_Stand       = 7,
+	EnemyRocket_OnKnee      = 8,
+	EnemyRocket_TakeDamage = 9,
+	EnemyRocketBullet_Horizontal = 10,
+	EnemyRocketBullet_Cross = 11,
+	Explode =12,
 	Count
 };
 
@@ -57,6 +65,13 @@ enum class State
 	EnemyGun_OnKnee,
 	EnemyGun_TakeDamage,
 	EnemyGunBullet,
+	EnemyRocket_Walking,
+	EnemyRocket_Stand,
+	EnemyRocket_OnKnee,
+	EnemyRocket_TakeDamage,
+	EnemyRocketBullet_Horizontal,
+	EnemyRocketBullet_Cross,
+	Explode,
 
 	Count
 

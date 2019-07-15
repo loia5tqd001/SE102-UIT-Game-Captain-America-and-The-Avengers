@@ -9,7 +9,7 @@ GreetingScene::GreetingScene()
 
 void GreetingScene::LoadResources()
 {
-	const auto& greetingTexture = Textures::Get( TextureId::Greeting );
+	const auto& greetingTexture = Textures::Get( TextureId::Warning );
 	const auto  windowFrame     = Window::Instance().GetWindowFrame();
 
 	rememberNote = std::make_unique<Sprite>( greetingTexture, windowFrame );

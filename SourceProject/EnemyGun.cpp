@@ -3,8 +3,6 @@
 #include "Captain.h"
 #include "EnemyGunBullet.h"
 
-static auto& setting = Settings::Instance();
-
 EnemyGun::EnemyGun(const Vector2 & spawnPos, const Vector2 & vel, Grid *grid) :
 	VisibleObject(State::EnemyGun_Stand, spawnPos, vel)
 {
@@ -12,6 +10,8 @@ EnemyGun::EnemyGun(const Vector2 & spawnPos, const Vector2 & vel, Grid *grid) :
 	animations.emplace(State::EnemyGun_OnKnee, Animation(SpriteId::EnemyGun_OnKnee, 0.1f));
 	animations.emplace(State::EnemyGun_TakeDamage, Animation(SpriteId::EnemyGun_TakeDamage, 0.1f));
 	animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.1f));
+	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.1f));
+	this->grid = grid;
 }
 
 void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
@@ -19,10 +19,31 @@ void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
 	if (curState == State::Destroyed) return;
 
 	// regular updates
-	if (curState != State::EnemyGun_TakeDamage) pos.y += vel.y * GRAVITY; //enemy not falling down when die
+	if (curState != State::EnemyGun_TakeDamage && curState != State::Explode) pos.y += vel.y * GRAVITY; //enemy not falling down when die
 
 	// handle collisions
 	HandleCollisions(dt, coObjects);
+
+	//counter, if take damage, flasing in 0,5s then change to explode, keep 2 sprite in 0,2 s fit and destroy
+	if (curState == State::EnemyGun_TakeDamage) {
+		static Counter takeDamageCounter;
+		if (takeDamageCounter.CanExcuseCommand(0.5f, true))
+		{
+			SetState(State::Explode);
+			OnFlasing();
+		}
+	}
+	if (curState == State::Explode)
+	{
+		static Counter ExplodeCounter;
+		if (ExplodeCounter.CanExcuseCommand(0.2f, true))
+		{
+			SetState(State::Destroyed);
+		}
+	}
+
+	// spawn bullet every 0.4s
+	SpawnBullet(4.0f);
 
 	// update animations
 	animations.at(curState).Update(dt);
@@ -49,25 +70,29 @@ void EnemyGun::SetState(State state)
 		OnKneeHeight(GetHeight());
 		break;
 	case State::EnemyGun_TakeDamage:
-		if (counter.CanExcuseCommand(0.5f,true)) { curState = State::Destroyed; }
-		else { //flashing and fallback in 0,5s
-			vel.x = nx * FALL_BACK;
-			static UINT  nFrameUnrendered = 0;
-			if (++nFrameUnrendered >= 10) {
-				shouldDrawImage = true;
-				nFrameUnrendered = 0;
-			}
-			else {
-				shouldDrawImage = false;
-			}
-		}
+		vel.x = -nx * FALL_BACK;
+		break;
+	case State::Explode:
+		vel.x = 0;
 		break;
 	}
 }
-void EnemyGun::SpawnBullet(float cycle)
+void EnemyGun::OnFlasing()
 {
+	static UINT  nFrameUnrendered = 0;
+	if (++nFrameUnrendered >= 10) {
+		shouldDrawImage = true;
+		nFrameUnrendered = 0;
+	}
+	else {
+		shouldDrawImage = false;
+	}
+}
+void EnemyGun::SpawnBullet(float cycle) 
+{
+	static Counter curCounter;
 	if (curState == State::EnemyGun_TakeDamage) return;
-	if (counter.CanExcuseCommand(cycle, false))
+	if (curCounter.CanExcuseCommand(cycle, false))
 	{
 		grid->SpawnObject(std::make_unique<EnemyGunBullet>(Vector2{ pos.x, pos.y }, Vector2{ 0.0f, 0.0f }));
 	}
@@ -94,6 +119,7 @@ void EnemyGun::HandleNoCollisions(float dt)
 
 void EnemyGun::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
 {
+	if (curState != State::EnemyGun_TakeDamage && curState != State::Explode) return;
 	//this code is critical for every moving object towards
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
 	if (coEvents.size() == 0) { HandleNoCollisions(dt); return; }

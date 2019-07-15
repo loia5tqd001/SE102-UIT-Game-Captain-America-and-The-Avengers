@@ -189,6 +189,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EnemyGun.cpp" />
     <ClCompile Include="EnemyGunBullet.cpp" />
+    <ClCompile Include="EnemyRocket.cpp" />
     <ClCompile Include="KeyCodeFonts.cpp" />
     <ClCompile Include="PittsburghScene.cpp" />
     <ClCompile Include="RedAlertScene.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Counter.h" />
     <ClInclude Include="EnemyGun.h" />
     <ClInclude Include="EnemyGunBullet.h" />
+    <ClInclude Include="EnemyRocket.h" />
     <ClInclude Include="KeyCodeFonts.h" />
     <ClInclude Include="PittsburghScene.h" />
     <ClInclude Include="RedAlertScene.h" />
