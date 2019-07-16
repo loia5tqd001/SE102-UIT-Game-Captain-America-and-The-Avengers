@@ -28,6 +28,6 @@ void EnemyGunBullet::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 void EnemyGunBullet::Initnx(int nx)
 {
-	this->nx = nx;
+	this->nx = (float) nx;
 }
 

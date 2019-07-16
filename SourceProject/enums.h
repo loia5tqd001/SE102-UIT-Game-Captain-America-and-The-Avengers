@@ -12,9 +12,10 @@ enum class TextureId
 	MapPittsburghDark           = 7,
 	MapPittsburghLight          = 8,
 	MapRedAlert                 = 9,
-	enemy                       = 10,
-	captain                     = 11,
-	explode                     = 12,
+	Captain                     = 10,
+	Enemies                     = 11,
+	Wizard                      = 12,
+	Dynamite                    = 13,
 	Count
 };
 
@@ -22,16 +23,16 @@ enum class SpriteId
 {
 	Invisible			            =  0,
 							           
-	EnemyGun_Walking		        =  1,
-	EnemyGun_Stand			        =  2,
-	EnemyGun_OnKnee			        =  3,
-	EnemyGun_TakeDamage		        =  4,
+	EnemyGun_Stand			        =  1,
+	EnemyGun_Walking		        =  2,
+	EnemyGun_TakeDamage		        =  3,
+	EnemyGun_Sitting                =  4,
 	EnemyGunBullet			        =  5,
 
-	EnemyRocket_Walking             =  6,
-	EnemyRocket_Stand               =  7,
-	EnemyRocket_OnKnee              =  8,
-	EnemyRocket_TakeDamage          =  9,
+	EnemyRocket_Stand               =  6,
+	EnemyRocket_Walking             =  7,
+	EnemyRocket_TakeDamage          =  8,
+	EnemyRocket_Sitting             =  9,
 	EnemyRocketBullet_Horizontal    = 10,
 	EnemyRocketBullet_Cross         = 11,
 
@@ -77,13 +78,13 @@ enum class State
 
 	EnemyGun_Walking,
 	EnemyGun_Stand,
-	EnemyGun_OnKnee,
+	EnemyGun_Sitting,
 	EnemyGun_TakeDamage,
 	EnemyGunBullet,
 
 	EnemyRocket_Walking,
 	EnemyRocket_Stand,
-	EnemyRocket_OnKnee,
+	EnemyRocket_Sitting,
 	EnemyRocket_TakeDamage,
 	EnemyRocketBullet_Horizontal,
 	EnemyRocketBullet_Cross,

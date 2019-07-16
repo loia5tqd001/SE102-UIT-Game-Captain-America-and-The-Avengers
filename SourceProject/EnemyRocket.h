@@ -18,11 +18,10 @@ private:
 public:
 	EnemyRocket(const Vector2& spawnPos, const Vector2& vel, Grid *grid);
 
-	UINT GetHeight() const;
 	RectF GetBBox() const override;
 	void SetState(State state) override;
 	void SpawnRocket(float cycle);
-	void OnKneeHeight(UINT oldHeight); // recalculate position when lowing down body (height changed)
+
 	void TakeDamage(UINT damage) override;
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 };

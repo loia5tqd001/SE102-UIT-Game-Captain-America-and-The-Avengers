@@ -28,6 +28,16 @@ RectF VisibleObject::GetBBox() const
 	return { pos, animationFrame.GetWidth(), animationFrame.GetHeight() };
 }
 
+int VisibleObject::GetWidth() const
+{
+	return (int) animations.at(curState).GetFrameSize().GetWidth();
+}
+
+int VisibleObject::GetHeight() const
+{
+	return (int) animations.at(curState).GetFrameSize().GetHeight();
+}
+
 void VisibleObject::Render() const
 {
 	assert(animations.count(curState) == 1);

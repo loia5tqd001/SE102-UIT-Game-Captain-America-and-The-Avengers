@@ -15,6 +15,8 @@ public:
 
 	State GetState() const override;
 	RectF GetBBox () const override;
+	virtual int GetWidth () const;
+	virtual int GetHeight() const;
 
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {}) override {}
 	void Render() const override;

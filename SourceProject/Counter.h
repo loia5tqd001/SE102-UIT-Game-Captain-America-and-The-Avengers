@@ -17,7 +17,7 @@ private:
 	}
 public:
 	Counter() = default;
-	bool CanExcuseCommand(float time, bool resetCounter)
+	bool CanExcuteCommand(float time, bool resetCounter)
 	{
 		if (resetCounter) timePass = 0;
 		Counting();
