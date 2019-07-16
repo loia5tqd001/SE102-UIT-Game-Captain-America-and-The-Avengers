@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Enemy.h"
+#include "Bullet.h"
 
 Grid::Grid(const Json::Value& root)
 {
@@ -146,6 +147,16 @@ void Grid::UpdateCells()
 			static Camera& cam = Camera::Instance();
 			const RectF oBbox = o->GetBBox();
 
+			if (!oBbox.IsIntersect( cam.GetBBox() ))
+			{
+				if (auto e = dynamic_cast<Enemy*>(o)) {
+					e->SetState(State::Destroyed);
+				}
+				else if (auto b = dynamic_cast<Bullet*>(o)) {
+					b->SetState(State::Destroyed);
+				}
+			}
+
 			if (o->GetState() == State::Destroyed) hasDestroyedObject = true;
 
 			// objects IsNone are either Destroyed or Die and won't be moving, so no need to care updating
@@ -153,7 +164,7 @@ void Grid::UpdateCells()
 			if (oBbox.IsNone()) return false; 
 
 			// Objects offscreen should be updated when totally left their old cell
-			if ( !oBbox.IsIntersect(cell.GetBBox()) )
+			if (!oBbox.IsIntersect( cell.GetBBox() ))
 			{
 				shouldBeUpdatedObjects.emplace(o);	
 				return true;

@@ -5,6 +5,7 @@ VisibleObject::VisibleObject(State initState, Vector2 pos, Vector2 vel, int nx) 
 	curState(initState), 
 	nx(nx) 
 {
+	assert(std::abs(nx) == 1.0f);
 	animations.emplace( State::Destroyed, Animation(SpriteId::Invisible) );
 }
 
