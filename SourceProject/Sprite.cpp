@@ -6,14 +6,14 @@ Sprite::Sprite(Sprite&& other) noexcept :
 {
 }
 
-Sprite::Sprite(LPDIRECT3DTEXTURE9 texture, const Rect& frame) :
-	texture(texture),
+Sprite::Sprite(TextureId texture, const Rect& frame) :
+	texture(Textures::Get(texture)),
 	frames(1, frame)
 {
 }
 
-Sprite::Sprite(LPDIRECT3DTEXTURE9 texture, const std::vector<Rect>& frames) :
-	texture(texture), 
+Sprite::Sprite(TextureId texture, const std::vector<Rect>& frames) :
+	texture(Textures::Get(texture)),
 	frames(frames) 
 {
 }

@@ -9,9 +9,6 @@ private:
 	static CSoundManager dsound;
 	static std::unordered_map<SoundId, CSound> soundDictionary;
 
-private:
-	static LPSTR GetWaveFileNameFromSoundId(SoundId id, const Json::Value& root);
-	static void  AddSoundToDict            (SoundId id, const Json::Value& root);
 	static bool  CheckHoldingVolume();
 
 public:

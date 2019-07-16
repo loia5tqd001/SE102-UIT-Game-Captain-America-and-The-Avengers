@@ -14,8 +14,8 @@ public:
 
 	static Json::Value GetRootJson(LPCSTR jsonPath);
 
-	virtual SoundId GetBgMusic() const { return SoundId::Count; } // invalid music
-	bool HasMusic() const { return GetBgMusic() != SoundId::Count; }
+	virtual SoundId GetBgMusic() const { return SoundId::Invalid; } 
+	bool HasMusic() const { return GetBgMusic() != SoundId::Invalid; }
 
 	void SetPause(bool ispause);
 	void TogglePause() { SetPause(!isPause); }

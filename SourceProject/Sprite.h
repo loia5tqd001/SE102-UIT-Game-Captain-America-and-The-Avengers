@@ -9,8 +9,8 @@ private:
 public:
 	Sprite(const Sprite&) = delete;
 	Sprite(Sprite&& other) noexcept; // for forcing move semantic
-	Sprite(LPDIRECT3DTEXTURE9 texture, const Rect& frame);
-	Sprite(LPDIRECT3DTEXTURE9 texture, const std::vector<Rect>& frames);
+	Sprite(TextureId texture, const Rect& frame);
+	Sprite(TextureId texture, const std::vector<Rect>& frames);
 
 	UINT GetNumberOfFrames() const { return (UINT)frames.size(); }
 	Rect GetFrameSize(UINT frameIndex, const Vector2& vtScale = { 1.0f, 1.0f }) const;

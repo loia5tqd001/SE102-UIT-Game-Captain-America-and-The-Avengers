@@ -33,44 +33,28 @@ void Textures::AddTexture(TextureId id, LPCSTR texturePath, D3DCOLOR transparent
 	textureDictionary.emplace(id, texture);
 }
 
-const auto & Textures::GetTextureInfoFromTextureId(TextureId id, const Json::Value & root)
-{
-	static auto matchTextureIdPred = [&id](const Json::Value& txt) { return txt[0].asUInt() == (UINT)id; };
-
-	const Json::Value& textures = root["textures"];
-	auto found = std::find_if(textures.begin(), textures.end(), matchTextureIdPred);
-	if (found == textures.end())
-	{
-		ThrowMyException("Can't find texture match with id of:", (UINT)id);
-	}
-	return *found;
-}
-
 // Learn more about jsoncpp: https://github.com/open-source-parsers/jsoncpp
-void Textures::AddTexture(TextureId id, const Json::Value& root)
-{
-	assert(textureDictionary.count(id) == 0);
-
-	const auto& textureInfo          = GetTextureInfoFromTextureId(id, root);
-	LPCSTR      texturePath          = textureInfo[1].asCString();
-	const auto& transparentColorJson = textureInfo[2];
-	D3DCOLOR    transparentColor;
-	if (transparentColorJson.isNumeric()) {
-		transparentColor = 0;
-	} else {
-		const UINT r = transparentColorJson[0].asUInt();
-		const UINT g = transparentColorJson[1].asUInt();
-		const UINT b = transparentColorJson[2].asUInt();
-		transparentColor = D3DCOLOR_XRGB(r, g, b);
-	}
-
-	AddTexture(id, texturePath, transparentColor);
-}
-
 void Textures::LoadResources(const Json::Value& root)
 {
-	for (UINT i = 0; i < (UINT)TextureId::Count; i++)
-		AddTexture( TextureId(i), root );
+	const auto& textures = root["textures"];
+	for (auto& texture : textures)
+	{
+		const auto textureId              = (TextureId)texture[0].asInt();
+		const auto texturePath            = texture[1].asCString();
+		const auto& transparentColorJson  = texture[2];
+
+		D3DCOLOR    transparentColor;
+		if (transparentColorJson.isNumeric()) {
+			transparentColor = 0;
+		} else {
+			const UINT r = transparentColorJson[0].asUInt();
+			const UINT g = transparentColorJson[1].asUInt();
+			const UINT b = transparentColorJson[2].asUInt();
+			transparentColor = D3DCOLOR_XRGB(r, g, b);
+		}
+
+		AddTexture(textureId, texturePath, transparentColor);
+	}
 }
 
 const LPDIRECT3DTEXTURE9 Textures::Get(TextureId id)

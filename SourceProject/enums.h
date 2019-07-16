@@ -16,7 +16,6 @@ enum class TextureId
 	Enemies                     = 11,
 	Wizard                      = 12,
 	Dynamite                    = 13,
-	Count
 };
 
 enum class SpriteId
@@ -37,11 +36,11 @@ enum class SpriteId
 	BulletEnemyRocket_Cross         = 11,
 
 	Explode                         = 12,
-	Count
 };
 
 enum class SoundId
 {
+	Invalid          = -1,
 	Greeting         =  0,
 	Cursor           =  1,
 	CaptainTheme     =  2,
@@ -62,13 +61,11 @@ enum class SoundId
 	HighJump         = 17,
 	Grounding        = 18,
 	Water            = 19,
-	Count
 };
 
 enum class ClassId
 {
 	Captain  = 0,
-	Count
 };
 
 enum class State
@@ -90,9 +87,7 @@ enum class State
 	BulletEnemyRocket_Cross,
 
 	Explode,
-
-	Count
-
+	
 };
 
 enum class Scene
