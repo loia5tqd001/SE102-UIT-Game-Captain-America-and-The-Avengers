@@ -3,8 +3,7 @@
 #include "Captain.h"
 #include "EnemyGunBullet.h"
 
-EnemyGun::EnemyGun(const Vector2 & spawnPos, const Vector2 & vel, Grid *grid) :
-	VisibleObject(State::EnemyGun_Stand, spawnPos, vel)
+EnemyGun::EnemyGun(const Vector2 & spawnPos, const Vector2 & vel, Grid *grid) : Enemy(State::EnemyGun_Stand, spawnPos, vel)
 {
 	animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.1f));
 	animations.emplace(State::EnemyGun_OnKnee, Animation(SpriteId::EnemyGun_OnKnee, 0.1f));
@@ -12,6 +11,7 @@ EnemyGun::EnemyGun(const Vector2 & spawnPos, const Vector2 & vel, Grid *grid) :
 	animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.1f));
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.1f));
 	this->grid = grid;
+	this->health = 1;
 }
 
 void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
@@ -77,17 +77,6 @@ void EnemyGun::SetState(State state)
 		break;
 	}
 }
-void EnemyGun::OnFlasing()
-{
-	static UINT  nFrameUnrendered = 0;
-	if (++nFrameUnrendered >= 10) {
-		shouldDrawImage = true;
-		nFrameUnrendered = 0;
-	}
-	else {
-		shouldDrawImage = false;
-	}
-}
 void EnemyGun::SpawnBullet(float cycle) 
 {
 	static Counter curCounter;
@@ -101,6 +90,12 @@ void EnemyGun::OnKneeHeight(UINT oldHeight)
 {
 	assert(oldHeight > GetHeight());
 	pos.y += oldHeight - GetHeight();
+}
+void EnemyGun::TakeDamage(UINT damage)
+{
+	assert(this->health > 0);
+	health--;
+	SetState(State::EnemyGun_TakeDamage);
 }
 UINT EnemyGun::GetHeight() const
 {

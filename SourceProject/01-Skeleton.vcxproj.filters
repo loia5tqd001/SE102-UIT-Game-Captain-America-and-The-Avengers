@@ -144,6 +144,13 @@
     <ClCompile Include="EnemyRocket.cpp">
       <Filter>Development\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Development\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyRocketBullet.cpp">
+      <Filter>Development\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -269,5 +276,12 @@
     <ClInclude Include="EnemyRocket.h">
       <Filter>Development\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Development\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyRocketBullet.h">
+      <Filter>Development\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBoss.h" />
   </ItemGroup>
 </Project>

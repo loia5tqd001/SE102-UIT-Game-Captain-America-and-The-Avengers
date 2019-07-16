@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "EnemyRocket.h"
 #include "Captain.h"
+#include "EnemyRocketBullet.h"
 
 
 EnemyRocket::EnemyRocket(const Vector2 & spawnPos, const Vector2 & vel, Grid * grid) :
-	VisibleObject(State::EnemyGun_Stand, spawnPos, vel)
+	Enemy(State::EnemyRocket_Stand, spawnPos, vel)
 {
 	this->grid = grid;
 	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.1f));
@@ -37,8 +38,7 @@ void EnemyRocket::SetState(State state)
 		OnKneeHeight(GetHeight());
 		break;
 	case State::EnemyGun_TakeDamage:
-		health--;
-		if (health == 0) //die
+		if (health <= 0) //die
 		{
 			vel.x = -nx * FALL_BACK;
 		}
@@ -56,24 +56,14 @@ void EnemyRocket::SetState(State state)
 
 void EnemyRocket::SpawnRocket(float cycle)
 {
+	static Counter curCounter;
 	if (curState == State::EnemyGun_TakeDamage) return;
-	if (counter.CanExcuseCommand(cycle, false))
+	if (curCounter.CanExcuseCommand(cycle, false))
 	{
-		//grid->SpawnObject(std::make_unique<EnemyRocketBullet>(Vector2{ pos.x, pos.y }, Vector2{ 0.0f, 0.0f }));
+		grid->SpawnObject(std::make_unique<EnemyRocketBullet>(Vector2{ pos.x, pos.y }, Vector2{ 0.0f, 0.0f }));
 	}
 }
 
-void EnemyRocket::OnFlasing()
-{
-	static UINT  nFrameUnrendered = 0;
-	if (++nFrameUnrendered >= 10) {
-		shouldDrawImage = true;
-		nFrameUnrendered = 0;
-	}
-	else {
-		shouldDrawImage = false;
-	}
-}
 
 UINT EnemyRocket::GetHeight() const
 {
@@ -84,6 +74,13 @@ void EnemyRocket::OnKneeHeight(UINT oldHeight)
 {
 	assert(oldHeight > GetHeight());
 	pos.y += oldHeight - GetHeight();
+}
+
+void EnemyRocket::TakeDamage(UINT damage)
+{
+	assert(health > 0);
+	health -= damage;
+	SetState(State::EnemyGun_TakeDamage);
 }
 
 void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
@@ -99,7 +96,7 @@ void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 	//counter
 	if (curState == State::EnemyGun_TakeDamage) {
 		static Counter takeDamageCounter;
-		OnFlasing();
+		Enemy::OnFlasing();
 		if (health > 0) {
 			animations.at(State::EnemyGun_TakeDamage).Update(dt);
 		}

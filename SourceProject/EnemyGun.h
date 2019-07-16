@@ -1,8 +1,9 @@
 #pragma once
 #include "Counter.h"
+#include "Enemy.h"
 
 class EnemyGun :
-	public VisibleObject
+	public Enemy
 {
 private:
 	static constexpr float WALKING_SPEED      =  100.0f;
@@ -10,10 +11,8 @@ private:
 	static constexpr float GRAVITY            = 1000.0f;
 	static constexpr float FALL_BACK	      = 1000.0f;
 
-	Grid* grid;
-	void OnFlasing();
-	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
-	void HandleNoCollisions(float dt);
+	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects) override;
+	void HandleNoCollisions(float dt) override;
 
 public:
 	EnemyGun(const Vector2& spawnPos, const Vector2& vel, Grid *grid);
@@ -24,7 +23,7 @@ public:
 
 	UINT GetHeight() const;
 	void OnKneeHeight(UINT oldHeight); // recalculate position when lowing down body (height changed)
-
+	void TakeDamage(UINT damage) override;
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 };
 
