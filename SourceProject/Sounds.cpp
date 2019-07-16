@@ -105,7 +105,11 @@ void Sounds::LoadResources(const Json::Value& root)
 void Sounds::PlayAt(SoundId id)
 {
 	assert(soundDictionary.count(id) == 1);
-	if (!isMute) soundDictionary.at(id).Play(0, 0, LinearToLogVol( liVolume ));
+	if (!isMute)
+	{
+		soundDictionary.at(id).Reset();
+		soundDictionary.at(id).Play(0, 0, LinearToLogVol( liVolume ));
+	}
 }
 
 void Sounds::PlayLoop(SoundId id)

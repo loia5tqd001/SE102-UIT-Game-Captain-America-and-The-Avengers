@@ -10,27 +10,27 @@
 	[ 6, "Resources\\Textures\\6. TileMapBossCharlestonDark.png"      , 0             ],
 	[ 7, "Resources\\Textures\\7. TileMapPittsburghDark.png"          , 0             ],
 	[ 8, "Resources\\Textures\\8. TileMapPittsburghLight.png"         , 0             ],
-    [ 9, "Resources\\Textures\\9. TileMapRedAlert.png"                , 0             ],
-    [10, "Resources\\Textures\\10.enemy.png"                          , [0  ,91 ,127] ],
+	[ 9, "Resources\\Textures\\9. TileMapRedAlert.png"                , 0             ],
+	[10, "Resources\\Textures\\10.enemy.png"                          , [0  ,91 ,127] ],
 	[11, "Resources\\Textures\\11.captain.png"                        , [0  ,166,81 ] ],
 	[12, "Resources\\Textures\\12.explode.png"                        , [0  ,166,81 ] ]
 ],
 
   "sprites": [
-    // spriteId[0] - textureId[1] - left[2] - top[3] - spriteWidth[4] - spriteHeight[5] - count[6] - padding[7]
-    [ 0, 0, 0, 0, 0, 0, 1, 0 ], // invisible
-    [ 1, 10, 248, 13, 24, 43, 1, 0 ], // enemygun-stand
-    [ 2, 10, 280, 16, 24, 40, 3, 8 ], // enemygun-walking
-    [ 3, 10, 184, 24, 24, 32, 1, 0 ], // enemygun-take-damage
-    [ 4, 10, 29, 240, 24, 27, 1, 0 ], // enemygun-on-knee
-    [ 5, 10, 169, 33, 6, 6, 1, 0 ], //EnemyGunBullet
-	[ 6, 10, 281, 66, 23, 46, 1, 0 ], // enemyrocket-stand
-    [ 7, 10, 281, 66, 23, 46, 3, 9 ], // enemyrocket-walking
-    [ 8, 10, 248, 81, 24, 31, 1, 0 ], // enemyrocket-take-damage
-    [ 9, 10, 216, 72, 24, 40, 1, 0 ], // enemyrocket-on-knee
-    [ 10, 10, 171, 74, 15, 7, 2, 7 ], //EnemyrocketBullet-Horizontal
-	[ 11, 10, 168, 96, 12, 13, 2, 13 ], //EnemyrocketBullet-Cross
-	[ 12, 12, 237, 266, 30, 28, 2, 2 ] //explode
+	// spriteId[0] - textureId[1] - left[2] - top[3] - spriteWidth[4] - spriteHeight[5] - count[6] - padding[7]
+	[           0,             0,        0,       0,               0,                0,         1,           0 ], // invisible
+	[           1,            10,      248,      13,              24,               43,         1,           0 ], // enemygun-stand
+	[           2,            10,      280,      16,              24,               40,         3,           8 ], // enemygun-walking
+	[           3,            10,      184,      24,              24,               32,         1,           0 ], // enemygun-take-damage
+	[           4,            10,       29,     240,              24,               27,         1,           0 ], // enemygun-on-knee
+	[           5,            10,      169,      33,               6,                6,         1,           0 ], //EnemyGunBullet
+	[           6,            10,      281,      66,              23,               46,         1,           0 ], // enemyrocket-stand
+	[           7,            10,      281,      66,              23,               46,         3,           9 ], // enemyrocket-walking
+	[           8,            10,      248,      81,              24,               31,         1,           0 ], // enemyrocket-take-damage
+	[           9,            10,      216,      72,              24,               40,         1,           0 ], // enemyrocket-on-knee
+	[          10,            10,      171,      74,              15,                7,         2,           7 ], //EnemyrocketBullet-Horizontal
+	[          11,            10,      168,      96,              12,               13,         2,          13 ], //EnemyrocketBullet-Cross
+	[          12,            12,      237,     266,              30,               28,         2,           2 ]  //explode
   ],
   
   "sounds": [
@@ -41,7 +41,20 @@
 	[ 3, "Resources\\Sounds\\3. Boss Battle.wav"],
 	[ 4, "Resources\\Sounds\\4. Red Alert.wav"],
 	[ 5, "Resources\\Sounds\\5. Ambush.wav"],
-	[ 6, "Resources\\Sounds\\6. Death.wav"]
+	[ 6, "Resources\\Sounds\\6. Death.wav"],
+	[ 7, "Resources\\Sounds\\7.. Item Key Krystal.wav"],
+	[ 8, "Resources\\Sounds\\8.. Item Energy.wav"],
+	[ 9, "Resources\\Sounds\\9.. Item Normal.wav"],
+	[10, "Resources\\Sounds\\10.. Bullet Normal.wav"],
+	[11, "Resources\\Sounds\\11.. Bullet Lazer.wav"],
+	[12, "Resources\\Sounds\\12.. Explosion.wav"],
+	[13, "Resources\\Sounds\\13.. Shield Throw.wav"],
+	[14, "Resources\\Sounds\\14.. Shield Collide.wav"],
+	[15, "Resources\\Sounds\\15.. Punch.wav"],
+	[16, "Resources\\Sounds\\16.. Tackle.wav"],
+	[17, "Resources\\Sounds\\17.. HighJump.wav"],
+	[18, "Resources\\Sounds\\18.. Grounding.wav"],
+	[19, "Resources\\Sounds\\19.. Water.wav"]
   ],	
  
    "keycodefonts": [ // keyCode[0] - left[1] - top[2] - right[3] - bottom[4]

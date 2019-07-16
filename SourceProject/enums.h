@@ -20,32 +20,47 @@ enum class TextureId
 
 enum class SpriteId
 {
-	Invisible			    = 0,
+	Invisible			            =  0,
+							           
+	EnemyGun_Walking		        =  1,
+	EnemyGun_Stand			        =  2,
+	EnemyGun_OnKnee			        =  3,
+	EnemyGun_TakeDamage		        =  4,
+	EnemyGunBullet			        =  5,
 
-	EnemyGun_Walking		= 1,
-	EnemyGun_Stand			= 2,
-	EnemyGun_OnKnee			= 3,
-	EnemyGun_TakeDamage		= 4,
-	EnemyGunBullet			= 5,
-	EnemyRocket_Walking     = 6,
-	EnemyRocket_Stand       = 7,
-	EnemyRocket_OnKnee      = 8,
-	EnemyRocket_TakeDamage = 9,
-	EnemyRocketBullet_Horizontal = 10,
-	EnemyRocketBullet_Cross = 11,
-	Explode =12,
+	EnemyRocket_Walking             =  6,
+	EnemyRocket_Stand               =  7,
+	EnemyRocket_OnKnee              =  8,
+	EnemyRocket_TakeDamage          =  9,
+	EnemyRocketBullet_Horizontal    = 10,
+	EnemyRocketBullet_Cross         = 11,
+
+	Explode                         = 12,
 	Count
 };
 
 enum class SoundId
 {
-	Greeting       = 0,
-	Cursor         = 1,
-	CaptainTheme   = 2,
-	BossBattle     = 3,
-	RedAlert       = 4,
-	Ambush         = 5,
-	Death          = 6,
+	Greeting         =  0,
+	Cursor           =  1,
+	CaptainTheme     =  2,
+	BossBattle       =  3,
+	RedAlert         =  4,
+	Ambush           =  5,
+	Death            =  6,
+	ItemKrystal      =  7,
+	ItemEnergy       =  8,
+	ItemNormal       =  9,
+	BulletNormal     = 10,
+	BulletLazer      = 11,
+	Explosion        = 12,
+	ShieldThrow      = 13,
+	ShieldCollide    = 14,
+	Punch            = 15,
+	Tackle           = 16,
+	HighJump         = 17,
+	Grounding        = 18,
+	Water            = 19,
 	Count
 };
 
@@ -65,16 +80,17 @@ enum class State
 	EnemyGun_OnKnee,
 	EnemyGun_TakeDamage,
 	EnemyGunBullet,
+
 	EnemyRocket_Walking,
 	EnemyRocket_Stand,
 	EnemyRocket_OnKnee,
 	EnemyRocket_TakeDamage,
 	EnemyRocketBullet_Horizontal,
 	EnemyRocketBullet_Cross,
+
 	Explode,
 
 	Count
-
 
 };
 
