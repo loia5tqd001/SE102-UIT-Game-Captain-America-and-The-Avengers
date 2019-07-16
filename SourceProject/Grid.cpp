@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Enemy.h"
 
 Grid::Grid(const Json::Value& root)
 {
@@ -135,42 +136,42 @@ void Grid::UpdateCells()
 	bool hasDestroyedObject = false;
 
 	for (UINT x = viewPortArea.xs; x <= viewPortArea.xe; x++)
-		for (UINT y = viewPortArea.ys; y <= viewPortArea.ye; y++)
+	for (UINT y = viewPortArea.ys; y <= viewPortArea.ye; y++)
+	{
+		Cell& cell = cells[x * height + y];
+		if (cell.movingObjects.size() == 0) continue;
+
+		Utils::RemoveIf(cell.movingObjects, [&](auto& o)
 		{
-			Cell& cell = cells[x * height + y];
-			if (cell.movingObjects.size() == 0) continue;
+			static Camera& cam = Camera::Instance();
+			const RectF oBbox = o->GetBBox();
 
-			Utils::RemoveIf(cell.movingObjects, [&](auto& o)
+			if (o->GetState() == State::Destroyed) hasDestroyedObject = true;
+
+			// objects IsNone are either Destroyed or Die and won't be moving, so no need to care updating
+			// NOTE: but if game has objects flying around after died we should rewrite this
+			if (oBbox.IsNone()) return false; 
+
+			// Objects offscreen should be updated when totally left their old cell
+			if ( !oBbox.IsIntersect(cell.GetBBox()) )
 			{
-				static Camera& cam = Camera::Instance();
-				const RectF oBbox = o->GetBBox();
+				shouldBeUpdatedObjects.emplace(o);	
+				return true;
+			}
 
-				if (o->GetState() == State::Destroyed) hasDestroyedObject = true;
-
-				// objects IsNone are either Destroyed or Die and won't be moving, so no need to care updating
-				// NOTE: but if game has objects flying around after died we should rewrite this
-				if (oBbox.IsNone()) return false; 
-
-				// Objects offscreen should be updated when totally left their old cell
-				if ( !oBbox.IsIntersect(cell.GetBBox()) )
-				{
-					shouldBeUpdatedObjects.emplace(o);	
-					return true;
-				}
-
-				return false;
-			});
-		}
+			return false;
+		});
+	}
 
 	for (auto& obj : shouldBeUpdatedObjects)
 	{
 		Area area = CalcCollidableArea( obj->GetBBox() );
 
 		for (UINT x = area.xs; x <= area.xe; x++)
-			for (UINT y = area.ys; y <= area.ye; y++)
-			{
-				cells[x * height + y].movingObjects.emplace( obj );
-			}
+		for (UINT y = area.ys; y <= area.ye; y++)
+		{
+			cells[x * height + y].movingObjects.emplace( obj );
+		}
 	}
 
 	if (hasDestroyedObject) RemoveDestroyedObjects();

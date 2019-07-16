@@ -43,6 +43,12 @@
     <Filter Include="Framework\Resource Managers">
       <UniqueIdentifier>{c7481584-ff8b-4a74-83c5-b5775ef315b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Development\Objects\Enemies">
+      <UniqueIdentifier>{f1762551-4c01-42fd-b537-dde1d2937676}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Objects\Bullets">
+      <UniqueIdentifier>{edd10a0f-29fe-409c-b332-b60c3f9f1267}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -136,21 +142,17 @@
       <Filter>Development\Scenes\Playable Scenes</Filter>
     </ClCompile>
     <ClCompile Include="EnemyGun.cpp">
-      <Filter>Development\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyGunBullet.cpp">
-      <Filter>Development\Objects</Filter>
+      <Filter>Development\Objects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="EnemyRocket.cpp">
-      <Filter>Development\Objects</Filter>
+      <Filter>Development\Objects\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Development\Objects</Filter>
+    <ClCompile Include="BulletEnemyGun.cpp">
+      <Filter>Development\Objects\Bullets</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyRocketBullet.cpp">
-      <Filter>Development\Objects</Filter>
+    <ClCompile Include="BulletEnemyRocket.cpp">
+      <Filter>Development\Objects\Bullets</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBoss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -264,24 +266,26 @@
     <ClInclude Include="RedAlertScene.h">
       <Filter>Development\Scenes\Playable Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyGun.h">
-      <Filter>Development\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Counter.h">
       <Filter>Framework\_MyUtils</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyGunBullet.h">
-      <Filter>Development\Objects</Filter>
+    <ClInclude Include="Enemy.h">
+      <Filter>Development\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGun.h">
+      <Filter>Development\Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="EnemyRocket.h">
-      <Filter>Development\Objects</Filter>
+      <Filter>Development\Objects\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Development\Objects</Filter>
+    <ClInclude Include="BulletEnemyRocket.h">
+      <Filter>Development\Objects\Bullets</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyRocketBullet.h">
-      <Filter>Development\Objects</Filter>
+    <ClInclude Include="Bullet.h">
+      <Filter>Development\Objects\Bullets</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBoss.h" />
+    <ClInclude Include="BulletEnemyGun.h">
+      <Filter>Development\Objects\Bullets</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

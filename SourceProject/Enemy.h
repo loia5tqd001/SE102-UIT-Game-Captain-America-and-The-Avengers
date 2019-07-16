@@ -1,17 +1,18 @@
 #pragma once
-class Enemy :
-	public VisibleObject
+
+class Enemy : public VisibleObject
 {
 protected:
-	UINT health;
+	int health;
 	Grid* grid;
-	void OnFlasing();
-	virtual void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)=0;
-	virtual void HandleNoCollisions(float dt)=0;
 
 public:
-	Enemy(State state, Vector2 spawnPos, Vector2 vel);
+	Enemy(State state, int health, Vector2 spawnPos, Vector2 vel, int nx, Grid* grid) :
+		VisibleObject(state, spawnPos, vel, nx),
+		health(health),
+		grid(grid)
+	{}
 
-	virtual void TakeDamage(UINT damage)=0;
+	virtual void TakeDamage(int damage) = 0;
 };
 

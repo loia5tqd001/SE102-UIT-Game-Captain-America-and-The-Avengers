@@ -1,6 +1,7 @@
 #pragma once
-class EnemyRocketBullet :
-	public VisibleObject
+#include "Bullet.h"
+
+class BulletEnemyRocket : public Bullet
 {
 private:
 	static constexpr float WALKING_SPEED = 100.0f;
@@ -12,7 +13,7 @@ private:
 	void HandleNoCollisions(float dt) override;*/
 
 public:
-	EnemyRocketBullet(const Vector2& spawnPos, const Vector2& vel);
+	BulletEnemyRocket(const Vector2& spawnPos, const Vector2& vel, int nx);
 	//EnemyGun(const Vector2& spawnPos, const Vector2& vel, Grid *grid);
 
 	//RectF GetBBox() const override;

@@ -7,7 +7,7 @@ std::unique_ptr<Font> DebugDraw::fontDraw;
 void DebugDraw::InitDefaultFont()
 {
 	fontDraw = std::make_unique<Font>(12, "Arial");
-	isInDebugMode = true;
+	isInDebugMode = false;
 	isDrawCrt = false;
 }
 

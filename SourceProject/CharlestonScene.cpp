@@ -23,7 +23,7 @@ void CharlestonScene::Update(float dt)
 	cam.ClampWithin( map->GetWorldBoundary() );
 }
 #include "EnemyGun.h"
-#include "EnemyGunBullet.h"
+#include "BulletEnemyGun.h"
 #include "EnemyRocket.h"
 
 void CharlestonScene::Draw()
@@ -33,32 +33,32 @@ void CharlestonScene::Draw()
 
 	if (1) // test enemyGun
 	{
-		static EnemyGun enemyGun( { 100.0f, 100.0f }, {}, nullptr );
+		static EnemyGun enemyGun( { 100.0f, 100.0f }, {}, 1, nullptr );
 		std::vector<GameObject*> co;
 		enemyGun.Update(GameTimer::Dt(), co);
 
 		if (wnd.IsKeyPressed('1')) enemyGun.SetState(State::EnemyGun_Stand);
 		if (wnd.IsKeyPressed('2')) enemyGun.SetState(State::EnemyGun_Sitting);
-		if (wnd.IsKeyPressed('3')) enemyGun.SetState(State::EnemyGun_TakeDamage);
+		if (wnd.IsKeyPressed('3')) enemyGun.TakeDamage(1);
 		if (wnd.IsKeyPressed('4')) enemyGun.SetState(State::EnemyGun_Walking);
 
 		enemyGun.Render();
 	}
 
-	if (1) // test enemyGunBullet
+	if (1) // test BulletEnemyGun
 	{
-		static EnemyGunBullet enemyGunBullet( { 100.0f, 150.0f }, {} );
+		static BulletEnemyGun BulletEnemyGun( { 100.0f, 150.0f },  {}, 1 );
 		std::vector<GameObject*> co;
-		enemyGunBullet.Update(GameTimer::Dt(), co);
+		BulletEnemyGun.Update(GameTimer::Dt(), co);
 
-		if (wnd.IsKeyPressed('5')) enemyGunBullet.SetState(State::EnemyGunBullet);
+		if (wnd.IsKeyPressed('5')) BulletEnemyGun.SetState(State::BulletEnemyGun);
 
-		enemyGunBullet.Render();
+		BulletEnemyGun.Render();
 	}
 
 	if (1) // test EnemyRocket
 	{
-		static EnemyRocket enemyRocket( { 150.0f, 150.0f }, {}, nullptr );
+		static EnemyRocket enemyRocket( { 150.0f, 150.0f }, {}, 1, nullptr );
 		std::vector<GameObject*> co;
 		enemyRocket.Update(GameTimer::Dt(), co);
 

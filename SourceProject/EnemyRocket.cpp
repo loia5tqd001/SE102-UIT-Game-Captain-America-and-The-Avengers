@@ -1,24 +1,17 @@
 #include "pch.h"
 #include "EnemyRocket.h"
 #include "Captain.h"
-#include "EnemyRocketBullet.h"
+#include "BulletEnemyRocket.h"
 
 
-EnemyRocket::EnemyRocket(const Vector2 & spawnPos, const Vector2 & vel, Grid * grid) :
-	Enemy(State::EnemyRocket_Stand, spawnPos, vel)
+EnemyRocket::EnemyRocket(const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid * grid) :
+	Enemy(State::EnemyRocket_Stand, 3, spawnPos, vel, nx, grid)
 {
-	this->grid = grid;
 	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.1f));
 	animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.1f));
 	animations.emplace(State::EnemyRocket_TakeDamage, Animation(SpriteId::EnemyRocket_TakeDamage, 0.1f));
 	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.1f));
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.1f));
-}
-
-RectF EnemyRocket::GetBBox() const
-{
-	if (curState == State::EnemyGun_TakeDamage) return {};
-	return VisibleObject::GetBBox();
 }
 
 void EnemyRocket::SetState(State state)
@@ -61,27 +54,19 @@ void EnemyRocket::SpawnRocket(float cycle)
 	if (curState == State::EnemyGun_TakeDamage) return;
 	if (curCounter.CanExcuteCommand(cycle, false))
 	{
-		grid->SpawnObject(std::make_unique<EnemyRocketBullet>( pos, Vector2{ 0.0f, 0.0f }));
+		grid->SpawnObject(std::make_unique<BulletEnemyRocket>( pos, Vector2{ 100.0f, 0.0f }, nx));
 	}
 }
 
-void EnemyRocket::TakeDamage(UINT damage)
+void EnemyRocket::TakeDamage(int damage)
 {
-	assert(health > 0);
+	assert(damage > 0);
 	health -= damage;
 	SetState(State::EnemyGun_TakeDamage);
 }
 
 void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (curState == State::Destroyed) return;
-
-	// regular updates
-	if (curState != State::EnemyRocket_TakeDamage && curState != State::Explode) pos.y += vel.y * GRAVITY; //enemy not falling down when die
-
-	// handle collisions
-	HandleCollisions(dt, coObjects);
-
 	//counter
 	if (curState == State::EnemyGun_TakeDamage) {
 		static Counter takeDamageCounter;
@@ -112,53 +97,4 @@ void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 	// update animations
 	animations.at(curState).Update(dt);
 
-	Utils::Clamp(pos.x, 0.0f, (float)Window::Instance().GetWidth(), [this]()
-	{
-		curState = State::Destroyed;
-	});
-}
-
-void EnemyRocket::HandleNoCollisions(float dt)
-{
-	pos.x += vel.x * dt;
-	pos.y += vel.y * dt;
-}
-
-void EnemyRocket::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
-{
-	if (curState != State::EnemyGun_TakeDamage && curState != State::Explode) return;
-	//this code is critical for every moving object towards
-	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
-	if (coEvents.size() == 0) { HandleNoCollisions(dt); return; }
-
-	float min_tx, min_ty, nx, ny;
-	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
-
-	// NOTE: HACK: not perfect handler but we're fine
-	if (coEvents.size() == 0) return; // the case object's going toward the corner
-
-	pos.x += min_tx * vel.x * dt;
-	pos.y += min_ty * vel.y * dt;
-
-	if (nx != 0.0f) vel.x = 0.0f;
-	if (ny != 0.0f) { vel.y = 0.0f; }
-
-	//the default will cause problem, enemy can not run throught captain
-	//handle (only 1 captain, maybe this code is not working i should change it later)
-	for (UINT i = 0; i < coEvents.size(); i++)
-	{
-		const CollisionEvent& e = coEvents[i];
-
-		if (auto captain = dynamic_cast<Captain*>(e.pCoObj))
-		{
-			if (nx > 0 && e.nx > 0) //go right
-			{
-				vel.x = WALKING_SPEED;
-			}
-			else if (nx < 0 && e.nx < 0)
-			{
-				vel.x = -WALKING_SPEED;
-			}
-		}
-	}
 }

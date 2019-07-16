@@ -15,10 +15,6 @@
 	[11, "Resources\\Textures\\11. Enemies.png"                       , [  0, 91,127] ],
 	[12, "Resources\\Textures\\12. Wizard.png"                        , [  0,166, 81] ],
 	[13, "Resources\\Textures\\13. Dynamite.png"                      , [  0, 91,127] ]
-	
-	//[10, "Resources\\Textures\\10.enemy.png"                          , [0  ,91 ,127] ],
-	//[11, "Resources\\Textures\\11.captain.png"                        , [0  ,166,81 ] ],
-	//[12, "Resources\\Textures\\12.explode.png"  
 ],
 
   "sprites": [
@@ -35,7 +31,7 @@
 	[           9,            11,      248,      81,              24,               31,         1,           0 ], // enemyrocket-sitting
 	[          10,            11,      171,      74,              15,                7,         2,           8 ], // enemyrocketBullet-Horizontal
 	[          11,            11,      168,      96,              12,               13,         2,          12 ], // enemyrocketBullet-Cross
-	[          12,            10,      237,     266,              30,               28,         2,           2 ]  // explode
+	[          12,            10,      245,     266,              30,               28,         2,           2 ]  // explode
   ],
   
   "sounds": [

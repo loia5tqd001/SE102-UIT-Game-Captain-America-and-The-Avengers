@@ -183,16 +183,14 @@
     <ClCompile Include="AbstractScene.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="BossCharlestonScene.cpp" />
+    <ClCompile Include="BulletEnemyGun.cpp" />
+    <ClCompile Include="BulletEnemyRocket.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Captain.cpp" />
     <ClCompile Include="CharlestonScene.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyBoss.cpp" />
     <ClCompile Include="EnemyGun.cpp" />
-    <ClCompile Include="EnemyGunBullet.cpp" />
     <ClCompile Include="EnemyRocket.cpp" />
-    <ClCompile Include="EnemyRocketBullet.cpp" />
     <ClCompile Include="KeyCodeFonts.cpp" />
     <ClCompile Include="PittsburghScene.cpp" />
     <ClCompile Include="RedAlertScene.cpp" />
@@ -227,6 +225,9 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="BossCharlestonScene.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletEnemyGun.h" />
+    <ClInclude Include="BulletEnemyRocket.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Captain.h" />
     <ClInclude Include="CharlestonScene.h" />
@@ -234,11 +235,8 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="Counter.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyBoss.h" />
     <ClInclude Include="EnemyGun.h" />
-    <ClInclude Include="EnemyGunBullet.h" />
     <ClInclude Include="EnemyRocket.h" />
-    <ClInclude Include="EnemyRocketBullet.h" />
     <ClInclude Include="KeyCodeFonts.h" />
     <ClInclude Include="PittsburghScene.h" />
     <ClInclude Include="RedAlertScene.h" />
