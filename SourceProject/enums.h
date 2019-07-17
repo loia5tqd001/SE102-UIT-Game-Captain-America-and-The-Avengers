@@ -36,6 +36,14 @@ enum class SpriteId
 	BulletEnemyRocket_Cross         = 11,
 
 	Explode                         = 12,
+
+	ItemSmallPowerStone             = 13,
+	ItemBigPowerStone               = 14,
+	ItemFivePointItem               = 15,
+	ItemSmallEnergy                 = 16,
+	ItemBigEnergy                   = 17,
+	ItemKeyKrystal                  = 18,
+	ItemExitSign                    = 19
 };
 
 enum class SoundId
@@ -88,6 +96,8 @@ enum class State
 
 	Explode,
 	
+	ItemFalling,
+	ItemNotMoving
 };
 
 enum class Scene

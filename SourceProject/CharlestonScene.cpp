@@ -25,7 +25,9 @@ void CharlestonScene::Update(float dt)
 #include "EnemyGun.h"
 #include "BulletEnemyGun.h"
 #include "EnemyRocket.h"
-
+#include"SmallPowerStone.h"
+#include"BigPowerStone.h"
+#include"FivePointItem.h"
 void CharlestonScene::Draw()
 {
 	static auto& wnd = Window::Instance();
@@ -69,6 +71,27 @@ void CharlestonScene::Draw()
 
 		enemyRocket.Render();
 	}
+
+	//Test PowerStone
+	if (true)
+	{
+		static FivePointItem stone(Vector2(0, 0), 100);
+		std::vector<GameObject*> co;
+		stone.Update(GameTimer::Dt(), co);
+
+		if (wnd.IsKeyPressed('A'))
+		{
+			stone.Fall();
+		}
+
+		if (wnd.IsKeyPressed('Z'))
+		{
+			stone.Collect();
+		}
+		
+		stone.Render();
+	}
+
 
 	if (wnd.IsKeyPressed(VK_LEFT))
 		cam.MoveBy( { -5.0f, 0.0f });

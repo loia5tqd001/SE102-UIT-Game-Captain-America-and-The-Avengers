@@ -159,6 +159,11 @@
     <ClCompile Include="Item.cpp">
       <Filter>Development\Objects\Items</Filter>
     </ClCompile>
+    <ClCompile Include="SmallPowerStone.cpp">
+      <Filter>Development\Objects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="BigPowerStone.cpp" />
+    <ClCompile Include="FivePointItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -296,5 +301,10 @@
     <ClInclude Include="Item.h">
       <Filter>Development\Objects\Items</Filter>
     </ClInclude>
+    <ClInclude Include="SmallPowerStone.h">
+      <Filter>Development\Objects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="BigPowerStone.h" />
+    <ClInclude Include="FivePointItem.h" />
   </ItemGroup>
 </Project>

@@ -182,6 +182,7 @@
     </ClCompile>
     <ClCompile Include="AbstractScene.cpp" />
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BigPowerStone.cpp" />
     <ClCompile Include="BossCharlestonScene.cpp" />
     <ClCompile Include="BulletEnemyGun.cpp" />
     <ClCompile Include="BulletEnemyRocket.cpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EnemyGun.cpp" />
     <ClCompile Include="EnemyRocket.cpp" />
+    <ClCompile Include="FivePointItem.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="KeyCodeFonts.cpp" />
     <ClCompile Include="PittsburghScene.cpp" />
@@ -215,6 +217,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SmallPowerStone.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Sprites.cpp" />
@@ -225,6 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BigPowerStone.h" />
     <ClInclude Include="BossCharlestonScene.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletEnemyGun.h" />
@@ -238,6 +242,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyGun.h" />
     <ClInclude Include="EnemyRocket.h" />
+    <ClInclude Include="FivePointItem.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyCodeFonts.h" />
     <ClInclude Include="PittsburghScene.h" />
@@ -254,6 +259,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="SmallPowerStone.h" />
     <ClInclude Include="Sounds.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VisibleObject.h" />
