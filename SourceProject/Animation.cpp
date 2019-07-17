@@ -13,8 +13,6 @@ Animation::Animation(SpriteId spriteId, float holdTime) :
 
 void Animation::Update(float dt)
 {
-	if (nFrames == 1) return;
-
 	holdingTime += dt;
 	while (holdingTime >= holdTime)
 	{
@@ -38,8 +36,7 @@ bool Animation::IsDoneCycle()
 	if (!doneCycle) return false;
 
 	else doneCycle = false, curFrame = 0u, holdingTime = 0.0f;
-	return true;
-	
+	return true;	
 }
 
 Rect Animation::GetFrameSize(const Vector2 & vtScale) const

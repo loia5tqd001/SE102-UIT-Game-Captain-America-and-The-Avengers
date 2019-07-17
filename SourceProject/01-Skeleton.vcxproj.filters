@@ -166,6 +166,9 @@
     <ClCompile Include="FivePointItem.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Capsule.cpp" />
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Development\Objects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

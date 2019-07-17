@@ -9,8 +9,7 @@ private:
 	static constexpr float JUMP_SPEED         =  50.0f;
 	static constexpr float FALL_BACK	      =   50.0f;
 
-	float timeTakenDamaged = 0.0f;
-	float timeExploding = 0.0f;
+
 	float timeSpawnBullet;
 
 
@@ -20,7 +19,6 @@ public:
 	void SetState(State state) override;
 	void SpawnBullet(float cycle);
 
-	void TakeDamage(int damage) override;
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 };
 

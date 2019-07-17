@@ -52,8 +52,6 @@ void Grid::LoadObjects(const Json::Value& grid)
 
 GameObject* Grid::SpawnObject(std::unique_ptr<GameObject> obj, bool isMoving)
 {
-    RectF bboxx;
-	bboxx = obj->GetBBox();
 	Area area = CalcCollidableArea( obj->GetBBox() );
 
 	for (UINT x = area.xs; x <= area.xe; x++)

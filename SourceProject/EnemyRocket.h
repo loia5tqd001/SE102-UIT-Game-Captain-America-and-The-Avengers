@@ -10,8 +10,6 @@ private:
 	static constexpr float GRAVITY = 50.0f;
 	static constexpr float FALL_BACK = 50.0f;
 
-	float timeTakenDamaged = 0.0f;
-	float timeExploding = 0.0f;
 	float timeSpawnBullet;
 public:
 	EnemyRocket(const Vector2& spawnPos, const Vector2& vel, int nx, Grid *grid);
@@ -19,7 +17,6 @@ public:
 	void SetState(State state) override;
 	void SpawnRocket(float cycle);
 
-	void TakeDamage(int damage) override;
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 };
 

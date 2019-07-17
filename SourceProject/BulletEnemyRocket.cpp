@@ -2,12 +2,11 @@
 #include "BulletEnemyRocket.h"
 
 BulletEnemyRocket::BulletEnemyRocket(int nx, int type, const Vector2 & spawnPos, Vector2 vel) :
-	Bullet(State::BulletEnemyGun, 1, spawnPos, vel, nx)
+	Bullet(State::BulletEnemyRocket_Horizontal, 1, spawnPos, vel, nx),
+	type(type)
 {
 	animations.emplace(State::BulletEnemyRocket_Cross, Animation(SpriteId::BulletEnemyRocket_Cross, 0.1f));
 	animations.emplace(State::BulletEnemyRocket_Horizontal, Animation(SpriteId::BulletEnemyRocket_Horizontal, 0.1f));
-	this->SetState(State::BulletEnemyRocket_Horizontal);
-	this->type = type;
 }
 void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 {

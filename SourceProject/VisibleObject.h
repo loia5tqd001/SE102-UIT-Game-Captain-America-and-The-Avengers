@@ -11,7 +11,7 @@ protected:
 	bool  isFlashing = false;
 	float timePassed;
 	UINT  nFrameUnrendered;
-	void  OnFlasing(std::optional<bool> setFlashing = {});
+	void  OnFlashing(std::optional<bool> setFlashing = {});
 
 public:
 	VisibleObject(State initState, Vector2 pos, Vector2 vel = { 0.0f, 0.0f }, int nx = 1);

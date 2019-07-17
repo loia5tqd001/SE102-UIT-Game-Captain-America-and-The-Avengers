@@ -15,7 +15,7 @@ void VisibleObject::FlipHorizontally()
 	nx = -nx;
 }
 
-void VisibleObject::OnFlasing(std::optional<bool> setFlashing)
+void VisibleObject::OnFlashing(std::optional<bool> setFlashing)
 {
 	if (setFlashing.has_value()) {
 		isFlashing = setFlashing.value();
@@ -84,5 +84,7 @@ void VisibleObject::Render() const
 void VisibleObject::SetState(State state)
 {
 	assert(animations.count(state) == 1); // make sure the state already has a corresponding animation 
+	const auto oldHeight = GetHeight();
 	curState = state;
+	pos.y += oldHeight - GetHeight();
 }

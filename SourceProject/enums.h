@@ -24,13 +24,13 @@ enum class SpriteId
 							           
 	EnemyGun_Stand			        =  1,
 	EnemyGun_Walking		        =  2,
-	EnemyGun_TakeDamage		        =  3,
+	EnemyGun_BeforeExplode          =  3,
 	EnemyGun_Sitting                =  4,
 	BulletEnemyGun			        =  5,
 
 	EnemyRocket_Stand               =  6,
 	EnemyRocket_Walking             =  7,
-	EnemyRocket_TakeDamage          =  8,
+	EnemyRocket_BeforeExplode       =  8,
 	EnemyRocket_Sitting             =  9,
 	BulletEnemyRocket_Horizontal    = 10,
 	BulletEnemyRocket_Cross         = 11,
@@ -86,13 +86,13 @@ enum class State
 	EnemyGun_Walking,
 	EnemyGun_Stand,
 	EnemyGun_Sitting,
-	EnemyGun_TakeDamage,
+	EnemyGun_BeforeExplode,
 	BulletEnemyGun,
 
 	EnemyRocket_Walking,
 	EnemyRocket_Stand,
 	EnemyRocket_Sitting,
-	EnemyRocket_TakeDamage,
+	EnemyRocket_BeforeExplode,
 	BulletEnemyRocket_Horizontal,
 	BulletEnemyRocket_Cross,
 
