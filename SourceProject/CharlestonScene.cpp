@@ -87,25 +87,22 @@ void CharlestonScene::Draw()
 		enemyRocket.Render();
 	}
 
-	
-	//Test Capsule
-	//if (1)
-	//{
-	//	static Capsule capsule(Vector2(0, 0));
-	//	std::vector<GameObject*> co;
-	//	capsule.Update(GameTimer::Dt(), co);
+	// Test Capsule, NOTE: Can't test because there's not grid yet
+	if (1)
+	{
+		static Capsule capsule( { 0.0f, 10.0f}, SpriteId::ItemKeyKrystal, 60.0f, nullptr);
+		if (wnd.IsKeyPressed(VK_NUMPAD9)) capsule.BeingHit();
+		capsule.Update( GameTimer::Dt() );
+		capsule.Render();
+	}
 
-	//	if (wnd.IsKeyPressed('C'))
-	//	{
-	//		capsule.Open();
-	//	}
-
-	//	capsule.Render();
-	//}
+	Sprites::Get( SpriteId::CaptainHealth ).Draw( { 200.0f, 0.0f }, 0);
+	Sprites::Get( SpriteId::ExitSign ).Draw( { 200.0f, 20.0f }, 0);
 
 	//Test Items
 	if (1)
 	{
+
 		static std::unique_ptr<Item> item = std::make_unique<Item> ( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemKeyKrystal );
 		
 		if (wnd.IsKeyPressed(VK_NUMPAD0)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemSmallPowerStone );

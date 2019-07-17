@@ -46,6 +46,9 @@
 
 	[         100,            10,      357,      11,              22,               45,         1,            0],	//Captain_Standing,
 	[         101,            10,      228,      13,              24,               43,         4,            8]	//Captain_Walking,
+	[          21,            10,      224,     308,               8,                8,         1,            0], // CaptainHealth
+	[          22,            10,      336,     304,              16,               16,         1,            0], // CapsuleIdle
+	[          23,            10,      336,     304,              16,               16,         2,            8]  // CapsuleOpenning
   ],
   
   "sounds": [

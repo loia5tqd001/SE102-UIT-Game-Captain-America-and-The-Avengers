@@ -73,7 +73,7 @@ void Sounds::LoadResources(const Json::Value& root)
 		const auto& strWaveFileName = (LPSTR)sound[1].asCString();
 
 		CSound* waveSound;
-		if (dsound.Create(&waveSound, strWaveFileName, DSBCAPS_CTRLVOLUME | DSBCAPS_GLOBALFOCUS) != S_OK)
+		if (dsound.Create(&waveSound, strWaveFileName, DSBCAPS_CTRLVOLUME) != S_OK)
 		{
 			ThrowMyException("Create CSound failed!");
 		}
