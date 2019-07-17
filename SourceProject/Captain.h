@@ -11,8 +11,11 @@ private:
 public:
 	Captain(const Vector2 & spawnPos);
 
+	Vector2 GetPos() { return pos; };
+	int GetNx() { return nx; };
 	void OnKeyDown(BYTE keyCode);
 	void SetState(State state) override;
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
+	static Captain& Instance();
 };
 

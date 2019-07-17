@@ -12,6 +12,7 @@ Captain::Captain(const Vector2 & spawnPos) :
 
 	//bboxColor = Colors::MyPoisonGreen;
 }
+
 void Captain::OnKeyDown(BYTE keyCode)
 {
 	//switch (keyCode)
@@ -132,4 +133,10 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	//// recalculate if image should be rendered
 	//OnFlashing();
 }
+
+//Captain & Captain::Instance()
+//{
+//	static Captain instance;
+//	return instance;
+//}
 

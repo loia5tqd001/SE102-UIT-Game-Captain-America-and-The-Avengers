@@ -41,5 +41,4 @@ private:
 
 public:
 	static Settings& Instance();
-
 };

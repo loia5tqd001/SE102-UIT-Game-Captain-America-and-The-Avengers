@@ -4,12 +4,25 @@
 class Shield : public VisibleObject
 {
 private:
-	State stateAtLastFrame;
-	float maximumDistance; 
+	static constexpr float MAX_DISTANCE = 150.0f;
+	static constexpr float SPEED = 50.0f;
+	bool isOnCaptain=true;
+	float distance = 0;
+	Captain *cap;
+	void UpdateByCapState(State capState, Vector2 capPos);
+	void CalculateVely();
+	void SetState(State state) override;
+	void flipPosx();
+	//TODO: write this later, after finishing the animation with captain
+	void HandleSideCollison(float dt, const std::vector<GameObject*>& coObjects);  //with bullet
+	void HandleUpCollison(float dt, const std::vector<GameObject*>& coObjects); //with bullet
+	void HandleBottomCollison(float dt, const std::vector<GameObject*>& coObjects);  //with enemy
+
+	void HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects); //with cap
 public:
-	Shield(Vector2 capPos);
-	void Update(float dt, const Captain& cap, const std::vector<GameObject*>& coObjects = {});
-	~Shield();
+	Shield(Captain *captain);
+	void Update(float dt, const std::vector<GameObject*>& coObjects = {});
+	void ThrowAway();
 };
 
 

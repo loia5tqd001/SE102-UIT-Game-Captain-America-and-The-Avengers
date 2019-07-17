@@ -47,6 +47,11 @@ enum class SpriteId
 	ExitSign                        = 20,
 	CapsuleIdle                     = 21,
 	CapsuleOpenning                 = 22
+
+	Shield_Side                     = 23,
+	Shield_Straight                 = 24,
+	Shield_Down                     = 25,
+	Shield_Up                       = 26,
 };
 
 enum class SoundId
@@ -105,12 +110,22 @@ enum class State
 
 	Explode,
 
-	Shield_Holding,
-	Shield_BeingThrown,
-	Shield_FlyingAway,
-	Shield_FlyingBack,
-	Shield_CoveringTop,
-	Shield_CoveringBottom
+	Shield_Side,
+	Shield_Straight,
+	Shield_Down,
+	Shield_Up,
+
+	Captain_Standing,
+	Captain_Moving,
+	Captain_OnOneKnee,
+	Captain_OnTwoKnee,
+	Captain_Jump,
+	Captain_JumpKick,
+	Captain_SitPunch,
+	Captain_Throw,
+	Captain_Smash,
+	Captain_Climb,
+	Captain_Spin
 };
 
 enum class Scene
