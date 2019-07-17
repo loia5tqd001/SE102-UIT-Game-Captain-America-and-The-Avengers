@@ -39,6 +39,7 @@ enum class SpriteId
 
 	ItemSmallPowerStone             = 13,
 	ItemBigPowerStone               = 14,
+
 	ItemFivePoint                   = 15,
 	ItemOneUp                       = 16,
 	ItemSmallEnergy                 = 17,
@@ -52,6 +53,9 @@ enum class SpriteId
 	Shield_Straight                 = 24,
 	Shield_Down                     = 25,
 	Shield_Up                       = 26,
+
+	Captain_Standing = 100,
+	Captain_Walking = 101
 };
 
 enum class SoundId

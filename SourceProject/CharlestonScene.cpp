@@ -28,8 +28,11 @@ void CharlestonScene::Update(float dt)
 #include "BulletEnemyGun.h"
 #include "EnemyRocket.h"
 #include "BulletEnemyRocket.h"
+
 #include "Capsule.h"
 #include "Item.h"
+#include"Captain.h"
+
 void CharlestonScene::Draw()
 {
 	static auto& wnd = Window::Instance();
@@ -122,14 +125,23 @@ void CharlestonScene::Draw()
 		item->Render();
 	}
 
-	if (wnd.IsKeyPressed(VK_LEFT))
+	if (1)
+	{
+		static Captain cap(Vector2(0, 100));
+		std::vector<GameObject*> co;
+		cap.Update(GameTimer::Dt(), co);
+
+		cap.Render();
+	}
+
+	/*if (wnd.IsKeyPressed(VK_LEFT))
 		cam.MoveBy( { -5.0f, 0.0f });
 	if (wnd.IsKeyPressed(VK_UP))
 		cam.MoveBy( { 0.0f, -5.0f });
 	if (wnd.IsKeyPressed(VK_RIGHT))
 		cam.MoveBy( { 5.0f, 0.0f });
 	if (wnd.IsKeyPressed(VK_DOWN))
-		cam.MoveBy( { 0.0f, 5.0f });
+		cam.MoveBy( { 0.0f, 5.0f });*/
 
 }
 

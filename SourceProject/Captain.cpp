@@ -3,13 +3,10 @@
 
 static auto& setting = Settings::Instance();
 
-Captain::Captain(const Vector2 & spawnPos) : 
-	VisibleObject(State::Invisible, spawnPos)
+Captain::Captain(const Vector2 & spawnPos) : VisibleObject(State::Captain_Standing, spawnPos)
 {
-	//animations.emplace(State::MarioIdle   , Animation(SpriteId::MarioBigIdle   , 0.1f));
-	//animations.emplace(State::MarioJump   , Animation(SpriteId::MarioBigWalking, 0.1f));
-	//animations.emplace(State::MarioWalking, Animation(SpriteId::MarioBigWalking, 0.1f));
-
+	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
+	animations.emplace(State::Captain_Moving, Animation(SpriteId::Captain_Walking, 0.1f));
 	//bboxColor = Colors::MyPoisonGreen;
 }
 
@@ -32,21 +29,21 @@ void Captain::OnKeyDown(BYTE keyCode)
 
 void Captain::ProcessInput()
 {
-	//static const Window& wnd = Window::Instance();
+	static const Window& wnd = Window::Instance();
 
-	//if (wnd.IsKeyPressed( setting.Get(KeyControls::Left) )) 
-	//{
-	//	nx = -std::abs(nx);
-	//	SetState(State::MarioWalking);
-	//}
-	//else if (wnd.IsKeyPressed( setting.Get(KeyControls::Right) )) 
-	//{
-	//	nx = std::abs(nx);
-	//	SetState(State::MarioWalking);
-	//}
-	//else {
-	//	SetState(State::MarioIdle);
-	//}
+	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
+	{
+		nx = -std::abs(nx);
+		SetState(State::Captain_Moving);
+	}
+	else
+		if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
+		{
+			nx = std::abs(nx);
+			SetState(State::Captain_Moving);
+		}
+		else
+			SetState(State::Captain_Standing);
 }
 
 void Captain::HandleNoCollisions(float dt)
@@ -93,42 +90,47 @@ void Captain::SetState(State state)
 {
 	VisibleObject::SetState(state);
 
+	assert(animations.count(state) == 1);
+	curState = state;
 	switch (state)
 	{
-	//	case State::MarioWalking:
-	//		vel.x = nx * WALKING_SPEED;
-	//		break;
+	case State::Captain_Standing:
+		vel.x = 0;
+		vel.y = 0;
+		break;
+	case State::Captain_Moving:
+		vel.x = nx * WALKING_SPEED;
+		//	case State::MarioJump:
+		//		Sounds::PlayAt(SoundId::MarioJump);
+		//		vel.y = -JUMP_SPEED;
+		//		break;
 
-	//	case State::MarioJump:
-	//		Sounds::PlayAt(SoundId::MarioJump);
-	//		vel.y = -JUMP_SPEED;
-	//		break;
+		//	case State::MarioIdle:
+		//		vel.x = 0.0f;
+		//		break;
 
-	//	case State::MarioIdle:
-	//		vel.x = 0.0f;
-	//		break;
-
-	//	case State::MarioDie:
-	//		break;
+		//	case State::MarioDie:
+		//		break;
 	}
 }
 
 void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	//// early checking
-	//if (curState == State::MarioDie) return;
+	//early checking
+	if (curState == State::Destroyed)
+		return;
 
 	//// regular updates
 	//vel.y += GRAVITY * dt;
 
-	//// process input
-	//ProcessInput();
+	// process input
+	ProcessInput();
 
-	//// handle collisions
-	//HandleCollisions(dt, coObjects);
+	// handle collisions
+	HandleCollisions(dt, coObjects);
 
-	//// update animations
-	//animations.at(curState).Update(dt);
+	// update animations
+	animations.at(curState).Update(dt);
 
 	//// recalculate if image should be rendered
 	//OnFlashing();
