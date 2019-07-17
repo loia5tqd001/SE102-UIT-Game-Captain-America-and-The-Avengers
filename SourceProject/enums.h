@@ -46,7 +46,7 @@ enum class SpriteId
 	ItemKeyKrystal                  = 19,
 	ExitSign                        = 20,
 	CapsuleIdle                     = 21,
-	CapsuleOpenning                 = 22
+	CapsuleOpenning                 = 22,
 
 	Shield_Side                     = 23,
 	Shield_Straight                 = 24,
