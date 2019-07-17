@@ -159,15 +159,12 @@
     <ClCompile Include="Item.cpp">
       <Filter>Development\Objects\Items</Filter>
     </ClCompile>
-    <ClCompile Include="SmallPowerStone.cpp">
-      <Filter>Development\Objects\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="BigPowerStone.cpp" />
-    <ClCompile Include="FivePointItem.cpp" />
     <ClCompile Include="Shield.cpp" />
-    <ClCompile Include="Capsule.cpp" />
     <ClCompile Include="Enemy.cpp">
       <Filter>Development\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Capsule.cpp">
+      <Filter>Development\Objects\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -306,12 +303,9 @@
     <ClInclude Include="Item.h">
       <Filter>Development\Objects\Items</Filter>
     </ClInclude>
-    <ClInclude Include="SmallPowerStone.h">
+    <ClInclude Include="Shield.h" />
+    <ClInclude Include="Capsule.h">
       <Filter>Development\Objects\Items</Filter>
     </ClInclude>
-    <ClInclude Include="BigPowerStone.h" />
-    <ClInclude Include="FivePointItem.h" />
-    <ClInclude Include="Shield.h" />
-    <ClInclude Include="Capsule.h" />
   </ItemGroup>
 </Project>

@@ -7,8 +7,10 @@ CharlestonScene::CharlestonScene()
 {
 	LoadResources();
 
-	if (!IsPause()) 
+	if (!IsPause())
+	{
 		Sounds::PlayLoop( GetBgMusic() );
+	}
 }
 
 void CharlestonScene::LoadResources()
@@ -25,11 +27,9 @@ void CharlestonScene::Update(float dt)
 #include "EnemyGun.h"
 #include "BulletEnemyGun.h"
 #include "EnemyRocket.h"
-#include"SmallPowerStone.h"
-#include"BigPowerStone.h"
-#include"FivePointItem.h"
 #include "BulletEnemyRocket.h"
-#include"Capsule.h"
+#include "Capsule.h"
+#include "Item.h"
 void CharlestonScene::Draw()
 {
 	static auto& wnd = Window::Instance();
@@ -86,38 +86,40 @@ void CharlestonScene::Draw()
 
 	
 	//Test Capsule
+	//if (1)
+	//{
+	//	static Capsule capsule(Vector2(0, 0));
+	//	std::vector<GameObject*> co;
+	//	capsule.Update(GameTimer::Dt(), co);
+
+	//	if (wnd.IsKeyPressed('C'))
+	//	{
+	//		capsule.Open();
+	//	}
+
+	//	capsule.Render();
+	//}
+
+	//Test Items
 	if (1)
 	{
-		static Capsule capsule(Vector2(0, 0));
-		std::vector<GameObject*> co;
-		capsule.Update(GameTimer::Dt(), co);
+		static std::unique_ptr<Item> item = std::make_unique<Item> ( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemKeyKrystal );
+		
+		if (wnd.IsKeyPressed(VK_NUMPAD0)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemSmallPowerStone );
+		if (wnd.IsKeyPressed(VK_NUMPAD1)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemBigPowerStone   );
+		if (wnd.IsKeyPressed(VK_NUMPAD2)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemFivePoint       );
+		if (wnd.IsKeyPressed(VK_NUMPAD3)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemOneUp           );
+		if (wnd.IsKeyPressed(VK_NUMPAD4)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemSmallEnergy     );
+		if (wnd.IsKeyPressed(VK_NUMPAD5)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemBigEnergy       );
+		if (wnd.IsKeyPressed(VK_NUMPAD6)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemKeyKrystal      );
+		
+		item->Update( GameTimer::Dt() );
 
 		if (wnd.IsKeyPressed('C'))
-		{
-			capsule.Open();
-		}
-
-		capsule.Render();
-	}
-
-	//Test PowerStone
-	if (1)
-	{
-		static FivePointItem stone(Vector2(2, 0), 100);
-		std::vector<GameObject*> co;
-		stone.Update(GameTimer::Dt(), co);
-
-		if (wnd.IsKeyPressed('C'))
-		{
-			stone.Fall();
-		}
-
+			item->BeingHit();
 		if (wnd.IsKeyPressed('Z'))
-		{
-			stone.Collect();
-		}
-
-		stone.Render();
+			item->BeingCollected();
+		item->Render();
 	}
 
 	if (wnd.IsKeyPressed(VK_LEFT))

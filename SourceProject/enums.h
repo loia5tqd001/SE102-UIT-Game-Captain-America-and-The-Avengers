@@ -39,13 +39,14 @@ enum class SpriteId
 
 	ItemSmallPowerStone             = 13,
 	ItemBigPowerStone               = 14,
-	ItemFivePointItem               = 15,
-	ItemSmallEnergy                 = 16,
-	ItemBigEnergy                   = 17,
-	ItemKeyKrystal                  = 18,
-	ItemExitSign                    = 19,
-	CapsuleNotMoving                = 20,
-	CapsuleMoving                   = 21
+	ItemFivePoint                   = 15,
+	ItemOneUp                       = 16,
+	ItemSmallEnergy                 = 17,
+	ItemBigEnergy                   = 18,
+	ItemKeyKrystal                  = 19,
+	ExitSign                        = 20,
+	CapsuleIdle                     = 21,
+	CapsuleOpenning                 = 22
 };
 
 enum class SoundId
@@ -96,10 +97,13 @@ enum class State
 	BulletEnemyRocket_Horizontal,
 	BulletEnemyRocket_Cross,
 
+	Item_Hide,
+	Item_Bouncing,
+	Item_Falling,
+	Item_Grounding,
+	Item_Disappearing,
+
 	Explode,
-	
-	ItemMoving,
-	ItemNotMoving,
 
 	Shield_Holding,
 	Shield_BeingThrown,

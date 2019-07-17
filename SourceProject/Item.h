@@ -4,58 +4,20 @@
 class Item : public VisibleObject
 {
 private:
-	float maxPosY; // max position falling, being set from database
 	static constexpr float FALLING_SPEED = 150.0f;
+	static constexpr float TIME_TO_DISAPPEAR = 5.0f;
+
+	float maxPosY; // max position falling, being set from database
+	float minPosY; // to bounce before falling
+	float timeOnGround = 0.0f;
+	SoundId sound;
+	SpriteId itemType; // use SpriteId to represent item type
+
 public:
-	Item(Vector2 pos, float maxY, State state) :
-		VisibleObject(state, pos),
-		maxPosY(maxY) 
-	{
-		shouldDrawImage = false;
-		// sub class: emplace animation...
-	}
-
-	void SetState(State state) override
-	{
-		switch (state)
-		{
-		case State::Invisible:
-			break;
-		case State::Destroyed:
-			//Todo: PlaySound
-			shouldDrawImage = false;
-			break;
-		case State::ItemMoving:
-		case State::ItemNotMoving:
-			shouldDrawImage = true;
-			break;
-		default:
-			break;
-		}
-
-		curState = state;
-	}
-
-	void Update(float dt, const std::vector<GameObject*>& coObjects) override 
-	{
-		if (curState==State::Invisible||curState==State::ItemNotMoving)
-			return; // item hasn't been hit and appeared yet
-
-		// falling
-		if (pos.y < maxPosY)
-		{
-			pos.y += FALLING_SPEED * dt; 
-			//pos.y = min(maxPosY, pos.y); // to not fall too far
-		}
-
-		animations.at(curState).Update(dt);
-	}
-
-	void Fall() // call when captain hit not claimed item
-	{
-		this->SetState(State::ItemMoving);
-	}
-
-	virtual void Collect() = 0; // call when captain collect item, play sound and item being destroyed
+	Item(Vector2 pos, float maxY, SpriteId itemType);
+	void Update(float dt, const std::vector<GameObject*>& coObjects = {}) override;
+	void BeingHit(); // call when captain use force to collide with item
+	void BeingCollected(); // depend on GetItemType() captain will get corresponding result, item itself won't acknowledge about that result
+	auto GetItemType() const { return itemType; }
 };
 
