@@ -49,6 +49,9 @@
     <Filter Include="Development\Objects\Bullets">
       <UniqueIdentifier>{edd10a0f-29fe-409c-b332-b60c3f9f1267}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Development\Objects\Items">
+      <UniqueIdentifier>{4f2287f9-979c-4d94-9efd-776b4b8a904b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -152,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="BulletEnemyRocket.cpp">
       <Filter>Development\Objects\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Development\Objects\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="BulletEnemyGun.h">
       <Filter>Development\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Development\Objects\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
