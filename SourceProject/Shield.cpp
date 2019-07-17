@@ -9,40 +9,13 @@ Shield::Shield(Captain *captain) : VisibleObject(State::Invisible,captain->GetPo
 	animations.emplace(State::Shield_Straight, Animation(SpriteId::Shield_Straight, 0.1f));
 	animations.emplace(State::Shield_Side, Animation(SpriteId::Shield_Side, 0.1f));
 
-
-	//TODO
-	//Set Velocity
-	vel.y = 0;			//caculate y base on x, don't use this thing
-	vel.x = 0;
 	UpdateByCapState(State::Captain_Standing, captain->GetPos());
-	curState = State::Shield_Straight;
-	
-	//Caculate shield position depend on Cap's Position
-	//pos.x
+	this->cap = captain;
 }
 
 void Shield::SetState(State state)
 {
-	const auto oldHeight = GetHeight();
 	VisibleObject::SetState(state);
-	pos.y += oldHeight - GetHeight();
-
-	//NOTE:the code below may needed for later
-	//switch (state)
-	//{
-	//case State::Shield_Straight: //shield is on cap for sure
-	//	vel = { 0.0f, 0.0f };
-	//	break;
-	//case State::Shield_Side: //shield is on cap for sure, and shield can take bullet
-	//	vel = { 0.0f, 0.0f };
-	//	break;
-	//case State::Shield_Down: //shield is on cap for sure, and shield deal 3 damage to enemy
-	//	vel = { 0.0f, 0.0f };
-	//	break;
-	//case State::Shield_Up: //shield is flying or on cap, if it flying deal 1 damage to enemy, if it on cap it can take bullet
-	//	vel = { 0.0f, 0.0f };
-	//	break;
-	//}
 }
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
@@ -212,7 +185,7 @@ void Shield::CalculateVely()
 	// remember s=t*v
 	float timeX = distance / SPEED;
 	float speedY = distanceY / timeX;
-	vel.y += speedY;
+	pos.y += speedY;
 }
 
 
