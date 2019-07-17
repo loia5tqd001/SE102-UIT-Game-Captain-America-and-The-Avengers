@@ -5,8 +5,8 @@
 class EnemyGun : public Enemy
 {
 private:
-	static constexpr float WALKING_SPEED      =  100.0f;
-	static constexpr float JUMP_SPEED         =  400.0f;
+	static constexpr float WALKING_SPEED      =  15.0f;
+	static constexpr float JUMP_SPEED         =  50.0f;
 	static constexpr float FALL_BACK	      =   50.0f;
 
 	float timeTakenDamaged = 0.0f;

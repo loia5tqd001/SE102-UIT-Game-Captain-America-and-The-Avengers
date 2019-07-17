@@ -5,12 +5,14 @@
 class EnemyRocket : public Enemy
 {
 private:
-	static constexpr float WALKING_SPEED = 100.0f;
-	static constexpr float JUMP_SPEED = 400.0f;
-	static constexpr float GRAVITY = 1000.0f;
-	static constexpr float FALL_BACK = 1000.0f;
+	static constexpr float WALKING_SPEED = 15.0f;
+	static constexpr float JUMP_SPEED = 50.0f;
+	static constexpr float GRAVITY = 50.0f;
+	static constexpr float FALL_BACK = 50.0f;
 
-
+	float timeTakenDamaged = 0.0f;
+	float timeExploding = 0.0f;
+	float timeSpawnBullet;
 public:
 	EnemyRocket(const Vector2& spawnPos, const Vector2& vel, int nx, Grid *grid);
 

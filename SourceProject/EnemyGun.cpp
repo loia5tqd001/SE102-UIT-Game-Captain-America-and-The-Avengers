@@ -15,6 +15,7 @@ EnemyGun::EnemyGun(const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid *
 
 void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	pos.x += vel.x*dt;
 	//counter, if take damage, flasing in 0,5s then change to explode, keep 2 sprite in 0,2 s fit and destroy
 	if (curState == State::EnemyGun_TakeDamage) {
 
@@ -39,6 +40,7 @@ void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 	// spawn bullet every 4s
 	// NOTE: disable for testing SpawnBullet(4.0f);
+	//SpawnBullet(4.0f);
 
 	// update animations
 	animations.at(curState).Update(dt);
@@ -62,7 +64,7 @@ void EnemyGun::SetState(State state)
 		vel.x = 0.0f;
 		break;
 	case State::EnemyGun_TakeDamage:
-	    vel.x = -nx * FALL_BACK;
+	    if (health <= 0) vel.x = -nx * FALL_BACK;
 		OnFlasing(true);
 		break;
 	case State::Explode:
@@ -77,7 +79,7 @@ void EnemyGun::SpawnBullet(float cycle)
 	if (curState == State::EnemyGun_TakeDamage) return;
 	if (timeSpawnBullet >= cycle)
 	{
-		grid->SpawnObject(std::make_unique<BulletEnemyGun>( pos, Vector2{ 100.0f, 0.0f }, nx));
+		grid->SpawnObject(std::make_unique<BulletEnemyGun>(nx, pos));
 		timeSpawnBullet = 0;
 	}
 }

@@ -28,6 +28,8 @@ void CharlestonScene::Update(float dt)
 #include"SmallPowerStone.h"
 #include"BigPowerStone.h"
 #include"FivePointItem.h"
+#include "BulletEnemyRocket.h"
+
 void CharlestonScene::Draw()
 {
 	static auto& wnd = Window::Instance();
@@ -49,13 +51,22 @@ void CharlestonScene::Draw()
 
 	if (1) // test BulletEnemyGun
 	{
-		static BulletEnemyGun BulletEnemyGun( { 100.0f, 150.0f },  {}, 1 );
+		static BulletEnemyGun BulletEnemyGun(  1, {20.0f, 150.0f } );
 		std::vector<GameObject*> co;
 		BulletEnemyGun.Update(GameTimer::Dt(), co);
 
-		if (wnd.IsKeyPressed('5')) BulletEnemyGun.SetState(State::BulletEnemyGun);
+		BulletEnemyGun.SetState(State::BulletEnemyGun);
 
 		BulletEnemyGun.Render();
+	}
+
+	if (1) // test BulletEnemyRocket
+	{
+		static BulletEnemyRocket BulletEnemyRocket(  1, 1, {20.0f, 170.0f }); //1 is cross, 0 is horizontal
+		std::vector<GameObject*> co;
+		BulletEnemyRocket.Update(GameTimer::Dt(), co);
+
+		BulletEnemyRocket.Render();
 	}
 
 	if (1) // test EnemyRocket
@@ -66,7 +77,8 @@ void CharlestonScene::Draw()
 
 		if (wnd.IsKeyPressed('6')) enemyRocket.SetState(State::EnemyRocket_Stand);
 		if (wnd.IsKeyPressed('7')) enemyRocket.SetState(State::EnemyRocket_Sitting);
-		if (wnd.IsKeyPressed('8')) enemyRocket.SetState(State::EnemyRocket_TakeDamage);
+		if (wnd.IsKeyPressed('8')) 
+			enemyRocket.TakeDamage(1);
 		if (wnd.IsKeyPressed('9')) enemyRocket.SetState(State::EnemyRocket_Walking);
 
 		enemyRocket.Render();

@@ -5,19 +5,19 @@
 
 
 EnemyRocket::EnemyRocket(const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid * grid) :
-	Enemy(State::EnemyRocket_Stand, 3, spawnPos, vel, nx, grid)
+	Enemy(State::EnemyRocket_Stand, 30, spawnPos, vel, nx, grid)
 {
 	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.1f));
 	animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.1f));
-	animations.emplace(State::EnemyRocket_TakeDamage, Animation(SpriteId::EnemyRocket_TakeDamage, 0.1f));
 	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.1f));
-	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.1f));
+	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.25f));
+
 }
 
 void EnemyRocket::SetState(State state)
 {
 	const auto oldHeight = GetHeight();
-	VisibleObject::SetState(state);
+	if (state!=State::EnemyGun_TakeDamage) VisibleObject::SetState(state); //this state dont have const animation
 	pos.y += oldHeight - GetHeight();
 
 	switch (state)
@@ -32,13 +32,10 @@ void EnemyRocket::SetState(State state)
 		vel.x = 0.0f;
 		break;
 	case State::EnemyGun_TakeDamage:
+		OnFlasing(true);
 		if (health <= 0) //die
 		{
 			vel.x = -nx * FALL_BACK;
-		}
-		else
-		{
-			vel.x = 0.0f;
 		}
 		
 		break;
@@ -54,7 +51,7 @@ void EnemyRocket::SpawnRocket(float cycle)
 	if (curState == State::EnemyGun_TakeDamage) return;
 	if (curCounter.CanExcuteCommand(cycle, false))
 	{
-		grid->SpawnObject(std::make_unique<BulletEnemyRocket>( pos, Vector2{ 100.0f, 0.0f }, nx));
+		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, 1, pos));
 	}
 }
 
@@ -67,27 +64,28 @@ void EnemyRocket::TakeDamage(int damage)
 
 void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	//counter
-	if (curState == State::EnemyGun_TakeDamage) {
-		static Counter takeDamageCounter;
-		Enemy::OnFlasing();
-		if (health > 0) {
-			animations.at(State::EnemyGun_TakeDamage).Update(dt);
-		}
+	//regular update
+	pos.x += vel.x*dt;
+	pos.y += vel.y*dt;
+	//take damamge
+	if (isFlashing) {
+		timeTakenDamaged += GameTimer::Dt();
+		OnFlasing();
 		//if take damage and health = 0, flasing in 0,5s then change to explode, keep 2 sprite in 0,2 s fit and destroy
-		else {
-			if (takeDamageCounter.CanExcuteCommand(0.5f, true))
-			{
-				SetState(State::Explode);
-			}
+		if (timeTakenDamaged > 0.7f)
+		{
+			if (health<=0) SetState(State::Explode);
+			timeTakenDamaged = 0;
+			OnFlasing(false);
 		}
 	}
 	if (curState == State::Explode)
 	{
-		static Counter ExplodeCounter;
-		if (ExplodeCounter.CanExcuteCommand(0.2f, true))
+		timeExploding += GameTimer::Dt();
+		if (timeExploding>0.4f)
 		{
 			SetState(State::Destroyed);
+			timeExploding = 0;
 		}
 	}
 

@@ -99,6 +99,8 @@ Area Grid::CalcCollidableArea(const RectF& bbox) const
 
 void Grid::SpawnObject(std::unique_ptr<GameObject> obj)
 {
+    RectF bboxx;
+	bboxx = obj->GetBBox();
 	Area area = CalcCollidableArea( obj->GetBBox() );
 
 	for (UINT x = area.xs; x <= area.xe; x++)
