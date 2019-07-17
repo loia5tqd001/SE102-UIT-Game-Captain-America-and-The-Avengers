@@ -97,7 +97,14 @@ enum class State
 	Explode,
 	
 	ItemFalling,
-	ItemNotMoving
+	ItemNotMoving,
+
+	Shield_Holding,
+	Shield_BeingThrown,
+	Shield_FlyingAway,
+	Shield_FlyingBack,
+	Shield_CoveringTop,
+	Shield_CoveringBottom
 };
 
 enum class Scene

@@ -164,6 +164,7 @@
     </ClCompile>
     <ClCompile Include="BigPowerStone.cpp" />
     <ClCompile Include="FivePointItem.cpp" />
+    <ClCompile Include="Shield.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -306,5 +307,6 @@
     </ClInclude>
     <ClInclude Include="BigPowerStone.h" />
     <ClInclude Include="FivePointItem.h" />
+    <ClInclude Include="Shield.h" />
   </ItemGroup>
 </Project>

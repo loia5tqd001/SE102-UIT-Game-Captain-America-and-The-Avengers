@@ -217,6 +217,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Shield.cpp" />
     <ClCompile Include="SmallPowerStone.cpp" />
     <ClCompile Include="Sounds.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="Shield.h" />
     <ClInclude Include="SmallPowerStone.h" />
     <ClInclude Include="Sounds.h" />
     <ClInclude Include="Utils.h" />
