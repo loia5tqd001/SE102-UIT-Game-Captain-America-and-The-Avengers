@@ -22,9 +22,9 @@ private:
 
 private:
 	Grid(const Grid&) = delete;
-	Area CalcCollidableArea(const RectF& bbox) const;
+	Area CalcCollidableArea(const RectF& bbox, int broadX = 0, int broadY = 0) const;
 
-	auto LoadObjects(const Json::Value& grid);
+	void LoadObjects(const Json::Value& grid);
 	void LoadResources(const Json::Value& root);
 	void RemoveDestroyedObjects();
 	void RecalculateObjectsInViewPort();
@@ -32,13 +32,11 @@ private:
 public:
 	Grid(const Json::Value& root);
 
-	void UpdateCells(); // NOTE: This grid will not update objects being too far away from viewport
+	void UpdateCells();
 	void RenderCells() const;
 
-	void SpawnObject(std::unique_ptr<GameObject> obj); // add objects to grid (used by spwaner object)
+	GameObject* SpawnObject(std::unique_ptr<GameObject> obj, bool isMoving = true);
 	inline const auto& GetObjectsInViewPort() const { return curObjectsInViewPort; }
-
-	std::vector<GameObject*> GetObjectsNear(GameObject* objectInInterest) const;
 
 };
 

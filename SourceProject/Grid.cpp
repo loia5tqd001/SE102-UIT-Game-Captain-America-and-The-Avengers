@@ -1,47 +1,8 @@
 #include "pch.h"
-#include "Enemy.h"
-#include "Bullet.h"
 
 Grid::Grid(const Json::Value& root)
 {
 	LoadResources(root);
-}
-
-auto Grid::LoadObjects(const Json::Value& grid)
-{
-	std::vector<GameObject*> staticObjects;
-	std::vector<GameObject*> movingObjects;
-
-	const Json::Value& jsonObjects = grid["objects"];
-	objectHolder.reserve( jsonObjects.size() );
-
-	for (const auto& jsonObj : jsonObjects)
-	{
-		const UINT  classId  = jsonObj[0].asUInt ();
-		const bool  isStatic = jsonObj[1].asBool ();
-		const float x        = jsonObj[2].asFloat();
-		const float y        = jsonObj[3].asFloat();
-		const UINT  width    = jsonObj[4].asInt  ();
-		const UINT  height   = jsonObj[5].asInt  ();
-		const float vx       = jsonObj[6].asFloat();
-		const float vy       = jsonObj[7].asFloat();
-		const float nx       = jsonObj[8].asFloat();
-
-		static std::unique_ptr<GameObject> object;
-		switch ((ClassId)classId)
-		{
-			default:
-				ThrowMyException("Can't find class id:", classId);
-				break;
-		}
-
-		if (isStatic) staticObjects.emplace_back( object.get() );
-		else          movingObjects.emplace_back( object.get() );
-
-		objectHolder.emplace_back( std::move(object) );
-	}
-
-	return std::make_pair(staticObjects, movingObjects);
 }
 
 void Grid::LoadResources(const Json::Value& root)
@@ -58,46 +19,38 @@ void Grid::LoadResources(const Json::Value& root)
 		cells[x * height + y].boundingBox = { float(x * cellSize), float(y * cellSize), cellSize, cellSize };
 	}
 
-	const auto [staticObjs, movingObjs] = LoadObjects(grid);
-
-	for (const auto& obj : staticObjs)
-	{
-		const auto objBbox = obj->GetBBox();
-		const auto cellsObjectBelong = CalcCollidableArea( objBbox );
-		for (UINT x = cellsObjectBelong.xs; x <= cellsObjectBelong.xe; x++)
-		for (UINT y = cellsObjectBelong.ys; y <= cellsObjectBelong.ye; y++)
-		{
-			auto& cell = cells[x * height + y];
-			assert(objBbox.IsIntersect( cell.GetBBox() ));
-			cell.staticObjects.emplace( obj );
-		}
-	}
-
-	for (const auto& obj : movingObjs)
-	{
-		const auto objBbox = obj->GetBBox();
-		const auto cellsObjectBelong = CalcCollidableArea( objBbox );
-		for (UINT x = cellsObjectBelong.xs; x <= cellsObjectBelong.xe; x++)
-		for (UINT y = cellsObjectBelong.ys; y <= cellsObjectBelong.ye; y++)
-		{
-			auto& cell = cells[x * height + y];
-			assert(objBbox.IsIntersect( cell.GetBBox() ));
-			cell.movingObjects.emplace( obj );
-		}
-	}
+	LoadObjects(grid);
 }
 
-Area Grid::CalcCollidableArea(const RectF& bbox) const
+void Grid::LoadObjects(const Json::Value& grid)
 {
-	return 	{
-		UINT(max(0         ,      bbox.left   / cellSize      )),
-		UINT(min(width  - 1, ceil(bbox.right  / cellSize) - 1 )),
-		UINT(max(0         ,      bbox.top    / cellSize      )),
-		UINT(min(height - 1, ceil(bbox.bottom / cellSize) - 1 ))
-	};
+	const Json::Value& jsonObjects = grid["objects"];
+	objectHolder.reserve( jsonObjects.size() );
+
+	for (const auto& jsonObj : jsonObjects)
+	{
+		const int   classId  = jsonObj[0].asInt  ();
+		const float x        = jsonObj[1].asFloat();
+		const float y        = jsonObj[2].asFloat();
+		const UINT  width    = jsonObj[3].asUInt ();
+		const UINT  height   = jsonObj[4].asUInt ();
+		const float vx       = jsonObj[5].asFloat();
+		const float vy       = jsonObj[6].asFloat();
+		const float nx       = jsonObj[7].asFloat();
+
+		static std::unique_ptr<GameObject> object;
+		switch ((ClassId)classId)
+		{
+			default:
+				ThrowMyException("Can't find class id:", classId);
+				break;
+		}
+
+		SpawnObject(std::move(object), false);
+	}
 }
 
-void Grid::SpawnObject(std::unique_ptr<GameObject> obj)
+GameObject* Grid::SpawnObject(std::unique_ptr<GameObject> obj, bool isMoving)
 {
     RectF bboxx;
 	bboxx = obj->GetBBox();
@@ -106,28 +59,26 @@ void Grid::SpawnObject(std::unique_ptr<GameObject> obj)
 	for (UINT x = area.xs; x <= area.xe; x++)
 	for (UINT y = area.ys; y <= area.ye; y++)
 	{
-		cells[x * height + y].movingObjects.emplace( obj.get() );
+		if (isMoving) {
+			cells[x * height + y].movingObjects.emplace( obj.get() );
+		}
+		else {
+			cells[x * height + y].staticObjects.emplace( obj.get() );
+		}
 	}
 
 	objectHolder.emplace_back( std::move(obj) );
+	return objectHolder.back().get();
 }
 
-std::vector<GameObject*> Grid::GetObjectsNear(GameObject* objectInInterest) const
+Area Grid::CalcCollidableArea(const RectF& bbox, int broadX, int broadY) const
 {
-	std::unordered_set<GameObject*> result;
-	float dx, dy; objectInInterest->GetDxDy(GameTimer::Dt(), dx, dy);
-
-	Area area = CalcCollidableArea( objectInInterest->GetBBox().GetBroadPhase(dx, dy) );
-
-	for (UINT x = area.xs; x <= area.xe; x++)
-	for (UINT y = area.ys; y <= area.ye; y++)
-	{
-		const Cell& cell = cells[x * height + y];
-		result.insert(cell.staticObjects.begin(), cell.staticObjects.end());
-		result.insert(cell.movingObjects.begin(), cell.movingObjects.end());
-	}
-
-	return { result.begin(), result.end() };
+	return 	{
+		UINT(max(0         ,      bbox.left   / cellSize      - broadX)),
+		UINT(min(width  - 1, ceil(bbox.right  / cellSize) - 1 + broadX)),
+		UINT(max(0         ,      bbox.top    / cellSize      - broadY)),
+		UINT(min(height - 1, ceil(bbox.bottom / cellSize) - 1 + broadY))
+	};
 }
 
 void Grid::UpdateCells()
@@ -151,12 +102,7 @@ void Grid::UpdateCells()
 
 			if (!oBbox.IsIntersect( cam.GetBBox() ))
 			{
-				if (auto e = dynamic_cast<Enemy*>(o)) {
-					e->SetState(State::Destroyed);
-				}
-				else if (auto b = dynamic_cast<Bullet*>(o)) {
-					b->SetState(State::Destroyed);
-				}
+				dynamic_cast<VisibleObject*>(o)->SetState(State::Destroyed);
 			}
 
 			if (o->GetState() == State::Destroyed) hasDestroyedObject = true;
@@ -181,10 +127,10 @@ void Grid::UpdateCells()
 		Area area = CalcCollidableArea( obj->GetBBox() );
 
 		for (UINT x = area.xs; x <= area.xe; x++)
-		for (UINT y = area.ys; y <= area.ye; y++)
-		{
-			cells[x * height + y].movingObjects.emplace( obj );
-		}
+			for (UINT y = area.ys; y <= area.ye; y++)
+			{
+				cells[x * height + y].movingObjects.emplace( obj );
+			}
 	}
 
 	if (hasDestroyedObject) RemoveDestroyedObjects();
