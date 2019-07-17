@@ -25,7 +25,7 @@ public:
 			//Todo: PlaySound
 			shouldDrawImage = false;
 			break;
-		case State::ItemFalling:
+		case State::ItemMoving:
 		case State::ItemNotMoving:
 			shouldDrawImage = true;
 			break;
@@ -53,7 +53,7 @@ public:
 
 	void Fall() // call when captain hit not claimed item
 	{
-		this->SetState(State::ItemFalling);
+		this->SetState(State::ItemMoving);
 	}
 
 	virtual void Collect() = 0; // call when captain collect item, play sound and item being destroyed

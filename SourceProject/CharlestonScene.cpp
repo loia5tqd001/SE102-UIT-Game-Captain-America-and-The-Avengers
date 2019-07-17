@@ -29,7 +29,7 @@ void CharlestonScene::Update(float dt)
 #include"BigPowerStone.h"
 #include"FivePointItem.h"
 #include "BulletEnemyRocket.h"
-
+#include"Capsule.h"
 void CharlestonScene::Draw()
 {
 	static auto& wnd = Window::Instance();
@@ -84,14 +84,30 @@ void CharlestonScene::Draw()
 		enemyRocket.Render();
 	}
 
-	//Test PowerStone
-	if (true)
+	
+	//Test Capsule
+	if (1)
 	{
-		static FivePointItem stone(Vector2(0, 0), 100);
+		static Capsule capsule(Vector2(0, 0));
+		std::vector<GameObject*> co;
+		capsule.Update(GameTimer::Dt(), co);
+
+		if (wnd.IsKeyPressed('C'))
+		{
+			capsule.Open();
+		}
+
+		capsule.Render();
+	}
+
+	//Test PowerStone
+	if (1)
+	{
+		static FivePointItem stone(Vector2(2, 0), 100);
 		std::vector<GameObject*> co;
 		stone.Update(GameTimer::Dt(), co);
 
-		if (wnd.IsKeyPressed('A'))
+		if (wnd.IsKeyPressed('C'))
 		{
 			stone.Fall();
 		}
@@ -100,10 +116,9 @@ void CharlestonScene::Draw()
 		{
 			stone.Collect();
 		}
-		
+
 		stone.Render();
 	}
-
 
 	if (wnd.IsKeyPressed(VK_LEFT))
 		cam.MoveBy( { -5.0f, 0.0f });

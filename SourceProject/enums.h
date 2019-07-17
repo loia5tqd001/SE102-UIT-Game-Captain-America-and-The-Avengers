@@ -43,7 +43,9 @@ enum class SpriteId
 	ItemSmallEnergy                 = 16,
 	ItemBigEnergy                   = 17,
 	ItemKeyKrystal                  = 18,
-	ItemExitSign                    = 19
+	ItemExitSign                    = 19,
+	CapsuleNotMoving                = 20,
+	CapsuleMoving                   = 21
 };
 
 enum class SoundId
@@ -96,7 +98,7 @@ enum class State
 
 	Explode,
 	
-	ItemFalling,
+	ItemMoving,
 	ItemNotMoving,
 
 	Shield_Holding,
