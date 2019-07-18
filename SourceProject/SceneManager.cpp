@@ -4,6 +4,7 @@
 #include "BossCharlestonScene.h"
 #include "PittsburghScene.h"
 #include "RedAlertScene.h"
+#include "ExitSign.h"
 
 void SceneManager::ToggleMuteMode() const
 {
@@ -33,7 +34,10 @@ void SceneManager::LoadResources()
 void SceneManager::SetScene(Scene scene)
 {
 	if (curScene && curScene->HasMusic())
+	{
 		Sounds::StopAt( curScene->GetBgMusic() );
+		ExitSign::Instance().ResetNewStage();
+	}
 
 	switch (scene)
 	{
@@ -64,8 +68,11 @@ void SceneManager::SetScene(Scene scene)
 
 void SceneManager::Update(float dt)
 {
-	if (!curScene->IsPause()) 
+	if (!curScene->IsPause())
+	{
 		curScene->Update(dt);
+		ExitSign::Instance().Update(dt);
+	}
 
 	Sounds::HandleInput();
 
@@ -84,6 +91,7 @@ void SceneManager::Draw()
 	}
 	else {
 		curScene->Draw();
+		ExitSign::Instance().Render();
 		DebugDraw::DrawCrt();
 	}
 	settingScene.Draw();

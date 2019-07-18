@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Item.h"
+#include "ExitSign.h"
 
 Item::Item(Vector2 pos, float maxY, SpriteId itemType) :
 	VisibleObject(State::Item_Hide, pos),
@@ -94,6 +95,11 @@ void Item::BeingHit()
 void Item::BeingCollected()
 {
 	if (curState == State::Item_Hide) return;
+
 	Sounds::PlayAt(sound);
 	curState = State::Destroyed;
+	if (itemType == SpriteId::ItemKeyKrystal) 
+	{
+		ExitSign::Instance().KrystalCollected(pos);
+	}
 }

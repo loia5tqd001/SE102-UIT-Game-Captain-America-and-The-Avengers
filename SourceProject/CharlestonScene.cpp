@@ -99,8 +99,7 @@ void CharlestonScene::Draw()
 		capsule.Render();
 	}
 
-	Sprites::Get( SpriteId::CaptainHealth ).Draw( { 200.0f, 0.0f }, 0);
-	Sprites::Get( SpriteId::ExitSign ).Draw( { 200.0f, 20.0f }, 0);
+	Sprites::Get( SpriteId::CaptainHealth ).Draw( { 200.0f, 0.0f } );
 
 	//Test Items
 	if (1)

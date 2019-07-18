@@ -22,7 +22,7 @@ void GreetingScene::Update(float dt)
 
 void GreetingScene::Draw()
 {
-	rememberNote->Draw( Vector2{ 0.0f, 0.0f } , 0 );
+	rememberNote->Draw( Vector2{ 0.0f, 0.0f } );
 }
 
 void GreetingScene::OnKeyDown(BYTE keyCode)

@@ -166,14 +166,11 @@
     <ClCompile Include="Capsule.cpp">
       <Filter>Development\Objects\Items</Filter>
     </ClCompile>
-    <ClCompile Include="BigPowerStone.cpp">
-      <Filter>Development\Objects\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="FivePointItem.cpp">
-      <Filter>Development\Objects\Items</Filter>
-    </ClCompile>
     <ClCompile Include="Shield.cpp">
       <Filter>Development\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ExitSign.cpp">
+      <Filter>Development\Objects\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -316,14 +313,11 @@
     <ClInclude Include="Capsule.h">
       <Filter>Development\Objects\Items</Filter>
     </ClInclude>
-    <ClInclude Include="BigPowerStone.h">
-      <Filter>Development\Objects\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="FivePointItem.h">
-      <Filter>Development\Objects\Items</Filter>
-    </ClInclude>
     <ClInclude Include="Shield.h">
       <Filter>Development\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitSign.h">
+      <Filter>Development\Objects\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
