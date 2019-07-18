@@ -8,7 +8,7 @@ Captain::Captain(const Vector2 & spawnPos) :
 	isInTheAir(false),
 	doubleKeyDownTimeOut(0.2f)
 	//Todo: Remove this when test is done
-	,shieldOn(true)
+	, shieldOn(true)
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
 	animations.emplace(State::Captain_Moving, Animation(SpriteId::Captain_Walking, 0.1f));
@@ -19,7 +19,7 @@ Captain::Captain(const Vector2 & spawnPos) :
 	animations.emplace(State::Captain_Punching, Animation(SpriteId::Captain_Punching, 0.1f));
 	animations.emplace(State::Captain_Throw, Animation(SpriteId::Captain_Throw, 0.2f));
 	animations.emplace(State::Captain_JumpKick, Animation(SpriteId::Captain_JumpKick, 0.2f));
-
+	animations.emplace(State::Captain_SitPunch, Animation(SpriteId::Captain_SitPunch, 0.15f));
 	//bboxColor = Colors::MyPoisonGreen;
 }
 
@@ -39,12 +39,18 @@ void Captain::OnKeyDown(BYTE keyCode)
 		}
 	}
 
-	if (keyCode == setting.Get(KeyControls::Attack)) {
+	if (keyCode == setting.Get(KeyControls::Attack))
+	{
 		if (isInTheAir == false)
-			if (shieldOn)
-				SetState(State::Captain_Throw);
+			if (curState == State::Captain_Sitting)
+				SetState(State::Captain_SitPunch);
 			else
-				SetState(State::Captain_Punching);
+			{
+				if (shieldOn)
+					SetState(State::Captain_Throw);
+				else
+					SetState(State::Captain_Punching);
+			}
 		else
 			SetState(State::Captain_JumpKick);
 	}
@@ -87,7 +93,7 @@ void Captain::ProcessInput()
 
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
 	{
-		if (!isInTheAir)
+		if (!isInTheAir && !(curState == State::Captain_SitPunch))
 		{
 			SetState(State::Captain_Sitting);
 		}
@@ -199,6 +205,10 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	case State::Captain_LookUp:
 		if (animations.at(curState).IsDoneCycle())
 			SetState(State::Captain_Standing);
+		break;
+	case State::Captain_SitPunch:
+		if (animations.at(curState).IsDoneCycle())
+			SetState(State::Captain_Sitting);
 		break;
 	case State::Captain_Moving:
 		SetState(State::Captain_Standing);

@@ -63,7 +63,8 @@ enum class SpriteId
 	Captain_Punching = 105,
 	Captain_Throw = 106, 
 	Captain_Falling = 107,
-	Captain_JumpKick = 108
+	Captain_JumpKick = 108,
+	Captain_SitPunch
 };
 
 enum class SoundId

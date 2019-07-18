@@ -54,7 +54,8 @@ void CharlestonScene::Draw()
 	static auto& wnd = Window::Instance();
 	map->Render();
 	cap->Render();
-	shield->Render();
+
+	#pragma region _TESTING_
 	if (1) // test enemyGun
 	{
 		static EnemyGun enemyGun( { 50.0f, 100.0f }, {}, 1, nullptr );
@@ -164,6 +165,8 @@ void CharlestonScene::Draw()
 		if (wnd.IsKeyPressed('P')) CaptainHealth::Instance().Subtract(1);
 		if (wnd.IsKeyPressed('0')) CaptainHealth::Instance().Set(0);
 	}
+#pragma endregion
+
 	if (wnd.IsKeyPressed('A'))
 		cam.MoveBy( { -5.0f, 0.0f });
 	if (wnd.IsKeyPressed('W'))
@@ -177,6 +180,8 @@ void CharlestonScene::Draw()
 		obj->Render();
 	}
 	grid->RenderCells();
+
+	shield->Render();
 }
 
 void CharlestonScene::OnKeyDown(BYTE keyCode)

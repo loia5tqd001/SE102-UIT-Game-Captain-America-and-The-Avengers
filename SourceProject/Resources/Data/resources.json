@@ -59,7 +59,8 @@
 	[         105,            10,      217,      71,              38,               41,         2,            2], //Captain_Punching
 	[         106,            10,      298,      73,              49,               39,         2,            1], //Captain_Throw
 	[         107,            10,      134,      15,              22,               38,         1,            0],  //Captain_Falling
-	[108, 10, 20, 23, 40, 25, 1, 0] //Captain_JumpKick
+	[108, 10, 20, 23, 40, 25, 1, 0], //Captain_JumpKick
+	[109, 10, 168, 85, 37, 27, 1, 0] //Captain_SitPunch
   ],
   
   "sounds": [

@@ -4,7 +4,7 @@
 #include "BulletEnemyGun.h"
 
 
-Shield::Shield(Captain *captain) : VisibleObject(State::Shield_Straight,captain->GetPos())
+Shield::Shield(Captain *captain) : VisibleObject(State::Shield_Straight, captain->GetPos())
 {
 	animations.emplace(State::Shield_Up, Animation(SpriteId::Shield_Up, 0.1f));
 	animations.emplace(State::Shield_Down, Animation(SpriteId::Shield_Down, 0.1f));
@@ -21,7 +21,7 @@ void Shield::SetState(State state)
 }
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (isOnCaptain) 
+	if (isOnCaptain)
 		nx = cap->GetNx();// get nx to flip posx
 
 	switch (curState)
@@ -60,9 +60,9 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 			if (distance < MAX_DISTANCE)
 			{
 				turnBack = true;
-				flagDistance += SPEED*dt;
-				distance += SPEED*dt;
-				pos.x += nx*SPEED*dt; 
+				flagDistance += SPEED * dt;
+				distance += SPEED * dt;
+				pos.x += nx * SPEED*dt;
 			}
 			else
 			{
@@ -71,9 +71,27 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 					turnBack = false;
 					nx = -nx; //only do this once}
 				}
-				flagDistance -= SPEED*dt; //we need distance for if else checking, and flagDistance to update pos.y
-				pos.x += nx*SPEED*dt;
-				CalculateVely(dt); //update pos.y
+				flagDistance -= SPEED * dt; //we need distance for if else checking, and flagDistance to update pos.y
+
+				#pragma region _Edit_1_
+				Vector2 shieldCenter = this->GetBBox().GetCenter();
+				Vector2 capCenter = cap->GetBBox().GetCenter();
+				Vector2 trans = capCenter - shieldCenter;
+				float ratio = (SPEED * dt) / std::abs(capCenter.x-shieldCenter.x);
+				trans.x *= ratio;
+				trans.y *= ratio;
+
+				#pragma endregion
+				pos.x += nx * SPEED*dt;
+				pos.y += trans.y;
+				//Todo: Restore this if fail
+				//CalculateVely(dt); //update pos.y
+				#pragma region _Edit_2_
+				
+
+				#pragma endregion
+
+
 				HandleCaptainCollison(dt, coObjects); //distance = 0
 			}
 		}
@@ -174,7 +192,7 @@ void Shield::flipPosx()
 	pos.x = 2 * cap->GetPos().x - pos.x + cap->GetWidth() - this->GetWidth();
 }
 void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects)
-{	
+{
 	if (nx < 0 && pos.x < cap->GetPos().x)
 	{
 		UpdateByCapState(cap->GetState(), cap->GetPos());
@@ -267,13 +285,16 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 
 void Shield::CalculateVely(float dt)
 {
-	//HACK:this moving may not perfect, we could calculate a math function, but i 'd like to if else a lot till it looks right
-	float destinationY = cap->GetPos().y + 10;
-	int distanceY = destinationY - pos.y;
-	// remember s=t*v
-	float timeX = distance / SPEED;
-	float speedY = distanceY / timeX;
-	pos.y += speedY * dt;
+#pragma region _Solution_1_
+	////HACK:this moving may not perfect, we could calculate a math function, but i 'd like to if else a lot till it looks right
+	//float destinationY = cap->GetPos().y + 10;
+	//int distanceY = destinationY - pos.y;
+	//// remember s=t*v
+	//float timeX = distance / SPEED;
+	//float speedY = distanceY / timeX;
+	//pos.y += speedY * dt;
+#pragma endregion
+
 }
 
 
