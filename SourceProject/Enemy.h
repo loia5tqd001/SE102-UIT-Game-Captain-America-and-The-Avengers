@@ -14,5 +14,7 @@ public:
 	Enemy(State state, int health, Vector2 spawnPos, Vector2 vel, int nx, Grid* grid);
 
 	void TakeDamage(int damage);
+
+	void OnOutOfViewPort() override { SetState(beforeExplode); }
 };
 

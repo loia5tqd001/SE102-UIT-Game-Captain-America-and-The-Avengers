@@ -12,11 +12,15 @@ private:
 	float timeOnGround = 0.0f;
 	SoundId sound;
 	SpriteId itemType; // use SpriteId to represent item type
+	class Capsule* parent;
+
+	void OnItemNotCollected();
 
 public:
-	Item(Vector2 pos, float maxY, SpriteId itemType);
+	Item(Vector2 pos, float maxY, SpriteId itemType, Capsule* parent);
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {}) override;
 	void BeingHit(); // call when captain use force to collide with capsule
 	void BeingCollected(); 
+	void OnOutOfViewPort() override; 
 };
 

@@ -117,28 +117,7 @@ void CharlestonScene::Draw()
 		capsule.Render();
 	}
 
-	//Test Items
-	if (1)
-	{
-
-		static std::unique_ptr<Item> item = std::make_unique<Item> ( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemKeyKrystal );
-		
-		if (wnd.IsKeyPressed(VK_NUMPAD0)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemSmallPowerStone );
-		if (wnd.IsKeyPressed(VK_NUMPAD1)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemBigPowerStone   );
-		if (wnd.IsKeyPressed(VK_NUMPAD2)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemFivePoint       );
-		if (wnd.IsKeyPressed(VK_NUMPAD3)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemOneUp           );
-		if (wnd.IsKeyPressed(VK_NUMPAD4)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemSmallEnergy     );
-		if (wnd.IsKeyPressed(VK_NUMPAD5)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemBigEnergy       );
-		if (wnd.IsKeyPressed(VK_NUMPAD6)) item = std::make_unique<Item>( Vector2{ 20.0f, 20.0f }, 60.0f, SpriteId::ItemKeyKrystal      );
-		
-		item->Update( GameTimer::Dt() );
-
-		if (wnd.IsKeyPressed('C'))
-			item->BeingHit();
-		if (wnd.IsKeyPressed('Z'))
-			item->BeingCollected();
-		item->Render();
-	}
+	
 
 	//if (0)
 	//{

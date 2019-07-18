@@ -2,12 +2,14 @@
 #include "Item.h"
 #include "ExitSign.h"
 #include "CaptainHealth.h"
+#include "Capsule.h"
 
-Item::Item(Vector2 pos, float maxY, SpriteId itemType) :
+Item::Item(Vector2 pos, float maxY, SpriteId itemType, Capsule* parent) :
 	VisibleObject(State::Item_Hide, pos),
 	maxY(maxY) ,
 	minY(pos.y - 10.0f),
-	itemType(itemType)
+	itemType(itemType),
+	parent(parent)
 {
 	shouldDrawImage = false;
 
@@ -77,12 +79,24 @@ void Item::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 		case State::Item_Disappearing:
 			if (!isFlashing) // done flashing, time to real disappear
+			{
 				curState = State::Destroyed;
+				OnItemNotCollected();
+			}
 			break;
 	}
 
 	OnFlashing(); // update flashing if it's being set
 	animations.at(curState).Update(dt);
+}
+
+void Item::OnItemNotCollected()
+{
+	curState = State::Destroyed;
+	if (itemType != SpriteId::ItemFivePoint) 
+	{
+		parent->OnItemNotCollected();
+	}
 }
 
 void Item::BeingHit()
@@ -115,4 +129,9 @@ void Item::BeingCollected()
 			CaptainHealth::Instance().Set(12);
 			break;
 	}	
+}
+
+void Item::OnOutOfViewPort()
+{
+	OnItemNotCollected();
 }

@@ -3,5 +3,9 @@
 
 class Spawner : public InvisibleObject
 {
+
+
+public:
+	void OnOutOfViewPort() override;
 };
 

@@ -19,6 +19,7 @@ public:
 
 	virtual void Update(float dt, const std::vector<GameObject*>& coObjects = {}) = 0;
 	virtual void Render() const = 0;
+	virtual void OnOutOfViewPort() {}
 
 	virtual ~GameObject() = default; 
 	GameObject(const GameObject&) = delete; 

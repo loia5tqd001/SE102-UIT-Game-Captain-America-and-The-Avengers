@@ -18,9 +18,8 @@ void Capsule::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 	if (curState == State::Capsule_Idle) return;
 
-	animations.at(curState).Update(dt);
-
 	// State::Capsule_Openning
+	animations.at(curState).Update(dt);
 	if (animations.at(curState).IsDoneCycle())
 	{
 		SetState(State::Capsule_Idle);
@@ -32,15 +31,16 @@ void Capsule::BeingHit()
 	if (curState == State::Capsule_Openning) return;
 	else SetState(State::Capsule_Openning);
 
-	auto itemType = isRealItemDropped ? SpriteId::ItemFivePoint : realItemType;
+	auto itemType = countRealItem > 0 ? realItemType : SpriteId::ItemFivePoint;
 
 	// to make sure item's symmetric
 	auto itemWidth = Sprites::Get(itemType).GetFrameSize(0).GetWidth();
 	auto dx = ( GetWidth() - float(itemWidth) ) / 2;
 	auto posSpawn = pos + Vector2{ dx, 0.0f };
 
-	auto item = grid->SpawnObject(std::make_unique<Item>(posSpawn, maxY, itemType));
-	dynamic_cast<Item*>(item)->BeingHit();		
+	auto item = grid->SpawnObject(std::make_unique<Item>(posSpawn, maxY, itemType, this));
+	dynamic_cast<Item*>(item)->BeingHit();	
 
-	if (!isRealItemDropped) isRealItemDropped = true;
+	if (itemType != SpriteId::ItemFivePoint)
+		countRealItem--;
 }
