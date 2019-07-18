@@ -3,16 +3,23 @@
 
 static auto& setting = Settings::Instance();
 
-Captain::Captain(const Vector2 & spawnPos) : VisibleObject(State::Captain_Standing, spawnPos), isInTheAir(false)
+Captain::Captain(const Vector2 & spawnPos) :
+	VisibleObject(State::Captain_Standing, spawnPos),
+	isInTheAir(false),
+	doubleKeyDownTimeOut(0.2f)
+	//Todo: Remove this when test is done
+	,shieldOn(true)
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
 	animations.emplace(State::Captain_Moving, Animation(SpriteId::Captain_Walking, 0.1f));
-	animations.emplace(State::Captain_Jump, Animation(SpriteId::Captain_Jump, 0.1f));
-
+	animations.emplace(State::Captain_Jump, Animation(SpriteId::Captain_Jump));
+	animations.emplace(State::Captain_Falling, Animation(SpriteId::Captain_Jump));
 	animations.emplace(State::Captain_LookUp, Animation(SpriteId::Captain_LookUp, 0.1f));
 	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.1f));
 	animations.emplace(State::Captain_Punching, Animation(SpriteId::Captain_Punching, 0.1f));
-	animations.emplace(State::Captain_Throw, Animation(SpriteId::Captain_Throw, 0.1f));
+	animations.emplace(State::Captain_Throw, Animation(SpriteId::Captain_Throw, 0.2f));
+	animations.emplace(State::Captain_JumpKick, Animation(SpriteId::Captain_JumpKick, 0.2f));
+
 	//bboxColor = Colors::MyPoisonGreen;
 }
 
@@ -30,6 +37,16 @@ void Captain::OnKeyDown(BYTE keyCode)
 			SetState(State::Captain_Jump);
 			isInTheAir = true;
 		}
+	}
+
+	if (keyCode == setting.Get(KeyControls::Attack)) {
+		if (isInTheAir == false)
+			if (shieldOn)
+				SetState(State::Captain_Throw);
+			else
+				SetState(State::Captain_Punching);
+		else
+			SetState(State::Captain_JumpKick);
 	}
 }
 
@@ -59,16 +76,29 @@ void Captain::ProcessInput()
 		return;
 	}
 
-	if (!isInTheAir)
+	if (wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
 	{
-		SetState(State::Captain_Standing);
+		if (!isInTheAir)
+		{
+			SetState(State::Captain_LookUp);
+		}
+		return;
+	}
+
+	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
+	{
+		if (!isInTheAir)
+		{
+			SetState(State::Captain_Sitting);
+		}
+		return;
 	}
 }
 
 void Captain::HandleNoCollisions(float dt)
 {
 	//Todo: Remove when test is done
-	if (isStandingOnTheGround() && curState == State::Captain_Jump)
+	if (isStandingOnTheGround() && isInTheAir)
 	{
 		pos.y = 200;
 		vel.y = 0;
@@ -117,6 +147,7 @@ void Captain::HandleCollisions(float dt, const std::vector<GameObject*>& coObjec
 
 void Captain::SetState(State state)
 {
+	prevState = curState;
 	VisibleObject::SetState(state);
 
 	assert(animations.count(state) == 1);
@@ -134,6 +165,18 @@ void Captain::SetState(State state)
 	case State::Captain_Jump:
 		vel.y = -JUMPING_SPEED;
 		break;
+	case State::Captain_Punching:
+		vel.x = 0;
+		vel.y = 0;
+	case State::Captain_LookUp:
+		vel.x = 0.0f;
+		vel.y = 0.0f;
+		break;
+	case State::Captain_Sitting:
+		vel.x = 0.0f;
+		vel.y = 0.0f;
+	case State::Captain_JumpKick:
+		vel.x = 0.0f;
 	default:
 		break;
 	}
@@ -144,8 +187,51 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	//early checking
 	if (curState == State::Destroyed)
 		return;
+	switch (curState)
+	{
+	case State::Captain_JumpKick:
+		if (animations.at(curState).IsDoneCycle())
+			SetState(State::Captain_Falling);
+		break;
+	case State::Captain_Throw:
+	case State::Captain_Punching:
+	case State::Captain_Sitting:
+	case State::Captain_LookUp:
+		if (animations.at(curState).IsDoneCycle())
+			SetState(State::Captain_Standing);
+		break;
+	case State::Captain_Moving:
+		SetState(State::Captain_Standing);
+		break;
+	default:
+		break;
+	}
+#pragma region _EDIT_
+	//if (curState==State::Captain_JumpKick)
+	//{
+	//	if (animations.at(curState).IsDoneCycle())
+	//	{
+	//		SetState(State::Captain_Falling);
+	//	}
+	//}
 
-	// regular updates
+	//if (curState==State::Captain_Throw)
+	//{
+	//	if (animations.at(curState).IsDoneCycle())
+	//	{
+	//		SetState(State::Captain_Standing);
+	//	}
+	//}
+
+	//if (curState==State::Captain_Punching)
+	//{
+	//	if (animations.at(curState).IsDoneCycle())
+	//	{
+	//		SetState(State::Captain_Standing);
+	//	}
+	//}
+#pragma endregion
+	//Gravity to make Cap fall
 	if (isInTheAir)
 	{
 		vel.y += GRAVITY * dt;
