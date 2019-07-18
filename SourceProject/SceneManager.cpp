@@ -72,7 +72,6 @@ void SceneManager::Update(float dt)
 	if (!curScene->IsPause())
 	{
 		curScene->Update(dt);
-		ExitSign::Instance().Update(dt);
 	}
 
 	Sounds::HandleInput();
@@ -92,7 +91,7 @@ void SceneManager::Draw()
 	}
 	else {
 		curScene->Draw();
-		ExitSign::Instance().Render();
+		ExitSign::Instance().Draw();
 		CaptainHealth::Instance().Draw();
 		DebugDraw::DrawCrt();
 	}

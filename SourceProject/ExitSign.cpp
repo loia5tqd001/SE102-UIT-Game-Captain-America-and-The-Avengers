@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ExitSign.h"
 
-ExitSign::ExitSign() : VisibleObject(State::Destroyed, {}) // state is not used
+ExitSign::ExitSign() 
 {
 	ResetNewStage();
 }
@@ -9,23 +9,16 @@ ExitSign::ExitSign() : VisibleObject(State::Destroyed, {}) // state is not used
 void ExitSign::ResetNewStage()
 {
 	isKrystalCollected = false;
-	nFramesAfterKrystalCollected = 0;
+	timePassedAfterKrystalCollected = 0.0f;
 }
 
-void ExitSign::Update(float dt, const std::vector<GameObject*>& coObjects)
-{
-	if (!isKrystalCollected) return;
-
-	nFramesAfterKrystalCollected++;
-}
-
-void ExitSign::Render() const
+void ExitSign::Draw()
 {
 	if (!isKrystalCollected) return;
 
 	static auto& sprite = Sprites::Get(SpriteId::ExitSign);
 
-	if (nFramesAfterKrystalCollected <= 45)
+	if ((timePassedAfterKrystalCollected += GameTimer::Dt()) <= 0.96f)
 	{
 		auto exitPos = krystalPos - Vector2{ 9.0f, 25.0f };
 		auto drawablePos = Camera::Instance().GetPositionInViewPort(exitPos);
@@ -49,7 +42,7 @@ void ExitSign::Render() const
 void ExitSign::KrystalCollected(const Vector2& krystalPos)
 {
 	isKrystalCollected = true;
-	nFramesAfterKrystalCollected = 0;
+	timePassedAfterKrystalCollected = 0.0f;
 	this->krystalPos = krystalPos;
 }
 
