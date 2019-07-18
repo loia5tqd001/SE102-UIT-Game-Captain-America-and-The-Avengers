@@ -30,15 +30,6 @@ void Grid::LoadObjects(const Json::Value& grid)
 
 	for (const auto& jsonObj : jsonObjects)
 	{
-		//const int   classId  = jsonObj[0].asInt  ();
-		//const float x        = jsonObj[1].asFloat();
-		//const float y        = jsonObj[2].asFloat();
-		//const UINT  width    = jsonObj[3].asUInt ();
-		//const UINT  height   = jsonObj[4].asUInt ();
-		//const float vx       = jsonObj[5].asFloat();
-		//const float vy       = jsonObj[6].asFloat();
-		//const float nx       = jsonObj[7].asFloat();
-
 		static std::unique_ptr<GameObject> object;
 		const int classId  = jsonObj[0].asInt();
 		switch ((ClassId)classId)
@@ -51,15 +42,19 @@ void Grid::LoadObjects(const Json::Value& grid)
 			case ClassId::Switch        :  
 			case ClassId::NextMap       :  
 			case ClassId::Door   		:
-				object = ObjectFactory::Create<Block>(jsonObj);
+				object = ObjectFactory::Create<Block>(jsonObj, this);
+				break;
+
+			case ClassId::Capsule:
+				object = ObjectFactory::Create<Capsule>(jsonObj, this);
 				break;
 
 			case ClassId::Spawner:
-				object = ObjectFactory::Create<Spawner>(jsonObj);
+				object = ObjectFactory::Create<Spawner>(jsonObj, this);
 				break;
 
 			case ClassId::AmbushTrigger:
-				object = ObjectFactory::Create<AmbushTrigger>(jsonObj);
+				object = ObjectFactory::Create<AmbushTrigger>(jsonObj, this);
 				break;
 
 			default:

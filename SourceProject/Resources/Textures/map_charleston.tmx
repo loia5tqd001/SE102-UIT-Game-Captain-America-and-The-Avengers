@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="128" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="128" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="47">
  <tileset firstgid="1" name="4. TileMapCharleston.png" tilewidth="16" tileheight="16" tilecount="88" columns="11">
   <image source="4. TileMapCharleston.png" width="176" height="128"/>
  </tileset>
@@ -37,4 +37,54 @@
 77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,78,79,78,79,78,79,78,79,78,79,78,79,78,79,79,78
 </data>
  </layer>
+ <objectgroup color="#aa00ff" id="2" name="RigidBlocks(classid=1)">
+  <object id="2" name="RigidBlock" x="1792" y="421" width="63" height="59"/>
+  <object id="3" name="RigidBlock" x="1855" y="437" width="161" height="43"/>
+  <object id="4" name="RigidBlock" x="2016" y="309" width="32" height="171"/>
+  <object id="6" name="RigidBlock" x="1792" y="309" width="224" height="43"/>
+ </objectgroup>
+ <objectgroup color="#ffaa00" id="8" name="NextMap(classid=7)">
+  <object id="37" name="NextMap" x="1968" y="352" width="48" height="85"/>
+ </objectgroup>
+ <objectgroup color="#00ff00" id="5" name="Spawners(classid=9)"/>
+ <objectgroup color="#ffffff" id="6" name="AmbushTrigger(classid=10)">
+  <object id="24" name="AmbushTrigger" x="399" y="0" width="113" height="480"/>
+ </objectgroup>
+ <objectgroup color="#ffff00" id="7" name="Capsules(classid=11)">
+  <object id="25" name="SmallPowerStone(13),maxy=308" x="64" y="272" width="16" height="16"/>
+  <object id="27" name="SmallPowerStone(13),maxy=454" x="128" y="368" width="16" height="16"/>
+  <object id="28" name="SmallPowerStone(13),maxy=437" x="320" y="383" width="16" height="16"/>
+  <object id="30" name="BigPowerStone(14),maxy=437" x="1184" y="289" width="16" height="16"/>
+  <object id="31" name="BigPowerStone(14),maxy=309" x="1344" y="272" width="16" height="16"/>
+  <object id="32" name="SmallEnergy(17),maxy=437" x="416" y="289" width="16" height="16"/>
+  <object id="33" name="SmallEnergy(17),maxy=357" x="832" y="320" width="16" height="16"/>
+  <object id="34" name="SmallEnergy(17),maxy=454" x="1408" y="368" width="16" height="16"/>
+  <object id="35" name="BigEnergy(18),maxy=437" x="1088" y="384" width="16" height="16"/>
+  <object id="36" name="KeyKrystal(19),maxy=357" x="576" y="321" width="16" height="16"/>
+  <object id="45" name="BigEnergy(18),maxy=437" x="1600" y="384" width="16" height="16"/>
+  <object id="46" name="BigEnergy(18),maxy=437" x="1696" y="289" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup color="#ff00ff" id="3" name="Water(classid=2)">
+  <object id="9" name="Water" x="0" y="454" width="1792" height="26"/>
+ </objectgroup>
+ <objectgroup color="#0000ff" id="4" name="PassableLedges(classid=3)">
+  <object id="12" name="PassableLedge" x="0" y="437" width="96" height="12"/>
+  <object id="13" name="PassableLedge" x="160" y="437" width="1216" height="12"/>
+  <object id="14" name="PassableLedge" x="1440" y="437" width="352" height="12"/>
+  <object id="15" name="PassableLedge" x="48" y="309" width="48" height="10"/>
+  <object id="16" name="PassableLedge" x="32" y="197" width="224" height="10"/>
+  <object id="17" name="PassableLedge" x="288" y="197" width="224" height="10"/>
+  <object id="18" name="PassableLedge" x="544" y="197" width="224" height="10"/>
+  <object id="19" name="PassableLedge" x="800" y="197" width="224" height="10"/>
+  <object id="20" name="PassableLedge" x="1056" y="197" width="224" height="10"/>
+  <object id="21" name="PassableLedge" x="1312" y="197" width="224" height="10"/>
+  <object id="22" name="PassableLedge" x="1568" y="197" width="224" height="10"/>
+  <object id="23" name="PassableLedge" x="1328" y="309" width="48" height="10"/>
+  <object id="39" name="PassableLedge" x="672" y="357" width="48" height="10"/>
+  <object id="40" name="PassableLedge" x="576" y="357" width="32" height="10"/>
+  <object id="41" name="PassableLedge" x="624" y="277" width="32" height="10"/>
+  <object id="42" name="PassableLedge" x="880" y="277" width="32" height="10"/>
+  <object id="43" name="PassableLedge" x="832" y="357" width="32" height="10"/>
+  <object id="44" name="PassableLedge" x="928" y="357" width="48" height="10"/>
+ </objectgroup>
 </map>

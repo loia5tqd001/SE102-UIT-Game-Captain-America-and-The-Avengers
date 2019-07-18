@@ -20,11 +20,17 @@ void CharlestonScene::LoadResources()
 	const auto root = GetRootJson("Resources\\Data\\scene-charleston.json");
 
 	map = std::make_unique<Map>( root );
+	grid = std::make_unique<Grid>( root );
 	cap = std::make_unique<Captain>(Vector2(0, 100));
 }
 
 void CharlestonScene::Update(float dt)
 {
+	grid->UpdateCells();
+	for (auto& obj : grid->GetObjectsInViewPort())
+	{
+		obj->Update(dt);
+	}
 	cam.ClampWithin( map->GetWorldBoundary() );
 	std::vector<GameObject*> co;
 	cap->Update(dt, co);
@@ -41,7 +47,8 @@ void CharlestonScene::Update(float dt)
 #include "Shield.h"
 
 void CharlestonScene::Draw()
-{
+{	
+
 	static auto& wnd = Window::Instance();
 	map->Render();
 	cap->Render();
@@ -76,7 +83,7 @@ void CharlestonScene::Draw()
 		std::vector<GameObject*> co;
 		BulletEnemyRocket.Update(GameTimer::Dt(), co);
 
-		BulletEnemyRocket.Render();
+		//BulletEnemyRocket.Render();
 	}
 
 	if (1) // test EnemyRocket
@@ -154,14 +161,19 @@ void CharlestonScene::Draw()
 		if (wnd.IsKeyPressed('P')) CaptainHealth::Instance().Subtract(1);
 		if (wnd.IsKeyPressed('0')) CaptainHealth::Instance().Set(0);
 	}
-	/*if (wnd.IsKeyPressed(VK_LEFT))
+	if (wnd.IsKeyPressed('A'))
 		cam.MoveBy( { -5.0f, 0.0f });
-	if (wnd.IsKeyPressed(VK_UP))
+	if (wnd.IsKeyPressed('W'))
 		cam.MoveBy( { 0.0f, -5.0f });
-	if (wnd.IsKeyPressed(VK_RIGHT))
+	if (wnd.IsKeyPressed('D'))
 		cam.MoveBy( { 5.0f, 0.0f });
-	if (wnd.IsKeyPressed(VK_DOWN))
-		cam.MoveBy( { 0.0f, 5.0f });*/
+	if (wnd.IsKeyPressed('S'))
+		cam.MoveBy( { 0.0f, 5.0f });
+	for (auto& obj : grid->GetObjectsInViewPort())
+	{
+		obj->Render();
+	}
+	grid->RenderCells();
 }
 
 void CharlestonScene::OnKeyDown(BYTE keyCode)

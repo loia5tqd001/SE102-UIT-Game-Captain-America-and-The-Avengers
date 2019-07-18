@@ -39,7 +39,6 @@ enum class SpriteId
 
 	ItemSmallPowerStone             = 13,
 	ItemBigPowerStone               = 14,
-
 	ItemFivePoint                   = 15,
 	ItemOneUp                       = 16,
 	ItemSmallEnergy                 = 17,
@@ -107,6 +106,7 @@ enum class ClassId
 	Door                 =   8,
 	Spawner              =   9,
 	AmbushTrigger        =  10,
+	Capsule              =  11,
 
 	// moving objects: being spawned
 	EnemyGun             =  100,
