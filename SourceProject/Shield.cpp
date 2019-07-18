@@ -2,7 +2,7 @@
 #include "Shield.h"
 
 
-Shield::Shield(Captain *captain) : VisibleObject(State::Invisible,captain->GetPos())
+Shield::Shield(Captain *captain) : VisibleObject(State::Shield_Straight,captain->GetPos())
 {
 	animations.emplace(State::Shield_Up, Animation(SpriteId::Shield_Up, 0.1f));
 	animations.emplace(State::Shield_Down, Animation(SpriteId::Shield_Down, 0.1f));
@@ -19,7 +19,8 @@ void Shield::SetState(State state)
 }
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	nx = cap->GetNx();
+	if (isOnCaptain) 
+		nx = cap->GetNx();// get nx to flip posx
 
 	switch (curState)
 	{
@@ -54,18 +55,25 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 		}
 		else {
 			//to the max_distance
-			static float flagDistance;
-			flagDistance = distance;
-			if (flagDistance < MAX_DISTANCE)
+			static float flagDistance = 0;
+			static bool turnBack;
+			if (distance < MAX_DISTANCE)
 			{
-				flagDistance += SPEED;
-				pos.x += nx * SPEED *dt;
+				turnBack = true;
+				flagDistance += SPEED*dt;
+				distance += SPEED*dt;
+				pos.x += nx*SPEED*dt; // nx is not allow to use in this 
 			}
 			else
 			{
-				flagDistance -= SPEED;
-				pos.x -= nx * SPEED *dt;
-				CalculateVely();
+				if (turnBack)
+				{ //i tried flag with (flagDistance>MAX_DISTANCE) then flagDistance-= SPEED but it cause bug: it may do the functiton 2 times
+					turnBack = false;
+					nx = -nx; //only do this once}
+				}
+				flagDistance -= SPEED*dt; //we need distance for if else checking, and flagDistance to update pos.y
+				pos.x += nx*SPEED*dt;
+				CalculateVely(dt); //update pos.y
 				HandleCaptainCollison(dt, coObjects); //distance = 0
 			}
 			break;
@@ -78,8 +86,12 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 void Shield::ThrowAway()
 {
-	UpdateByCapState(State::Captain_Throw, cap->GetPos());
-	isOnCaptain = false; //go to the moving code in update
+	if (isOnCaptain) { //cannot throw when shield is not on cap
+		UpdateByCapState(State::Captain_Throw, cap->GetPos());
+		isOnCaptain = false; //go to the moving code in update
+		nx = cap->GetNx();
+		cap->setShieldOn(false);
+	}
 }
 
 void Shield::UpdateByCapState(State capState, Vector2 capPos)
@@ -161,9 +173,21 @@ void Shield::flipPosx()
 	pos.x = 2 * cap->GetPos().x - pos.x + cap->GetWidth() - this->GetWidth();
 }
 void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects)
-{
-	distance = 0;
-	isOnCaptain = true;
+{	
+	if (nx < 0 && pos.x < cap->GetPos().x)
+	{
+		UpdateByCapState(cap->GetState(), cap->GetPos());
+		isOnCaptain = true;
+		distance = 0;
+		cap->setShieldOn(true);
+	}
+	else if (nx > 0 && pos.x > cap->GetPos().x)
+	{
+		UpdateByCapState(cap->GetState(), cap->GetPos());
+		isOnCaptain = true;
+		distance = 0;
+		cap->setShieldOn(true);
+	}
 }
 void Shield::HandleSideCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
@@ -177,15 +201,15 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 {
 }
 
-void Shield::CalculateVely()
+void Shield::CalculateVely(float dt)
 {
 	//HACK:this moving may not perfect, we could calculate a math function, but i 'd like to if else a lot till it looks right
-	float destinationY = cap->GetPos().y - cap->GetHeight() / 2;
+	float destinationY = cap->GetPos().y + 10;
 	int distanceY = destinationY - pos.y;
 	// remember s=t*v
 	float timeX = distance / SPEED;
 	float speedY = distanceY / timeX;
-	pos.y += speedY;
+	pos.y += speedY * dt;
 }
 
 

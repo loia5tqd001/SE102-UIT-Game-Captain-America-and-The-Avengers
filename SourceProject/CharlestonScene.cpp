@@ -33,6 +33,7 @@ void CharlestonScene::Update(float dt)
 #include "Item.h"
 #include "Captain.h"
 #include "CaptainHealth.h"
+#include "Shield.h"
 
 void CharlestonScene::Draw()
 {
@@ -130,6 +131,16 @@ void CharlestonScene::Draw()
 		cap.Update(GameTimer::Dt(), co);
 
 		cap.Render();
+
+		//test shield
+		static Captain *captain = &cap;
+		static Shield shield(captain);
+		shield.Update(GameTimer::Dt(), co);
+		static auto& setting = Settings::Instance();
+		if (wnd.IsKeyPressed('T'))
+			shield.ThrowAway();
+
+		shield.Render();
 	}
 
 	if (1)

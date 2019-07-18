@@ -159,12 +159,11 @@
     <ClCompile Include="Item.cpp">
       <Filter>Development\Objects\Misc.</Filter>
     </ClCompile>
-    <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Enemy.cpp">
       <Filter>Development\Objects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Capsule.cpp">
-      <Filter>Development\Objects\Misc.</Filter>
+      <Filter>Development\Objects\Items</Filter>
     </ClCompile>
     <ClCompile Include="Shield.cpp">
       <Filter>Development\Objects</Filter>
@@ -312,9 +311,11 @@
     <ClInclude Include="Item.h">
       <Filter>Development\Objects\Misc.</Filter>
     </ClInclude>
-    <ClInclude Include="Shield.h" />
     <ClInclude Include="Capsule.h">
       <Filter>Development\Objects\Misc.</Filter>
+    </ClInclude>
+    <ClInclude Include="Shield.h">
+      <Filter>Development\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Shield.h">
       <Filter>Development\Objects</Filter>

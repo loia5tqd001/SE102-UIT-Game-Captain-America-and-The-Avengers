@@ -45,7 +45,8 @@ enum class SpriteId
 	ItemSmallEnergy                 = 17,
 	ItemBigEnergy                   = 18,
 	ItemKeyKrystal                  = 19,
-	ExitSign                        = 20,	
+
+	ExitSign                        = 20,
 	CaptainHealth                   = 21,
 	CapsuleIdle                     = 22,
 	CapsuleOpenning                 = 23,
@@ -55,8 +56,8 @@ enum class SpriteId
 	Shield_Down                     = 26,
 	Shield_Up                       = 27,
 
-	Captain_Standing               = 100,
-	Captain_Walking                = 101
+	Captain_Standing				= 100,
+	Captain_Walking					= 101
 };
 
 enum class SoundId

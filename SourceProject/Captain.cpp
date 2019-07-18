@@ -136,9 +136,3 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	//OnFlashing();
 }
 
-//Captain & Captain::Instance()
-//{
-//	static Captain instance;
-//	return instance;
-//}
-
