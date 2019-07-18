@@ -31,7 +31,8 @@ void CharlestonScene::Update(float dt)
 
 #include "Capsule.h"
 #include "Item.h"
-#include"Captain.h"
+#include "Captain.h"
+#include "CaptainHealth.h"
 
 void CharlestonScene::Draw()
 {
@@ -99,8 +100,6 @@ void CharlestonScene::Draw()
 		capsule.Render();
 	}
 
-	Sprites::Get( SpriteId::CaptainHealth ).Draw( { 200.0f, 0.0f } );
-
 	//Test Items
 	if (1)
 	{
@@ -131,6 +130,13 @@ void CharlestonScene::Draw()
 		cap.Update(GameTimer::Dt(), co);
 
 		cap.Render();
+	}
+
+	if (1)
+	{
+		if (wnd.IsKeyPressed('O')) CaptainHealth::Instance().Add(1);
+		if (wnd.IsKeyPressed('P')) CaptainHealth::Instance().Subtract(1);
+		if (wnd.IsKeyPressed('0')) CaptainHealth::Instance().Set(0);
 	}
 
 	/*if (wnd.IsKeyPressed(VK_LEFT))

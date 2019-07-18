@@ -188,6 +188,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Capsule.cpp" />
     <ClCompile Include="Captain.cpp" />
+    <ClCompile Include="CaptainHealth.cpp" />
     <ClCompile Include="CharlestonScene.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Capsule.h" />
     <ClInclude Include="Captain.h" />
+    <ClInclude Include="CaptainHealth.h" />
     <ClInclude Include="CharlestonScene.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Colors.h" />

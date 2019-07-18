@@ -17,7 +17,6 @@ public:
 	Item(Vector2 pos, float maxY, SpriteId itemType);
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {}) override;
 	void BeingHit(); // call when captain use force to collide with capsule
-	void BeingCollected(); // depend on GetItemType() captain will get corresponding result, item itself won't acknowledge about that result
-	auto GetItemType() const { return itemType; }
+	void BeingCollected(); 
 };
 

@@ -172,6 +172,9 @@
     <ClCompile Include="ExitSign.cpp">
       <Filter>Development\Objects\Items</Filter>
     </ClCompile>
+    <ClCompile Include="CaptainHealth.cpp">
+      <Filter>Development\Objects\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -317,6 +320,9 @@
       <Filter>Development\Objects</Filter>
     </ClInclude>
     <ClInclude Include="ExitSign.h">
+      <Filter>Development\Objects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainHealth.h">
       <Filter>Development\Objects\Items</Filter>
     </ClInclude>
   </ItemGroup>

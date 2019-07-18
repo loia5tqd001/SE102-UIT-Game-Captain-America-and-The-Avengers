@@ -5,6 +5,7 @@
 #include "PittsburghScene.h"
 #include "RedAlertScene.h"
 #include "ExitSign.h"
+#include "CaptainHealth.h"
 
 void SceneManager::ToggleMuteMode() const
 {
@@ -92,6 +93,7 @@ void SceneManager::Draw()
 	else {
 		curScene->Draw();
 		ExitSign::Instance().Render();
+		CaptainHealth::Instance().Draw();
 		DebugDraw::DrawCrt();
 	}
 	settingScene.Draw();

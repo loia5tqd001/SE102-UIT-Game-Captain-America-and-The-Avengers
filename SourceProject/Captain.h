@@ -1,10 +1,13 @@
 #pragma once
 #include "VisibleObject.h"
+#include "CaptainHealth.h"
 
 class Captain : public VisibleObject
 {
 private:
 	static constexpr float WALKING_SPEED = 50.0f;
+
+	CaptainHealth& health = CaptainHealth::Instance();
 
 	void ProcessInput();
 	void HandleNoCollisions(float dt);

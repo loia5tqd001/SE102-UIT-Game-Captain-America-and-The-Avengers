@@ -34,7 +34,7 @@ void ExitSign::Render() const
 	else {
 		static int count = 0;
 		static bool shouldDraw = false;
-		if (count <= 5) {
+		if (count <= 10) {
 			count++;
 		}
 		else {

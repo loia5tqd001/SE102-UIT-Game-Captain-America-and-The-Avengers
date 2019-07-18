@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Item.h"
 #include "ExitSign.h"
+#include "CaptainHealth.h"
 
 Item::Item(Vector2 pos, float maxY, SpriteId itemType) :
 	VisibleObject(State::Item_Hide, pos),
@@ -69,6 +70,7 @@ void Item::Update(float dt, const std::vector<GameObject*>& coObjects)
 			if (timeOnGround >= TIME_TO_DISAPPEAR)
 			{
 				curState = State::Item_Disappearing;
+				timeOnGround = 0.0f;
 				OnFlashing(true);
 			}
 			break;
@@ -98,8 +100,19 @@ void Item::BeingCollected()
 
 	Sounds::PlayAt(sound);
 	curState = State::Destroyed;
-	if (itemType == SpriteId::ItemKeyKrystal) 
+
+	switch (itemType)
 	{
-		ExitSign::Instance().KrystalCollected(pos);
-	}
+		case SpriteId::ItemKeyKrystal:
+			ExitSign::Instance().KrystalCollected(pos);
+			break;
+
+		case SpriteId::ItemSmallEnergy:
+			CaptainHealth::Instance().Add(2);
+			break;
+
+		case SpriteId::ItemBigEnergy:
+			CaptainHealth::Instance().Set(12);
+			break;
+	}	
 }
