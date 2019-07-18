@@ -56,8 +56,14 @@ enum class SpriteId
 	Shield_Down                     = 26,
 	Shield_Up                       = 27,
 
-	Captain_Standing				= 100,
-	Captain_Walking					= 101
+	Captain_Standing = 100,
+	Captain_Walking = 101,
+	Captain_Jump = 102,
+	Captain_LookUp = 103,
+	Captain_Sitting = 104,
+	Captain_Punching = 105,
+	Captain_Throw = 106, 
+	Captain_Falling = 107
 };
 
 enum class SoundId
@@ -125,12 +131,16 @@ enum class State
 
 	Captain_Standing,
 	Captain_Moving,
+	Captain_Jump,
+	Captain_LookUp,
+	Captain_Sitting,
+	Captain_Punching,
+	Captain_Falling,
+	Captain_Throw,
 	Captain_OnOneKnee,
 	Captain_OnTwoKnee,
-	Captain_Jump,
 	Captain_JumpKick,
 	Captain_SitPunch,
-	Captain_Throw,
 	Captain_Smash,
 	Captain_Climb,
 	Captain_Spin

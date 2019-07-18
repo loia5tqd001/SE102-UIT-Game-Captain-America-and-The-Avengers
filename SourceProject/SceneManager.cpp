@@ -104,7 +104,7 @@ void SceneManager::OnKeyDown(BYTE keyCode)
 	if (settingScene.IsOpening()) 
 		settingScene.OnKeyDown(keyCode);
 	else                         
-		curScene->OnKeyDown(keyCode);
+ 		curScene->OnKeyDown(keyCode);
 
 	switch (keyCode)
 	{

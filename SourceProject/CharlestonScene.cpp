@@ -1,16 +1,18 @@
 #include "pch.h"
 #include "CharlestonScene.h"
 
+
 static auto& cam = Camera::Instance();
 
 CharlestonScene::CharlestonScene()
 {
 	LoadResources();
-
+	
 	if (!IsPause())
 	{
 		Sounds::PlayLoop( GetBgMusic() );
 	}
+	
 }
 
 void CharlestonScene::LoadResources()
@@ -18,11 +20,14 @@ void CharlestonScene::LoadResources()
 	const auto root = GetRootJson("Resources\\Data\\scene-charleston.json");
 
 	map = std::make_unique<Map>( root );
+	cap = std::make_unique<Captain>(Vector2(0, 100));
 }
 
 void CharlestonScene::Update(float dt)
 {
 	cam.ClampWithin( map->GetWorldBoundary() );
+	std::vector<GameObject*> co;
+	cap->Update(dt, co);
 }
 #include "EnemyGun.h"
 #include "BulletEnemyGun.h"
@@ -39,7 +44,7 @@ void CharlestonScene::Draw()
 {
 	static auto& wnd = Window::Instance();
 	map->Render();
-
+	cap->Render();
 	if (1) // test enemyGun
 	{
 		static EnemyGun enemyGun( { 100.0f, 100.0f }, {}, 1, nullptr );
@@ -124,7 +129,7 @@ void CharlestonScene::Draw()
 		item->Render();
 	}
 
-	if (1)
+	/*if (1)
 	{
 		static Captain cap(Vector2(0, 100));
 		std::vector<GameObject*> co;
@@ -149,7 +154,7 @@ void CharlestonScene::Draw()
 		if (wnd.IsKeyPressed('P')) CaptainHealth::Instance().Subtract(1);
 		if (wnd.IsKeyPressed('0')) CaptainHealth::Instance().Set(0);
 	}
-
+	}*/
 	/*if (wnd.IsKeyPressed(VK_LEFT))
 		cam.MoveBy( { -5.0f, 0.0f });
 	if (wnd.IsKeyPressed(VK_UP))
@@ -158,7 +163,6 @@ void CharlestonScene::Draw()
 		cam.MoveBy( { 5.0f, 0.0f });
 	if (wnd.IsKeyPressed(VK_DOWN))
 		cam.MoveBy( { 0.0f, 5.0f });*/
-
 }
 
 void CharlestonScene::OnKeyDown(BYTE keyCode)
@@ -168,6 +172,6 @@ void CharlestonScene::OnKeyDown(BYTE keyCode)
 		case VK_RETURN:
 			DoTransitionScene(Scene::BossCharleston);
 			break;
-
 	}
+	cap->OnKeyDown(keyCode);
 }
