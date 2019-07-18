@@ -2,7 +2,7 @@
 #include "AbstractScene.h"
 
 //Warning: Include header file
-#include"Captain.h"
+#include"Shield.h"
 
 class CharlestonScene : public AbstractScene
 {
@@ -10,6 +10,7 @@ private:
 	std::unique_ptr<Map> map; 
 	std::unique_ptr<Grid> grid; 	
 	std::unique_ptr<Captain> cap; //Just for testing... 
+	std::unique_ptr<Shield> shield;
 
 public:
 	CharlestonScene();

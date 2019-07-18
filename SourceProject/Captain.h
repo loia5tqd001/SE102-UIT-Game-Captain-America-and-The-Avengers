@@ -27,6 +27,7 @@ public:
 	int GetNx() { return nx; };
 	void OnKeyDown(BYTE keyCode);
 	void SetState(State state) override;
+	State GetState() { return curState; }
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	void setShieldOn(bool b) { this->shieldOn = b; } //shield let captain know
 };

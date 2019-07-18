@@ -22,6 +22,7 @@ void CharlestonScene::LoadResources()
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
 	cap = std::make_unique<Captain>(Vector2(0, 100));
+	shield = std::make_unique<Shield>(cap.get());
 }
 
 void CharlestonScene::Update(float dt)
@@ -34,6 +35,7 @@ void CharlestonScene::Update(float dt)
 	cam.ClampWithin( map->GetWorldBoundary() );
 	std::vector<GameObject*> co;
 	cap->Update(dt, co);
+	shield->Update(dt, co);
 }
 #include "EnemyGun.h"
 #include "BulletEnemyGun.h"
@@ -52,6 +54,7 @@ void CharlestonScene::Draw()
 	static auto& wnd = Window::Instance();
 	map->Render();
 	cap->Render();
+	shield->Render();
 	if (1) // test enemyGun
 	{
 		static EnemyGun enemyGun( { 50.0f, 100.0f }, {}, 1, nullptr );
@@ -136,24 +139,24 @@ void CharlestonScene::Draw()
 		item->Render();
 	}
 
-	if (1)
-	{
-		static Captain cap(Vector2(0, 100));
-		std::vector<GameObject*> co;
-		cap.Update(GameTimer::Dt(), co);
+	//if (0)
+	//{
+	//	static Captain cap(Vector2(0, 100));
+	//	std::vector<GameObject*> co;
+	//	cap.Update(GameTimer::Dt(), co);
 
-		cap.Render();
+	//	cap.Render();
 
-		//test shield
-		static Captain *captain = &cap;
-		static Shield shield(captain);
-		shield.Update(GameTimer::Dt(), co);
-		static auto& setting = Settings::Instance();
-		if (wnd.IsKeyPressed('T'))
-			shield.ThrowAway();
+	//	//test shield
+	//	static Captain *captain = &cap;
+	//	static Shield shield(captain);
+	//	shield.Update(GameTimer::Dt(), co);
+	//	static auto& setting = Settings::Instance();
+	//	if (wnd.IsKeyPressed('T'))
+	//		shield.ThrowAway();
 
-		shield.Render();
-	}
+	//	shield.Render();
+	//}
 
 	if (1)
 	{
@@ -185,4 +188,9 @@ void CharlestonScene::OnKeyDown(BYTE keyCode)
 			break;
 	}
 	cap->OnKeyDown(keyCode);
+	if (cap->GetState()==State::Captain_Throw)
+	{
+		shield->ThrowAway();
+		cap->setShieldOn(false);
+	}
 }
