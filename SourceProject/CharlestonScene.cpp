@@ -47,7 +47,7 @@ void CharlestonScene::Draw()
 	cap->Render();
 	if (1) // test enemyGun
 	{
-		static EnemyGun enemyGun( { 100.0f, 100.0f }, {}, 1, nullptr );
+		static EnemyGun enemyGun( { 50.0f, 100.0f }, {}, 1, nullptr );
 		std::vector<GameObject*> co;
 		enemyGun.Update(GameTimer::Dt(), co);
 
@@ -129,7 +129,7 @@ void CharlestonScene::Draw()
 		item->Render();
 	}
 
-	/*if (1)
+	if (1)
 	{
 		static Captain cap(Vector2(0, 100));
 		std::vector<GameObject*> co;
@@ -154,7 +154,6 @@ void CharlestonScene::Draw()
 		if (wnd.IsKeyPressed('P')) CaptainHealth::Instance().Subtract(1);
 		if (wnd.IsKeyPressed('0')) CaptainHealth::Instance().Set(0);
 	}
-	}*/
 	/*if (wnd.IsKeyPressed(VK_LEFT))
 		cam.MoveBy( { -5.0f, 0.0f });
 	if (wnd.IsKeyPressed(VK_UP))

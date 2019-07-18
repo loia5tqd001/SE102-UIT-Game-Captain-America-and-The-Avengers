@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Shield.h"
+#include "Enemy.h"
+#include "BulletEnemyGun.h"
 
 
 Shield::Shield(Captain *captain) : VisibleObject(State::Shield_Straight,captain->GetPos())
@@ -50,8 +52,6 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 		if (isOnCaptain)
 		{
 			UpdateByCapState(cap->GetState(), cap->GetPos());
-			HandleUpCollison(dt, coObjects);
-			break;
 		}
 		else {
 			//to the max_distance
@@ -62,7 +62,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				turnBack = true;
 				flagDistance += SPEED*dt;
 				distance += SPEED*dt;
-				pos.x += nx*SPEED*dt; // nx is not allow to use in this 
+				pos.x += nx*SPEED*dt; 
 			}
 			else
 			{
@@ -76,8 +76,9 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				CalculateVely(dt); //update pos.y
 				HandleCaptainCollison(dt, coObjects); //distance = 0
 			}
-			break;
 		}
+		HandleUpCollison(dt, coObjects);
+		break;
 	}
 	default:
 		break;
@@ -191,14 +192,77 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 }
 void Shield::HandleSideCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	if (coEvents.size() == 0) return;
+	if (isOnCaptain) //deflect bullet
+	{
+		for (UINT i = 0; i < coEvents.size(); i++)
+		{
+			const CollisionEvent& e = coEvents[i];
+
+			if (auto bullet = dynamic_cast<BulletEnemyGun*>(e.pCoObj))
+			{
+				if (e.nx > 0.0f && this->nx > 0 || e.nx < 0.0f && this->nx < 0)
+				{
+					bullet->Reflect();
+				}
+			}
+		}
+	}
 }
 
 void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	if (coEvents.size() == 0) return;
+	if (isOnCaptain) //deflect bullet, this is use for bulletenemyboss
+	{   //TODO: change this to bulletenemyboss
+		for (UINT i = 0; i < coEvents.size(); i++)
+		{
+			const CollisionEvent& e = coEvents[i];
+
+			if (auto bullet = dynamic_cast<BulletEnemyGun*>(e.pCoObj)) //
+			{
+				if (e.ny < 0.0f)
+				{
+					bullet->Reflect();
+				}
+			}
+		}
+	}
+	else //cause damage to enemy
+	{
+		for (UINT i = 0; i < coEvents.size(); i++)
+		{
+			const CollisionEvent& e = coEvents[i];
+
+			if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
+			{
+				enemy->TakeDamage(1);
+			}
+		}
+	}
 }
 
 void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	if (coEvents.size() == 0) return;
+	if (isOnCaptain)
+	{
+		for (UINT i = 0; i < coEvents.size(); i++)
+		{
+			const CollisionEvent& e = coEvents[i];
+
+			if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj)) //
+			{
+				if (e.ny > 0.0f)
+				{
+					enemy->TakeDamage(3);
+				}
+			}
+		}
+	}
 }
 
 void Shield::CalculateVely(float dt)

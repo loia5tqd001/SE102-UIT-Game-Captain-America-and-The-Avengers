@@ -98,21 +98,21 @@ void Captain::HandleCollisions(float dt, const std::vector<GameObject*>& coObjec
 	//if (nx != 0.0f) vel.x = 0.0f;
 	//if (ny != 0.0f) { vel.y = 0.0f; _isJumping = false; }
 
-	//// Collision logic with Goombas
-	//for (UINT i = 0; i < coEvents.size(); i++)
-	//{
-	//	const CollisionEvent& e = coEvents[i];
+	// Collision logic with Goombas
+	/*for (UINT i = 0; i < coEvents.size(); i++)
+	{
+		const CollisionEvent& e = coEvents[i];
 
-	//	if (auto goomba = dynamic_cast<Goomba*>(e.pCoObj))
-	//	{
-	//		if (e.ny < 0.0f && goomba->GetState() != State::GoombaDie)
-	//		{
-	//			goomba->SetState(State::GoombaDie);
-	//			vel.y = -JUMP_DEFLECT_SPEED;
-	//			OnFlashing(true);
-	//		}
-	//	}
-	//}
+		if (auto goomba = dynamic_cast<Goomba*>(e.pCoObj))
+		{
+			if (e.ny < 0.0f && goomba->GetState() != State::GoombaDie)
+			{
+				goomba->SetState(State::GoombaDie);
+				vel.y = -JUMP_DEFLECT_SPEED;
+				OnFlashing(true);
+			}
+		}
+	}*/
 }
 
 void Captain::SetState(State state)
