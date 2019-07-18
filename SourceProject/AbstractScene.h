@@ -8,7 +8,7 @@ private:
 	std::optional<Scene> nextScene;
 
 public:
-	AbstractScene() = default;
+	AbstractScene() noexcept;
 	AbstractScene(const AbstractScene&) = delete;
 	virtual ~AbstractScene() = default;
 
@@ -24,6 +24,8 @@ public:
 	void DoTransitionScene(std::optional<Scene> nextScene = {}, float transTime = 0.69f);
 	inline bool IsDoingTransitionSceneEffect() const { return isDoingTransitionScene; }
 	std::optional<Scene> GetNextScene() const;
+
+	bool isDark; // bad practice but who cares // toggle when captain hit the switch
 
 	virtual void LoadResources () = 0;
 	virtual void Update(float dt) = 0;

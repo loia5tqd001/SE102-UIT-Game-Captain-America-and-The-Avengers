@@ -18,6 +18,8 @@ public:
 	void OnKeyDown(BYTE keyCode);
 	void OnKeyUp(BYTE keyCode);
 
+	inline const AbstractScene& GetCurScene() { return *curScene.get(); }
+
 private:
 	SceneManager() = default;
 	SceneManager(const SceneManager&) = delete;

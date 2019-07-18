@@ -1,4 +1,10 @@
 #include "pch.h"
+#include "PittsburghScene.h"
+
+AbstractScene::AbstractScene() noexcept
+{
+	isDark = typeid(*this) == typeid(PittsburghScene);
+}
 
 // Learn more about jsoncpp: https://github.com/open-source-parsers/jsoncpp
 Json::Value AbstractScene::GetRootJson(LPCSTR jsonPath)

@@ -14,6 +14,8 @@ Capsule::Capsule(Vector2 pos, SpriteId itemType, float maxY, Grid* grid) :
 
 void Capsule::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	shouldDrawImage = !SceneManager::Instance().GetCurScene().isDark;
+
 	if (curState == State::Capsule_Idle) return;
 
 	animations.at(curState).Update(dt);
@@ -37,9 +39,8 @@ void Capsule::BeingHit()
 	auto dx = ( GetWidth() - float(itemWidth) ) / 2;
 	auto posSpawn = pos + Vector2{ dx, 0.0f };
 
-	// spawn item. TODO: open comment when having grid
-	//auto item = grid->SpawnObject(std::make_unique<Item>(posSpawn, maxY, realItemType));
-	//dynamic_cast<Item*>(item)->BeingHit();		
+	auto item = grid->SpawnObject(std::make_unique<Item>(posSpawn, maxY, itemType));
+	dynamic_cast<Item*>(item)->BeingHit();		
 
 	if (!isRealItemDropped) isRealItemDropped = true;
 }
