@@ -3,8 +3,8 @@
 
 Item::Item(Vector2 pos, float maxY, SpriteId itemType) :
 	VisibleObject(State::Item_Hide, pos),
-	maxPosY(maxY) ,
-	minPosY(pos.y - 10.0f),
+	maxY(maxY) ,
+	minY(pos.y - 10.0f),
 	itemType(itemType)
 {
 	shouldDrawImage = false;
@@ -47,18 +47,18 @@ void Item::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 		case State::Item_Bouncing:
 			pos.y -= FALLING_SPEED * dt; 
-			if (pos.y < minPosY)
+			if (pos.y < minY)
 			{
-				pos.y = minPosY;
+				pos.y = minY;
 				curState = State::Item_Falling;
 			}
 			break;
 
 		case State::Item_Falling:
 			pos.y += 100.0f * dt; 
-			if (pos.y > maxPosY)
+			if (pos.y + GetHeight() > maxY)
 			{
-				pos.y = maxPosY;
+				pos.y = maxY - GetHeight();
 				curState = State::Item_Grounding;
 			}
 			break;

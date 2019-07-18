@@ -7,8 +7,8 @@ private:
 	static constexpr float FALLING_SPEED = 150.0f;
 	static constexpr float TIME_TO_DISAPPEAR = 5.0f;
 
-	float maxPosY; // max position falling, being set from database
-	float minPosY; // to bounce before falling
+	float maxY; // max position falling, being set from database
+	float minY; // to bounce before falling
 	float timeOnGround = 0.0f;
 	SoundId sound;
 	SpriteId itemType; // use SpriteId to represent item type

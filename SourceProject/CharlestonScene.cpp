@@ -90,8 +90,11 @@ void CharlestonScene::Draw()
 	// Test Capsule, NOTE: Can't test because there's not grid yet
 	if (1)
 	{
-		static Capsule capsule( { 0.0f, 10.0f}, SpriteId::ItemKeyKrystal, 60.0f, nullptr);
-		if (wnd.IsKeyPressed(VK_NUMPAD9)) capsule.BeingHit();
+		static Capsule capsule( { 0.0f, 10.0f}, SpriteId::ItemKeyKrystal, 100.0f, nullptr);
+		if (wnd.IsKeyPressed(VK_NUMPAD9))
+		{
+			capsule.BeingHit();
+		}
 		capsule.Update( GameTimer::Dt() );
 		capsule.Render();
 	}

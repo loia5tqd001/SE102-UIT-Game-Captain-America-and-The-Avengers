@@ -17,12 +17,12 @@ void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjec
 		if (abs(vel.y) > vel.x / 2) this->SetState(State::BulletEnemyRocket_Cross);
 		if (abs(vel.y) < BULLET_MOVING / 5)
 		{
-			vel.y -= 0.4;
+			vel.y -= 0.4f;
 			vel.x = std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
 		}
 		else if (abs(vel.y) < BULLET_MOVING)
 		{
-			vel.y -= 0.8;
+			vel.y -= 0.8f;
 			vel.x = std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
 		}
 	}

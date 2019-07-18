@@ -9,16 +9,16 @@ Capsule::Capsule(Vector2 pos, SpriteId itemType, float maxY, Grid* grid) :
 	grid(grid)
 {
 	animations.emplace(State::Capsule_Idle, Animation(SpriteId::CapsuleIdle));
-	animations.emplace(State::Capsule_Openning, Animation(SpriteId::CapsuleOpenning, 0.2f));
+	animations.emplace(State::Capsule_Openning, Animation(SpriteId::CapsuleOpenning, 0.1f));
 }
 
 void Capsule::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (curState == State::Capsule_Idle) return;
 
-	// else State::Capsule_Openning
 	animations.at(curState).Update(dt);
 
+	// State::Capsule_Openning
 	if (animations.at(curState).IsDoneCycle())
 	{
 		SetState(State::Capsule_Idle);
@@ -30,14 +30,16 @@ void Capsule::BeingHit()
 	if (curState == State::Capsule_Openning) return;
 	else SetState(State::Capsule_Openning);
 
-	if (!realItemDropped) { 
-		// TODO: open comment when have grid
-		//auto realItem = grid->SpawnObject(std::make_unique<Item>(pos, maxY, realItemType));
-		//dynamic_cast<Item*>(realItem)->BeingHit();		
-		realItemDropped = true; 
-	}
-	else {
-		//auto fivePointItem = grid->SpawnObject(std::make_unique<Item>(pos, maxY, SpriteId::ItemFivePoint));
-		//dynamic_cast<Item*>(fivePointItem)->BeingHit();
-	}
+	auto itemType = isRealItemDropped ? SpriteId::ItemFivePoint : realItemType;
+
+	// to make sure item's symmetric
+	auto itemWidth = Sprites::Get(itemType).GetFrameSize(0).GetWidth();
+	auto dx = ( GetWidth() - float(itemWidth) ) / 2;
+	auto posSpawn = pos + Vector2{ dx, 0.0f };
+
+	// spawn item. TODO: open comment when having grid
+	//auto item = grid->SpawnObject(std::make_unique<Item>(posSpawn, maxY, realItemType));
+	//dynamic_cast<Item*>(item)->BeingHit();		
+
+	if (!isRealItemDropped) isRealItemDropped = true;
 }

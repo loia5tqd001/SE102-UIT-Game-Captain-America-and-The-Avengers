@@ -4,7 +4,7 @@
 class Capsule :	public VisibleObject
 {
 private:
-	bool realItemDropped = false;
+	bool isRealItemDropped = false;
 	const SpriteId realItemType;
 	const float maxY; // maxY of items to spawn
 	Grid* grid;
