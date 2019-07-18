@@ -52,6 +52,9 @@
     <Filter Include="Development\Objects\Misc.">
       <UniqueIdentifier>{4f2287f9-979c-4d94-9efd-776b4b8a904b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Development\Objects\Blocks">
+      <UniqueIdentifier>{d12c7ebb-6ba6-4d24-ad27-5a0749a460fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -173,6 +176,21 @@
     </ClCompile>
     <ClCompile Include="CaptainHealth.cpp">
       <Filter>Development\Objects\Misc.</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawner.cpp">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="AmbushTrigger.cpp">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="BreakableLedge.cpp">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingLedge.cpp">
+      <Filter>Development\Objects\Blocks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +343,21 @@
     </ClInclude>
     <ClInclude Include="CaptainHealth.h">
       <Filter>Development\Objects\Misc.</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="AmbushTrigger.h">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingLedge.h">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="BreakableLedge.h">
+      <Filter>Development\Objects\Blocks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
