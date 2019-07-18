@@ -195,6 +195,9 @@
     <ClCompile Include="Settings.cpp">
       <Filter>Framework\Game Managers</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyWizard.cpp">
+      <Filter>Development\Objects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -367,6 +370,8 @@
     </ClInclude>
     <ClInclude Include="Data.h">
       <Filter>Framework\_MyUtils</Filter>
+    <ClInclude Include="EnemyWizard.h">
+      <Filter>Development\Objects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

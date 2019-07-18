@@ -55,6 +55,17 @@ enum class SpriteId
 	Shield_Down                     = 26,
 	Shield_Up                       = 27,
 
+	EnemyWizard_Walking     = 50,
+	EnemyWizard_Stand       = 51,
+	EnemyWizard_BeforeDefeated = 52,
+	EnemyWizard_Defeated    = 53,
+	EnemyWizard_DefeatedCaptain = 54,
+	EnemyWizard_FlyUp       = 55,
+	EnemyWizard_FlyDown = 56,
+	EnemyWizard_ShootWhenFly = 57,
+	EnemyWizard_ShootBullet = 58,
+	EnemyWizard_ShootBulletFire = 59,
+
 	Captain_Standing = 100,
 	Captain_Walking = 101,
 	Captain_Jump = 102,
@@ -162,7 +173,18 @@ enum class State
 	Captain_SitPunch,
 	Captain_Smash,
 	Captain_Climb,
-	Captain_Spin
+	Captain_Spin,
+
+	EnemyWizard_Walking,
+	EnemyWizard_Stand,
+	EnemyWizard_BeforeDefeated,
+	EnemyWizard_Defeated,
+	EnemyWizard_DefeatedCaptain,
+	EnemyWizard_FlyUp,
+	EnemyWizard_FlyDown,
+	EnemyWizard_ShootWhenFly,
+	EnemyWizard_ShootBullet,
+	EnemyWizard_ShootBulletFire,
 };
 
 enum class Behaviors // for enemy, moving ledges
