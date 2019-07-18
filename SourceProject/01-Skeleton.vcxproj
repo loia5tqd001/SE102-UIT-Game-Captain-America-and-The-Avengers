@@ -201,6 +201,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="KeyCodeFonts.cpp" />
     <ClCompile Include="MovingLedge.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="PittsburghScene.cpp" />
     <ClCompile Include="RedAlertScene.cpp" />
     <ClCompile Include="Settings.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="KeyCodeFonts.h" />
     <ClInclude Include="MovingLedge.h" />
+    <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PittsburghScene.h" />
     <ClInclude Include="RedAlertScene.h" />
     <ClInclude Include="Settings.h" />

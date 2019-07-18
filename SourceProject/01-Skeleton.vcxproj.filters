@@ -78,9 +78,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>Development\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Settings.cpp">
-      <Filter>Development\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Framework\Resource Components</Filter>
     </ClCompile>
@@ -165,9 +162,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Development\Objects\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Capsule.cpp">
-      <Filter>Development\Objects\Items</Filter>
-    </ClCompile>
     <ClCompile Include="Shield.cpp">
       <Filter>Development\Objects</Filter>
     </ClCompile>
@@ -191,6 +185,15 @@
     </ClCompile>
     <ClCompile Include="MovingLedge.cpp">
       <Filter>Development\Objects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Development\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Capsule.cpp">
+      <Filter>Development\Objects\Misc.</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Framework\Game Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,9 +238,6 @@
     </ClInclude>
     <ClInclude Include="Colors.h">
       <Filter>Framework\_MyUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="Settings.h">
-      <Filter>Development\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Sprites.h">
       <Filter>Framework\Resource Managers</Filter>
@@ -358,6 +358,12 @@
     </ClInclude>
     <ClInclude Include="BreakableLedge.h">
       <Filter>Development\Objects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Development\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Framework\Game Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

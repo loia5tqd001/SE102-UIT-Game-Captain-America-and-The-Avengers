@@ -93,7 +93,23 @@ enum class SoundId
 
 enum class ClassId
 {
-	Captain  = 0,
+	Captain              =   0,
+
+	// static objects: load from json
+	RigidBlock           =   1,
+	Water                =   2,
+	PassableLedge        =   3,
+	ClimbableBar         =   4,
+	DamageBlock          =   5,
+	Switch               =   6,
+	NextMap              =   7,
+	Door                 =   8,
+	Spawner              =   9,
+	AmbushTrigger        =  10,
+
+	// moving objects: being spawned
+	EnemyGun             =  100,
+	EnemyRocket          =  101,
 };
 
 enum class State

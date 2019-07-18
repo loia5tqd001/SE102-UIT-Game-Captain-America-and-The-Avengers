@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "ObjectFactory.h"
 
 Grid::Grid(const Json::Value& root)
 {
@@ -29,21 +30,40 @@ void Grid::LoadObjects(const Json::Value& grid)
 
 	for (const auto& jsonObj : jsonObjects)
 	{
-		const int   classId  = jsonObj[0].asInt  ();
-		const float x        = jsonObj[1].asFloat();
-		const float y        = jsonObj[2].asFloat();
-		const UINT  width    = jsonObj[3].asUInt ();
-		const UINT  height   = jsonObj[4].asUInt ();
-		const float vx       = jsonObj[5].asFloat();
-		const float vy       = jsonObj[6].asFloat();
-		const float nx       = jsonObj[7].asFloat();
+		//const int   classId  = jsonObj[0].asInt  ();
+		//const float x        = jsonObj[1].asFloat();
+		//const float y        = jsonObj[2].asFloat();
+		//const UINT  width    = jsonObj[3].asUInt ();
+		//const UINT  height   = jsonObj[4].asUInt ();
+		//const float vx       = jsonObj[5].asFloat();
+		//const float vy       = jsonObj[6].asFloat();
+		//const float nx       = jsonObj[7].asFloat();
 
 		static std::unique_ptr<GameObject> object;
+		const int classId  = jsonObj[0].asInt();
 		switch ((ClassId)classId)
 		{
+			case ClassId::RigidBlock    :  
+			case ClassId::Water         :  
+			case ClassId::PassableLedge :  
+			case ClassId::ClimbableBar  :  
+			case ClassId::DamageBlock   :  
+			case ClassId::Switch        :  
+			case ClassId::NextMap       :  
+			case ClassId::Door   		:
+				object = ObjectFactory::Create<Block>(jsonObj);
+				break;
+
+			case ClassId::Spawner:
+				object = ObjectFactory::Create<Spawner>(jsonObj);
+				break;
+
+			case ClassId::AmbushTrigger:
+				object = ObjectFactory::Create<AmbushTrigger>(jsonObj);
+				break;
+
 			default:
 				ThrowMyException("Can't find class id:", classId);
-				break;
 		}
 
 		SpawnObject(std::move(object), false);
@@ -125,10 +145,10 @@ void Grid::UpdateCells()
 		Area area = CalcCollidableArea( obj->GetBBox() );
 
 		for (UINT x = area.xs; x <= area.xe; x++)
-			for (UINT y = area.ys; y <= area.ye; y++)
-			{
-				cells[x * height + y].movingObjects.emplace( obj );
-			}
+		for (UINT y = area.ys; y <= area.ye; y++)
+		{
+			cells[x * height + y].movingObjects.emplace( obj );
+		}
 	}
 
 	if (hasDestroyedObject) RemoveDestroyedObjects();

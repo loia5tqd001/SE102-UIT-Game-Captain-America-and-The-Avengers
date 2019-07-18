@@ -1,28 +1,16 @@
 #pragma once
 #include "InvisibleObject.h"
 
-enum class InvisibleBlocks
-{
-	RigidBlock     = 0, // can't pass through
-	Water          = 1, 
-	PassableLedge  = 2, 
-	ClimbableBar   = 3,
-	DamageBlock    = 4, // sprike, electric wall
-	Switch         = 5,
-	NextMap        = 6,
-	Door           = 7,
-};
-
 using Data = std::unordered_map<std::string, std::any>; // property-value look-up for data of any type of block
 
 class Block : public InvisibleObject
 {
 private:
-	const InvisibleBlocks type;
+	const ClassId type;
 	Data data;
 
 public:
-	Block(InvisibleBlocks type, Vector2 pos, UINT w, UINT h, Data&& customData = {});
+	Block(ClassId type, Vector2 pos, UINT w, UINT h, Data&& customData = {});
 
 	inline const auto& GetType() const { return type; } // for captain to handle collision
 
