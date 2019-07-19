@@ -5,6 +5,7 @@
 
 Shield::Shield(Captain *captain) : VisibleObject(State::Shield_Straight, captain->GetPos())
 {
+	animations.emplace(State::Invisible, Animation(SpriteId::Invisible));
 	animations.emplace(State::Shield_Up, Animation(SpriteId::Shield_Up, 0.1f));
 	animations.emplace(State::Shield_Down, Animation(SpriteId::Shield_Down, 0.1f));
 	animations.emplace(State::Shield_Straight, Animation(SpriteId::Shield_Straight, 0.1f));

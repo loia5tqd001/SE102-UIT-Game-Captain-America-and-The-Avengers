@@ -20,8 +20,10 @@ Captain::Captain(const Vector2 & spawnPos) :
 	animations.emplace(State::Captain_Throw, Animation(SpriteId::Captain_Throw, 0.2f));
 	animations.emplace(State::Captain_JumpKick, Animation(SpriteId::Captain_JumpKick, 0.2f));
 	animations.emplace(State::Captain_SitPunch, Animation(SpriteId::Captain_SitPunch, 0.15f));
-	animations.emplace(State::Captain_Smash, Animation(SpriteId::Captain_Smash, 0.3f));
-	animations.at(State::Captain_Throw).SetCusFrameHoldTime(1, 0.5f);
+	animations.emplace(State::Captain_Smash, Animation(SpriteId::Captain_Smash, 0.25f));
+
+	animations.at(State::Captain_Smash).SetCusFrameHoldTime(0, 0.05f);
+
 	shield = std::make_unique<Shield>(this);
 	//bboxColor = Colors::MyPoisonGreen;
 }
@@ -54,11 +56,36 @@ void Captain::OnKeyDown(BYTE keyCode)
 			else
 			{
 				OutputDebugString("Event hit\n");
-				//Todo: setstate()
+				//Todo:Set state
+				SetState(State::Captain_Smash);
 			}
 		}
 		break;
 	case VK_RIGHT:
+		if (prevPressedControlKey != KeyControls::Right && !isInTheAir)
+		{
+			prevPressedControlKey = KeyControls::Right;
+			timePressed = std::chrono::steady_clock::now();
+			OutputDebugString("Last key is not Right\n");
+		}
+		else
+		{
+			std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+			std::chrono::duration<float> timepassed = now - timePressed;
+
+			if (timepassed.count() > DOUBLE_KEY_DOWN_TIME_OUT)
+			{
+				prevPressedControlKey = KeyControls::Right;
+				timePressed = now;
+				OutputDebugString("KeyControl timeout!\n");
+			}
+			else
+			{
+				OutputDebugString("Event hit\n");
+				//Todo:Set state
+				SetState(State::Captain_Smash);
+			}
+		}
 		break;
 	}
 
@@ -96,6 +123,10 @@ void Captain::ProcessInput()
 
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
+		if (curState ==State::Captain_Smash)
+		{
+			return;
+		}
 		nx = -std::abs(nx);
 		vel.x = nx * WALKING_SPEED;
 		if (!isInTheAir)
@@ -107,6 +138,10 @@ void Captain::ProcessInput()
 
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
+		if (curState ==State::Captain_Smash)
+		{
+			return;
+		}
 		nx = std::abs(nx);
 		vel.x = nx * WALKING_SPEED;
 		if (!isInTheAir)
@@ -208,6 +243,7 @@ void Captain::SetState(State state)
 	case State::Captain_Punching:
 		vel.x = 0;
 		vel.y = 0;
+		break;
 	case State::Captain_LookUp:
 		vel.x = 0.0f;
 		vel.y = 0.0f;
@@ -215,11 +251,14 @@ void Captain::SetState(State state)
 	case State::Captain_Sitting:
 		vel.x = 0.0f;
 		vel.y = 0.0f;
+		break;
 	case State::Captain_JumpKick:
 		vel.x = 0.0f;
 		break;
 	case State::Captain_Smash:
 		vel.x = SMASH_SPEED * nx;
+		vel.y = 0.0f;
+		break;
 	default:
 		break;
 	}
@@ -230,20 +269,19 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	//early checking
 	if (curState == State::Destroyed)
 		return;
+
 	switch (curState)
 	{
 	case State::Captain_JumpKick:
 		if (animations.at(curState).IsDoneCycle())
 			SetState(State::Captain_Falling);
 		break;
-	case State::Captain_Smash:
-		if (animations.at(curState).IsDoneCycle())
-			SetState(State::Captain_Standing);
-		break;
+
 	case State::Captain_Throw:
 	case State::Captain_Punching:
 	case State::Captain_Sitting:
 	case State::Captain_LookUp:
+	case State::Captain_Smash:
 		if (animations.at(curState).IsDoneCycle())
 			SetState(State::Captain_Standing);
 		break;
