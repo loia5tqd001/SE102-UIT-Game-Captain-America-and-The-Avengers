@@ -11,6 +11,7 @@ public:
 	void  MoveTo(const Vector2& newPos);
 	void  MoveBy(const Vector2& dist);
 	void  CenterTo(const Vector2& center);
+	void  CenterAround(const Vector2& center, float radius = 50.0f);
 	void  ClampWithin(const RectF& theBox);
 	const RectF GetBBox() const;
 

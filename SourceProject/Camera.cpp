@@ -17,6 +17,15 @@ void Camera::CenterTo(const Vector2 & center)
 	MoveBy({ -float(width / 2), -float(height / 2) });
 }
 
+void Camera::CenterAround(const Vector2& center, float radius)
+{
+	ClampWithin( RectF{
+		center - Vector2{ radius + width / 2.0f, radius + height / 2.0f}, 
+		width + UINT(2 * radius), 
+		height + UINT(2 * radius)}
+	);
+}
+
 void Camera::ClampWithin(const RectF& theBox)
 {
 	Utils::Clamp(pos.x, theBox.left, theBox.right - width);

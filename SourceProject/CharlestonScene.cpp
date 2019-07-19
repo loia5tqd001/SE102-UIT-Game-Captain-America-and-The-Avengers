@@ -46,7 +46,7 @@ void CharlestonScene::Update(float dt)
 	{
 		obj->Update(dt);
 	}
-	//cam.CenterTo( cap->GetBBox().GetCenter() );
+	cam.CenterAround( cap->GetBBox().GetCenter() );
 	cam.ClampWithin( map->GetWorldBoundary() );
 
 	cap->Update(dt, grid->GetObjectsInViewPort());
