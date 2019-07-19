@@ -8,9 +8,9 @@ AmbushTrigger::AmbushTrigger(Vector2 pos, UINT w, UINT h, const RectF& lockRegio
 	lockRegion(lockRegion),
 	grid(grid)
 {
-	const Vector2 lockPos = lockRegion.GetTopLeft();
-	enemyGunSpawnPos = lockPos + Vector2{ -22.0f, 165.0f };
-	enemyRocketSpawnPos = lockPos + Vector2{ 222.0f, 157.0f };
+	const Vector2 topleftLock = lockRegion.GetTopLeft();
+	enemyGunSpawnPos = topleftLock + Vector2{ -22.0f, 165.0f };
+	enemyRocketSpawnPos = topleftLock + Vector2{ 222.0f, 157.0f };
 }
 
 State AmbushTrigger::GetState() const

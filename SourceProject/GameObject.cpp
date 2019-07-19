@@ -26,6 +26,6 @@ Vector2 GameObject::GetVelocity() const
 GameObject::GameObject(Vector2 pos, Vector2 vel) : 
 	pos(pos),
 	vel(vel),
-	bboxColor(Colors::DimGray)
+	bboxColor(Colors::MyChineseBrown)
 {
 }

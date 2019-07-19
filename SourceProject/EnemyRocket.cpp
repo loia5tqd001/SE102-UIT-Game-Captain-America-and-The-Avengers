@@ -24,7 +24,7 @@ EnemyRocket::EnemyRocket(Behaviors behavior, const Data& behaviorData, Vector2 s
 		case Behaviors::EnemyRocket_Ambush:
 			break;
 		default:
-			ThrowMyException("Wrong behavior for enemy rocket!!");
+			AssertUnreachable();
 	}
 }
 
@@ -67,7 +67,7 @@ void EnemyRocket::OnBehaviorShoot()
 		case State::Destroyed:
 			break;
 		default:
-			ThrowMyException("Wrong state for behavior EnemyRocket_Shoot");
+			AssertUnreachable();
 	}
 }
 
@@ -104,7 +104,7 @@ void EnemyRocket::OnBehaviorBackAndForth()
 		case State::Destroyed:
 			break;
 		default:
-			ThrowMyException("Wrong state for behavior EnemyRocket_BackAndForth");
+			AssertUnreachable();
 	}
 }
 
@@ -174,7 +174,7 @@ void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 			OnBehaviorAmbush();
 			break;
 		default:
-			ThrowMyException("Wrong behavior for enemy rocket!!");
+			AssertUnreachable();
 	}
 
 	pos.x += vel.x*dt;

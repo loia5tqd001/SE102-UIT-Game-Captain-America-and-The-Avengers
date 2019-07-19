@@ -85,6 +85,8 @@ void VisibleObject::SetState(State state)
 {
 	assert(animations.count(state) == 1); // make sure the state already has a corresponding animation 
 	const auto oldHeight = GetHeight();
+	const auto oldWidth = GetWidth();
 	curState = state;
+	pos.x += (oldWidth - GetWidth()) / 2;
 	pos.y += oldHeight - GetHeight();
 }

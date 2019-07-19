@@ -188,9 +188,9 @@ void Grid::RenderCells() const
 		const Cell& cell      = cells[cellIndex] ;
 		const RectF cellBbox  = cell.GetBBox()   ;
 
-		DebugDraw::DrawRectOutLine( cellBbox, Colors::LightGray ); // cells outline
+		DebugDraw::DrawRectOutLine( cellBbox, Colors::DimGray ); // cells outline
 
-		DebugDraw::DrawSolidRect( { cellBbox.GetTopLeft(), 45, 37 }, Colors::LightGray ); // background for string
+		DebugDraw::DrawSolidRect( { cellBbox.GetTopLeft(), 45, 37 }, Colors::DimGray ); // background for string
 
 		const Vector2 cellDrawPosition = cellBbox.GetTopLeft() + Vector2{ 2.5f, 0.5f };
 

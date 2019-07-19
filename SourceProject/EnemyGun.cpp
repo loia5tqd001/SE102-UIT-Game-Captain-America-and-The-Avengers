@@ -30,7 +30,7 @@ EnemyGun::EnemyGun(Behaviors behavior, const Data& behaviorData, Vector2 spawnPo
 			SetState(State::EnemyGun_Walking);
 			break;
 		default:
-			ThrowMyException("Wrong behavior for enemy gun!!");
+			AssertUnreachable();
 	}
 }
 
@@ -62,7 +62,7 @@ void EnemyGun::OnBehaviorShoot()
 		case State::Destroyed:
 			break;
 		default:
-			ThrowMyException("Wrong state for EnemyGun_Shoot");
+			AssertUnreachable();
 	}
 }
 
@@ -102,7 +102,7 @@ void EnemyGun::OnBehaviorAmbush()
 		case State::Destroyed:
 			break;
 		default:
-			ThrowMyException("Wrong state for behavior EnemyGun_Ambush");
+			AssertUnreachable();
 	}
 }
 
@@ -121,7 +121,7 @@ void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
 			OnBehaviorAmbush();
 			break;
 		default:
-			ThrowMyException("Wrong behavior for enemy rocket!!");
+			AssertUnreachable();
 	}
 
 	pos.x += vel.x*dt;

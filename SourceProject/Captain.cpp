@@ -28,8 +28,8 @@ Captain::Captain(const Vector2 & spawnPos) :
 
 	shield = std::make_unique<Shield>(this);
 
-	pos = { 73.0f, 393.0f };
-	//bboxColor = Colors::MyPoisonGreen;
+	pos = { 73.0f, 392.0f };
+	bboxColor = Colors::MyPoisonGreen;
 }
 
 void Captain::OnKeyDown(BYTE keyCode)
@@ -228,6 +228,17 @@ void Captain::HandleCollisions(float dt, const std::vector<GameObject*>& coObjec
 			{
 				case ClassId::RigidBlock:
 				case ClassId::PassableLedge:
+					break;
+
+				case ClassId::Water:
+					pos.x += e.t * (-nx);
+					pos.y += e.t * (-ny);
+					vel.y = -100.0f;
+					break;
+
+				case ClassId::Spawner:
+					pos.x += e.t * (-nx);
+					pos.y += e.t * (-ny);
 					break;
 			}
 		}

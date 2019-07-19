@@ -12,6 +12,7 @@ Shield::Shield(Captain *captain) : VisibleObject(State::Shield_Straight, captain
 	animations.emplace(State::Shield_Side, Animation(SpriteId::Shield_Side, 0.1f));
 	UpdateByCapState(State::Captain_Standing, captain->GetPos());
 	this->cap = captain;
+	bboxColor = Colors::MyPoisonGreen;
 }
 
 void Shield::SetState(State state)
