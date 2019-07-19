@@ -188,6 +188,7 @@
     <ClCompile Include="BreakableLedge.cpp" />
     <ClCompile Include="BulletEnemyGun.cpp" />
     <ClCompile Include="BulletEnemyRocket.cpp" />
+    <ClCompile Include="BulletEnemyWizard.cpp" />
     <ClCompile Include="BulletFireEnemyWizard.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Capsule.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletEnemyGun.h" />
     <ClInclude Include="BulletEnemyRocket.h" />
+    <ClInclude Include="BulletEnemyWizard.h" />
     <ClInclude Include="BulletFireEnemyWizard.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Capsule.h" />

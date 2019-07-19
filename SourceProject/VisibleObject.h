@@ -3,7 +3,7 @@
 class VisibleObject : public GameObject
 {
 protected:
-	int nx      ; 
+	int nx      ;
 	State curState;
 	std::unordered_map<State, Animation> animations;
 	bool shouldDrawImage = true;
