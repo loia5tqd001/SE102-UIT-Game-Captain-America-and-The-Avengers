@@ -198,6 +198,9 @@
     <ClCompile Include="EnemyWizard.cpp">
       <Filter>Development\Objects\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="BulletFireEnemyWizard.cpp">
+      <Filter>Development\Objects\Bullets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -372,6 +375,9 @@
       <Filter>Framework\_MyUtils</Filter>
     <ClInclude Include="EnemyWizard.h">
       <Filter>Development\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFireEnemyWizard.h">
+      <Filter>Development\Objects\Bullets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

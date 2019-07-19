@@ -17,9 +17,9 @@ void Enemy::UpdateAnimation(float dt)
 
 	if (animations.at(beforeExplode).IsDoneCycle())
 	{
-		SetState(State::Explode);
+		SetState(Explode);
 	}
-	else if (animations.at(State::Explode).IsDoneCycle())
+	else if (animations.at(Explode).IsDoneCycle())
 	{
 		SetState(State::Destroyed);
 	}

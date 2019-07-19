@@ -12,6 +12,9 @@ EnemyGun::EnemyGun(Behaviors behavior, const Data& behaviorData, Vector2 spawnPo
 	animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode, 0.3f));
 	animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.1f));
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.25f));
+	
+	beforeExplode = State::EnemyGun_BeforeExplode;
+	Explode = State::Explode;
 }
 
 void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)

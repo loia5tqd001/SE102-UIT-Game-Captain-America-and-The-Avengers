@@ -120,7 +120,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 			pos.y = capPos.y + 7;
 			SetState(State::Shield_Straight);
 		}
-		else if (capState == State::Captain_OnOneKnee)
+		else if (capState == State::Captain_Sitting)
 		{
 			pos.x = capPos.x + 19;
 			pos.y = capPos.y + 10;
@@ -160,15 +160,16 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		}
 		else if (capState == State::Captain_Smash)
 		{
-			//we dont have sprite to calculate this yet
-			SetState(State::Shield_Up);
+			SetState(State::Invisible);
 		}
 		else if (capState == State::Captain_Climb)
 		{
-			SetState(State::Invisible);
+			//we dont have sprite to calculate this yet
 		}
 		else if (capState == State::Captain_Spin)
 		{
+			pos.x = capPos.x - 2;
+			pos.y = capPos.y + 16;
 			SetState(State::Invisible);
 		} else if (capState==State::Captain_Sitting)
 		{
@@ -180,6 +181,12 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 			//Todo: do it
 			pos.x = capPos.x + 3;
 			pos.y = capPos.y - 4;
+			SetState(State::Shield_Up);
+		}
+		else if (capState == State::Captain_LookUp)
+		{
+			pos.x = capPos.x + 7;
+			pos.y = capPos.y - 1;
 			SetState(State::Shield_Up);
 		}
 		if (nx < 0)

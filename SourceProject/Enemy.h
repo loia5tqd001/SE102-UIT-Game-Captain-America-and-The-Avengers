@@ -7,11 +7,12 @@ protected:
 
 	int health;
 	Grid* const grid;
-	const State beforeExplode;
+	State beforeExplode = State::Destroyed;
+    State Explode = State::Destroyed; //wizard need to change this
 	const Behaviors behavior;
 	const Data& behaviorData;
-	void UpdateAnimation(float dt);
 
+	void UpdateAnimation(float dt);
 public:
 	Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, int health, Vector2 spawnPos, Grid* grid);
 

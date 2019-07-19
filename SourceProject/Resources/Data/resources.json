@@ -52,7 +52,24 @@
     [          24,            10,      124,     272,              15,               16,         1,            0], // Shield_Side   
     [          25,            10,      107,     272,               7,               16,         1,            0], // Shield_Straight
 	[          26,            10,      173,     282,              23,                6,         1,            0], // Shield_Down       
-	[          27,            10,      148,     274,              16,                9,         1,            0], // Shield_Up         
+	[          27,            10,      148,     274,              16,                9,         1,            0], // Shield_Up    
+
+	[          24,            10,      124,     272,               7,               16,         1,            0], // Shield_Side       
+	[          25,            10,      107,     272,              15,               16,         1,            0], // Shield_Straight   
+	[          26,            10,      173,     282,              23,                6,         1,            0], // Shield_Down       
+	[          27,            10,      148,     274,              16,                9,         1,            0], // Shield_Up  
+
+	[          50,            12,      144,      19,              31,               45,         3,            1], //EnemyWizard_Walking,   
+	[          51,            12,      280,      16,              23,               48,         1,            0], //EnemyWizard_Stand,   
+	[          52,            12,      107,      16,              29,               41,         1,            0], //EnemyWizard_BeforeDefeated,   
+	[          53,            12,       59,      37,              36,               27,         2,         -120], //EnemyWizard_Defeated,
+	[          54,            12,      248,      15,              23,               49,         1,            0], //EnemyWizard_DefeatedCaptain,   
+	[          55,            12,      235,     130,              29,               51,         1,            0], //EnemyWizard_FlyUp,   
+	[          56,            12,      195,     130,              29,               51,         1,            0], //EnemyWizard_FlyDown,   
+	[          57,            12,      155,     134,              29,               47,         2,          -69], //EnemyWizard_ShootWhenFly,
+	[          58,            12,       30,      76,              36,               44,         3,            7], //EnemyWizard_ShootBullet,   
+	[          59,            12,      256,      76,              40,               44,         3,          -88], //EnemyWizard_ShootBulletFire,
+	[          60,            12,      195,     130,              29,               51,         1,           12], //EnemyWizard_Flying,
 
 	[         100,            10,      357,      11,              22,               45,         1,            0], //Captain_Standing,
 	[         101,            10,      228,      13,              24,               43,         4,            8], //Captain_Walking,

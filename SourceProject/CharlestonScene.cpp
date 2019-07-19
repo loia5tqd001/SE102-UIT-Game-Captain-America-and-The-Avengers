@@ -45,6 +45,7 @@ void CharlestonScene::Update(float dt)
 #include "Captain.h"
 #include "CaptainHealth.h"
 #include "Shield.h"
+#include "EnemyWizard.h"
 
 void CharlestonScene::Draw()
 {	
@@ -102,6 +103,17 @@ void CharlestonScene::Draw()
 
 	//	enemyRocket.Render();
 	//}
+	}
+	if (1) // test EnemyWizard
+	{
+		static EnemyWizard enemyWizard({ 50.0f, 150.0f }, {}, 1, nullptr);
+		std::vector<GameObject*> co;
+		enemyWizard.Update(GameTimer::Dt(), co);
+
+		enemyWizard.testing(wnd);
+
+		enemyWizard.Render();
+	}
 
 	// Test Capsule, NOTE: Can't test because there's not grid yet
 	if (1)

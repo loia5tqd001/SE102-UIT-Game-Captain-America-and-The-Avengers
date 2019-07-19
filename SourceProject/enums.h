@@ -65,6 +65,7 @@ enum class SpriteId
 	EnemyWizard_ShootWhenFly = 57,
 	EnemyWizard_ShootBullet = 58,
 	EnemyWizard_ShootBulletFire = 59,
+	EnemyWizard_Flying = 60,
 
 	Captain_Standing = 100,
 	Captain_Walking = 101,
@@ -167,7 +168,6 @@ enum class State
 	Captain_Punching,
 	Captain_Falling,
 	Captain_Throw,
-	Captain_OnOneKnee,
 	Captain_OnTwoKnee,
 	Captain_JumpKick,
 	Captain_SitPunch,
@@ -182,6 +182,7 @@ enum class State
 	EnemyWizard_DefeatedCaptain,
 	EnemyWizard_FlyUp,
 	EnemyWizard_FlyDown,
+	EnemyWizard_Flying,
 	EnemyWizard_ShootWhenFly,
 	EnemyWizard_ShootBullet,
 	EnemyWizard_ShootBulletFire,

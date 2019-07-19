@@ -62,15 +62,15 @@ void Captain::OnKeyDown(BYTE keyCode)
 		break;
 	}
 
-	if (keyCode == setting.Get(KeyControls::Jump)) {
+	if (keyCode == 0x4D) {
 		if (isInTheAir == false) {
 			SetState(State::Captain_Jump);
 			isInTheAir = true;
 		}
 	}
 
-	if (keyCode == setting.Get(KeyControls::Attack))
-	{
+
+	if (keyCode == 0x4E) {
 		if (isInTheAir == false)
 			if (curState == State::Captain_Sitting)
 				SetState(State::Captain_SitPunch);

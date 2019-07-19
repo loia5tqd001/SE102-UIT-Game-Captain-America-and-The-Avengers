@@ -9,14 +9,17 @@ const auto Sprites::GetFramesFromSpriteInfo(const Json::Value & spriteInfo)
 	const UINT spriteWidth  = spriteInfo[4].asUInt();
 	const UINT spriteHeight = spriteInfo[5].asUInt();
 	const UINT nRects       = spriteInfo[6].asUInt();
-	const UINT margin       = spriteInfo[7].asUInt();
+	const UINT margin       = spriteInfo[7].asInt();
 
 	std::vector<Rect> frames; frames.reserve(nRects);
 
 	for (UINT i = 0; i < nRects; i++)
 	{
 		static Rect frame;
-		frame.left   = left + (spriteWidth + margin) * i;
+		if (margin > 0) 
+			frame.left = left + (spriteWidth + margin) * i;
+		else
+			frame.left = left - (spriteWidth + margin) * i;
 		frame.top    = top;
 		frame.right  = frame.left + spriteWidth;
 		frame.bottom = frame.top + spriteHeight;

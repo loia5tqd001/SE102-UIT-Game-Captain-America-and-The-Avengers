@@ -12,11 +12,14 @@ EnemyRocket::EnemyRocket(Behaviors behavior, const Data& behaviorData, Vector2 s
 	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.1f));
 	animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode, 0.2f));
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.25f));
+
+	beforeExplode = State::EnemyRocket_BeforeExplode;
+	Explode = State::Explode;
 }
 
 void EnemyRocket::SetState(State state)
 {
-	VisibleObject::SetState(state); //this state dont have const animation
+	VisibleObject::SetState(state); 
 
 	switch (state)
 	{
@@ -64,5 +67,4 @@ void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 	// update animations
 	UpdateAnimation(dt);
-
 }
