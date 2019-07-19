@@ -69,7 +69,7 @@ void CharlestonScene::Draw()
 	    Data data;
 		data.Add("water-velocity", 16.9f);
 		data.Add("damage", 420);
-		static EnemyWizard enemyWizard(Behaviors::EnemyGun_Shoot, data,{ 50.0f, 150.0f }, {}, 1, nullptr);
+		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, data,{ 50.0f, 150.0f }, {}, 1, nullptr, cap);
 		std::vector<GameObject*> co;
 		enemyWizard.Update(GameTimer::Dt(), co);
 

@@ -2,9 +2,8 @@
 #include "EnemyWizard.h"
 #include "BulletFireEnemyWizard.h"
 #include "BulletEnemyWizard.h"
-#include "Captain.h"
 
-EnemyWizard::EnemyWizard(Behaviors behavior, const Data& behaviorData, const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid * grid, Captain *captain) 
+EnemyWizard::EnemyWizard(Behaviors behavior, const Data& behaviorData, const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid * grid, std::unique_ptr<Captain> cap)
 	: Enemy(behavior, std::move(behaviorData),State::EnemyWizard_Stand, 2, spawnPos, grid)
 {
 	animations.emplace(State::EnemyWizard_BeforeDefeated, Animation(SpriteId::EnemyWizard_BeforeDefeated, 0.2f));
@@ -21,7 +20,7 @@ EnemyWizard::EnemyWizard(Behaviors behavior, const Data& behaviorData, const Vec
 
 	beforeExplode = State::EnemyWizard_BeforeDefeated;
 	Explode = State::EnemyWizard_Defeated;
-	this->cap = captain;
+	cap = cap;
 }
 
 void EnemyWizard::SpawnBullet()

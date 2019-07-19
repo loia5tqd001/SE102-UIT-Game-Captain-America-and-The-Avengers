@@ -210,7 +210,7 @@ enum class Behaviors // for enemy, moving ledges
 	EnemyRocket_ShootStraight = 10, 
 	EnemyRocket_ShootCross    = 11, 
 	EnemyRocket_BackAndForth  = 12, 
-	EnemyRocket_Ambush        = 13, 
+	EnemyRocket_Ambush        = 13,
 };
 
 enum class Scene
