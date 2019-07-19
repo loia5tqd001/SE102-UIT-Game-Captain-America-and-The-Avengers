@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "ObjectFactory.h"
 
+static Camera& cam = Camera::Instance();
+
 Grid::Grid(const Json::Value& root)
 {
 	LoadResources(root);
@@ -97,22 +99,27 @@ Area Grid::CalcCollidableArea(const RectF& bbox, int broadX, int broadY) const
 void Grid::UpdateCells()
 {
 	// recalculate viewPortArea every frame
-	viewPortArea = CalcCollidableArea( Camera::Instance().GetBBox() );
+	viewPortArea = CalcCollidableArea( cam.GetBBox() );
+	const auto updateArea = CalcCollidableArea( cam.GetBBox(), 1, 1 );
 
 	std::unordered_set<GameObject*> shouldBeUpdatedObjects;
 
-	for (UINT x = viewPortArea.xs; x <= viewPortArea.xe; x++)
-	for (UINT y = viewPortArea.ys; y <= viewPortArea.ye; y++)
+	for (UINT x = updateArea.xs; x <= updateArea.xe; x++)
+	for (UINT y = updateArea.ys; y <= updateArea.ye; y++)
 	{
 		Cell& cell = cells[x * height + y];
 		if (cell.movingObjects.size() == 0) continue;
 
 		Utils::RemoveIf(cell.movingObjects, [&](auto& o)
 		{
-			static Camera& cam = Camera::Instance();
 			const RectF oBbox = o->GetBBox();
 
-			if (!oBbox.IsIntersect( cam.GetBBox() ))
+			if (!oBbox.IsIntersect(RectF{ {}, cellSize*width, cellSize*height }))
+			{
+				dynamic_cast<VisibleObject*>(o)->SetState(State::Destroyed);
+			}
+			if ( x < viewPortArea.xs && x > viewPortArea.xe ||
+			     y < viewPortArea.ys && y > viewPortArea.ye )
 			{
 				dynamic_cast<VisibleObject*>(o)->SetState(State::Destroyed);
 			}

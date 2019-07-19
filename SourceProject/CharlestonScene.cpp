@@ -12,7 +12,12 @@
 #include "CaptainHealth.h"
 #include "Shield.h"
 #include "Spawner.h"
+#include "EnemyWizard.h"
+
+
 static auto& cam = Camera::Instance();
+static auto& wnd = Window::Instance();
+
 
 CharlestonScene::CharlestonScene()
 {
@@ -36,31 +41,31 @@ void CharlestonScene::LoadResources()
 
 void CharlestonScene::Update(float dt)
 {
-	static Window& wnd = Window::Instance();
 	grid->UpdateCells();
-	if (1)
-	{
-		static Spawner spawner({256.0f,0.0f}, 16, 480, Behaviors::EnemyGun_Shoot, { 73.0f, 404.0f }, Data{}, grid.get());
-		if (wnd.IsKeyPressed(VK_NUMPAD0))
-			spawner.OnCollideWithCap();
-		spawner.Update( GameTimer::Dt() );
-	}
 	for (auto& obj : grid->GetObjectsInViewPort())
 	{
 		obj->Update(dt);
 	}
+	//cam.CenterTo( cap->GetBBox().GetCenter() );
 	cam.ClampWithin( map->GetWorldBoundary() );
-	std::vector<GameObject*> co;
-	cap->Update(dt, co);
+
+	cap->Update(dt, grid->GetObjectsInViewPort());
+
 	grid->RemoveDestroyedObjects();
 }
-#include "EnemyWizard.h"
+
 void CharlestonScene::Draw()
 {	
-
-	static auto& wnd = Window::Instance();
 	map->Render();
 	cap->Render();
+
+	for (auto& obj : grid->GetObjectsInViewPort())
+	{
+		obj->Render();
+	}
+
+	grid->RenderCells();
+	
 
 	#pragma region _TESTING_
 
@@ -69,7 +74,7 @@ void CharlestonScene::Draw()
 	    Data data;
 		data.Add("water-velocity", 16.9f);
 		data.Add("damage", 420);
-		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, data,{ 50.0f, 150.0f }, {}, 1, nullptr, cap.get());
+		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, data,{ 50.0f, 150.0f }, {}, 1, grid.get(), cap.get());
 		std::vector<GameObject*> co;
 		enemyWizard.Update(GameTimer::Dt(), co);
 
@@ -77,20 +82,6 @@ void CharlestonScene::Draw()
 
 		enemyWizard.Render();
 	}
-
-	// Test Capsule, NOTE: Can't test because there's not grid yet
-	if (1)
-	{
-		static Capsule capsule( { 0.0f, 10.0f}, SpriteId::ItemKeyKrystal, 100.0f, grid.get());
-		if (wnd.IsKeyPressed(VK_NUMPAD9))
-		{
-			capsule.BeingHit();
-		}
-		capsule.Update( GameTimer::Dt() );
-		capsule.Render();
-	}
-
-	
 
 	//if (0)
 	//{
@@ -127,11 +118,6 @@ void CharlestonScene::Draw()
 		cam.MoveBy( { 5.0f, 0.0f });
 	if (wnd.IsKeyPressed('S'))
 		cam.MoveBy( { 0.0f, 5.0f });
-	for (auto& obj : grid->GetObjectsInViewPort())
-	{
-		obj->Render();
-	}
-	grid->RenderCells();
 
 }
 

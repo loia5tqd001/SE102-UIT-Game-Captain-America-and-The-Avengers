@@ -75,7 +75,7 @@
 	[          62,            12,       49,     136,               7,               16,         1,            0], //BulletFireEnemyWizard_Vertical,
 	[          63,            12,       56,     162,               8,                5,         1,            0], //BulletEnemyWizard_Horizontal,
 	[          64,            12,       72,     161,               8,                6,         1,            0], //BulletEnemyWizard_SemiCross,
-	[          66,            12,       88,     160,               7,                8,         1,            0], //BulletEnemyWizard_Cross,
+	[          65,            12,       88,     160,               7,                8,         1,            0], //BulletEnemyWizard_Cross,
 
 	[         100,            10,      357,      11,              22,               45,         1,            0], //Captain_Standing,
 	[         101,            10,      228,      13,              24,               43,         4,            8], //Captain_Walking,

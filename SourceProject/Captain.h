@@ -20,7 +20,7 @@ private:
 	void HandleNoCollisions(float dt);
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 	bool isInTheAir;
-	bool isStandingOnTheGround(){return (pos.y > 200);}
+	bool isStandingOnTheGround() { return curState == State::Captain_Standing; }
 	
 	//For super speed Captain
 	KeyControls prevPressedControlKey;

@@ -1,6 +1,4 @@
 #pragma once
-#include "EnemyGun.h"
-#include "EnemyRocket.h"
 #include "Block.h"
 #include "Spawner.h"
 #include "AmbushTrigger.h"
@@ -29,6 +27,7 @@ struct ObjectFactory
 	template<>
 	static std::unique_ptr<Capsule> Create(const Json::Value& objJson, Grid* grid)
 	{
+		assert(objJson[0].asInt() == (int)ClassId::Capsule);
 		const auto itemType = (SpriteId)objJson[1].asInt();
 		const auto maxY = objJson[2].asFloat();
 		const auto pos = Vector2{ objJson[3].asFloat(), objJson[4].asFloat() };
@@ -38,15 +37,29 @@ struct ObjectFactory
 	template<>
 	static std::unique_ptr<Spawner> Create(const Json::Value& objJson, Grid* grid)
 	{
-		// may call Create<EnemyGun>, Create<EnemyRocket> below...
-		return {};
+		assert(objJson[0].asInt() == (int)ClassId::Spawner);
+		const auto behavior = (Behaviors)objJson[1].asInt();
+		const auto pos = Vector2{ objJson[2].asFloat(), objJson[3].asFloat() };
+		const auto width = objJson[4].asUInt();
+		const auto height = objJson[5].asUInt();
+		const auto spawnPos = Vector2{ objJson[6].asFloat(), objJson[7].asFloat() };
+		return std::make_unique<Spawner>(pos, width, height, behavior, spawnPos, Data{}, grid);
 	}
 
 	template<>
 	static std::unique_ptr<AmbushTrigger> Create(const Json::Value& objJson, Grid* grid)
 	{
-		// may call Create<EnemyGun>, Create<EnemyRocket> below...
-		return {};
+		assert(objJson[0].asInt() == (int)ClassId::AmbushTrigger);
+		const auto lockRegion = RectF{
+			objJson[1][0].asFloat(),
+			objJson[1][1].asFloat(),
+			objJson[1][2].asFloat(),
+			objJson[1][3].asFloat()
+		};
+		const auto pos = Vector2{ objJson[2].asFloat(), objJson[3].asFloat() };
+		const auto width = objJson[4].asUInt();
+		const auto height = objJson[5].asUInt();
+		return std::make_unique<AmbushTrigger>(pos, width, height, lockRegion, grid);
 	}
 };
 

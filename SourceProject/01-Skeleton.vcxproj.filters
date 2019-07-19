@@ -108,9 +108,6 @@
     <ClCompile Include="InvisibleObject.cpp">
       <Filter>Framework\Base Objects</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractScene.cpp">
-      <Filter>Framework\Game Managers</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\Game Managers</Filter>
     </ClCompile>
@@ -204,6 +201,9 @@
     <ClCompile Include="BulletEnemyWizard.cpp">
       <Filter>Development\Objects\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="AbstractScene.cpp">
+      <Filter>Framework\Base Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -277,9 +277,6 @@
     </ClInclude>
     <ClInclude Include="VisibleObject.h">
       <Filter>Framework\Base Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractScene.h">
-      <Filter>Framework\Game Managers</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Framework\Game Managers</Filter>
@@ -385,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="BulletEnemyWizard.h">
       <Filter>Development\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractScene.h">
+      <Filter>Framework\Base Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

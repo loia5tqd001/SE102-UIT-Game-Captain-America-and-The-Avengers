@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Captain.h"
-#include"Shield.h"
+#include "Shield.h"
+#include "Block.h"
 
 static auto& setting = Settings::Instance();
 
@@ -25,6 +26,8 @@ Captain::Captain(const Vector2 & spawnPos) :
 	animations.at(State::Captain_Smash).SetCusFrameHoldTime(0, 0.05f);
 
 	shield = std::make_unique<Shield>(this);
+
+	pos = { 73.0f, 393.0f };
 	//bboxColor = Colors::MyPoisonGreen;
 }
 
@@ -89,7 +92,7 @@ void Captain::OnKeyDown(BYTE keyCode)
 		break;
 	}
 
-	if (keyCode == 0x4D) { //M
+	if (keyCode == setting.Get(KeyControls::Jump)) { 
 		if (isInTheAir == false) {
 			SetState(State::Captain_Jump);
 			isInTheAir = true;
@@ -97,7 +100,7 @@ void Captain::OnKeyDown(BYTE keyCode)
 	}
 
 
-	if (keyCode == 0x4E) { //N
+	if (keyCode == setting.Get(KeyControls::Attack)) { 
 		if (isInTheAir == false)
 			if (curState == State::Captain_Sitting)
 				SetState(State::Captain_SitPunch);
@@ -197,27 +200,26 @@ void Captain::HandleCollisions(float dt, const std::vector<GameObject*>& coObjec
 	// NOTE: HACK: not perfect handler but we're fine
 	if (coEvents.size() == 0) return; // the case object's going toward the corner
 
-	//pos.x += min_tx * vel.x * dt;
-	//pos.y += min_ty * vel.y * dt;
+	pos.x += min_tx * vel.x * dt;
+	pos.y += min_ty * vel.y * dt;
 
 	//if (nx != 0.0f) vel.x = 0.0f;
-	//if (ny != 0.0f) { vel.y = 0.0f; _isJumping = false; }
+	//if (ny != 0.0f) vel.y = 0.0f;
 
-	// Collision logic with Goombas
-	/*for (UINT i = 0; i < coEvents.size(); i++)
+	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		const CollisionEvent& e = coEvents[i];
 
-		if (auto goomba = dynamic_cast<Goomba*>(e.pCoObj))
+		if (auto block = dynamic_cast<Block*>(e.pCoObj))
 		{
-			if (e.ny < 0.0f && goomba->GetState() != State::GoombaDie)
+			switch (block->GetType())
 			{
-				goomba->SetState(State::GoombaDie);
-				vel.y = -JUMP_DEFLECT_SPEED;
-				OnFlashing(true);
+				case ClassId::RigidBlock:
+				case ClassId::PassableLedge:
+					break;
 			}
 		}
-	}*/
+	}
 }
 
 void Captain::SetState(State state)
