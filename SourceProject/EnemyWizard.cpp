@@ -2,8 +2,8 @@
 #include "EnemyWizard.h"
 #include "BulletFireEnemyWizard.h"
 
-EnemyWizard::EnemyWizard(const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid * grid) :
-	Enemy(State::EnemyWizard_Stand, 2, spawnPos, vel, nx, grid)
+EnemyWizard::EnemyWizard(Behaviors behavior, const Data& behaviorData, const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid * grid) :
+	Enemy(behavior, std::move(behaviorData),State::EnemyWizard_Stand, 2, spawnPos, grid)
 {
 	animations.emplace(State::EnemyWizard_BeforeDefeated, Animation(SpriteId::EnemyWizard_BeforeDefeated, 0.2f));
 	animations.emplace(State::EnemyWizard_Defeated, Animation(SpriteId::EnemyWizard_Defeated, 0.25f));

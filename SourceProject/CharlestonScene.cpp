@@ -103,10 +103,13 @@ void CharlestonScene::Draw()
 
 	//	enemyRocket.Render();
 	//}
-	}
+	//}
 	if (1) // test EnemyWizard
 	{
-		static EnemyWizard enemyWizard({ 50.0f, 150.0f }, {}, 1, nullptr);
+	    Data data;
+		data.Add("water-velocity", 16.9f);
+		data.Add("damage", 420);
+		static EnemyWizard enemyWizard(Behaviors::EnemyGun_Shoot, data,{ 50.0f, 150.0f }, {}, 1, nullptr);
 		std::vector<GameObject*> co;
 		enemyWizard.Update(GameTimer::Dt(), co);
 
