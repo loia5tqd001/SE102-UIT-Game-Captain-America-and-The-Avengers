@@ -10,7 +10,6 @@ private:
 	float distance = 0;
 	Captain *cap;
 	void UpdateByCapState(State capState, Vector2 capPos);
-	void CalculateVely(float dt);
 	void SetState(State state) override;
 	void flipPosx();
 

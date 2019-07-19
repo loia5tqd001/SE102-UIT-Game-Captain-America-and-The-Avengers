@@ -2,12 +2,16 @@
 #include "VisibleObject.h"
 #include "CaptainHealth.h"
 
+class Shield;
+
 class Captain : public VisibleObject
 {
 private:
 	static constexpr float WALKING_SPEED = 80.0f;
 	static constexpr float JUMPING_SPEED = 500.0f;
 	static constexpr float GRAVITY = 1200.0f;
+
+	std::unique_ptr<Shield> shield;
 
 	CaptainHealth& health = CaptainHealth::Instance();
 	bool shieldOn = true;
@@ -30,5 +34,6 @@ public:
 	State GetState() { return curState; }
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	void setShieldOn(bool b) { this->shieldOn = b; } //shield let captain know
+	void Render() const override;
 };
 

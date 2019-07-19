@@ -22,7 +22,6 @@ void CharlestonScene::LoadResources()
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
 	cap = std::make_unique<Captain>(Vector2(0, 100));
-	shield = std::make_unique<Shield>(cap.get());
 }
 
 void CharlestonScene::Update(float dt)
@@ -35,7 +34,6 @@ void CharlestonScene::Update(float dt)
 	cam.ClampWithin( map->GetWorldBoundary() );
 	std::vector<GameObject*> co;
 	cap->Update(dt, co);
-	shield->Update(dt, co);
 }
 #include "EnemyGun.h"
 #include "BulletEnemyGun.h"
@@ -160,7 +158,6 @@ void CharlestonScene::Draw()
 	}
 	grid->RenderCells();
 
-	shield->Render();
 }
 
 void CharlestonScene::OnKeyDown(BYTE keyCode)
@@ -172,9 +169,4 @@ void CharlestonScene::OnKeyDown(BYTE keyCode)
 			break;
 	}
 	cap->OnKeyDown(keyCode);
-	if (cap->GetState()==State::Captain_Throw)
-	{
-		shield->ThrowAway();
-		cap->setShieldOn(false);
-	}
 }

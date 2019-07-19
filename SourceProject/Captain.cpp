@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "Captain.h"
+#include"Shield.h"
 
 static auto& setting = Settings::Instance();
 
 Captain::Captain(const Vector2 & spawnPos) :
 	VisibleObject(State::Captain_Standing, spawnPos),
 	isInTheAir(false),
-	doubleKeyDownTimeOut(0.2f)
-	//Todo: Remove this when test is done
-	, shieldOn(true)
+	doubleKeyDownTimeOut(0.2f), 
+	shieldOn(true)
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
 	animations.emplace(State::Captain_Moving, Animation(SpriteId::Captain_Walking, 0.1f));
@@ -20,6 +20,8 @@ Captain::Captain(const Vector2 & spawnPos) :
 	animations.emplace(State::Captain_Throw, Animation(SpriteId::Captain_Throw, 0.2f));
 	animations.emplace(State::Captain_JumpKick, Animation(SpriteId::Captain_JumpKick, 0.2f));
 	animations.emplace(State::Captain_SitPunch, Animation(SpriteId::Captain_SitPunch, 0.15f));
+
+	shield = std::make_unique<Shield>(this);
 	//bboxColor = Colors::MyPoisonGreen;
 }
 
@@ -47,7 +49,11 @@ void Captain::OnKeyDown(BYTE keyCode)
 			else
 			{
 				if (shieldOn)
+				{
 					SetState(State::Captain_Throw);
+					shieldOn = false;
+					shield->ThrowAway();
+				}
 				else
 					SetState(State::Captain_Punching);
 			}
@@ -258,5 +264,14 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 	//// recalculate if image should be rendered
 	//OnFlashing();
+	std::vector<GameObject*> co;
+	shield->Update(dt, co);
+
+}
+
+void Captain::Render() const
+{
+	VisibleObject::Render();
+	shield->Render();
 }
 

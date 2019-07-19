@@ -3,14 +3,12 @@
 #include "Enemy.h"
 #include "BulletEnemyGun.h"
 
-
 Shield::Shield(Captain *captain) : VisibleObject(State::Shield_Straight, captain->GetPos())
 {
 	animations.emplace(State::Shield_Up, Animation(SpriteId::Shield_Up, 0.1f));
 	animations.emplace(State::Shield_Down, Animation(SpriteId::Shield_Down, 0.1f));
 	animations.emplace(State::Shield_Straight, Animation(SpriteId::Shield_Straight, 0.1f));
 	animations.emplace(State::Shield_Side, Animation(SpriteId::Shield_Side, 0.1f));
-
 	UpdateByCapState(State::Captain_Standing, captain->GetPos());
 	this->cap = captain;
 }
@@ -19,6 +17,7 @@ void Shield::SetState(State state)
 {
 	VisibleObject::SetState(state);
 }
+
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (isOnCaptain)
@@ -73,7 +72,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				}
 				flagDistance -= SPEED * dt; //we need distance for if else checking, and flagDistance to update pos.y
 
-				#pragma region _Edit_1_
+				//Caculate pos.y base on pos.x by using vector and distance ratio
 				Vector2 shieldCenter = this->GetBBox().GetCenter();
 				Vector2 capCenter = cap->GetBBox().GetCenter();
 				Vector2 trans = capCenter - shieldCenter;
@@ -81,16 +80,8 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				trans.x *= ratio;
 				trans.y *= ratio;
 
-				#pragma endregion
 				pos.x += nx * SPEED*dt;
 				pos.y += trans.y;
-				//Todo: Restore this if fail
-				//CalculateVely(dt); //update pos.y
-				#pragma region _Edit_2_
-				
-
-				#pragma endregion
-
 
 				HandleCaptainCollison(dt, coObjects); //distance = 0
 			}
@@ -116,6 +107,7 @@ void Shield::ThrowAway()
 void Shield::UpdateByCapState(State capState, Vector2 capPos)
 {
 	if (isOnCaptain) {
+
 		if (capState == State::Captain_Standing)
 		{
 			pos.x = capPos.x + 18;
@@ -140,7 +132,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 			pos.y = capPos.y - 3;
 			SetState(State::Shield_Down);
 		}
-		else if (capState == State::Captain_Jump)
+		else if (capState == State::Captain_Jump||capState==State::Captain_Falling)
 		{
 			pos.x = capPos.x - 1;
 			pos.y = capPos.y + 3;
@@ -178,6 +170,17 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		else if (capState == State::Captain_Spin)
 		{
 			SetState(State::Invisible);
+		} else if (capState==State::Captain_Sitting)
+		{
+			pos.x = capPos.x + 18;
+			pos.y = capPos.y + 8;
+			SetState(State::Shield_Straight);
+		} else if (capState==State::Captain_LookUp)
+		{
+			//Todo: do it
+			pos.x = capPos.x + 3;
+			pos.y = capPos.y - 4;
+			SetState(State::Shield_Up);
 		}
 		if (nx < 0)
 		{
@@ -191,6 +194,7 @@ void Shield::flipPosx()
 	//dont worry i 've done the math
 	pos.x = 2 * cap->GetPos().x - pos.x + cap->GetWidth() - this->GetWidth();
 }
+
 void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (nx < 0 && pos.x < cap->GetPos().x)
@@ -208,6 +212,7 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 		cap->setShieldOn(true);
 	}
 }
+
 void Shield::HandleSideCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
@@ -282,19 +287,3 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 		}
 	}
 }
-
-void Shield::CalculateVely(float dt)
-{
-#pragma region _Solution_1_
-	////HACK:this moving may not perfect, we could calculate a math function, but i 'd like to if else a lot till it looks right
-	//float destinationY = cap->GetPos().y + 10;
-	//int distanceY = destinationY - pos.y;
-	//// remember s=t*v
-	//float timeX = distance / SPEED;
-	//float speedY = distanceY / timeX;
-	//pos.y += speedY * dt;
-#pragma endregion
-
-}
-
-
