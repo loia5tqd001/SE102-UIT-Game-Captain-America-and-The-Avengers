@@ -2,8 +2,8 @@
 #include "BulletFireEnemyWizard.h"
 
 
-BulletFireEnemyWizard::BulletFireEnemyWizard(int nx, const Vector2& spawnPos, bool isVertical) :
-	Bullet(State::BulletFireEnemyWizard_Horizontal, 2, spawnPos, { BULLET_MOVING, 0.0f}, nx)
+BulletFireEnemyWizard::BulletFireEnemyWizard(int nx, const Vector2& spawnPos, bool isVertical, Enemy *enemy) :
+	Bullet(State::BulletFireEnemyWizard_Horizontal, 2, spawnPos, { BULLET_MOVING, 0.0f}, nx,enemy)
 {
 	animations.emplace(State::BulletFireEnemyWizard_Horizontal, Animation(SpriteId::BulletFireEnemyWizard_Horizontal, 0.1f));
 	animations.emplace(State::BulletFireEnemyWizard_Vertical, Animation(SpriteId::BulletFireEnemyWizard_Vertical, 0.1f));
@@ -12,15 +12,14 @@ BulletFireEnemyWizard::BulletFireEnemyWizard(int nx, const Vector2& spawnPos, bo
 		curState = State::BulletFireEnemyWizard_Vertical;
 		vel = { 0.0f,BULLET_MOVING };
 	}
+	if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth()); // this code is critical
 }
 
 void BulletFireEnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (curState == State::Destroyed) return;
-	if (nx == 0)
-		pos.y += vel.y * dt;
-	else
-		pos.x += vel.x * dt;
+	pos.y += vel.y * dt;
+	pos.x += vel.x * dt;
 	animations.at(curState).Update(dt); //do we really need this line?
 }
 

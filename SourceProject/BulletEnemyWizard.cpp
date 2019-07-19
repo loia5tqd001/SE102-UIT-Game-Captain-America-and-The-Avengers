@@ -2,12 +2,14 @@
 #include "BulletEnemyWizard.h"
 
 
-BulletEnemyWizard::BulletEnemyWizard(int nx, const Vector2& spawnPos, Vector2& vel) :
-	Bullet(State::BulletEnemyWizard_Horizontal, 4, spawnPos, { BULLET_MOVING, 0.0f }, nx)
+BulletEnemyWizard::BulletEnemyWizard(int nx, const Vector2& spawnPos, Vector2& vel,Enemy *enemy) :
+	Bullet(State::BulletEnemyWizard_Horizontal, 4, spawnPos, vel, nx, enemy)
 {
 	animations.emplace(State::BulletEnemyWizard_Cross, Animation(SpriteId::BulletEnemyWizard_Cross, 0.1f));
 	animations.emplace(State::BulletEnemyWizard_Horizontal, Animation(SpriteId::BulletEnemyWizard_Horizontal, 0.1f));
 	animations.emplace(State::BulletEnemyWizard_SemiCross, Animation(SpriteId::BulletEnemyWizard_SemiCross, 0.1f));
+
+	if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth()); // this code is critical
 }
 
 void BulletEnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)

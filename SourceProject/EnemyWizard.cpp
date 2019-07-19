@@ -27,14 +27,14 @@ void EnemyWizard::SpawnBullet()
 {
 	if (isFlashing) return;
 	if (this->curState == State::EnemyWizard_ShootBullet) {
-		const auto bulletPos = pos + Vector2{ 34.0f, 11.0f } *float(nx);
-
+		Vector2 bulletPos = pos + Vector2{ 34.0f, 11.0f };
+		//if (nx < 0) GameObject::FlipPosXToLeft(bulletPos.x, pos.x, GetWidth(), );
 		//caculate vel.y
 		Vector2 bulletVel;
-		bulletVel.x = BulletEnemyWizard::GetXSpeed();
-		bulletVel.y = std::abs(bulletPos.y - cap->GetPos().y) / std::abs(bulletPos.x - cap->GetPos().x) * bulletVel.x;
+		bulletVel.x = nx * BulletEnemyWizard::GetXSpeed();
+		bulletVel.y = nx * std::abs(bulletPos.y - cap->GetPos().y) / std::abs(bulletPos.x - cap->GetPos().x) * bulletVel.x;
 
-		grid->SpawnObject(std::make_unique<BulletEnemyWizard>(nx, bulletPos, bulletVel));
+		grid->SpawnObject(std::make_unique<BulletEnemyWizard>(nx, bulletPos, bulletVel, this));
 		Sounds::PlayAt(SoundId::BulletNormal);
 	}
 }
@@ -43,13 +43,13 @@ void EnemyWizard::SpawnBulletFire()
 {
 	if (isFlashing) return;
 	if (this->curState == State::EnemyWizard_ShootWhenFly) {
-		const auto bulletPos = pos + Vector2{ 23.0f, 31.0f } *float(nx);
-		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(1, bulletPos, true));
+		const auto bulletPos = pos + Vector2{ 23.0f, 31.0f };
+		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(nx, bulletPos, true, this));
 		Sounds::PlayAt(SoundId::BulletLazer);
 	}
 	if (this->curState == State::EnemyWizard_ShootBulletFire) {
-		const auto bulletPos = pos + Vector2{ 34.0f, 11.0f } *float(nx);
-		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(nx, bulletPos, false));
+		const auto bulletPos = pos + Vector2{ 34.0f, 11.0f };
+		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(nx, bulletPos, false, this));
 		Sounds::PlayAt(SoundId::BulletLazer);
 	}
 }
@@ -126,7 +126,7 @@ void EnemyWizard::SetState(State state)
 		break;
 	}
 }
-static float groundPosY = 150; // testing ground pos.y
+static float groundPosY = 390.0f; // testing ground pos.y
 void EnemyWizard::testing(Window &win)
 {	
 	if (win.IsKeyPressed(VK_UP))
@@ -154,7 +154,7 @@ void EnemyWizard::testing(Window &win)
 		else
 			this->SetState(State::EnemyWizard_Walking);
 	}
-	if (win.IsKeyPressed('A')) // in real data we shoot base on cap pos if shoot vertical
+	if (win.IsKeyPressed('J')) // in real data we shoot base on cap pos if shoot vertical
 	{
 		if (curState == State::EnemyWizard_Flying || curState == State::EnemyWizard_FlyUp || curState == State::EnemyWizard_FlyDown)
 			this->SetState(State::EnemyWizard_ShootWhenFly);
@@ -162,11 +162,10 @@ void EnemyWizard::testing(Window &win)
 			this->SetState(State::EnemyWizard_ShootBullet);
 		SpawnBulletFire();
 	}
-	else if (win.IsKeyPressed('S')) // we always shoot base on cap pos
+	else if (win.IsKeyPressed('K')) // we always shoot base on cap pos
 	{
 		if (curState != State::EnemyWizard_Flying && curState != State::EnemyWizard_FlyUp && curState != State::EnemyWizard_FlyDown)
 			this->SetState(State::EnemyWizard_ShootBullet);
 		SpawnBullet();
-	}
-	
+	}	
 }

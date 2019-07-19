@@ -145,7 +145,18 @@ void EnemyRocket::SetState(State state)
 void EnemyRocket::SpawnRocket()
 {
 	if (isFlashing) return;
-	grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, pos));
+	if (curState == State::EnemyRocket_Sitting)
+	{
+		const auto bulletPos = pos + Vector2{ 23.0f, 3.0f };
+		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, pos));
+		Sounds::PlayAt(SoundId::Explosion);
+	}
+	else if (curState == State::EnemyGun_Stand)
+	{
+		const auto bulletPos = pos + Vector2{ 22.0f, 3.0f };
+		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, pos));
+		Sounds::PlayAt(SoundId::Explosion);
+	}
 }
 
 void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)

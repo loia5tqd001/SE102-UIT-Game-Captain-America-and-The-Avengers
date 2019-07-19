@@ -157,7 +157,16 @@ void EnemyGun::SetState(State state)
 void EnemyGun::SpawnBullet() 
 {
 	if (isFlashing) return;
-	const auto bulletPos = pos + Vector2{ 24.0f, 2.0f } * float(nx);
-	grid->SpawnObject(std::make_unique<BulletEnemyGun>(nx, bulletPos));
-	Sounds::PlayAt(SoundId::BulletNormal);
+	if (curState == State::EnemyGun_Sitting)
+	{
+		const auto bulletPos = pos + Vector2{ 24.0f, 10.0f };
+		grid->SpawnObject(std::make_unique<BulletEnemyGun>(nx, this, bulletPos));
+		Sounds::PlayAt(SoundId::BulletNormal);
+	}
+	else if (curState == State::EnemyGun_Stand)
+	{
+		const auto bulletPos = pos + Vector2{ 24.0f, 3.0f };
+		grid->SpawnObject(std::make_unique<BulletEnemyGun>(nx, this, bulletPos));
+		Sounds::PlayAt(SoundId::Explosion);
+	}
 }

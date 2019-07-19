@@ -10,6 +10,10 @@ protected:
 public: 
 	void GetDxDy(float dt, float& dx, float& dy) const;
 	void ClampWithin(const RectF& theBox);
+	static void FlipPosXToLeft(float &xFlip,const float xHost, const int widthFlip,const int widthHost) //flip object that its pos are base on another Host Object pos
+	{
+		xFlip = 2 * xHost - xFlip + widthHost - widthFlip;
+	};
 
 	Vector2 GetVelocity      () const;
 	void    RenderBoundingBox() const; // draw bounding box for better debugging

@@ -18,5 +18,6 @@ public:
 
 	void TakeDamage(int damage);
 	void OnOutOfViewPort() override { SetState(State::Explode); }
+	float GetPosX() { return pos.x; }
 };
 

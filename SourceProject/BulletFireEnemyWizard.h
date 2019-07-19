@@ -7,7 +7,7 @@ private:
 	static constexpr float BULLET_MOVING = 110.0f;
 
 public:
-	BulletFireEnemyWizard(int nx, const Vector2& spawnPos, bool isVertical = 0);
+	BulletFireEnemyWizard(int nx, const Vector2& spawnPos, bool isVertical = 0, Enemy *enemy = nullptr);
 
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	RectF GetBBox() const override;
