@@ -55,6 +55,12 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 			UpdateByCapState(cap->GetState(), cap->GetPos());
 		}
 		else {
+			timeToThrow += GameTimer::Dt();
+			if (timeToThrow < 0.1f)
+			{
+				UpdateByCapState(cap->GetState(), cap->GetPos());
+				return;
+			}
 			//to the max_distance
 			static float flagDistance = 0;
 			static bool turnBack;
@@ -157,7 +163,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		else if (capState == State::Captain_Throw)
 		{
 			pos.x = capPos.x - 5;
-			pos.y = capPos.y + 1;
+			pos.y = capPos.y - 7;
 			SetState(State::Shield_Up);
 		}
 		else if (capState == State::Captain_Smash)
@@ -211,6 +217,7 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 		isOnCaptain = true;
 		distance = 0;
 		cap->setShieldOn(true);
+		timeToThrow = 0;
 	}
 	else if (nx > 0 && pos.x > cap->GetPos().x)
 	{
@@ -218,6 +225,7 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 		isOnCaptain = true;
 		distance = 0;
 		cap->setShieldOn(true);
+		timeToThrow = 0;
 	}
 }
 

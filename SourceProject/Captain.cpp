@@ -89,7 +89,7 @@ void Captain::OnKeyDown(BYTE keyCode)
 		break;
 	}
 
-	if (keyCode == 0x4D) { //x
+	if (keyCode == 0x4D) { //M
 		if (isInTheAir == false) {
 			SetState(State::Captain_Jump);
 			isInTheAir = true;
@@ -97,7 +97,7 @@ void Captain::OnKeyDown(BYTE keyCode)
 	}
 
 
-	if (keyCode == 0x4E) { //z
+	if (keyCode == 0x4E) { //N
 		if (isInTheAir == false)
 			if (curState == State::Captain_Sitting)
 				SetState(State::Captain_SitPunch);
@@ -278,6 +278,9 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 		break;
 
 	case State::Captain_Throw:
+		if (animations.at(curState).IsDoneCycle())
+			SetState(State::Captain_Standing);
+		break;
 	case State::Captain_Punching:
 	case State::Captain_Sitting:
 	case State::Captain_LookUp:
