@@ -62,7 +62,7 @@ void Captain::OnKeyDown(BYTE keyCode)
 		break;
 	}
 
-	if (keyCode == 0x4D) {
+	if (keyCode == 0x4D) { //x
 		if (isInTheAir == false) {
 			SetState(State::Captain_Jump);
 			isInTheAir = true;
@@ -70,7 +70,7 @@ void Captain::OnKeyDown(BYTE keyCode)
 	}
 
 
-	if (keyCode == 0x4E) {
+	if (keyCode == 0x4E) { //z
 		if (isInTheAir == false)
 			if (curState == State::Captain_Sitting)
 				SetState(State::Captain_SitPunch);
