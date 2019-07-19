@@ -38,7 +38,6 @@ void PittsburghScene::Draw()
 		cam.MoveBy( { 5.0f, 0.0f });
 	if (wnd.IsKeyPressed(VK_DOWN))
 		cam.MoveBy( { 0.0f, 5.0f });
-
 }
 
 void PittsburghScene::OnKeyDown(BYTE keyCode)

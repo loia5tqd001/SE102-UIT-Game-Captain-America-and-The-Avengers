@@ -132,3 +132,14 @@ void CharlestonScene::OnKeyDown(BYTE keyCode)
 	}
 	cap->OnKeyDown(keyCode);
 }
+
+void CharlestonScene::OnKeyUp(BYTE keyCode)
+{
+	switch (keyCode)
+	{
+	default:
+		break;
+	}
+	cap->OnKeyUp(keyCode);
+}
+

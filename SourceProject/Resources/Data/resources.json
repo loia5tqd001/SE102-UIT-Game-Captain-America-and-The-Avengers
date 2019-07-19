@@ -84,10 +84,11 @@
 	[         104,            10,      164,      28,              24,               28,         1,            0], //Captain_Sitting
 	[         105,            10,      217,      71,              38,               41,         2,            2], //Captain_Punching
 	[         106,            10,      298,      73,              49,               39,         2,            1], //Captain_Throw
-	[         107,            10,      134,      15,              22,               38,         1,            0], //Captain_Falling
-	[108, 10, 20, 23, 40, 25, 1, 0], //Captain_JumpKick
-	[109, 10, 168, 85, 37, 27, 1, 0], //Captain_SitPunch
-	[110, 10, 38, 79, 39, 29, 2, 1] //Captain_Smash
+	[         107,            10,      134,      15,              22,               38,         1,            0],  //Captain_Falling
+	[         108,            10,       20,      23,              40,               25,         1,            0], //Captain_JumpKick
+	[         109,            10,      168,      85,              37,               27,         1,            0], //Captain_SitPunch
+	[         110,            10,       38,      79,              39,               29,         2,            1], //Captain_Smash
+	[         111,            10,       68,      28,              20,               20,         2,            9] //Captain_Spin
   ],
   
   "sounds": [

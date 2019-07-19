@@ -22,7 +22,6 @@ LRESULT Window::WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			SceneManager::Instance().OnKeyUp((BYTE)wParam);
 			Window::Instance().keyStates.reset((BYTE)wParam);
 			break;
-
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 	}
