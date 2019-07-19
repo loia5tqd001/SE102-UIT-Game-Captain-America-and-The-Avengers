@@ -8,7 +8,9 @@ Enemy::Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, 
 	grid(grid),
 	behavior(behavior),
 	behaviorData(behaviorData)
-{}
+{
+	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.25f));
+}
 
 void Enemy::UpdateAnimation(float dt)
 {

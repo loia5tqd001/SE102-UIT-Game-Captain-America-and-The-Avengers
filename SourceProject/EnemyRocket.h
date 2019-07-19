@@ -10,11 +10,20 @@ private:
 	static constexpr float GRAVITY = 50.0f;
 	static constexpr float FALL_BACK = 50.0f;
 
+	void OnBehaviorShoot();
+	void OnBehaviorBackAndForth();
+	void OnBehaviorAmbush();
+
+	int rocketType = 0;
+	int countWalkStep = 0;
+	bool justShoot = false;
+	bool isLastForth = false; 
+
 public:
 	EnemyRocket(Behaviors behavior, const Data& behaviorData, Vector2 spawnPos, Grid* grid);
 
 	void SetState(State state) override;
-	void SpawnRocket(float cycle);
+	void SpawnRocket();
 
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 };

@@ -190,15 +190,15 @@ enum class State
 
 enum class Behaviors // for enemy, moving ledges
 {
-	EnemyGun_Shoot   = 0, // Sit -> Stand& Shoot -> Repeat. Always update on toward Captain, not moving.
-	EnemyGun_RunOnly = 1, // Running fast with an entry velocity, that velocity is originaly set on toward Captain.
-	EnemyGun_Ambush  = 2, // Walking Right -> Stand& Shoot -> Repeat. If Captain's throwing shield => Walking->Jumping 
+	EnemyGun_Shoot     = 0, 
+	EnemyGun_ShootFast = 1, 
+	EnemyGun_RunOnly   = 2, 
+	EnemyGun_Ambush    = 3, 
 
-	EnemyRocket_ShootStraight = 10, // First walk a bit. Stand& Shoot -> Sit& Shoot -> Repeat. Always update on toward Captain, not moving.
-	EnemyRocket_ShootCross    = 11, // Like above, but the bullet shot out fly cross.
-	EnemyRocket_BackAndForth  = 12, // Sit& ShootStraight -> Stand -> Walking 3 cycles -> Repeat. Always face one direction, that direction is originaly set on toward Captain.
-	EnemyRocket_BackAndForth2 = 13, // There's 1 enemy jumps once before in BackAndForth behavior
-	EnemyRocket_Ambush        = 14, // Walking Left Only. If Captain's throwing shield => Jumping instead of Walking 
+	EnemyRocket_ShootStraight = 10, 
+	EnemyRocket_ShootCross    = 11, 
+	EnemyRocket_BackAndForth  = 12, 
+	EnemyRocket_Ambush        = 13, 
 };
 
 enum class Scene

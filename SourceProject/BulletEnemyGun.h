@@ -4,7 +4,7 @@
 class BulletEnemyGun : public Bullet
 {
 private:
-	static constexpr float BULLET_MOVING = 110.0f;
+	static constexpr float BULLET_MOVING = 180.0f;
 
 public:
 	BulletEnemyGun(int nx, const Vector2& spawnPos, Vector2 vel = { BULLET_MOVING, 0.0f });

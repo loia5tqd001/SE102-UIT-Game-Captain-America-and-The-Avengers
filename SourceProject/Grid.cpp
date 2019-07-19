@@ -100,7 +100,6 @@ void Grid::UpdateCells()
 	viewPortArea = CalcCollidableArea( Camera::Instance().GetBBox() );
 
 	std::unordered_set<GameObject*> shouldBeUpdatedObjects;
-	bool hasDestroyedObject = false;
 
 	for (UINT x = viewPortArea.xs; x <= viewPortArea.xe; x++)
 	for (UINT y = viewPortArea.ys; y <= viewPortArea.ye; y++)
@@ -117,8 +116,6 @@ void Grid::UpdateCells()
 			{
 				dynamic_cast<VisibleObject*>(o)->SetState(State::Destroyed);
 			}
-
-			if (o->GetState() == State::Destroyed) hasDestroyedObject = true;
 
 			// objects IsNone are either Destroyed or Die and won't be moving, so no need to care updating
 			// NOTE: but if game has objects flying around after died we should rewrite this
@@ -145,9 +142,6 @@ void Grid::UpdateCells()
 			cells[x * height + y].movingObjects.emplace( obj );
 		}
 	}
-
-	if (hasDestroyedObject) RemoveDestroyedObjects();
-	RecalculateObjectsInViewPort();
 }
 
 void Grid::RemoveDestroyedObjects()
@@ -160,6 +154,7 @@ void Grid::RemoveDestroyedObjects()
 	}
 
 	Utils::RemoveIf(objectHolder, [](auto& o) { return o->GetState() == State::Destroyed; });
+	RecalculateObjectsInViewPort();
 }
 
 void Grid::RecalculateObjectsInViewPort()

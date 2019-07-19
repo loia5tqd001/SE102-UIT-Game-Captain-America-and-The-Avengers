@@ -1,7 +1,17 @@
 #include "pch.h"
 #include "CharlestonScene.h"
 
+#include "EnemyGun.h"
+#include "BulletEnemyGun.h"
+#include "EnemyRocket.h"
+#include "BulletEnemyRocket.h"
 
+#include "Capsule.h"
+#include "Item.h"
+#include "Captain.h"
+#include "CaptainHealth.h"
+#include "Shield.h"
+#include "Spawner.h"
 static auto& cam = Camera::Instance();
 
 CharlestonScene::CharlestonScene()
@@ -26,7 +36,17 @@ void CharlestonScene::LoadResources()
 
 void CharlestonScene::Update(float dt)
 {
+
+
+	static Window& wnd = Window::Instance();
 	grid->UpdateCells();
+	if (1)
+	{
+		static Spawner spawner({256.0f,0.0f}, 16, 480, Behaviors::EnemyGun_Shoot, { 73.0f, 404.0f }, Data{}, grid.get());
+		if (wnd.IsKeyPressed(VK_NUMPAD0))
+			spawner.OnCollideWithCap();
+		spawner.Update( GameTimer::Dt() );
+	}
 	for (auto& obj : grid->GetObjectsInViewPort())
 	{
 		obj->Update(dt);
@@ -34,19 +54,9 @@ void CharlestonScene::Update(float dt)
 	cam.ClampWithin( map->GetWorldBoundary() );
 	std::vector<GameObject*> co;
 	cap->Update(dt, co);
+	grid->RemoveDestroyedObjects();
 }
-#include "EnemyGun.h"
-#include "BulletEnemyGun.h"
-#include "EnemyRocket.h"
-#include "BulletEnemyRocket.h"
-
-#include "Capsule.h"
-#include "Item.h"
-#include "Captain.h"
-#include "CaptainHealth.h"
-#include "Shield.h"
 #include "EnemyWizard.h"
-
 void CharlestonScene::Draw()
 {	
 
@@ -55,55 +65,7 @@ void CharlestonScene::Draw()
 	cap->Render();
 
 	#pragma region _TESTING_
-	//if (1) // test enemyGun
-	//{
-	//	static EnemyGun enemyGun( { 50.0f, 100.0f }, {}, 1, nullptr );
-	//	std::vector<GameObject*> co;
-	//	enemyGun.Update(GameTimer::Dt(), co);
 
-	//	if (wnd.IsKeyPressed('1')) enemyGun.SetState(State::EnemyGun_Stand);
-	//	if (wnd.IsKeyPressed('2')) enemyGun.SetState(State::EnemyGun_Sitting);
-	//	if (wnd.IsKeyPressed('3')) enemyGun.TakeDamage(1);
-	//	if (wnd.IsKeyPressed('4')) enemyGun.SetState(State::EnemyGun_Walking);
-
-	//	enemyGun.Render();
-	//}
-
-	//if (1) // test BulletEnemyGun
-	//{
-	//	static BulletEnemyGun BulletEnemyGun(  1, {20.0f, 150.0f } );
-	//	std::vector<GameObject*> co;
-	//	BulletEnemyGun.Update(GameTimer::Dt(), co);
-
-	//	BulletEnemyGun.SetState(State::BulletEnemyGun);
-
-	//	BulletEnemyGun.Render();
-	//}
-
-	//if (1) // test BulletEnemyRocket
-	//{
-	//	static BulletEnemyRocket BulletEnemyRocket(  1, 1, {20.0f, 170.0f }); //1 is cross, 0 is horizontal
-	//	std::vector<GameObject*> co;
-	//	BulletEnemyRocket.Update(GameTimer::Dt(), co);
-
-	//	//BulletEnemyRocket.Render();
-	//}
-
-	//if (1) // test EnemyRocket
-	//{
-	//	static EnemyRocket enemyRocket( { 150.0f, 150.0f }, {}, 1, nullptr );
-	//	std::vector<GameObject*> co;
-	//	enemyRocket.Update(GameTimer::Dt(), co);
-
-	//	if (wnd.IsKeyPressed('6')) enemyRocket.SetState(State::EnemyRocket_Stand);
-	//	if (wnd.IsKeyPressed('7')) enemyRocket.SetState(State::EnemyRocket_Sitting);
-	//	if (wnd.IsKeyPressed('8')) 
-	//		enemyRocket.TakeDamage(1);
-	//	if (wnd.IsKeyPressed('9')) enemyRocket.SetState(State::EnemyRocket_Walking);
-
-	//	enemyRocket.Render();
-	//}
-	//}
 	if (1) // test EnemyWizard
 	{
 	    Data data;
@@ -182,6 +144,7 @@ void CharlestonScene::OnKeyDown(BYTE keyCode)
 		case VK_RETURN:
 			DoTransitionScene(Scene::BossCharleston);
 			break;
+
 	}
 	cap->OnKeyDown(keyCode);
 }

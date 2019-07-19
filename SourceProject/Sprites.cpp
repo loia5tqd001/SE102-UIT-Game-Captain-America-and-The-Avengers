@@ -9,7 +9,7 @@ const auto Sprites::GetFramesFromSpriteInfo(const Json::Value & spriteInfo)
 	const UINT spriteWidth  = spriteInfo[4].asUInt();
 	const UINT spriteHeight = spriteInfo[5].asUInt();
 	const UINT nRects       = spriteInfo[6].asUInt();
-	const UINT margin       = spriteInfo[7].asInt();
+	const auto margin       = spriteInfo[7].asInt();
 
 	std::vector<Rect> frames; frames.reserve(nRects);
 

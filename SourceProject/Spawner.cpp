@@ -28,8 +28,9 @@ void Spawner::OnCollideWithCap()
 	else {
 		switch (objectBehavior)
 		{
-			case Behaviors::EnemyGun_Shoot   : 
-			case Behaviors::EnemyGun_RunOnly :
+			case Behaviors::EnemyGun_Shoot    : 
+			case Behaviors::EnemyGun_ShootFast: 
+			case Behaviors::EnemyGun_RunOnly  :
 				enemy = dynamic_cast<EnemyGun*>( grid->SpawnObject(
 					std::make_unique<EnemyGun>(objectBehavior, behaviorData, objSpawnPos, grid)));
 				break;
@@ -37,7 +38,6 @@ void Spawner::OnCollideWithCap()
 			case Behaviors::EnemyRocket_ShootStraight :
 			case Behaviors::EnemyRocket_ShootCross    :
 			case Behaviors::EnemyRocket_BackAndForth  :
-			case Behaviors::EnemyRocket_BackAndForth2 :
 				enemy = dynamic_cast<EnemyRocket*>( grid->SpawnObject(
 					std::make_unique<EnemyRocket>(objectBehavior, behaviorData, objSpawnPos, grid)));
 				break;

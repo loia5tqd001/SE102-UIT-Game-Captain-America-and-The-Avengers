@@ -26,7 +26,6 @@ private:
 
 	void LoadObjects(const Json::Value& grid);
 	void LoadResources(const Json::Value& root);
-	void RemoveDestroyedObjects();
 	void RecalculateObjectsInViewPort();
 
 public:
@@ -37,6 +36,6 @@ public:
 
 	GameObject* SpawnObject(std::unique_ptr<GameObject> obj, bool isMoving = true);
 	inline const auto& GetObjectsInViewPort() const { return curObjectsInViewPort; }
-
+	void RemoveDestroyedObjects();
 };
 
