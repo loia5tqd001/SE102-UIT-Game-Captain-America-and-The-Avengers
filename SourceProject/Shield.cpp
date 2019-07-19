@@ -27,6 +27,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 	switch (curState)
 	{
 	case State::Invisible:
+		UpdateByCapState(cap->GetState(), cap->GetPos());
 		break;
 	case State::Destroyed:
 		break;

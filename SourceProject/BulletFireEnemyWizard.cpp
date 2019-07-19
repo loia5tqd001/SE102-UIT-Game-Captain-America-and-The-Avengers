@@ -3,15 +3,20 @@
 
 
 BulletFireEnemyWizard::BulletFireEnemyWizard(int nx, const Vector2& spawnPos, Vector2 vel) :
-	Bullet(State::BulletEnemyGun, 1, spawnPos, vel, nx)
+	Bullet(State::BulletFireEnemyWizard_Horizontal, 2, spawnPos, vel, nx)
 {
-	animations.emplace(State::BulletEnemyGun, Animation(SpriteId::BulletEnemyGun, 0.1f));
+	animations.emplace(State::BulletFireEnemyWizard_Horizontal, Animation(SpriteId::BulletFireEnemyWizard_Horizontal, 0.1f));
+	animations.emplace(State::BulletFireEnemyWizard_Vertical, Animation(SpriteId::BulletFireEnemyWizard_Vertical, 0.1f));
+	if (nx == 0) curState = State::BulletFireEnemyWizard_Vertical;
 }
 
 void BulletFireEnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	pos.x += vel.x * dt;
-	pos.y += vel.y * dt;
+	if (curState == State::Destroyed) return;
+	if (nx == 0)
+		pos.y += vel.y * dt;
+	else
+		pos.x += vel.x * dt;
 	animations.at(curState).Update(dt);
 }
 

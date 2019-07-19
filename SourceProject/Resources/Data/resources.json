@@ -70,6 +70,12 @@
 	[          58,            12,       30,      76,              36,               44,         3,            7], //EnemyWizard_ShootBullet,   
 	[          59,            12,      256,      76,              40,               44,         3,          -88], //EnemyWizard_ShootBulletFire,
 	[          60,            12,      195,     130,              29,               51,         1,           12], //EnemyWizard_Flying,
+	
+	[          61,            12,       88,     140,              16,                8,         1,            0], //BulletFireEnemyWizard_Horizontal,
+	[          62,            12,       49,     136,               7,               16,         1,            0], //BulletFireEnemyWizard_Vertical,
+	[          63,            12,       56,     162,               8,                5,         1,            0], //BulletEnemyWizard_Horizontal,
+	[          64,            12,       72,     161,               8,                6,         1,            0], //BulletEnemyWizard_SemiCross,
+	[          66,            12,       88,     160,               7,                8,         1,            0], //BulletEnemyWizard_Cross,
 
 	[         100,            10,      357,      11,              22,               45,         1,            0], //Captain_Standing,
 	[         101,            10,      228,      13,              24,               43,         4,            8], //Captain_Walking,
@@ -78,7 +84,7 @@
 	[         104,            10,      164,      28,              24,               28,         1,            0], //Captain_Sitting
 	[         105,            10,      217,      71,              38,               41,         2,            2], //Captain_Punching
 	[         106,            10,      298,      73,              49,               39,         2,            1], //Captain_Throw
-	[         107,            10,      134,      15,              22,               38,         1,            0],  //Captain_Falling
+	[         107,            10,      134,      15,              22,               38,         1,            0], //Captain_Falling
 	[108, 10, 20, 23, 40, 25, 1, 0], //Captain_JumpKick
 	[109, 10, 168, 85, 37, 27, 1, 0], //Captain_SitPunch
 	[110, 10, 38, 79, 39, 29, 2, 1] //Captain_Smash

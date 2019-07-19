@@ -28,7 +28,17 @@ void EnemyWizard::SpawnBullet()
 
 void EnemyWizard::SpawnBulletFire()
 {
-
+	if (isFlashing) return;
+	if (this->curState == State::EnemyWizard_ShootWhenFly) {
+		const auto bulletPos = pos + Vector2{ 23.0f, 31.0f } *float(nx);
+		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(0, bulletPos));
+		Sounds::PlayAt(SoundId::BulletLazer);
+	}
+	if (this->curState == State::EnemyWizard_ShootBulletFire) {
+		const auto bulletPos = pos + Vector2{ 23.0f, 31.0f } *float(nx);
+		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(0, bulletPos));
+		Sounds::PlayAt(SoundId::BulletLazer);
+	}
 }
 
 void EnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)

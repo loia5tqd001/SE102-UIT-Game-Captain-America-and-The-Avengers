@@ -36,8 +36,6 @@ void CharlestonScene::LoadResources()
 
 void CharlestonScene::Update(float dt)
 {
-
-
 	static Window& wnd = Window::Instance();
 	grid->UpdateCells();
 	if (1)
