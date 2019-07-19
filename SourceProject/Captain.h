@@ -8,9 +8,10 @@ class Captain : public VisibleObject
 {
 private:
 	static constexpr float WALKING_SPEED = 80.0f;
+	static constexpr float SMASH_SPEED = 400.0f;
 	static constexpr float JUMPING_SPEED = 500.0f;
 	static constexpr float GRAVITY = 1200.0f;
-
+	static constexpr float DOUBLE_KEY_DOWN_TIME_OUT = 0.2f;
 	std::unique_ptr<Shield> shield;
 
 	CaptainHealth& health = CaptainHealth::Instance();
@@ -22,7 +23,9 @@ private:
 	bool isStandingOnTheGround(){return (pos.y > 200);}
 	
 	//For super speed Captain
-	float doubleKeyDownTimeOut;
+	KeyControls prevPressedControlKey;
+	std::chrono::steady_clock::time_point timePressed;
+
 	//Todo: Use this
 	State prevState;
 public:

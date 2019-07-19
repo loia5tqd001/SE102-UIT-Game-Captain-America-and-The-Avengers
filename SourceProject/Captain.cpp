@@ -7,8 +7,8 @@ static auto& setting = Settings::Instance();
 Captain::Captain(const Vector2 & spawnPos) :
 	VisibleObject(State::Captain_Standing, spawnPos),
 	isInTheAir(false),
-	doubleKeyDownTimeOut(0.2f), 
-	shieldOn(true)
+	shieldOn(true),
+	prevPressedControlKey(KeyControls::Attack)
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
 	animations.emplace(State::Captain_Moving, Animation(SpriteId::Captain_Walking, 0.1f));
@@ -20,7 +20,8 @@ Captain::Captain(const Vector2 & spawnPos) :
 	animations.emplace(State::Captain_Throw, Animation(SpriteId::Captain_Throw, 0.2f));
 	animations.emplace(State::Captain_JumpKick, Animation(SpriteId::Captain_JumpKick, 0.2f));
 	animations.emplace(State::Captain_SitPunch, Animation(SpriteId::Captain_SitPunch, 0.15f));
-
+	animations.emplace(State::Captain_Smash, Animation(SpriteId::Captain_Smash, 0.3f));
+	animations.at(State::Captain_Throw).SetCusFrameHoldTime(1, 0.5f);
 	shield = std::make_unique<Shield>(this);
 	//bboxColor = Colors::MyPoisonGreen;
 }
@@ -31,6 +32,33 @@ void Captain::OnKeyDown(BYTE keyCode)
 	{
 	case VK_TAB:
 		OnFlashing(false);
+		break;
+	case VK_LEFT:
+		if (prevPressedControlKey!=KeyControls::Left && !isInTheAir)
+		{
+			prevPressedControlKey = KeyControls::Left;
+			timePressed = std::chrono::steady_clock::now();
+			OutputDebugString("Last key is not Left\n");
+		}
+		else
+		{
+			std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+			std::chrono::duration<float> timepassed = now - timePressed;
+
+			if (timepassed.count()>DOUBLE_KEY_DOWN_TIME_OUT)
+			{
+				prevPressedControlKey = KeyControls::Left;
+				timePressed = now;
+				OutputDebugString("KeyControl timeout!\n");
+			}
+			else
+			{
+				OutputDebugString("Event hit\n");
+				//Todo: setstate()
+			}
+		}
+		break;
+	case VK_RIGHT:
 		break;
 	}
 
@@ -189,6 +217,9 @@ void Captain::SetState(State state)
 		vel.y = 0.0f;
 	case State::Captain_JumpKick:
 		vel.x = 0.0f;
+		break;
+	case State::Captain_Smash:
+		vel.x = SMASH_SPEED * nx;
 	default:
 		break;
 	}
@@ -204,6 +235,10 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	case State::Captain_JumpKick:
 		if (animations.at(curState).IsDoneCycle())
 			SetState(State::Captain_Falling);
+		break;
+	case State::Captain_Smash:
+		if (animations.at(curState).IsDoneCycle())
+			SetState(State::Captain_Standing);
 		break;
 	case State::Captain_Throw:
 	case State::Captain_Punching:
@@ -222,31 +257,7 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	default:
 		break;
 	}
-#pragma region _EDIT_
-	//if (curState==State::Captain_JumpKick)
-	//{
-	//	if (animations.at(curState).IsDoneCycle())
-	//	{
-	//		SetState(State::Captain_Falling);
-	//	}
-	//}
 
-	//if (curState==State::Captain_Throw)
-	//{
-	//	if (animations.at(curState).IsDoneCycle())
-	//	{
-	//		SetState(State::Captain_Standing);
-	//	}
-	//}
-
-	//if (curState==State::Captain_Punching)
-	//{
-	//	if (animations.at(curState).IsDoneCycle())
-	//	{
-	//		SetState(State::Captain_Standing);
-	//	}
-	//}
-#pragma endregion
 	//Gravity to make Cap fall
 	if (isInTheAir)
 	{

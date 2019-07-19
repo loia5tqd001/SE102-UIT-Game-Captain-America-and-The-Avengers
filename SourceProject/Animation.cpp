@@ -14,16 +14,23 @@ Animation::Animation(SpriteId spriteId, float holdTime) :
 void Animation::Update(float dt)
 {
 	holdingTime += dt;
-	while (holdingTime >= holdTime)
+
+	while (holdingTime >= GetCurFrameHoldTime(curFrame))
 	{
+		holdingTime -= GetCurFrameHoldTime(curFrame);
 		curFrame++;
 		if (curFrame >= nFrames)
 		{
 			doneCycle = true;
 			curFrame = 0;
 		}
-		holdingTime -= holdTime;
 	}
+}
+
+void Animation::SetCusFrameHoldTime(UINT frameNumber, float holdTime)
+{
+	assert(float(holdTime) > 0.0f);
+	cusHoldTimeMap[frameNumber] = holdTime;
 }
 
 void Animation::Render(const Vector2& pos, const Vector2& vtScale, int alpha) const
