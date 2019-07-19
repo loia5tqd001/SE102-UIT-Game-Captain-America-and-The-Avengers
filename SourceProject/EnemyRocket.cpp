@@ -4,15 +4,14 @@
 #include "BulletEnemyRocket.h"
 
 
-EnemyRocket::EnemyRocket(const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid * grid) :
-	Enemy(State::EnemyRocket_Stand, 2, spawnPos, vel, nx, grid)
+EnemyRocket::EnemyRocket(Behaviors behavior, const Data& behaviorData, Vector2 spawnPos, Grid* grid) :
+	Enemy(behavior, std::move(behaviorData), State::EnemyRocket_BeforeExplode, 2, spawnPos, grid)
 {
 	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.1f));
 	animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.1f));
 	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.1f));
 	animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode, 0.2f));
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.25f));
-	beforeExplode = State::EnemyRocket_BeforeExplode;
 }
 
 void EnemyRocket::SetState(State state)

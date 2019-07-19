@@ -54,54 +54,54 @@ void CharlestonScene::Draw()
 	cap->Render();
 
 	#pragma region _TESTING_
-	if (1) // test enemyGun
-	{
-		static EnemyGun enemyGun( { 50.0f, 100.0f }, {}, 1, nullptr );
-		std::vector<GameObject*> co;
-		enemyGun.Update(GameTimer::Dt(), co);
+	//if (1) // test enemyGun
+	//{
+	//	static EnemyGun enemyGun( { 50.0f, 100.0f }, {}, 1, nullptr );
+	//	std::vector<GameObject*> co;
+	//	enemyGun.Update(GameTimer::Dt(), co);
 
-		if (wnd.IsKeyPressed('1')) enemyGun.SetState(State::EnemyGun_Stand);
-		if (wnd.IsKeyPressed('2')) enemyGun.SetState(State::EnemyGun_Sitting);
-		if (wnd.IsKeyPressed('3')) enemyGun.TakeDamage(1);
-		if (wnd.IsKeyPressed('4')) enemyGun.SetState(State::EnemyGun_Walking);
+	//	if (wnd.IsKeyPressed('1')) enemyGun.SetState(State::EnemyGun_Stand);
+	//	if (wnd.IsKeyPressed('2')) enemyGun.SetState(State::EnemyGun_Sitting);
+	//	if (wnd.IsKeyPressed('3')) enemyGun.TakeDamage(1);
+	//	if (wnd.IsKeyPressed('4')) enemyGun.SetState(State::EnemyGun_Walking);
 
-		enemyGun.Render();
-	}
+	//	enemyGun.Render();
+	//}
 
-	if (1) // test BulletEnemyGun
-	{
-		static BulletEnemyGun BulletEnemyGun(  1, {20.0f, 150.0f } );
-		std::vector<GameObject*> co;
-		BulletEnemyGun.Update(GameTimer::Dt(), co);
+	//if (1) // test BulletEnemyGun
+	//{
+	//	static BulletEnemyGun BulletEnemyGun(  1, {20.0f, 150.0f } );
+	//	std::vector<GameObject*> co;
+	//	BulletEnemyGun.Update(GameTimer::Dt(), co);
 
-		BulletEnemyGun.SetState(State::BulletEnemyGun);
+	//	BulletEnemyGun.SetState(State::BulletEnemyGun);
 
-		BulletEnemyGun.Render();
-	}
+	//	BulletEnemyGun.Render();
+	//}
 
-	if (1) // test BulletEnemyRocket
-	{
-		static BulletEnemyRocket BulletEnemyRocket(  1, 1, {20.0f, 170.0f }); //1 is cross, 0 is horizontal
-		std::vector<GameObject*> co;
-		BulletEnemyRocket.Update(GameTimer::Dt(), co);
+	//if (1) // test BulletEnemyRocket
+	//{
+	//	static BulletEnemyRocket BulletEnemyRocket(  1, 1, {20.0f, 170.0f }); //1 is cross, 0 is horizontal
+	//	std::vector<GameObject*> co;
+	//	BulletEnemyRocket.Update(GameTimer::Dt(), co);
 
-		//BulletEnemyRocket.Render();
-	}
+	//	//BulletEnemyRocket.Render();
+	//}
 
-	if (1) // test EnemyRocket
-	{
-		static EnemyRocket enemyRocket( { 150.0f, 150.0f }, {}, 1, nullptr );
-		std::vector<GameObject*> co;
-		enemyRocket.Update(GameTimer::Dt(), co);
+	//if (1) // test EnemyRocket
+	//{
+	//	static EnemyRocket enemyRocket( { 150.0f, 150.0f }, {}, 1, nullptr );
+	//	std::vector<GameObject*> co;
+	//	enemyRocket.Update(GameTimer::Dt(), co);
 
-		if (wnd.IsKeyPressed('6')) enemyRocket.SetState(State::EnemyRocket_Stand);
-		if (wnd.IsKeyPressed('7')) enemyRocket.SetState(State::EnemyRocket_Sitting);
-		if (wnd.IsKeyPressed('8')) 
-			enemyRocket.TakeDamage(1);
-		if (wnd.IsKeyPressed('9')) enemyRocket.SetState(State::EnemyRocket_Walking);
+	//	if (wnd.IsKeyPressed('6')) enemyRocket.SetState(State::EnemyRocket_Stand);
+	//	if (wnd.IsKeyPressed('7')) enemyRocket.SetState(State::EnemyRocket_Sitting);
+	//	if (wnd.IsKeyPressed('8')) 
+	//		enemyRocket.TakeDamage(1);
+	//	if (wnd.IsKeyPressed('9')) enemyRocket.SetState(State::EnemyRocket_Walking);
 
-		enemyRocket.Render();
-	}
+	//	enemyRocket.Render();
+	//}
 
 	// Test Capsule, NOTE: Can't test because there's not grid yet
 	if (1)

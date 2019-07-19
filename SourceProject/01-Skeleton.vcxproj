@@ -251,6 +251,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="Counter.h" />
+    <ClInclude Include="Data.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyGun.h" />
     <ClInclude Include="EnemyRocket.h" />

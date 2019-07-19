@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "Enemy.h"
 
-Enemy::Enemy(State state, int health, Vector2 spawnPos, Vector2 vel, int nx, Grid* grid) :
-	VisibleObject(state, spawnPos, vel, nx),
+Enemy::Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, int health, Vector2 spawnPos, Grid* grid) :
+	VisibleObject(beforeExplode, spawnPos),
+	beforeExplode(beforeExplode),
 	health(health),
-	grid(grid)
+	grid(grid),
+	behavior(behavior),
+	behaviorData(behaviorData)
 {}
 
 void Enemy::UpdateAnimation(float dt)
@@ -30,13 +33,10 @@ void Enemy::TakeDamage(int damage)
 	if (isFlashing) return; // has just being damaged and is flashing, don't be too evil, give me time to recover please
 
 	health -= damage;
-	if (health <= 0)
-	{
-		assert(beforeExplode != State::Destroyed);
+	if (health <= 0) {
 		SetState(beforeExplode);
 	}
-	else
-	{
+	else {
 		OnFlashing(true);
 	}
 }

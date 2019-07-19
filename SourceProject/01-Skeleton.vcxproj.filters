@@ -365,5 +365,8 @@
     <ClInclude Include="Settings.h">
       <Filter>Framework\Game Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Data.h">
+      <Filter>Framework\_MyUtils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

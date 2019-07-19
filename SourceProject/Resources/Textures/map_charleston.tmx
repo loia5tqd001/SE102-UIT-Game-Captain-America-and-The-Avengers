@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="128" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="47">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="128" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="65">
  <tileset firstgid="1" name="4. TileMapCharleston.png" tilewidth="16" tileheight="16" tilecount="88" columns="11">
   <image source="4. TileMapCharleston.png" width="176" height="128"/>
  </tileset>
@@ -46,9 +46,28 @@
  <objectgroup color="#ffaa00" id="8" name="NextMap(classid=7)">
   <object id="37" name="NextMap" x="1968" y="352" width="48" height="85"/>
  </objectgroup>
- <objectgroup color="#00ff00" id="5" name="Spawners(classid=9)"/>
+ <objectgroup color="#00ff00" id="5" name="Spawners(classid=9)">
+  <object id="47" name="1.spawner" x="256" y="0" width="16" height="480"/>
+  <object id="48" name="1.enemyGun(100)" x="73" y="394" width="24" height="43"/>
+  <object id="49" name="1.enemyRocket(101)" x="373" y="391" width="23" height="46"/>
+  <object id="50" name="2.spawner" x="352" y="0" width="16" height="480"/>
+  <object id="51" name="2.enemyRocket(101)" x="443" y="391" width="23" height="46"/>
+  <object id="54" name="2.enemyGun(100)" x="163" y="394" width="24" height="43"/>
+  <object id="55" name="3.spawner" x="480" y="0" width="16" height="480"/>
+  <object id="56" name="3.enemyRocket(101)" x="580" y="311" width="23" height="46"/>
+  <object id="57" name="4.spawner" x="592" y="0" width="16" height="480"/>
+  <object id="58" name="4.enemyGun(100)" x="690" y="314" width="24" height="43"/>
+  <object id="59" name="5.spawner" x="720" y="0" width="16" height="480"/>
+  <object id="60" name="5.enemyGun(100)-running" x="831.5" y="392.5" width="24" height="43"/>
+  <object id="61" name="6.spawner" x="848" y="0" width="16" height="480"/>
+  <object id="62" name="6.enemyGun(100)" x="940" y="314" width="24" height="43"/>
+  <object id="63" name="7.spawner" x="1488" y="0" width="16" height="480"/>
+  <object id="64" name="7.enemyRocket(101)-retire" x="1593" y="391" width="23" height="46"/>
+ </objectgroup>
  <objectgroup color="#ffffff" id="6" name="AmbushTrigger(classid=10)">
-  <object id="24" name="AmbushTrigger" x="399" y="0" width="113" height="480"/>
+  <object id="24" name="AmbushTrigger[256,240,512,480]" x="399" y="0" width="16" height="480"/>
+  <object id="52" name="x3 enemyRocket(101)" x="478" y="397" width="24" height="40"/>
+  <object id="53" name="x3 enemyRun(100)" x="234" y="405" width="24" height="32"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="7" name="Capsules(classid=11)">
   <object id="25" name="SmallPowerStone(13),maxy=308" x="64" y="272" width="16" height="16"/>
@@ -68,9 +87,9 @@
   <object id="9" name="Water" x="0" y="454" width="1792" height="26"/>
  </objectgroup>
  <objectgroup color="#0000ff" id="4" name="PassableLedges(classid=3)">
-  <object id="12" name="PassableLedge" x="0" y="437" width="96" height="12"/>
-  <object id="13" name="PassableLedge" x="160" y="437" width="1216" height="12"/>
-  <object id="14" name="PassableLedge" x="1440" y="437" width="352" height="12"/>
+  <object id="12" name="PassableLedge" x="0" y="437" width="92" height="12"/>
+  <object id="13" name="PassableLedge" x="164" y="437" width="1208" height="12"/>
+  <object id="14" name="PassableLedge" x="1444" y="437" width="348" height="12"/>
   <object id="15" name="PassableLedge" x="48" y="309" width="48" height="10"/>
   <object id="16" name="PassableLedge" x="32" y="197" width="224" height="10"/>
   <object id="17" name="PassableLedge" x="288" y="197" width="224" height="10"/>

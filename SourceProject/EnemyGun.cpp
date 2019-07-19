@@ -3,15 +3,15 @@
 #include "Captain.h"
 #include "BulletEnemyGun.h"
 
-EnemyGun::EnemyGun(const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid *grid) : 
-	Enemy(State::EnemyGun_Stand, 1, spawnPos, vel, nx, grid)
+EnemyGun::EnemyGun(Behaviors behavior, const Data& behaviorData, Vector2 spawnPos, Grid* grid) : 
+	Enemy(behavior, std::move(behaviorData), State::EnemyGun_BeforeExplode, 1, spawnPos, grid)
 {
+	// switch behavior data, case:
 	animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.1f));
 	animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 0.1f));
 	animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode, 0.3f));
 	animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.1f));
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.25f));
-	beforeExplode = State::EnemyGun_BeforeExplode;
 }
 
 void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)

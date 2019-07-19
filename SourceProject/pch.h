@@ -31,6 +31,7 @@
 #include "GameTimer.h"
 #include "Random.h"
 #include "Utils.h"
+#include "Data.h"
 
 // === Resources ===
 #include "enums.h"

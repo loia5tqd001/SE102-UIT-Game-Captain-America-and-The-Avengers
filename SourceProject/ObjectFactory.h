@@ -48,17 +48,5 @@ struct ObjectFactory
 		// may call Create<EnemyGun>, Create<EnemyRocket> below...
 		return {};
 	}
-
-	template<>
-	static std::unique_ptr<EnemyGun> Create(const Json::Value& objJson, Grid* grid)
-	{
-		return {};
-	}
-
-	template<>
-	static std::unique_ptr<EnemyRocket> Create(const Json::Value& objJson, Grid* grid)
-	{
-		return {};
-	}
 };
 

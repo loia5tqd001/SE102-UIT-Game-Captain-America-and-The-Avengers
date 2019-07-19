@@ -10,9 +10,8 @@ private:
 	static constexpr float GRAVITY = 50.0f;
 	static constexpr float FALL_BACK = 50.0f;
 
-	float timeSpawnBullet;
 public:
-	EnemyRocket(const Vector2& spawnPos, const Vector2& vel, int nx, Grid *grid);
+	EnemyRocket(Behaviors behavior, const Data& behaviorData, Vector2 spawnPos, Grid* grid);
 
 	void SetState(State state) override;
 	void SpawnRocket(float cycle);
