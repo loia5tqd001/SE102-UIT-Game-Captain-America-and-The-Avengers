@@ -22,7 +22,7 @@ private:
 	void HandleNoCollisions(float dt);
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 
-	bool isInTheAir;
+	inline bool IsInTheAir();
 
 	bool isStandingOnTheGround() { return curState == State::Captain_Standing; }
 	Vector2 posWhenJump;

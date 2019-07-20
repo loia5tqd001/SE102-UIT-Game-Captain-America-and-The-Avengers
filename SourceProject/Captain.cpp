@@ -7,7 +7,6 @@ static auto& setting = Settings::Instance();
 
 Captain::Captain(const Vector2 & spawnPos) :
 	VisibleObject(State::Captain_Standing, spawnPos),
-	isInTheAir(false),
 	shieldOn(true),
 	prevPressedControlKey(KeyControls::Attack),
 	canSpin(false),
@@ -41,7 +40,7 @@ void Captain::OnKeyDown(BYTE keyCode)
 		OnFlashing(false);
 		break;
 	case VK_LEFT:
-		if (prevPressedControlKey != KeyControls::Left && !isInTheAir)
+		if (prevPressedControlKey != KeyControls::Left && !IsInTheAir())
 		{
 			prevPressedControlKey = KeyControls::Left;
 			timePressed = std::chrono::steady_clock::now();
@@ -67,7 +66,7 @@ void Captain::OnKeyDown(BYTE keyCode)
 		}
 		break;
 	case VK_RIGHT:
-		if (prevPressedControlKey != KeyControls::Right && !isInTheAir)
+		if (prevPressedControlKey != KeyControls::Right && !IsInTheAir())
 		{
 			prevPressedControlKey = KeyControls::Right;
 			timePressed = std::chrono::steady_clock::now();
@@ -94,16 +93,15 @@ void Captain::OnKeyDown(BYTE keyCode)
 		break;
 	}
 
-		if (isInTheAir == false) {
+		if (IsInTheAir() == false) {
 			SetState(State::Captain_Jump);
 			posWhenJump = pos;
-			isInTheAir = true;
 		}
 
 
 	if(keyCode == setting.Get(KeyControls::Attack)) 
 	{ 
-		if (isInTheAir == false)
+		if (IsInTheAir() == false)
 			if (curState == State::Captain_Sitting)
 				SetState(State::Captain_SitPunch);
 			else
@@ -144,7 +142,7 @@ void Captain::ProcessInput()
 		nx = -std::abs(nx);
 		vel.x = nx * WALKING_SPEED;
 
-		if (!isInTheAir) //on the ground
+		if (!IsInTheAir()) //on the ground
 		{
 			SetState(State::Captain_Moving);
 		}
@@ -160,7 +158,7 @@ void Captain::ProcessInput()
 
 		nx = std::abs(nx);
 		vel.x = nx * WALKING_SPEED;
-		if (!isInTheAir)
+		if (!IsInTheAir())
 		{
 			SetState(State::Captain_Moving);
 		}
@@ -169,7 +167,7 @@ void Captain::ProcessInput()
 
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
 	{
-		if (!isInTheAir)
+		if (!IsInTheAir())
 		{
 			SetState(State::Captain_LookUp);
 		}
@@ -178,7 +176,7 @@ void Captain::ProcessInput()
 
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
 	{
-		if (!isInTheAir && !(curState == State::Captain_SitPunch))
+		if (!IsInTheAir() && !(curState == State::Captain_SitPunch))
 		{
 			SetState(State::Captain_Sitting);
 		}
@@ -274,7 +272,7 @@ void Captain::SetState(State state)
 		vel.x = 0.0f;
 		break;
 	case State::Captain_Smash:
-		if (isInTheAir)
+		if (IsInTheAir())
 		{
 			return;
 		}
@@ -424,3 +422,36 @@ void Captain::Render() const
 	shield->Render();
 }
 
+inline bool Captain::IsInTheAir()
+{
+	switch (curState)
+	{
+	case State::Invisible: //Todo: solve this
+		return false;
+		break;
+	case State::Destroyed:
+		return false;
+		break;
+	case State::Captain_Standing:
+	case State::Captain_Moving:
+	case State::Captain_LookUp:
+	case State::Captain_Sitting:
+	case State::Captain_Punching:
+	case State::Captain_Throw:
+	case State::Captain_SitPunch:
+	case State::Captain_Smash:
+		return false;
+		break;
+	case State::Captain_Jump:
+	case State::Captain_Falling:
+	case State::Captain_OnTwoKnee:
+	case State::Captain_JumpKick:
+	case State::Captain_Climb: //TODO: remeber this
+	case State::Captain_Spin:
+		return true;
+		break;
+	default:
+		Debug::out("State is not handled! Message from [bool Captain::IsInTheAir()]");
+		break;
+	}
+}
