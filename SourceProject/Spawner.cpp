@@ -24,6 +24,7 @@ void Spawner::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 void Spawner::OnCollideWithCap()
 {
+	if (!isActive) return;
 	if (enemy != nullptr) return; // if object's still alive
 	else {
 		switch (objectBehavior)

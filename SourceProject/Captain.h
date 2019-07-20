@@ -19,14 +19,12 @@ private:
 	CaptainHealth& health = CaptainHealth::Instance();
 	bool shieldOn = true;
 	void ProcessInput();
+	void CollideWithPassableObjects(float dt, const CollisionEvent& e);
 	void HandleNoCollisions(float dt);
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
+	bool isInTheAir;
 
-	inline bool IsInTheAir();
-
-	bool isStandingOnTheGround() { return curState == State::Captain_Standing; }
-	Vector2 posWhenJump;
-
+	
 	//For super speed Captain
 	KeyControls prevPressedControlKey;
 	std::chrono::steady_clock::time_point timePressed;

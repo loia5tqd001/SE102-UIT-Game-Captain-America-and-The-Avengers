@@ -2,8 +2,14 @@
 #include "Captain.h"
 #include "Shield.h"
 #include "Block.h"
+#include "Spawner.h"
+#include "AmbushTrigger.h"
+#include "Item.h"
+#include "Enemy.h"
+#include "Capsule.h"
 
 static auto& setting = Settings::Instance();
+static auto& wnd = Window::Instance();
 
 Captain::Captain(const Vector2 & spawnPos) :
 	VisibleObject(State::Captain_Standing, spawnPos),
@@ -28,7 +34,7 @@ Captain::Captain(const Vector2 & spawnPos) :
 
 	shield = std::make_unique<Shield>(this);
 
-	pos = { 73.0f, 392.0f };
+	pos = { 73.0f, 391.0f };
 	bboxColor = Colors::MyPoisonGreen;
 }
 
@@ -185,20 +191,22 @@ void Captain::ProcessInput()
 
 }
 
+void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
+{
+	if (e.nx != 0.0f) 
+	{
+		pos.x += min( e.pCoObj->GetBBox().GetWidth(), (1.0f - e.t) * vel.x * dt );
+	}
+	if (e.ny != 0.0f)
+	{
+		pos.y += min(e.pCoObj->GetBBox().GetHeight(), (1.0f - e.t) * vel.y * dt);
+	}
+}
+
 void Captain::HandleNoCollisions(float dt)
 {
-	//Todo: Remove when test is done
-	/*if (isStandingOnTheGround() && isInTheAir)
-	{
-		pos.y = 200;
-		vel.y = 0;
-		isInTheAir = false;
-		SetState(State::Captain_Standing);
-	}*/
 	pos.x += vel.x * dt;
 	pos.y += vel.y * dt;
-	Debug::out("pos.x = %f | pos.y = %f\n", pos.x, pos.y);
-	//Todo: Delete this when test is done
 }
 
 void Captain::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
@@ -209,38 +217,89 @@ void Captain::HandleCollisions(float dt, const std::vector<GameObject*>& coObjec
 	float min_tx, min_ty, nx, ny;
 	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 
-	// NOTE: HACK: not perfect handler but we're fine
-	if (coEvents.size() == 0) return; // the case object's going toward the corner
+	if (coEvents.size() == 0) return;
 
 	pos.x += min_tx * vel.x * dt;
 	pos.y += min_ty * vel.y * dt;
 
-	//if (nx != 0.0f) vel.x = 0.0f;
-	//if (ny != 0.0f) vel.y = 0.0f;
-
-	for (UINT i = 0; i < coEvents.size(); i++)
+	for (auto& e : coEvents)
 	{
-		const CollisionEvent& e = coEvents[i];
-
-		if (auto block = dynamic_cast<Block*>(e.pCoObj))
+		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
 		{
+			spawner->OnCollideWithCap();
+			CollideWithPassableObjects(dt, e);
+		}
+		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
+		{
+			if (!ambush->IsActive())
+				ambush->Active(coObjects);
+			CollideWithPassableObjects(dt, e);
+		}
+		else if (auto item = dynamic_cast<Item*>(e.pCoObj))
+		{
+			// TODO: being hit or collected, need to rewrite
+			item->BeingCollected();
+			CollideWithPassableObjects(dt, e);
+		}
+		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
+		{
+			if (isFlashing) { // undamagable
+				CollideWithPassableObjects(dt, e);
+			}
+			else {
+				// TODO: setState being damaged
+			}
+		}
+		else if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
+
 			switch (block->GetType())
 			{
-				case ClassId::RigidBlock:
-				case ClassId::PassableLedge:
-					break;
-
 				case ClassId::Water:
-					pos.x += e.t * (-nx);
-					pos.y += e.t * (-ny);
-					vel.y = -100.0f;
+					// TODO: setstate on water;
+					// NOTE: onwater will have on water animation and vel.y -= vel of water, pos.y = (calculate)
 					break;
 
-				case ClassId::Spawner:
-					pos.x += e.t * (-nx);
-					pos.y += e.t * (-ny);
+				case ClassId::Switch:
+					// TODO: check if hit switch then toggle light map
+					CollideWithPassableObjects(dt, e);
 					break;
+
+				case ClassId::NextMap:
+					// check if krystal is collected, if yes then move to next map
+					CollideWithPassableObjects(dt, e);
+					break;
+
+				case ClassId::Door:
+					if (wnd.IsKeyPressed(setting.Get(KeyControls::Up))) {
+						// TODO: handle scene in pittsburgh
+					}
+					CollideWithPassableObjects(dt, e);
+					break;
+
+				case ClassId::PassableLedge:
+					if (e.ny < 0.0f && !wnd.IsKeyPressed(setting.Get(KeyControls::Down))) {
+						break;
+					}
+					else {
+						CollideWithPassableObjects(dt, e);
+						break;
+					}
+
+				case ClassId::ClimbableBar:
+					// TODO: handle in pittsburgh map
+					break;
+
+				case ClassId::DamageBlock:
+					// TODO: set state being damage
+				case ClassId::RigidBlock:
+					break;
+
+				default:
+					AssertUnreachable();
 			}
+		}
+		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
+			CollideWithPassableObjects(dt, e);
 		}
 	}
 }
@@ -305,43 +364,43 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	if (curState == State::Destroyed)
 		return;
 
-	if (vel.y < 0)
-	{
-		if (pos.y > posWhenJump.y - MAX_HEIGHT_JUMP)
-		{
-			SetState(State::Captain_Jump);
-		}
-		else
-			if ((pos.y <= posWhenJump.y - MAX_HEIGHT_JUMP) &&
-				(pos.y > posWhenJump.y - MAX_HEIGHT_JUMP - MAX_HEIGHT_SPIN))
-			{
-				SetState(State::Captain_Spin);
-			}
-			else
-			{
-				vel.y = -vel.y;
-			}
-	}
-	else
-	{
-		if (vel.y < 0)
-		{
-			if (pos.y > posWhenJump.y - MAX_HEIGHT_JUMP)
-			{
-				SetState(State::Captain_Falling);
-			}
-			else
-				if ((pos.y <= posWhenJump.y - MAX_HEIGHT_JUMP) &&
-					(pos.y > posWhenJump.y - MAX_HEIGHT_JUMP - MAX_HEIGHT_SPIN))
-				{
-					SetState(State::Captain_Spin);
-				}
-				else
-				{
-					pos.y = posWhenJump.y - MAX_HEIGHT_JUMP - MAX_HEIGHT_SPIN + 1;
-				}
-		}
-	}
+	// if (vel.y < 0)
+	// {
+	// 	if (pos.y > posWhenJump.y - MAX_HEIGHT_JUMP)
+	// 	{
+	// 		SetState(State::Captain_Jump);
+	// 	}
+	// 	else
+	// 		if ((pos.y <= posWhenJump.y - MAX_HEIGHT_JUMP) &&
+	// 			(pos.y > posWhenJump.y - MAX_HEIGHT_JUMP - MAX_HEIGHT_SPIN))
+	// 		{
+	// 			SetState(State::Captain_Spin);
+	// 		}
+	// 		else
+	// 		{
+	// 			vel.y = -vel.y;
+	// 		}
+	// }
+	// else
+	// {
+	// 	if (vel.y < 0)
+	// 	{
+	// 		if (pos.y > posWhenJump.y - MAX_HEIGHT_JUMP)
+	// 		{
+	// 			SetState(State::Captain_Falling);
+	// 		}
+	// 		else
+	// 			if ((pos.y <= posWhenJump.y - MAX_HEIGHT_JUMP) &&
+	// 				(pos.y > posWhenJump.y - MAX_HEIGHT_JUMP - MAX_HEIGHT_SPIN))
+	// 			{
+	// 				SetState(State::Captain_Spin);
+	// 			}
+	// 			else
+	// 			{
+	// 				pos.y = posWhenJump.y - MAX_HEIGHT_JUMP - MAX_HEIGHT_SPIN + 1;
+	// 			}
+	// 	}
+	// }
 
 
 	/*if (vel.y < 0)
@@ -368,9 +427,10 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	}*/
 
 	//Todo: fix
-	if (canSpin)
-		OutputDebugString("Can spin???\n");
+	//if (canSpin)
+	//	OutputDebugString("Can spin???\n");
 
+	vel.y += GRAVITY * dt;
 
 	switch (curState)
 	{
@@ -406,11 +466,6 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 		break;
 	}
 
-	//Gravity to make Cap fall
-	/*if (isInTheAir)
-	{
-		vel.y += virtual_Gravity * dt;
-	}*/
 
 	// process input
 	ProcessInput();

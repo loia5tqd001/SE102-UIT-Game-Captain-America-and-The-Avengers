@@ -4,6 +4,7 @@ void Camera::MoveTo(const Vector2 & newPos)
 {
 	pos.x = floor(newPos.x);
 	pos.y = floor(newPos.y);
+	if (lockRegion) ClampWithin(lockRegion);
 }
 
 void Camera::MoveBy(const Vector2 & dist)
@@ -19,11 +20,16 @@ void Camera::CenterTo(const Vector2 & center)
 
 void Camera::CenterAround(const Vector2& center, float radius)
 {
-	ClampWithin( RectF{
-		center - Vector2{ radius + width / 2.0f, radius + height / 2.0f}, 
-		width + UINT(2 * radius), 
-		height + UINT(2 * radius)}
-	);
+	if (lockRegion) {
+		ClampWithin(lockRegion);
+	}
+	else {
+		ClampWithin( RectF{
+			center - Vector2{ radius + width / 2.0f, radius + height / 2.0f}, 
+			width + UINT(2 * radius), 
+			height + UINT(2 * radius)}
+		);
+	}	
 }
 
 void Camera::ClampWithin(const RectF& theBox)
@@ -35,6 +41,11 @@ void Camera::ClampWithin(const RectF& theBox)
 const RectF Camera::GetBBox() const
 {
 	return { pos, width, height };
+}
+
+void Camera::SetLockRegion(const RectF& lock)
+{
+	lockRegion = lock;
 }
 
 Vector2 Camera::GetPositionInViewPort(const Vector2 & objPos) const

@@ -2,6 +2,9 @@
 #include "AmbushTrigger.h"
 #include "EnemyGun.h"
 #include "EnemyRocket.h"
+#include "Spawner.h"
+
+static auto& sceneManger = SceneManager::Instance();
 
 AmbushTrigger::AmbushTrigger(Vector2 pos, UINT w, UINT h, const RectF& lockRegion, Grid* grid) :
 	InvisibleObject(pos, w, h),
@@ -11,6 +14,25 @@ AmbushTrigger::AmbushTrigger(Vector2 pos, UINT w, UINT h, const RectF& lockRegio
 	const Vector2 topleftLock = lockRegion.GetTopLeft();
 	enemyGunSpawnPos = topleftLock + Vector2{ -22.0f, 165.0f };
 	enemyRocketSpawnPos = topleftLock + Vector2{ 222.0f, 157.0f };
+}
+
+void AmbushTrigger::Active(const std::vector<GameObject*>& objs)
+{
+	for (auto& o : objs) 
+	{
+		if (auto enemy = dynamic_cast<Enemy*>(o)) {
+			enemy->SetState(State::Explode);
+		}
+		else if (auto spawner = dynamic_cast<Spawner*>(o)) {
+			spawner->SetActive(false);
+			spawners.emplace_back(spawner);
+		}
+	}
+
+	isActive = true;
+	Camera::Instance().SetLockRegion( lockRegion );
+	Sounds::StopAt(sceneManger.GetCurScene().GetBgMusic());
+	Sounds::PlayLoop(SoundId::Ambush);
 }
 
 State AmbushTrigger::GetState() const
@@ -28,7 +50,12 @@ void AmbushTrigger::Update(float dt, const std::vector<GameObject*>& coObjects)
 	static EnemyRocket* enemyRocket = nullptr;
 	int countEnemyGun = 3, countEnemyRocket = 3;
 
-	if (!enemyGun->GetBBox().IsIntersect(cam.GetBBox())) // respawn enemy when out of camera
+	if (enemyGun == nullptr)
+	{
+		enemyGun = dynamic_cast<EnemyGun*>( grid->SpawnObject(
+			std::make_unique<EnemyGun>(Behaviors::EnemyGun_Ambush, Data{}, enemyGunSpawnPos, grid)));
+	}
+	else if (!enemyGun->GetBBox().IsIntersect(cam.GetBBox())) // respawn enemy when out of camera
 	{
 		enemyGun->SetState(State::Destroyed);
 		enemyGun = dynamic_cast<EnemyGun*>( grid->SpawnObject(
@@ -41,16 +68,21 @@ void AmbushTrigger::Update(float dt, const std::vector<GameObject*>& coObjects)
 		countEnemyGun--;
 	}
 
-	if (!enemyRocket->GetBBox().IsIntersect(cam.GetBBox()))
+	if (enemyRocket == nullptr)
+	{
+		enemyRocket = dynamic_cast<EnemyRocket*>( grid->SpawnObject(
+			std::make_unique<EnemyRocket>(Behaviors::EnemyRocket_Ambush, Data{}, enemyRocketSpawnPos, grid)));
+	}
+	else if (enemyRocket == nullptr || !enemyRocket->GetBBox().IsIntersect(cam.GetBBox()))
 	{
 		enemyRocket->SetState(State::Destroyed);
 		enemyRocket = dynamic_cast<EnemyRocket*>( grid->SpawnObject(
-			std::make_unique<EnemyRocket>(Behaviors::EnemyGun_Ambush, Data{}, enemyRocketSpawnPos, grid)));
+			std::make_unique<EnemyRocket>(Behaviors::EnemyRocket_Ambush, Data{}, enemyRocketSpawnPos, grid)));
 	}
 	else if (enemyRocket->GetState() == State::Destroyed) // being killed
 	{
 		enemyRocket = dynamic_cast<EnemyRocket*>( grid->SpawnObject(
-			std::make_unique<EnemyRocket>(Behaviors::EnemyGun_Ambush, Data{}, enemyRocketSpawnPos, grid)));
+			std::make_unique<EnemyRocket>(Behaviors::EnemyRocket_Ambush, Data{}, enemyRocketSpawnPos, grid)));
 		countEnemyRocket--;
 	}
 
@@ -59,5 +91,9 @@ void AmbushTrigger::Update(float dt, const std::vector<GameObject*>& coObjects)
 		countEnemyGun = countEnemyRocket = 3;
 		enemyGun = nullptr, enemyRocket = nullptr;
 		isDestroyed = true;
+		for (auto spawner : spawners) spawner->SetActive(true);
+		Sounds::StopAt(SoundId::Ambush);
+		Sounds::PlayLoop(sceneManger.GetCurScene().GetBgMusic());
+		Camera::Instance().SetLockRegion( {} );
 	}
 }
