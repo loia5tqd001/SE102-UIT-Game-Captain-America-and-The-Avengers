@@ -19,6 +19,7 @@ Data CaptainSpinning::Exit(Captain& cap, State toState)
 
 void CaptainSpinning::OnKeyUp(Captain& cap, BYTE keyCode)
 {
+
 }
 
 void CaptainSpinning::OnKeyDown(Captain& cap, BYTE keyCode)
