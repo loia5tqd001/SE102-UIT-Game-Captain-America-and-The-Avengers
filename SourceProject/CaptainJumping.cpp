@@ -24,7 +24,8 @@ Data CaptainJumping::Exit(Captain& cap, State toState)
 	switch (toState)
 	{
 		case State::Captain_Kicking:
-			data.Add("can-higher", canHigher);
+			data.Add(CAN_JUMP_HIGHER, canHigher);
+			data.Add(IS_JUMP_RELEASED, isJumpReleased);
 			break;
 	}
 	return std::move(data);

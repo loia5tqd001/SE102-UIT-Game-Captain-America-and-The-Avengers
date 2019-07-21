@@ -12,10 +12,16 @@ protected:
 public:
 	virtual void Enter(Captain& cap, State fromState, Data&& data = {}) = 0; // handle when change to this state
 	virtual Data Exit(Captain& cap, State toState) = 0; // handle when change to other state
-	virtual void OnKeyUp(Captain& cap, BYTE keyCode) {}
-	virtual void OnKeyDown(Captain& cap, BYTE keyCode) {}
+	virtual void OnKeyUp(Captain& cap, BYTE keyCode) = 0;
+	virtual void OnKeyDown(Captain& cap, BYTE keyCode) = 0;
 	virtual void Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects) = 0; // captain delegates his update call to this function
 	virtual void HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects) = 0;
 	virtual ~CaptainState() = default;
+
+protected:
+	// define properties for subclasses here. Those states need to communicate via Data, which need unified property name
+	static constexpr auto CAN_JUMP_HIGHER = "can-higher";
+	static constexpr auto IS_JUMP_RELEASED = "is-jump-released";
+
 };
 
