@@ -14,7 +14,9 @@ public:
 	{
 		xFlip = 2 * xHost - xFlip + widthHost - widthFlip;
 	};
+	void SetPos(const Vector2& p) { pos = p; }
 
+	Vector2 GetPos           () const;
 	Vector2 GetVelocity      () const;
 	void    RenderBoundingBox() const; // draw bounding box for better debugging
 

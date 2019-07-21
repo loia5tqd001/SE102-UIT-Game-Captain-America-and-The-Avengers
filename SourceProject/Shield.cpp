@@ -3,63 +3,59 @@
 #include "Enemy.h"
 #include "BulletEnemyGun.h"
 
-Shield::Shield(Captain *captain) : VisibleObject(State::Shield_Straight, captain->GetPos())
+Shield::Shield(Captain& cap) : 
+	VisibleObject(State::Shield_Straight, cap.GetPos()),
+	cap(cap)
 {
 	animations.emplace(State::Invisible, Animation(SpriteId::Invisible));
 	animations.emplace(State::Shield_Up, Animation(SpriteId::Shield_Up, 0.1f));
 	animations.emplace(State::Shield_Down, Animation(SpriteId::Shield_Down, 0.1f));
 	animations.emplace(State::Shield_Straight, Animation(SpriteId::Shield_Straight, 0.1f));
 	animations.emplace(State::Shield_Side, Animation(SpriteId::Shield_Side, 0.1f));
-	UpdateByCapState(State::Captain_Standing, captain->GetPos());
-	this->cap = captain;
+	UpdateByCapState(State::Captain_Standing, cap.GetPos());
 	bboxColor = Colors::MyPoisonGreen;
-}
-
-void Shield::SetState(State state)
-{
-	VisibleObject::SetState(state);
 }
 
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (isOnCaptain)
-		nx = cap->GetNx();// get nx to flip posx
+		nx = cap.GetNx();// get nx to flip posx
 
 	switch (curState)
 	{
 	case State::Invisible:
-		UpdateByCapState(cap->GetState(), cap->GetPos());
+		UpdateByCapState(cap.GetState(), cap.GetPos());
 		break;
 	case State::Destroyed:
 		break;
 	case State::Shield_Side:
 	{
-		UpdateByCapState(cap->GetState(), cap->GetPos());
+		UpdateByCapState(cap.GetState(), cap.GetPos());
 		HandleSideCollison(dt, coObjects);
 		break;
 	}
 	case State::Shield_Down:
 	{
-		UpdateByCapState(cap->GetState(), cap->GetPos());
+		UpdateByCapState(cap.GetState(), cap.GetPos());
 		HandleBottomCollison(dt, coObjects);
 		break;
 	}
 	case State::Shield_Straight:
 	{
-		UpdateByCapState(cap->GetState(), cap->GetPos());
+		UpdateByCapState(cap.GetState(), cap.GetPos());
 		break;
 	}
 	case State::Shield_Up:
 	{
 		if (isOnCaptain)
 		{
-			UpdateByCapState(cap->GetState(), cap->GetPos());
+			UpdateByCapState(cap.GetState(), cap.GetPos());
 		}
 		else {
 			timeToThrow += GameTimer::Dt();
 			if (timeToThrow < 0.1f)
 			{
-				UpdateByCapState(cap->GetState(), cap->GetPos());
+				UpdateByCapState(cap.GetState(), cap.GetPos());
 				return;
 			}
 			//to the max_distance
@@ -83,7 +79,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 				//Caculate pos.y base on pos.x by using vector and distance ratio
 				Vector2 shieldCenter = this->GetBBox().GetCenter();
-				Vector2 capCenter = cap->GetBBox().GetCenter();
+				Vector2 capCenter = cap.GetBBox().GetCenter();
 				Vector2 trans = capCenter - shieldCenter;
 				float ratio = (SPEED * dt) / std::abs(capCenter.x-shieldCenter.x);
 				trans.x *= ratio;
@@ -106,10 +102,10 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 void Shield::ThrowAway()
 {
 	if (isOnCaptain) { //cannot throw when shield is not on cap
-		UpdateByCapState(State::Captain_Throw, cap->GetPos());
+		UpdateByCapState(State::Captain_Throwing, cap.GetPos());
 		isOnCaptain = false; //go to the moving code in update
-		nx = cap->GetNx();
-		cap->setShieldOn(false);
+		nx = cap.GetNx();
+		cap.setShieldOn(false);
 	}
 }
 
@@ -123,7 +119,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 			pos.y = capPos.y + 8;
 			SetState(State::Shield_Straight);
 		}
-		else if (capState == State::Captain_Moving)
+		else if (capState == State::Captain_Walking)
 		{
 			pos.x = capPos.x + 18;
 			pos.y = capPos.y + 7;
@@ -135,19 +131,19 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 			pos.y = capPos.y + 10;
 			SetState(State::Shield_Straight);
 		}
-		else if (capState == State::Captain_OnTwoKnee)
+		else if (capState == State::Captain_CoverLow)
 		{
 			pos.x = capPos.x + 24;
 			pos.y = capPos.y - 3;
 			SetState(State::Shield_Down);
 		}
-		else if (capState == State::Captain_Jump||capState==State::Captain_Falling)
+		else if (capState == State::Captain_Jumping)
 		{
 			pos.x = capPos.x - 1;
 			pos.y = capPos.y + 3;
 			SetState(State::Shield_Side);
 		}
-		else if (capState == State::Captain_JumpKick)
+		else if (capState == State::Captain_Kicking)
 		{
 			pos.x = capPos.x - 3;
 			pos.y = capPos.y + 5;
@@ -155,43 +151,43 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 			nx = -nx;
 			flipPosx(); //the only state that shield is flip already, so flip 2 times then it will back in the work
 		}
-		else if (capState == State::Captain_SitPunch)
+		else if (capState == State::Captain_SitPunching)
 		{
 			pos.x = capPos.x + 7;
 			pos.y = capPos.y + 7;
 			SetState(State::Shield_Side);
 		}
-		else if (capState == State::Captain_Throw)
+		else if (capState == State::Captain_Throwing)
 		{
 			pos.x = capPos.x - 5;
 			pos.y = capPos.y - 7;
 			SetState(State::Shield_Up);
 		}
-		else if (capState == State::Captain_Smash)
+		else if (capState == State::Captain_Tackle)
 		{
 			SetState(State::Invisible);
 		}
-		else if (capState == State::Captain_Climb)
+		else if (capState == State::Captain_Climbing)
 		{
 			//we dont have sprite to calculate this correctly
 			pos.x = capPos.x - 2;
 			pos.y = capPos.y + 16;
 			SetState(State::Shield_Side);
 		}
-		else if (capState == State::Captain_Spin)
+		else if (capState == State::Captain_Spinning)
 		{
 			pos.x = capPos.x - 2;
 			pos.y = capPos.y + 16;
 			SetState(State::Invisible);
 		}
-		else if (capState==State::Captain_LookUp)
+		else if (capState==State::Captain_CoverTop)
 		{
 			//Todo: do it
 			pos.x = capPos.x + 3;
 			pos.y = capPos.y - 4;
 			SetState(State::Shield_Up);
 		}
-		else if (capState == State::Captain_LookUp)
+		else if (capState == State::Captain_CoverTop) // TODO: wait what???
 		{
 			pos.x = capPos.x + 7;
 			pos.y = capPos.y - 1;
@@ -207,25 +203,25 @@ void Shield::flipPosx()
 {
 	//only call when captain turn left
 	//dont worry i 've done the math
-	pos.x = 2 * cap->GetPos().x - pos.x + cap->GetWidth() - this->GetWidth();
+	pos.x = 2 * cap.GetPos().x - pos.x + cap.GetWidth() - this->GetWidth();
 }
 
 void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (nx < 0 && pos.x < cap->GetPos().x)
+	if (nx < 0 && pos.x < cap.GetPos().x)
 	{
-		UpdateByCapState(cap->GetState(), cap->GetPos());
+		UpdateByCapState(cap.GetState(), cap.GetPos());
 		isOnCaptain = true;
 		distance = 0;
-		cap->setShieldOn(true);
+		cap.setShieldOn(true);
 		timeToThrow = 0;
 	}
-	else if (nx > 0 && pos.x > cap->GetPos().x)
+	else if (nx > 0 && pos.x > cap.GetPos().x)
 	{
-		UpdateByCapState(cap->GetState(), cap->GetPos());
+		UpdateByCapState(cap.GetState(), cap.GetPos());
 		isOnCaptain = true;
 		distance = 0;
-		cap->setShieldOn(true);
+		cap.setShieldOn(true);
 		timeToThrow = 0;
 	}
 }

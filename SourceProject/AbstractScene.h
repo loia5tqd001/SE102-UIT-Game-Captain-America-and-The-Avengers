@@ -25,6 +25,7 @@ public:
 	inline bool IsDoingTransitionSceneEffect() const { return isDoingTransitionScene; }
 	std::optional<Scene> GetNextScene() const;
 
+	bool canGoNextMap = false;
 	bool isDark; // bad practice but who cares // toggle when captain hit the switch
 
 	virtual void LoadResources () = 0;

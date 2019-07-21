@@ -1,5 +1,4 @@
 #pragma once
-#include"Captain.h"
 
 class Shield : public VisibleObject
 {
@@ -8,9 +7,8 @@ private:
 	static constexpr float SPEED = 260.0f;
 	bool isOnCaptain = true;
 	float distance = 0;
-	Captain *cap;
+	class Captain& cap;
 	void UpdateByCapState(State capState, Vector2 capPos);
-	void SetState(State state) override;
 	void flipPosx();
 	float timeToThrow = 0.0f;
 
@@ -20,7 +18,7 @@ private:
 	void HandleBottomCollison(float dt, const std::vector<GameObject*>& coObjects);  //with enemy
 	void HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects); //with cap
 public:
-	Shield(Captain *captain);
+	Shield(Captain& cap);
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {});
 	void ThrowAway();
 };

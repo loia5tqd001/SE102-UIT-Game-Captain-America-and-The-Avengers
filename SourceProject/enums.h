@@ -168,19 +168,24 @@ enum class State
 	Shield_Up,
 
 	Captain_Standing,
-	Captain_Moving,
-	Captain_Jump,
-	Captain_LookUp,
-	Captain_Sitting,
+	Captain_Walking,
+	Captain_Jumping, // use vel to keep track if it's jumping or falling
+	Captain_Kicking,
+	Captain_Spinning,
+	Captain_Throwing,
+	Captain_Tackle,
 	Captain_Punching,
-	Captain_Falling,
-	Captain_Throw,
-	Captain_OnTwoKnee,
-	Captain_JumpKick,
-	Captain_SitPunch,
-	Captain_Smash,
-	Captain_Climb,
-	Captain_Spin,
+	Captain_Sitting,
+	Captain_SitPunching,
+	Captain_CoverTop,
+	Captain_CoverLow,
+	Captain_FallToWater,
+	Captain_InWater,
+	Captain_Swimming,
+	Captain_Climbing,
+	Captain_Injured, // when being attacked at the side (left or right)
+	Captain_Dead,
+
 
 	EnemyWizard_Walking,
 	EnemyWizard_Stand,
@@ -220,7 +225,8 @@ enum class Scene
 	Charleston,
 	BossCharleston,
 	Pittsburgh,
-	RedAlert
+	RedAlert, 
+	Count
 };
 
 

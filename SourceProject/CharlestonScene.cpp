@@ -6,12 +6,6 @@
 #include "EnemyRocket.h"
 #include "BulletEnemyRocket.h"
 
-#include "Capsule.h"
-#include "Item.h"
-#include "Captain.h"
-#include "CaptainHealth.h"
-#include "Shield.h"
-#include "Spawner.h"
 #include "EnemyWizard.h"
 
 
@@ -27,7 +21,7 @@ CharlestonScene::CharlestonScene()
 	{
 		Sounds::PlayLoop( GetBgMusic() );
 	}
-	
+
 }
 
 void CharlestonScene::LoadResources()
@@ -36,7 +30,7 @@ void CharlestonScene::LoadResources()
 
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
-	cap = std::make_unique<Captain>(Vector2(0, 100));
+	cap = std::make_unique<Captain>( Vector2{ 73.0f, 391.0f } ) ;
 }
 
 void CharlestonScene::Update(float dt)
@@ -74,7 +68,7 @@ void CharlestonScene::Draw()
 	    Data data;
 		data.Add("water-velocity", 16.9f);
 		data.Add("damage", 420);
-		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, data,{ 50.0f, 260.0f }, {}, 1, grid.get(), cap.get());
+		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, std::move(data),{ 50.0f, 150.0f }, {}, 1, grid.get(), *cap.get());
 		std::vector<GameObject*> co;
 		enemyWizard.Update(GameTimer::Dt(), co);
 
@@ -85,15 +79,15 @@ void CharlestonScene::Draw()
 
 	//if (0)
 	//{
-	//	static Captain cap(Vector2(0, 100));
+	//	static cap->ain cap->Vector2(0, 100));
 	//	std::vector<GameObject*> co;
-	//	cap.Update(GameTimer::Dt(), co);
+	//	cap->Update(GameTimer::Dt(), co);
 
-	//	cap.Render();
+	//	cap->Render();
 
 	//	//test shield
-	//	static Captain *captain = &cap;
-	//	static Shield shield(captain);
+	//	static cap->ain *cap->ain = &cap->
+	//	static Shield shield(cap->ain);
 	//	shield.Update(GameTimer::Dt(), co);
 	//	static auto& setting = Settings::Instance();
 	//	if (wnd.IsKeyPressed('T'))
@@ -101,13 +95,6 @@ void CharlestonScene::Draw()
 
 	//	shield.Render();
 	//}
-
-	if (1)
-	{
-		if (wnd.IsKeyPressed('O')) CaptainHealth::Instance().Add(1);
-		if (wnd.IsKeyPressed('P')) CaptainHealth::Instance().Subtract(1);
-		if (wnd.IsKeyPressed('0')) CaptainHealth::Instance().Set(0);
-	}
 #pragma endregion
 
 	if (wnd.IsKeyPressed('A'))

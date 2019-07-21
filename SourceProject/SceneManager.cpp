@@ -67,6 +67,15 @@ void SceneManager::SetScene(Scene scene)
 	}
 }
 
+void SceneManager::GoNextScene()
+{
+	if (dynamic_cast< GreetingScene*>(curScene.get())) SetScene(Scene::Charleston);
+	if (dynamic_cast< CharlestonScene*>(curScene.get())) SetScene(Scene::BossCharleston);
+	if (dynamic_cast< BossCharlestonScene*>(curScene.get())) SetScene(Scene::Pittsburgh);
+	if (dynamic_cast< PittsburghScene*>(curScene.get())) SetScene(Scene::RedAlert);
+	if (dynamic_cast< RedAlertScene*>(curScene.get())) SetScene(Scene::Greeting);
+}
+
 void SceneManager::Update(float dt)
 {
 	if (!curScene->IsPause())

@@ -1,5 +1,4 @@
 #pragma once
-#include "VisibleObject.h"
 
 class Item : public VisibleObject
 {

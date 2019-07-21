@@ -3,8 +3,9 @@
 #include "BulletFireEnemyWizard.h"
 #include "BulletEnemyWizard.h"
 
-EnemyWizard::EnemyWizard(Behaviors behavior, const Data& behaviorData, const Vector2 & spawnPos, const Vector2 & vel, int nx, Grid * grid, Captain* captain)
-	: Enemy(behavior, std::move(behaviorData),State::EnemyWizard_Stand, 2, spawnPos, grid)
+EnemyWizard::EnemyWizard(Behaviors behavior, Data&& behaviorData, Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap) :
+	Enemy(behavior, behaviorData,State::EnemyWizard_Stand, 2, spawnPos, grid),
+	cap(cap)
 {
 	animations.emplace(State::EnemyWizard_BeforeDefeated, Animation(SpriteId::EnemyWizard_BeforeDefeated, 0.2f));
 	animations.emplace(State::EnemyWizard_Defeated, Animation(SpriteId::EnemyWizard_Defeated, 0.25f));
@@ -20,7 +21,6 @@ EnemyWizard::EnemyWizard(Behaviors behavior, const Data& behaviorData, const Vec
 
 	beforeExplode = State::EnemyWizard_BeforeDefeated;
 	Explode = State::EnemyWizard_Defeated;
-	cap = captain;
 }
 
 void EnemyWizard::SpawnBullet()
@@ -32,7 +32,7 @@ void EnemyWizard::SpawnBullet()
 		//caculate vel.y
 		Vector2 bulletVel;
 		bulletVel.x = nx * BulletEnemyWizard::GetXSpeed();
-		bulletVel.y = nx * std::abs(bulletPos.y - cap->GetPos().y) / std::abs(bulletPos.x - cap->GetPos().x) * bulletVel.x;
+		bulletVel.y = nx * std::abs(bulletPos.y - cap.GetPos().y) / std::abs(bulletPos.x - cap.GetPos().x) * bulletVel.x;
 
 		grid->SpawnObject(std::make_unique<BulletEnemyWizard>(nx, bulletPos, bulletVel, this));
 		Sounds::PlayAt(SoundId::BulletNormal);

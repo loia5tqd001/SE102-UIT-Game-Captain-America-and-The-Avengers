@@ -18,6 +18,11 @@ void GameObject::ClampWithin(const RectF& theBox)
 	Utils::Clamp(pos.y, theBox.top, theBox.bottom - objBBox.GetHeight());
 }
 
+Vector2 GameObject::GetPos() const
+{
+	return pos;
+}
+
 Vector2 GameObject::GetVelocity() const
 {
 	return vel;

@@ -12,13 +12,14 @@ public:
 
 	void LoadResources();
 	void SetScene(Scene scene);
+	void GoNextScene();
 	void Update(float dt);
 	void Draw();
 
 	void OnKeyDown(BYTE keyCode);
 	void OnKeyUp(BYTE keyCode);
 
-	inline const AbstractScene& GetCurScene() { return *curScene.get(); }
+	inline AbstractScene& GetCurScene() { return *curScene.get(); }
 
 private:
 	SceneManager() = default;

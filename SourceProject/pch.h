@@ -18,6 +18,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <bitset>
+#include <queue>
 
 // === Third party library ===
 #include <json/json.h>
@@ -60,6 +61,42 @@
 #include "AbstractScene.h"
 #include "SceneManager.h"
 
+// == Ingame Objects == 
+#include "CaptainHealth.h"
+#include "ExitSign.h"
+#include "Capsule.h"
+#include "Item.h"
+
+#include "Block.h"
+#include "Spawner.h"
+#include "AmbushTrigger.h"
+#include "BreakableLedge.h"
+#include "MovingLedge.h"
+
+#include "Enemy.h"
+#include "Bullet.h"
+
+#include "Shield.h"
+
+#include "CaptainStanding.h"
+#include "CaptainWalking.h"
+#include "CaptainJumping.h"
+#include "CaptainKicking.h"
+#include "CaptainSpinning.h"
+#include "CaptainThrowing.h"
+#include "CaptainTackle.h"
+#include "CaptainPunching.h"
+#include "CaptainSitting.h"
+#include "CaptainSitPunching.h"
+#include "CaptainCoverTop.h"
+#include "CaptainCoverLow.h"
+#include "CaptainFallToWater.h"
+#include "CaptainInWater.h"
+#include "CaptainSwimming.h"
+#include "CaptainClimbing.h"
+#include "CaptainInjured.h"
+#include "CaptainDead.h"
+#include "Captain.h"
 
 
 

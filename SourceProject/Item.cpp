@@ -119,6 +119,7 @@ void Item::BeingCollected()
 	{
 		case SpriteId::ItemKeyKrystal:
 			ExitSign::Instance().KrystalCollected(pos);
+			SceneManager::Instance().GetCurScene().canGoNextMap = true;
 			break;
 
 		case SpriteId::ItemSmallEnergy:

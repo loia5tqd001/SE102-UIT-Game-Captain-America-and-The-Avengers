@@ -1,8 +1,4 @@
 #pragma once
-#include "AbstractScene.h"
-
-//Warning: Include header file
-#include"Shield.h"
 
 class CharlestonScene : public AbstractScene
 {
