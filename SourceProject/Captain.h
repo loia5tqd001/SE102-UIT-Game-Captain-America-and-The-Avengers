@@ -41,9 +41,9 @@ private:
 	//friend class CaptainStanding;
 	//std::unique_ptr<CaptainStanding> standing;
 	//
-	////For super speed Captain
-	//KeyControls prevPressedControlKey;
-	//std::chrono::steady_clock::time_point timePressed;
+	//For super speed Captain
+	KeyControls lastKeyDown, lastKeyUp;
+	std::chrono::steady_clock::time_point timeLastKeyDown, timeLastKeyUp;
 
 	//Todo: Use this
 	bool canSpin;

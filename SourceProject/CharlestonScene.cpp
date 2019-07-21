@@ -51,12 +51,12 @@ void CharlestonScene::Update(float dt)
 void CharlestonScene::Draw()
 {	
 	map->Render();
-	cap->Render();
 
 	for (auto& obj : grid->GetObjectsInViewPort())
 	{
 		obj->Render();
 	}
+	cap->Render();
 
 	grid->RenderCells();
 	

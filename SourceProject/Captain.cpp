@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Captain.h"
 
+static auto& setting = Settings::Instance();
+
 Captain::Captain(const Vector2& pos) :
 	VisibleObject(State::Captain_Standing, pos),
 	currentState(&stateStanding)
@@ -28,6 +30,11 @@ Captain::Captain(const Vector2& pos) :
 void Captain::OnKeyDown(BYTE keyCode)
 {
 	currentState->OnKeyDown(*this, keyCode);
+	if (setting.IsKeyControl(keyCode))
+	{
+		lastKeyDown = setting.GetKControl(keyCode);
+		timeLastKeyDown = std::chrono::steady_clock::now();
+	}
 	//switch (keyCode)
 	//{
 	//case VK_TAB:
@@ -118,6 +125,11 @@ void Captain::OnKeyDown(BYTE keyCode)
 void Captain::OnKeyUp(BYTE keyCode)
 {
 	currentState->OnKeyUp(*this, keyCode);
+	if (setting.IsKeyControl(keyCode))
+	{
+		lastKeyUp = setting.GetKControl(keyCode);
+		timeLastKeyUp = std::chrono::steady_clock::now();
+	}
 }
 
 //void Captain::ProcessInput()

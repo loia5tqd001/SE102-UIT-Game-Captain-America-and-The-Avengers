@@ -63,12 +63,12 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 	{
 		if (canHigher) {
 			if(isJumpReleased) {
-				canHigher = false;
-				// auto do one more cycle animation
-			} 
-			else {
 				// falling
 				cap.vel.y = JUMP_SPEED_VER;
+			} 
+			else {
+				// auto do one more cycle animation
+				canHigher = false;
 			}
 		}
 		else // jump too high
@@ -171,6 +171,9 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
 			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (dynamic_cast<Bullet*>(e.pCoObj)) {
+			cap.SetState(State::Captain_Injured);
 		}
 	}
 }

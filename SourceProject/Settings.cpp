@@ -54,6 +54,23 @@ BYTE Settings::Get(KeyControls kControl) const
 	return textblocks[kControl].keyCode;
 }
 
+bool Settings::IsKeyControl(BYTE keyCode) const
+{
+	for (int i = 0; i < (int)KeyControls::CountKCtrl; i++)
+		if (textblocks[(KeyControls)i].keyCode == keyCode)
+			return true;
+	return false;
+}
+
+KeyControls Settings::GetKControl(BYTE keyCode) const
+{
+	assert(IsKeyControl(keyCode));
+	for (int i = 0; i < (int)KeyControls::CountKCtrl; i++)
+		if (textblocks[(KeyControls)i].keyCode == keyCode)
+			return KeyControls(i);
+	return KeyControls::Count;
+}
+
 void Settings::SetOpening(bool isOpening)
 {
 	isSceneOpening = isOpening;

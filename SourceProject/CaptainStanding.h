@@ -4,6 +4,12 @@
 class CaptainStanding : public CaptainState
 {
 	static constexpr auto WALKING_SPEED = 150.0f;
+private:
+	//float timePressedDir;
+	//bool isLastPressedDir;
+	bool isToSittingTackle = false;
+
+
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

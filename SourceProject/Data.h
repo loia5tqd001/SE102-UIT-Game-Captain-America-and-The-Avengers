@@ -18,6 +18,11 @@ public:
 		assert(data.count(property) == 1);
 		return std::any_cast<T>( data.at(property) );
 	}
+
+	inline int Count(const std::string& property) const
+	{
+		return data.count(property);
+	}
 };
 
 /*  Sample use of 'Data':

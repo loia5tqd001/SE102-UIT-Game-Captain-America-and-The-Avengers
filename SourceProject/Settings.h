@@ -32,6 +32,8 @@ public:
 	inline bool IsOpening() const { return isSceneOpening; }
 	inline bool IsEditing() const { return isEditing; }
 	BYTE Get(KeyControls kControl) const;
+	bool IsKeyControl(BYTE keyCode) const;
+	KeyControls GetKControl(BYTE keyCode) const;
 	void Draw() const;
 	void OnKeyDown(BYTE keyCode);
 
