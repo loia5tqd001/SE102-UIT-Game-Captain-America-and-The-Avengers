@@ -34,11 +34,16 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 {
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
-		cap.vel.x -= SPIN_SPEED_HOR;
+		cap.vel.x = SPIN_SPEED_HOR;
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
-		cap.vel.x += SPIN_SPEED_HOR;
+		cap.vel.x = SPIN_SPEED_HOR;
+	}
+	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
+	{
+		if (timeUp >= TIME_KEEP_SPIN && timeDown >= TIME_KEEP_SPIN)
+			cap.SetState(State::Captain_CoverLow);
 	}
 
 	if (cap.animations.at(cap.curState).IsDoneCycle())
@@ -53,6 +58,10 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 			{
 				timeDown += GameTimer::Dt();
 				cap.vel.y = SPIN_SPEED_HOR;
+			}
+			else
+			{
+				cap.SetState(State::Captain_Jumping);
 			}
 		}
 	}

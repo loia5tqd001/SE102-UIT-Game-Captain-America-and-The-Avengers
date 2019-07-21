@@ -6,7 +6,7 @@
 
 void CaptainSitPunching::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Sitting);
+	assert(fromState == State::Captain_Sitting || fromState == State::Captain_CoverLow);
 	cap.vel.y = 0;
 	cap.vel.x = 0;
 }
@@ -61,7 +61,7 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 				cap.CollideWithPassableObjects(dt, e);
 			}
 			else {
-				if (nx * e.nx > 0)
+				if (nx * e.nx < 0)
 				{
 					enemy->TakeDamage(1);
 				}

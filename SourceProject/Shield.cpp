@@ -165,7 +165,9 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		}
 		else if (capState == State::Captain_Tackle)
 		{
-			SetState(State::Invisible);
+			pos.x = capPos.x + 35;
+			pos.y = capPos.y - 3;
+			SetState(State::Shield_Straight);
 		}
 		else if (capState == State::Captain_Climbing)
 		{
@@ -182,15 +184,8 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		}
 		else if (capState==State::Captain_CoverTop)
 		{
-			//Todo: do it
 			pos.x = capPos.x + 3;
 			pos.y = capPos.y - 4;
-			SetState(State::Shield_Up);
-		}
-		else if (capState == State::Captain_CoverTop) // TODO: wait what???
-		{
-			pos.x = capPos.x + 7;
-			pos.y = capPos.y - 1;
 			SetState(State::Shield_Up);
 		}
 		if (nx < 0)

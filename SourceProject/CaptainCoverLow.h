@@ -3,6 +3,10 @@
 
 class CaptainCoverLow : public CaptainState
 {
+	static constexpr auto GRAVITY = 100.0f;
+	static constexpr auto MOVE_HOR = 100.0f;
+
+	bool isOnGround = false;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

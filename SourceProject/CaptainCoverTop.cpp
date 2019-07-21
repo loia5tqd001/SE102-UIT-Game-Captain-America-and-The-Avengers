@@ -5,6 +5,7 @@
 
 void CaptainCoverTop::Enter(Captain& cap, State fromState, Data&& data)
 {
+	//cover low
 }
 
 Data CaptainCoverTop::Exit(Captain& cap, State toState)
@@ -14,6 +15,7 @@ Data CaptainCoverTop::Exit(Captain& cap, State toState)
 
 void CaptainCoverTop::OnKeyUp(Captain& cap, BYTE keyCode)
 {
+
 }
 
 void CaptainCoverTop::OnKeyDown(Captain& cap, BYTE keyCode)

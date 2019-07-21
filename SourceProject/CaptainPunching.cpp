@@ -60,7 +60,7 @@ void CaptainPunching::HandleCollisions(Captain& cap, float dt, const std::vector
 				cap.CollideWithPassableObjects(dt, e);
 			}
 			else {
-				if (nx * e.nx > 0)
+				if (nx * e.nx < 0)
 				{
 					enemy->TakeDamage(1);
 				}
