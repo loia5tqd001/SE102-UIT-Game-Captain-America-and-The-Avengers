@@ -32,7 +32,6 @@ void CaptainSpinning::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	cap.vel.x = 0.0f;
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.vel.x -= SPIN_SPEED_HOR;

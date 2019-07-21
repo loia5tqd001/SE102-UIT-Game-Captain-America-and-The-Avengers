@@ -7,6 +7,7 @@
 void CaptainThrowing::Enter(Captain& cap, State fromState, Data&& data)
 {
 	assert(fromState == State::Captain_Jumping || fromState == State::Captain_CoverTop || fromState == State::Captain_Walking);
+	assert(cap.shieldOn);
 	cap.vel.y = 0;
 	cap.vel.x = 0;
 	cap.shield->ThrowAway();
@@ -24,28 +25,16 @@ void CaptainThrowing::OnKeyUp(Captain& cap, BYTE keyCode)
 void CaptainThrowing::OnKeyDown(Captain& cap, BYTE keyCode)
 {
 	assert(!cap.shieldOn);
-	if (cap.animations.at(State::Captain_Throwing).IsDoneCycle()) {
-		if (keyCode == setting.Get(KeyControls::Attack))
-		{
-			cap.SetState(State::Captain_Punching);
-		}
-		if (keyCode == setting.Get(KeyControls::Jump))
-		{
-			cap.SetState(State::Captain_Kicking);
-		}
-		if (keyCode == setting.Get(KeyControls::Down))
-		{
-			cap.SetState(State::Captain_Sitting);
-		}
-	}
+	//Captain_Walking should handle nx, KeyControls press, up and down => shorten the code
 }
 
 void CaptainThrowing::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (cap.animations.at(State::Captain_Throwing).IsDoneCycle()) {
 
-		cap.SetState(State::Captain_Walking); //Captain_Walking should handle nx, KeyControls::Left Right
+		cap.SetState(State::Captain_Walking); //move to Captain_Walking, Captain_Walking should handle nx, KeyControls press, up and down
 	}
+	HandleCollisions(cap, dt, coObjects);
 }
 
 void CaptainThrowing::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
