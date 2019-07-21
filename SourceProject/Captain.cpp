@@ -10,15 +10,14 @@ Captain::Captain(const Vector2& pos) :
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
 	animations.emplace(State::Captain_Walking, Animation(SpriteId::Captain_Walking, 0.1f));
-	animations.emplace(State::Captain_Jumping, Animation(SpriteId::Captain_Jump));
-	animations.emplace(State::Captain_CoverTop, Animation(SpriteId::Captain_LookUp, 0.1f));
-	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.1f));
+	animations.emplace(State::Captain_Jumping, Animation(SpriteId::Captain_Jump, 0.3f));
+	animations.emplace(State::Captain_CoverTop, Animation(SpriteId::Captain_LookUp, 0.2f));
+	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.11f));
 	animations.emplace(State::Captain_Punching, Animation(SpriteId::Captain_Punching, 0.1f));
-	animations.emplace(State::Captain_Throwing, Animation(SpriteId::Captain_Throw, 0.2f));
+	animations.emplace(State::Captain_Throwing, Animation(SpriteId::Captain_Throw, 0.15f));
 	animations.emplace(State::Captain_Kicking, Animation(SpriteId::Captain_JumpKick, 0.2f));
 	animations.emplace(State::Captain_SitPunching, Animation(SpriteId::Captain_SitPunch, 0.15f));
 	animations.emplace(State::Captain_Tackle, Animation(SpriteId::Captain_Smash, 0.35f));
-	animations.emplace(State::Captain_Spinning, Animation(SpriteId::Captain_Spin, 0.3f));
 	
 	animations.emplace(State::Captain_Climbing, Animation(SpriteId::Captain_Climb, 0.2f));
 	animations.emplace(State::Captain_Injured, Animation(SpriteId::Captain_Injure, 0.4f));
@@ -26,6 +25,7 @@ Captain::Captain(const Vector2& pos) :
 	animations.emplace(State::Captain_Swimming, Animation(SpriteId::Captain_Swimming, 0.1f));
 	animations.emplace(State::Captain_FallToWater, Animation(SpriteId::Captain_FallToWater,0.2f));
 	animations.emplace(State::Captain_InWater, Animation(SpriteId::Captain_InWater, 0.1f));
+	animations.emplace(State::Captain_Spinning, Animation(SpriteId::Captain_Spin, 0.01f));
 
 	animations.at(State::Captain_Tackle).SetCusFrameHoldTime(0, 0.1f);
 
@@ -532,12 +532,7 @@ void Captain::Render() const
 
 RectF Captain::GetBBox() const
 {
-	if (curState != State::Captain_Swimming)
-		return VisibleObject::GetBBox();
-
-	// for handling ambush trigger:
-	const auto animationFrame = animations.at(State::Captain_Walking).GetFrameSize();
-	return { pos.x - 3.0f, pos.y, animationFrame.GetWidth(), animationFrame.GetHeight() };
+	return VisibleObject::GetBBox().Trim( (float)GetWidth() / 2 - 1, 0, (float)GetWidth() / 2 - 1, 0);
 }
 
 //inline bool Captain::IsInTheAir()

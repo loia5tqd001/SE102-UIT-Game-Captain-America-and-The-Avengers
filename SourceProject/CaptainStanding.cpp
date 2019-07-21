@@ -52,67 +52,27 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 		cap.nx = 1;
 		cap.SetState(State::Captain_Walking);
 	}
-
-
-
-	//if (keyCode == keyCodeDir)
-	//{
-	//	if (isLastPressedDir) // first press on direction
-	//	{
-	//		if (timePressedDir > 0.1f)
-	//		{
-	//			timePressedDir = 0.0f;
-	//			isLastPressedDir = false;
-	//		}
-	//		else
-	//		{
-	//			Data data;
-	//			data.Add("is-tackle", true);
-
-	//			cap.SetState(State::Captain_Sitting,);
-	//		}
-	//		isLastPressedDir = true;
-	//	}
-	//	else
-	//	{
-
-	//	}
-
-	//}
-
-	// set direction
-
-
-
-
-	//std::optional<State> shouldBeNextState;
-
-	//if (keyCode == setting.Get(KeyControls::Left)) {
-	//	cap.vel.x -= WALKING_SPEED;
-	//}
-	//if (keyCode == setting.Get(KeyControls::Right)) {
-	//	cap.vel.x += WALKING_SPEED;
-	//}
-	//if (cap.vel.x != 0.0f) {
-	//	shouldBeNextState = State::Captain_Walking;
-	//}
-	//else {
-	//	int yDir = 0;
-	//	if (keyCode == setting.Get(KeyControls::Up)) {
-	//		yDir --;
-	//	}
-	//	if (keyCode == setting.Get(KeyControls::Down)) {
-	//		yDir ++;
-	//	}
-	//	if (yDir != 0) {
-	//		shouldBeNextState = yDir > 0 ? State::Captain_Sitting : State::Captain_CoverTop;
-	//	}
-	//}
-
-	//if (shouldBeNextState.has_value())
-	//{
-	//	cap.SetState(*shouldBeNextState);
-	//}
+	else if (keyCode == setting.Get(KeyControls::Up))
+	{
+		cap.SetState(State::Captain_CoverTop);
+	}
+	else if (keyCode == setting.Get(KeyControls::Down))
+	{
+		cap.SetState(State::Captain_Sitting);
+	}
+	else if (keyCode == setting.Get(KeyControls::Jump))
+	{
+		cap.SetState(State::Captain_Jumping);
+	}
+	else if (keyCode == setting.Get(KeyControls::Attack))
+	{
+		if (cap.shieldOn) {
+			cap.SetState(State::Captain_Throwing);
+		}
+		else {
+			cap.SetState(State::Captain_Punching);
+		}
+	}
 }
 
 void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

@@ -3,7 +3,9 @@
 
 class CaptainWalking : public CaptainState
 {
-	static constexpr auto WALKING_SPEED = 1.3f;
+	static constexpr auto WALKING_SPEED = 65.0f;
+private:
+	bool isToSittingTackle = false;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

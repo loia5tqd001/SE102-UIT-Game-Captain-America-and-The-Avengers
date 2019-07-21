@@ -9,13 +9,24 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 		case State::Captain_InWater:
 		case State::Captain_Swimming:
 			canHigher = false;
+			cap.vel.y = -JUMP_SPEED_VER;
+			break;
+		case State::Captain_Walking:
+			if (cap.lastKeyDown == KeyControls::Down) {
+				cap.vel.y = JUMP_SPEED_VER;
+			} else {
+				cap.vel.y = -JUMP_SPEED_VER;
+			}
+			break;
+		case State::Captain_Spinning:
+			cap.vel.y = JUMP_SPEED_VER;
 			break;
 		default:
 			canHigher = true;
+			cap.vel.y = -JUMP_SPEED_VER;
 			break;
 	}
 	isJumpReleased = false;
-	cap.vel.y = -JUMP_SPEED_VER;
 }
 
 Data CaptainJumping::Exit(Captain& cap, State toState)
@@ -33,10 +44,6 @@ Data CaptainJumping::Exit(Captain& cap, State toState)
 
 void CaptainJumping::OnKeyUp(Captain& cap, BYTE keyCode)
 {
-	if (keyCode == setting.Get(KeyControls::Jump))
-	{
-		isJumpReleased = true;
-	}
 }
 
 void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
@@ -45,6 +52,17 @@ void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
 	{
 		cap.SetState(State::Captain_Kicking);
 	}
+	else {
+		int dir = 0;
+		if (keyCode == setting.Get(KeyControls::Left)) {
+			dir --;
+		}
+		else if (keyCode == setting.Get(KeyControls::Right)) {
+			dir ++;
+		}
+		if (dir != 0) cap.nx = dir;
+	}
+		
 }
 
 void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -58,31 +76,35 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 	{
 		cap.vel.x += JUMP_SPEED_HOR;
 	}
+	if (!wnd.IsKeyPressed(setting.Get(KeyControls::Jump)))
+	{
+		isJumpReleased = true;
+	}
 
 	if (cap.animations.at(cap.curState).IsDoneCycle())
 	{
-		if (canHigher) {
-			if(isJumpReleased) {
-				// falling
-				cap.vel.y = JUMP_SPEED_VER;
-			} 
-			else {
-				// auto do one more cycle animation
+		static int count = 0;
+		if (isJumpReleased) {
+			// falling
+			cap.vel.y = JUMP_SPEED_VER;
+			isJumpReleased = false;
+		}
+		else // still holding jump
+		{
+			if (canHigher) {
+				// automatic do one more cycle
 				canHigher = false;
 			}
-		}
-		else // jump too high
-		{
-			if (isJumpReleased) {
-				// falling
-				cap.vel.y = JUMP_SPEED_VER;
-			}
-			else {
+			else // jump too high
+			{
 				cap.SetState(State::Captain_Spinning);
 			}
 		}
-	}
 
+	}
+	//Debug::Out(cap.vel.y, 0.0001 * signed(cap.vel.y) * dt);
+	cap.vel.y += 0.0003 * signed(cap.vel.y) * dt;
+	//Debug::Out(cap.vel.y, 0.0001 * signed(cap.vel.y) * dt);
 	HandleCollisions(cap, dt, coObjects);
 }
 
@@ -158,11 +180,27 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 					break;
 
 				case ClassId::DamageBlock:
-					cap.SetState(State::Captain_Injured);
+					if (!cap.isFlashing)
+					{
+						cap.health.Subtract(1);
+						cap.SetState(State::Captain_Injured);
+					}
 					break;
 
 				case ClassId::PassableLedge:
+					if (e.ny < 0) {
+						cap.SetState(State::Captain_Sitting);
+						Sounds::PlayAt(SoundId::Grounding);
+					} else {
+						cap.CollideWithPassableObjects(dt, e);
+					}
+					break;
+
 				case ClassId::RigidBlock:
+					if (e.ny > 0) {
+						cap.SetState(State::Captain_Sitting);
+						Sounds::PlayAt(SoundId::Grounding);
+					}
 					break;
 
 				default:
@@ -173,7 +211,11 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (dynamic_cast<Bullet*>(e.pCoObj)) {
-			cap.SetState(State::Captain_Injured);
+			if (!cap.isFlashing)
+			{
+				cap.SetState(State::Captain_Injured);
+				cap.health.Subtract(1);
+			}
 		}
 	}
 }

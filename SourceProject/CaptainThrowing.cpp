@@ -6,8 +6,12 @@
 
 void CaptainThrowing::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Jumping || fromState == State::Captain_CoverTop || fromState == State::Captain_Walking);
+	assert(fromState == State::Captain_Jumping || 
+		   fromState == State::Captain_CoverTop || 
+		   fromState == State::Captain_Walking ||
+		   fromState == State::Captain_Standing);
 	assert(cap.shieldOn);
+	Sounds::PlayAt(SoundId::ShieldThrow);
 	cap.vel.y = 0;
 	cap.vel.x = 0;
 	cap.shield->ThrowAway();
@@ -32,7 +36,7 @@ void CaptainThrowing::Update(Captain& cap, float dt, const std::vector<GameObjec
 {
 	if (cap.animations.at(State::Captain_Throwing).IsDoneCycle()) {
 
-		cap.SetState(State::Captain_Walking); //move to Captain_Walking, Captain_Walking should handle nx, KeyControls press, up and down
+		cap.SetState(State::Captain_Standing); //move to Captain_Walking, Captain_Walking should handle nx, KeyControls press, up and down
 	}
 	HandleCollisions(cap, dt, coObjects);
 }

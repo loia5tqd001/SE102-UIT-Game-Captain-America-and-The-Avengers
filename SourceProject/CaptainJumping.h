@@ -3,8 +3,8 @@
 
 class CaptainJumping : public CaptainState
 {
-	static constexpr auto JUMP_SPEED_VER = 100.0f;
-	static constexpr auto JUMP_SPEED_HOR = 100.0f;
+	static constexpr auto JUMP_SPEED_VER = 170.0f;
+	static constexpr auto JUMP_SPEED_HOR = 45.0f;
 private:
 	bool isJumpReleased;
 	bool canHigher;

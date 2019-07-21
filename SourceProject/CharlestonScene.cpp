@@ -39,10 +39,7 @@ void CharlestonScene::Update(float dt)
 	for (auto& obj : grid->GetObjectsInViewPort())
 	{
 		obj->Update(dt);
-	}
-	cam.CenterAround( cap->GetBBox().GetCenter() );
-	cam.ClampWithin( map->GetWorldBoundary() );
-	
+	}	
 	//Todo: Remove this when test's done
 	if (wnd.IsKeyPressed(VK_NUMPAD5))
 	{
@@ -54,10 +51,13 @@ void CharlestonScene::Update(float dt)
 		cap->SetState(State::Captain_Climbing);
 	}
 
+	cap->Update(dt, grid->GetObjectsInViewPort()); 
 
+	cap->ClampWithin( map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f) );
 
-	cap->Update(dt, grid->GetObjectsInViewPort());
-
+	cam.CenterAround( cap->GetBBox().GetCenter() );
+	cam.ClampWithin( map->GetWorldBoundary() );
+	
 	grid->RemoveDestroyedObjects();
 }
 
