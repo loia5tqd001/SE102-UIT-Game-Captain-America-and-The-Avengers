@@ -1,6 +1,6 @@
 #pragma once
 
-using TextBlocks = enum KeyControls
+using TextBlocks = enum class KeyControls
 {
 	Left, Right, Up, Down, Jump, Attack, // textblock is also keycontrol
 	Default,                             // textblock is not keycontrol
@@ -20,7 +20,7 @@ class Settings
 private:
 	bool isSceneOpening = false;
 	bool isEditing = false;
-	TextBlock  textblocks [TextBlocks::Count];
+	std::unordered_map<TextBlocks, TextBlock> textblocks; 
 	TextBlocks curCursor = TextBlocks::Left;
 
 private:

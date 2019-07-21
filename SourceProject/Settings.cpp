@@ -22,15 +22,15 @@ Settings::Settings()
 	textblocks[TextBlocks::Default].strDraw = "DEFAULT";
 
 	// Init position draw for textblocks
-	for (int i = TextBlocks::Left; i < TextBlocks::Count; i++) {
+	for (int i = (int) TextBlocks::Left; i < (int) TextBlocks::Count; i++) {
 
-		if (i < TextBlocks::CountKCtrl) {
-			textblocks[i].posDraw.x = 52.0f;
-			textblocks[i].posDraw.y = 42.0f + i * 25.0f;
+		if (i < (int) TextBlocks::CountKCtrl) {
+			textblocks.at( (TextBlocks) i ).posDraw.x = 52.0f;
+			textblocks.at( (TextBlocks) i ).posDraw.y = 42.0f + i * 25.0f;
 		}
 		else { // TextBlocks::Default         
-			textblocks[i].posDraw.x = 92.0f;
-			textblocks[i].posDraw.y = 45.0f + i * 25.0f;
+			textblocks.at( (TextBlocks) i ).posDraw.x = 92.0f;
+			textblocks.at( (TextBlocks) i ).posDraw.y = 45.0f + i * 25.0f;
 		}
 	}
 
@@ -40,34 +40,38 @@ Settings::Settings()
 
 void Settings::ResetDefaultKeyControl()
 {
-	textblocks[ TextBlocks::Left   ].keyCode = VK_LEFT;
-	textblocks[ TextBlocks::Right  ].keyCode = VK_RIGHT;
-	textblocks[ TextBlocks::Up     ].keyCode = VK_UP;
-	textblocks[ TextBlocks::Down   ].keyCode = VK_DOWN;
-	textblocks[ TextBlocks::Attack ].keyCode = 'Z';
-	textblocks[ TextBlocks::Jump   ].keyCode = 'X';		
+	textblocks.at( TextBlocks::Left   ).keyCode = VK_LEFT;
+	textblocks.at( TextBlocks::Right  ).keyCode = VK_RIGHT;
+	textblocks.at( TextBlocks::Up     ).keyCode = VK_UP;
+	textblocks.at( TextBlocks::Down   ).keyCode = VK_DOWN;
+	textblocks.at( TextBlocks::Attack ).keyCode = 'Z';
+	textblocks.at( TextBlocks::Jump   ).keyCode = 'X';		
 }
 
 BYTE Settings::Get(KeyControls kControl) const
 {
 	assert(kControl >= KeyControls::Left && kControl < KeyControls::CountKCtrl);
-	return textblocks[kControl].keyCode;
+	return textblocks.at(kControl).keyCode;
 }
 
 bool Settings::IsKeyControl(BYTE keyCode) const
 {
-	for (int i = 0; i < (int)KeyControls::CountKCtrl; i++)
-		if (textblocks[(KeyControls)i].keyCode == keyCode)
+	for (const auto& [kControl, textblock] : textblocks) {
+		if (textblock.keyCode == keyCode) {
 			return true;
+		}
+	}
 	return false;
 }
 
 KeyControls Settings::GetKControl(BYTE keyCode) const
 {
 	assert(IsKeyControl(keyCode));
-	for (int i = 0; i < (int)KeyControls::CountKCtrl; i++)
-		if (textblocks[(KeyControls)i].keyCode == keyCode)
-			return KeyControls(i);
+	for (auto& [kControl, textblock] : textblocks) {
+		if (textblock.keyCode == keyCode) {
+			return kControl;
+		}
+	}
 	return KeyControls::Count;
 }
 
@@ -105,16 +109,16 @@ void Settings::Draw() const
 	Game::Instance().DrawOutLine( { 236.0f, 212.0f, 246.0f, 222.0f }, 3, Colors::DimBlue); // bottomright
 
 	// Draw textblocks
-	for (int i = TextBlocks::Left; i < TextBlocks::Count; i++)
+	for (int i = (int) TextBlocks::Left; i < (int) TextBlocks::Count; i++)
 	{
-		if (i != curCursor) { // normal textblock
-			textblocks[i].Draw(Colors::White, Colors::White);
+		if (i != (int) curCursor) { // normal textblock
+			textblocks.at( (TextBlocks)i ).Draw(Colors::White, Colors::White);
 		} 
 		else if (isEditing) { // selected textblock editing
-			textblocks[i].Draw(Colors::DimRed , Colors::DimRed);
+			textblocks.at( (TextBlocks)i ).Draw(Colors::DimRed , Colors::DimRed);
 		} 
 		else { // selected textblock but not editing
-			textblocks[i].Draw(Colors::DimBlue, Colors::DimBlue);
+			textblocks.at( (TextBlocks)i ).Draw(Colors::DimBlue, Colors::DimBlue);
 		}
 	}
 }
@@ -136,9 +140,9 @@ void Settings::OnKeyDown(BYTE keyCode)
 			else if (IsValidKeyControl(keyCode)){
 				TextBlock& curTextBlock = textblocks[curCursor];
 
-				for (int i = 0; i < KeyControls::CountKCtrl; i++) { // change keyControl if an exist textblock has same key
-					if (textblocks[i].keyCode == keyCode) {
-						textblocks[i].keyCode = curTextBlock.keyCode;
+				for (auto& [_, textblock] : textblocks) {
+					if (textblock.keyCode == keyCode) {
+						textblock.keyCode = curTextBlock.keyCode;
 						break;
 					}
 				}
@@ -155,13 +159,13 @@ void Settings::OnKeyDown(BYTE keyCode)
 	switch (keyCode) {
 		case VK_UP: 
 			if (curCursor == TextBlocks::Left) curCursor = TextBlocks::Default;
-			else                               curCursor = TextBlocks( curCursor - 1 );
+			else                               curCursor = TextBlocks( (int)curCursor - 1 );
 			Sounds::PlayAt(SoundId::Cursor);
 			break;		
 
 		case VK_DOWN: 
 			if (curCursor == TextBlocks::Default) curCursor = TextBlocks::Left;
-			else                                  curCursor = TextBlocks( curCursor + 1 );
+			else                                  curCursor = TextBlocks( (int)curCursor + 1 );
 			Sounds::PlayAt(SoundId::Cursor);
 			break;
 

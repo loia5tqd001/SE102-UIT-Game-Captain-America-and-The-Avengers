@@ -48,8 +48,9 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 			return;
 		}
 	}
-	else if (keyCode == setting.Get(KeyControls::Left))
+	if (keyCode == setting.Get(KeyControls::Left))
 	{
+		// when move to walking??
 		cap.nx = - 1;
 		cap.curState = State::Captain_Walking;
 	}
