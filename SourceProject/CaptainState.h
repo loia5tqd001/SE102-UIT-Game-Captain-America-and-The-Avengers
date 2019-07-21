@@ -24,7 +24,7 @@ protected:
 	static constexpr auto IS_JUMP_RELEASED = "is-jump-released";
 
 
-	static constexpr float WATER_FLOW_SPEED = -40.0f;
-	static constexpr float CAP_SWIMMING_SPEED = 80.0f;
+	static constexpr float WATER_FLOW_SPEED = -20.0f;
+	static constexpr float CAP_SWIMMING_SPEED = 50.0f;
 };
 

@@ -25,6 +25,16 @@ void CaptainInWater::OnKeyDown(Captain& cap, BYTE keyCode)
 		cap.SetState(State::Captain_Jumping);
 		return;
 	}
+	else if (keyCode==setting.Get(KeyControls::Left))
+	{
+		cap.nx = -1;
+		cap.SetState(State::Captain_Swimming);
+	} 
+	else if (keyCode ==setting.Get(KeyControls::Right))
+	{
+		cap.nx = 1;
+		cap.SetState(State::Captain_Swimming);
+	}
 }
 
 void CaptainInWater::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
