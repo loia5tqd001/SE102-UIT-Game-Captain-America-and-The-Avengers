@@ -1,5 +1,5 @@
-{  
-  "textures": [ 
+{
+  "textures": [
     // textureId[0] - texturePath[1] - transparentColor[2]
 	[ 0, "Resources\\Textures\\0. Bbox.png"                           , 0             ],
 	[ 1, "Resources\\Textures\\1. Warning.png"                        , 0             ],
@@ -32,7 +32,7 @@
 	[          10,            11,      171,      74,              15,                7,         2,           8 ], // enemyrocketBullet-Horizontal
 	[          11,            11,      168,      96,              12,               13,         2,          12 ], // enemyrocketBullet-Cross
 	[          12,            10,      245,     266,              30,               28,         2,           2 ], // explode
-	
+
 	[          13,            10,       96,     306,               8,               13,         2,            8], // SmallPowerStone
 	[          14,            10,      131,     304,              11,               16,         2,           13], // BigPowerStone
 	[          15,            10,      176,     306,               8,               14,         1,            0], // FivePoint
@@ -40,37 +40,37 @@
 	[          17,            10,      193,     313,               7,                7,         1,            0], // SmallEnergy
 	[          18,            10,      208,     311,               8,                9,         1,            0], // Big Energy
 	[          19,            10,      242,     306,              12,               12,         2,           12], // KeyKrystal
-	[          20,            10,      288,     304,              29,               16,         1,            0], // ExitSign	
-	
+	[          20,            10,      288,     304,              29,               16,         1,            0], // ExitSign
+
 	[          21,            10,      224,     308,               8,                8,         1,            0], // CaptainHealth
 	[          22,            10,      336,     304,              16,               16,         1,            0], // CapsuleIdle
 	[          23,            10,      336,     304,              16,               16,         2,            8], // CapsuleOpenning
-	
-	//[          24,            10,      124,     272,               7,               16,         1,            0], // Shield_Side   
-	//[          25,            10,      107,     272,              15,               16,         1,            0], // Shield_Straight  
-	
-    [          24,            10,      124,     272,              15,               16,         1,            0], // Shield_Side   
+
+	//[          24,            10,      124,     272,               7,               16,         1,            0], // Shield_Side
+	//[          25,            10,      107,     272,              15,               16,         1,            0], // Shield_Straight
+
+    [          24,            10,      124,     272,              15,               16,         1,            0], // Shield_Side
     [          25,            10,      107,     272,               7,               16,         1,            0], // Shield_Straight
-	[          26,            10,      173,     282,              23,                6,         1,            0], // Shield_Down       
-	[          27,            10,      148,     274,              16,                9,         1,            0], // Shield_Up    
+	[          26,            10,      173,     282,              23,                6,         1,            0], // Shield_Down
+	[          27,            10,      148,     274,              16,                9,         1,            0], // Shield_Up
 
-	[          24,            10,      124,     272,               7,               16,         1,            0], // Shield_Side       
-	[          25,            10,      107,     272,              15,               16,         1,            0], // Shield_Straight   
-	[          26,            10,      173,     282,              23,                6,         1,            0], // Shield_Down       
-	[          27,            10,      148,     274,              16,                9,         1,            0], // Shield_Up  
+	[          24,            10,      124,     272,               7,               16,         1,            0], // Shield_Side
+	[          25,            10,      107,     272,              15,               16,         1,            0], // Shield_Straight
+	[          26,            10,      173,     282,              23,                6,         1,            0], // Shield_Down
+	[          27,            10,      148,     274,              16,                9,         1,            0], // Shield_Up
 
-	[          50,            12,      144,      19,              31,               45,         3,            1], //EnemyWizard_Walking,   
-	[          51,            12,      280,      16,              23,               48,         1,            0], //EnemyWizard_Stand,   
-	[          52,            12,      107,      16,              29,               41,         1,            0], //EnemyWizard_BeforeDefeated,   
+	[          50,            12,      144,      19,              31,               45,         3,            1], //EnemyWizard_Walking,
+	[          51,            12,      280,      16,              23,               48,         1,            0], //EnemyWizard_Stand,
+	[          52,            12,      107,      16,              29,               41,         1,            0], //EnemyWizard_BeforeDefeated,
 	[          53,            12,       59,      37,              36,               27,         2,         -120], //EnemyWizard_Defeated,
-	[          54,            12,      248,      15,              23,               49,         1,            0], //EnemyWizard_DefeatedCaptain,   
-	[          55,            12,      235,     130,              29,               51,         1,            0], //EnemyWizard_FlyUp,   
-	[          56,            12,      195,     130,              29,               51,         1,            0], //EnemyWizard_FlyDown,   
+	[          54,            12,      248,      15,              23,               49,         1,            0], //EnemyWizard_DefeatedCaptain,
+	[          55,            12,      235,     130,              29,               51,         1,            0], //EnemyWizard_FlyUp,
+	[          56,            12,      195,     130,              29,               51,         1,            0], //EnemyWizard_FlyDown,
 	[          57,            12,      155,     134,              29,               47,         2,          -69], //EnemyWizard_ShootWhenFly,
-	[          58,            12,       30,      76,              36,               44,         3,            7], //EnemyWizard_ShootBullet,   
+	[          58,            12,       30,      76,              36,               44,         3,            7], //EnemyWizard_ShootBullet,
 	[          59,            12,      256,      76,              40,               44,         3,          -88], //EnemyWizard_ShootBulletFire,
 	[          60,            12,      195,     130,              29,               51,         1,           12], //EnemyWizard_Flying,
-	
+
 	[          61,            12,       88,     140,              16,                8,         1,            0], //BulletFireEnemyWizard_Horizontal,
 	[          62,            12,       49,     136,               7,               16,         1,            0], //BulletFireEnemyWizard_Vertical,
 	[          63,            12,       56,     162,               8,                5,         1,            0], //BulletEnemyWizard_Horizontal,
@@ -88,9 +88,15 @@
 	[         108,            10,       20,      23,              40,               25,         1,            0], //Captain_JumpKick
 	[         109,            10,      168,      85,              37,               27,         1,            0], //Captain_SitPunch
 	[         110,            10,       38,      79,              39,               29,         2,            1], //Captain_Smash
-	[         111,            10,       68,      28,              20,               20,         2,            9] //Captain_Spin
+	[         111,            10,       68,      28,              20,               20,         2,            9], //Captain_Spin
+    [         112,            10,       32,     120,              20,               56,         3,            4], //Captain_Climb
+    [         113,            10,      128,     204,              30,               28,         1,            0], //Captain_Injure
+    [         114,            10,       88,     209,              26,               23,         1,            0], //Captain_Die
+    [         115,            10,       89,     244,              18,               12,         2,           13], //Captain_Swimming
+    [         116,            10,      144,     243,              16,               13,         5,            8], //Captain_FallToWater
+    [         117,            10,      278,     248,              16,                7,         3,            4] //Captain_InWater
   ],
-  
+
   "sounds": [
 	// soundId[0] - waveFileLink[1]
 	[ 0, "Resources\\Sounds\\0. Greeting.wav"],
@@ -113,8 +119,8 @@
 	[17, "Resources\\Sounds\\17.. HighJump.wav"],
 	[18, "Resources\\Sounds\\18.. Grounding.wav"],
 	[19, "Resources\\Sounds\\19.. Water.wav"]
-  ],	
- 
+  ],
+
    "keycodefonts": [ // keyCode[0] - left[1] - top[2] - right[3] - bottom[4]
 	[ 65,   0,   0,   8,   8], // A
 	[ 66,   8,   0,  16,   8], // B
@@ -122,59 +128,59 @@
 	[ 68,  24,   0,  32,   8], // D
 	[ 69,  32,   0,  40,   8], // E
 	[ 70,  40,   0,  48,   8], // F
-	
+
 	[ 71,   0,   8,   8,  16], // G
 	[ 72,   8,   8,  16,  16], // H
 	[ 73,  16,   8,  24,  16], // I
 	[ 74,  24,   8,  32,  16], // J
 	[ 75,  32,   8,  40,  16], // K
 	[ 76,  40,   8,  48,  16], // L
-	
+
 	[ 77,   0,  16,   8,  24], // M
 	[ 78,   8,  16,  16,  24], // N
-	[ 79,  16,  16,  24,  24], // O 
+	[ 79,  16,  16,  24,  24], // O
 	[ 80,  24,  16,  32,  24], // P
 	[ 81,  32,  16,  40,  24], // Q
 	[ 82,  40,  16,  48,  24], // R
-	
+
 	[ 83,   0,  24,   8,  32], // S
 	[ 84,   8,  24,  16,  32], // T
 	[ 85,  16,  24,  24,  32], // U
 	[ 86,  24,  24,  32,  32], // V
 	[ 87,  32,  24,  40,  32], // W
 	[ 88,  40,  24,  48,  32], // X
-	
+
 	[ 89,   0,  32,   8,  40], // Y
 	[ 90,   8,  32,  16,  40], // Z
-	[ 48,  16,  32,  24,  40], // 0	
+	[ 48,  16,  32,  24,  40], // 0
 	[ 49,  24,  32,  32,  40], // 1
 	[ 50,  32,  32,  40,  40], // 2
 	[ 51,  40,  32,  48,  40], // 3
-	
+
 	[ 52,   0,  40,   8,  48], // 4
 	[ 53,   8,  40,  16,  48], // 5
 	[ 54,  16,  40,  24,  48], // 6
 	[ 55,  24,  40,  32,  48], // 7
 	[ 56,  32,  40,  40,  48], // 8
 	[ 57,  40,  40,  48,  48], // 9
-	
+
 	[ 37,   0,  48,   8,  56], // VK_LEFT
 	[ 38,   8,  48,  16,  56], // VK_UP
-	[ 39,  16,  48,  24,  56], // VK_RIGHT	
+	[ 39,  16,  48,  24,  56], // VK_RIGHT
 	[ 40,  24,  48,  32,  56], // VK_DOWN
 	[ 13,  32,  48,  40,  56], // VK_RETURN
 	[ 32,  40,  48,  48,  56], // VK_SPACE
-	
+
 	[ 96,   0,  56,   8,  64], // VK_NUMPAD0
 	[ 97,   8,  56,  16,  64], // VK_NUMPAD1
 	[ 98,  16,  56,  24,  64], // VK_NUMPAD2
 	[ 99,  24,  56,  32,  64], // VK_NUMPAD3
 	[100,  32,  56,  40,  64], // VK_NUMPAD4
 	[101,  40,  56,  48,  64], // VK_NUMPAD5
-	
+
 	[102,   0,  64,   8,  72], // VK_NUMPAD6
 	[103,   8,  64,  16,  72], // VK_NUMPAD7
 	[104,  16,  64,  24,  72], // VK_NUMPAD8
 	[105,  24,  64,  32,  72]  // VK_NUMPAD9
    ]
-}	
+}
