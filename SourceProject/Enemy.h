@@ -6,17 +6,19 @@ protected:
 	static constexpr float FALL_BACK = 50.0f;
 
 	int health;
-	Grid* const grid;
+	Grid* grid;
 	State beforeExplode = State::Destroyed;
-    State Explode = State::Destroyed; //wizard need to change this
-	const Behaviors behavior;
+    State Explode = State::Destroyed; //wizard need this
+    Behaviors behavior;
 	const Data& behaviorData;
 
 	void UpdateAnimation(float dt);
 public:
 	Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, int health, Vector2 spawnPos, Grid* grid);
+	//enemy fly dont need data, just put pos to it and it will be fine
+	//also not every enemy will explode
 
-	void TakeDamage(int damage);
+	virtual void TakeDamage(int damage);
 	void OnOutOfViewPort() override { SetState(State::Explode); }
 	float GetPosX() { return pos.x; }
 };

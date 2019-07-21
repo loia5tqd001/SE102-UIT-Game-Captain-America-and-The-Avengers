@@ -16,10 +16,7 @@ const auto Sprites::GetFramesFromSpriteInfo(const Json::Value & spriteInfo)
 	for (UINT i = 0; i < nRects; i++)
 	{
 		static Rect frame;
-		if (margin > 0) 
-			frame.left = left + (spriteWidth + margin) * i;
-		else
-			frame.left = left - (spriteWidth + margin) * i;
+		frame.left = left + (spriteWidth + margin) * i;
 		frame.top    = top;
 		frame.right  = frame.left + spriteWidth;
 		frame.bottom = frame.top + spriteHeight;

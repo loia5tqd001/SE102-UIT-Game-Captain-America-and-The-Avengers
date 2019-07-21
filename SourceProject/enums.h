@@ -73,6 +73,8 @@ enum class SpriteId
 	BulletEnemyWizard_SemiCross = 64,
 	BulletEnemyWizard_Cross = 65,
 
+	EnemyFly_Fly = 66,
+
 	Captain_Standing = 100,
 	Captain_Walking = 101,
 	Captain_Jump = 102,
@@ -211,6 +213,9 @@ enum class State
 	BulletEnemyWizard_Horizontal,
 	BulletEnemyWizard_SemiCross,
 	BulletEnemyWizard_Cross,
+
+	EnemyFly_Fly,
+	EnemyFly_Falling,
 };
 
 enum class Behaviors // for enemy, moving ledges

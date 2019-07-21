@@ -5,7 +5,7 @@
 #include "BulletEnemyGun.h"
 #include "EnemyRocket.h"
 #include "BulletEnemyRocket.h"
-
+#include "EnemyFly.h"
 #include "EnemyWizard.h"
 
 
@@ -81,13 +81,23 @@ void CharlestonScene::Draw()
 	    Data data;
 		data.Add("water-velocity", 16.9f);
 		data.Add("damage", 420);
-		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, std::move(data),{ 50.0f, 150.0f }, {}, 1, grid.get(), *cap.get());
+		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, std::move(data),{ 150.0f, 250.0f }, {}, 1, grid.get(), *cap.get());
 		std::vector<GameObject*> co;
 		enemyWizard.Update(GameTimer::Dt(), co);
-
 		enemyWizard.testing(wnd);
 
 		enemyWizard.Render();
+	}
+	if (1) // test EnemyFly
+	{
+		Data data;
+		data.Add("water-velocity", 16.9f);
+		data.Add("damage", 420);
+		static EnemyFly enemyFly({ 50.0f, 260.0f }, grid.get(), cap.get());
+		std::vector<GameObject*> co;
+		enemyFly.Update(GameTimer::Dt(), co);
+
+		enemyFly.Render();
 	}
 
 	//if (0)

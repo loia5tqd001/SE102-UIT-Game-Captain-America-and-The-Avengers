@@ -10,6 +10,7 @@ Enemy::Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, 
 	behaviorData(behaviorData)
 {
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.25f));
+	//we need handing set for each class to this, some dont explode
 }
 
 void Enemy::UpdateAnimation(float dt)

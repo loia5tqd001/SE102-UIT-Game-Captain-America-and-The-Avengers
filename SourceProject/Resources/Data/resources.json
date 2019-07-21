@@ -46,9 +46,6 @@
 	[          22,            10,      336,     304,              16,               16,         1,            0], // CapsuleIdle
 	[          23,            10,      336,     304,              16,               16,         2,            8], // CapsuleOpenning
 
-	//[          24,            10,      124,     272,               7,               16,         1,            0], // Shield_Side
-	//[          25,            10,      107,     272,              15,               16,         1,            0], // Shield_Straight
-
     [          24,            10,      124,     272,              15,               16,         1,            0], // Shield_Side
     [          25,            10,      107,     272,               7,               16,         1,            0], // Shield_Straight
 	[          26,            10,      173,     282,              23,                6,         1,            0], // Shield_Down
@@ -62,7 +59,7 @@
 	[          50,            12,      144,      19,              31,               45,         3,            1], //EnemyWizard_Walking,
 	[          51,            12,      280,      16,              23,               48,         1,            0], //EnemyWizard_Stand,
 	[          52,            12,      107,      16,              29,               41,         1,            0], //EnemyWizard_BeforeDefeated,
-	[          53,            12,       59,      37,              36,               27,         2,         -120], //EnemyWizard_Defeated,
+	[          53,            12,       59,      37,              36,               27,         2,          -87], //EnemyWizard_Defeated,
 	[          54,            12,      248,      15,              23,               49,         1,            0], //EnemyWizard_DefeatedCaptain,
 	[          55,            12,      235,     130,              29,               51,         1,            0], //EnemyWizard_FlyUp,
 	[          56,            12,      195,     130,              29,               51,         1,            0], //EnemyWizard_FlyDown,
@@ -76,6 +73,8 @@
 	[          63,            12,       56,     162,               8,                5,         1,            0], //BulletEnemyWizard_Horizontal,
 	[          64,            12,       72,     161,               8,                6,         1,            0], //BulletEnemyWizard_SemiCross,
 	[          65,            12,       88,     160,               7,                8,         1,            0], //BulletEnemyWizard_Cross,
+	
+	[          66,            11,      120,     131,              28,               37,         2,          228], //EnemyFly_Fly	
 
 	[         100,            10,      357,      11,              22,               45,         1,            0], //Captain_Standing,
 	[         101,            10,      228,      13,              24,               43,         4,            8], //Captain_Walking,
@@ -95,6 +94,7 @@
     [         115,            10,       89,     244,              18,               12,         2,           13], //Captain_Swimming
     [         116,            10,      144,     243,              16,               13,         3,            8], //Captain_FallToWater
     [         117,            10,      278,     248,              16,                7,         3,            4] //Captain_InWater
+
   ],
 
   "sounds": [

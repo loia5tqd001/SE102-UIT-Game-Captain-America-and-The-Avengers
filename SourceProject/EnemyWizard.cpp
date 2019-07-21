@@ -14,13 +14,13 @@ EnemyWizard::EnemyWizard(Behaviors behavior, Data&& behaviorData, Vector2 spawnP
 	animations.emplace(State::EnemyWizard_FlyUp, Animation(SpriteId::EnemyWizard_FlyUp, 0.6f));
 	animations.emplace(State::EnemyWizard_Flying, Animation(SpriteId::EnemyWizard_FlyDown, 0.6f));
 	animations.emplace(State::EnemyWizard_ShootBullet, Animation(SpriteId::EnemyWizard_ShootBullet, 0.1f));
-	animations.emplace(State::EnemyWizard_ShootBulletFire, Animation(SpriteId::EnemyWizard_ShootBulletFire, 0.1f));
+	animations.emplace(State::EnemyWizard_ShootBulletFire, Animation(SpriteId::EnemyWizard_ShootBulletFire, 2.0f));
 	animations.emplace(State::EnemyWizard_ShootWhenFly, Animation(SpriteId::EnemyWizard_ShootWhenFly, 0.15f));
 	animations.emplace(State::EnemyWizard_Stand, Animation(SpriteId::EnemyWizard_Stand, 0.3f));
 	animations.emplace(State::EnemyWizard_Walking, Animation(SpriteId::EnemyWizard_Walking, 0.3f));
 
 	beforeExplode = State::EnemyWizard_BeforeDefeated;
-	Explode = State::EnemyWizard_Defeated;
+	Explode = State::EnemyWizard_Defeated; //this enemy do not explode
 }
 
 void EnemyWizard::SpawnBullet()
@@ -168,4 +168,6 @@ void EnemyWizard::testing(Window &win)
 			this->SetState(State::EnemyWizard_ShootBullet);
 		SpawnBullet();
 	}	
+	if (win.IsKeyPressed('B'))
+		TakeDamage(1);
 }

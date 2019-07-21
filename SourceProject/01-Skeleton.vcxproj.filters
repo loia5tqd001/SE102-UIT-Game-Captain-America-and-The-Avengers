@@ -264,6 +264,9 @@
     <ClCompile Include="CaptainCoverTop.cpp">
       <Filter>Development\Objects\Captain</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyFly.cpp">
+      <Filter>Development\Objects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -502,6 +505,9 @@
     </ClInclude>
     <ClInclude Include="CaptainCoverLow.h">
       <Filter>Development\Objects\Captain</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFly.h">
+      <Filter>Development\Objects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
