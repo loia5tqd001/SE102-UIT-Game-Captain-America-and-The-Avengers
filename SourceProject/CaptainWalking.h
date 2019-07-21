@@ -3,6 +3,7 @@
 
 class CaptainWalking : public CaptainState
 {
+	static constexpr auto WALKING_SPEED = 1.3f;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

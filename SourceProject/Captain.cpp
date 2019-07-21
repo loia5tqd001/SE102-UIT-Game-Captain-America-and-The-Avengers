@@ -16,10 +16,10 @@ Captain::Captain(const Vector2& pos) :
 	animations.emplace(State::Captain_Throwing, Animation(SpriteId::Captain_Throw, 0.2f));
 	animations.emplace(State::Captain_Kicking, Animation(SpriteId::Captain_JumpKick, 0.2f));
 	animations.emplace(State::Captain_SitPunching, Animation(SpriteId::Captain_SitPunch, 0.15f));
-	animations.emplace(State::Captain_Tackle, Animation(SpriteId::Captain_Smash, 0.25f));
+	animations.emplace(State::Captain_Tackle, Animation(SpriteId::Captain_Smash, 0.35f));
 	animations.emplace(State::Captain_Spinning, Animation(SpriteId::Captain_Spin, 0.3f));
 
-	animations.at(State::Captain_Tackle).SetCusFrameHoldTime(0, 0.05f);
+	animations.at(State::Captain_Tackle).SetCusFrameHoldTime(0, 0.1f);
 
 	shield = std::make_unique<Shield>(*this);
 
@@ -520,6 +520,16 @@ void Captain::Render() const
 {
 	VisibleObject::Render();
 	shield->Render();
+}
+
+RectF Captain::GetBBox() const
+{
+	if (curState != State::Captain_Swimming)
+		return VisibleObject::GetBBox();
+
+	// for handling ambush trigger:
+	const auto animationFrame = animations.at(State::Captain_Walking).GetFrameSize();
+	return { pos.x - 3.0f, pos.y, animationFrame.GetWidth(), animationFrame.GetHeight() };
 }
 
 //inline bool Captain::IsInTheAir()

@@ -7,18 +7,14 @@ void CaptainStanding::Enter(Captain& cap, State fromState, Data&& data)
 {
 	cap.vel.x = cap.vel.y = 0;
 	isToSittingTackle = false;
-	//timePressedDir = 0.0f;
-	//isLastPressedDir = false;
 }
 
 Data CaptainStanding::Exit(Captain& cap, State toState)
 {
-	//cap.curState = State::Captain_Standing;
 	Data data;
 	switch (toState)
 	{
 		case State::Captain_Sitting:
-			Debug::Out("is-tackle", isToSittingTackle);
 			data.Add("is-tackle", isToSittingTackle);
 			break;
 	}
@@ -28,7 +24,6 @@ Data CaptainStanding::Exit(Captain& cap, State toState)
 
 void CaptainStanding::OnKeyUp(Captain& cap, BYTE keyCode)
 {
-	cap.curState = State::Captain_Standing;
 }
 
 void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
@@ -42,23 +37,24 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 		std::chrono::duration<float> duration = std::chrono::steady_clock::now() - cap.timeLastKeyDown;
 		if (duration.count() < 0.15f)
 		{
-			Debug::Out("move to sitting tackle");
 			isToSittingTackle = true;
 			cap.SetState(State::Captain_Sitting);
 			return;
 		}
 	}
-	if (keyCode == setting.Get(KeyControls::Left))
+	else if (keyCode == setting.Get(KeyControls::Left))
 	{
-		// when move to walking??
 		cap.nx = - 1;
-		cap.curState = State::Captain_Walking;
+		cap.SetState(State::Captain_Walking);
 	}
 	else if (keyCode == setting.Get(KeyControls::Right))
 	{
 		cap.nx = 1;
-		cap.curState = State::Captain_Walking;
+		cap.SetState(State::Captain_Walking);
 	}
+
+
+
 	//if (keyCode == keyCodeDir)
 	//{
 	//	if (isLastPressedDir) // first press on direction
@@ -121,8 +117,21 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-
-
+	int dir = 0;
+	if (wnd.IsKeyPressed( setting.Get(KeyControls::Left) ))
+	{
+		dir --;
+	}
+	if (wnd.IsKeyPressed( setting.Get(KeyControls::Right) ))
+	{
+		dir ++;
+		cap.nx = 1;
+	}
+	if (dir != 0)
+	{
+		cap.nx = dir;
+		cap.SetState(State::Captain_Walking);
+	}
 
 
 	//if (isLastPressedDir && wnd.IsKeyPressed(kControlDir))

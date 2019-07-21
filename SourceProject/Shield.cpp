@@ -166,7 +166,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		else if (capState == State::Captain_Tackle)
 		{
 			pos.x = capPos.x + 35;
-			pos.y = capPos.y - 3;
+			pos.y = capPos.y + 3;
 			SetState(State::Shield_Straight);
 		}
 		else if (capState == State::Captain_Climbing)

@@ -56,6 +56,7 @@ public:
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	void setShieldOn(bool b) { this->shieldOn = b; } //shield let captain know
 	void Render() const override;
+	RectF GetBBox() const override;
 
 };
 

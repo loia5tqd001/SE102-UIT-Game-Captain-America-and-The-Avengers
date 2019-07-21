@@ -69,7 +69,7 @@
   <object id="75" name="10.enemyRocket" x="1588" y="397" width="24" height="40"/>
  </objectgroup>
  <objectgroup color="#ffffff" id="6" name="AmbushTrigger(classid=10)">
-  <object id="24" name="[256,240,512,480]" x="400" y="0" width="16" height="480"/>
+  <object id="24" name="[256,240,512,480]" x="411" y="0" width="16" height="480"/>
  </objectgroup>
  <objectgroup color="#ffff00" id="7" name="Capsules(classid=11)">
   <object id="25" name="SmallPowerStone(13),maxy=308" x="64" y="272" width="16" height="16"/>
