@@ -6,7 +6,6 @@
 
 void CaptainSitPunching::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(cap.shieldOn);
 	assert(fromState == State::Captain_Sitting);
 	cap.vel.y = 0;
 	cap.vel.x = 0;
@@ -23,14 +22,14 @@ void CaptainSitPunching::OnKeyUp(Captain& cap, BYTE keyCode)
 
 void CaptainSitPunching::OnKeyDown(Captain& cap, BYTE keyCode)
 {
-	assert(!cap.shieldOn);
+
 }
 
 void CaptainSitPunching::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (cap.animations.at(State::Captain_Throwing).IsDoneCycle()) {
 
-		cap.SetState(State::Captain_Sitting); //move to Captain_Walking, Captain_Walking should handle nx, KeyControls press, up and down
+		cap.SetState(State::Captain_Sitting); //move to Captain_Sitting, Captain_Walking should handle nx, KeyControls press, up and down
 	}
 	HandleCollisions(cap, dt, coObjects);
 }
@@ -38,6 +37,11 @@ void CaptainSitPunching::Update(Captain& cap, float dt, const std::vector<GameOb
 void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
+
+	float min_tx, min_ty, nx, ny;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
+
+	if (coEvents.size() == 0) return;
 
 	for (auto& e : coEvents)
 	{
@@ -53,12 +57,19 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 		}
 		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 		{
-			if (cap.isFlashing) { // undamagable
+			if (cap.isFlashing) { // undamagable and can not damage enemy
 				cap.CollideWithPassableObjects(dt, e);
 			}
 			else {
-				cap.SetState(State::Captain_Injured);
-				enemy->TakeDamage(1);
+				if (nx * e.nx > 0)
+				{
+					enemy->TakeDamage(1);
+				}
+				else
+				{
+					cap.SetState(State::Captain_Injured);
+					enemy->TakeDamage(1);
+				}
 			}
 		}	
 	}

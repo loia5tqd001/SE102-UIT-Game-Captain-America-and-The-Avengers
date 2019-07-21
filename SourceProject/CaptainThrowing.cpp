@@ -43,7 +43,7 @@ void CaptainThrowing::HandleCollisions(Captain& cap, float dt, const std::vector
 
 	for (auto& e : coEvents)
 	{
-	    if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
+		if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
 		{
 			if (!cap.isFlashing)
 			{
@@ -63,5 +63,6 @@ void CaptainThrowing::HandleCollisions(Captain& cap, float dt, const std::vector
 				enemy->TakeDamage(1);
 			}
 		}
+	}
 }
 
