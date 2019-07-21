@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CaptainCoverLow.h"
-
+#include "BulletEnemyRocket.h"
 
 
 void CaptainCoverLow::Enter(Captain& cap, State fromState, Data&& data)
@@ -91,6 +91,17 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 		{
 			spawner->OnCollideWithCap();
 			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
+		}
+		if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
+		{
+			if (!cap.isFlashing)
+			{
+				if (auto bullet = dynamic_cast<BulletEnemyRocket*>(e.pCoObj));
+				cap.health.Subtract(bullet->GetDamage());
+				cap.SetState(State::Captain_Injured);
+				//TODO: case BulletEnemyFlying
+				//TODO: deflect some of the bullets from below
+			}
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
