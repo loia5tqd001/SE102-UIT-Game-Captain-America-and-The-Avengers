@@ -3,6 +3,10 @@
 
 class CaptainKicking : public CaptainState
 {
+private:
+	State lastState;
+	bool isJumpReleased;
+	bool canHigher;
 
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;

@@ -27,7 +27,7 @@ void CaptainSitPunching::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainSitPunching::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (cap.animations.at(State::Captain_Throwing).IsDoneCycle()) {
+	if (cap.animations.at(cap.curState).IsDoneCycle()) {
 
 		cap.SetState(State::Captain_Sitting); //move to Captain_Sitting, Captain_Walking should handle nx, KeyControls press, up and down
 	}
@@ -39,9 +39,9 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 
 	float min_tx, min_ty, nx, ny;
-	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 
 	if (coEvents.size() == 0) return;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 
 	for (auto& e : coEvents)
 	{

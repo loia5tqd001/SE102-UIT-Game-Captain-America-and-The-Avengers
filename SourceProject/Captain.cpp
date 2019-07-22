@@ -15,8 +15,8 @@ Captain::Captain(const Vector2& pos) :
 	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.11f));
 	animations.emplace(State::Captain_Punching, Animation(SpriteId::Captain_Punching, 0.1f));
 	animations.emplace(State::Captain_Throwing, Animation(SpriteId::Captain_Throw, 0.15f));
-	animations.emplace(State::Captain_Kicking, Animation(SpriteId::Captain_JumpKick, 0.2f));
-	animations.emplace(State::Captain_SitPunching, Animation(SpriteId::Captain_SitPunch, 0.15f));
+	animations.emplace(State::Captain_Kicking, Animation(SpriteId::Captain_JumpKick, 0.3f));
+	animations.emplace(State::Captain_SitPunching, Animation(SpriteId::Captain_SitPunch, 0.1f));
 	animations.emplace(State::Captain_Tackle, Animation(SpriteId::Captain_Smash, 0.35f));
 	
 	animations.emplace(State::Captain_Climbing, Animation(SpriteId::Captain_Climb, 0.2f));

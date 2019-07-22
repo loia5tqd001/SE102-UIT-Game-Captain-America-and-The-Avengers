@@ -14,7 +14,7 @@ Data CaptainWalking::Exit(Captain& cap, State toState)
 	switch (toState)
 	{
 		case State::Captain_Sitting:
-			data.Add("is-tackle", isToSittingTackle);
+			data.Add(IS_TO_SIT_TACKLE, isToSittingTackle);
 			break;
 
 	}

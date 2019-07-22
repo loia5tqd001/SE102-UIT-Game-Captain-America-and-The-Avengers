@@ -6,7 +6,7 @@
 
 void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Jumping);
+	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Kicking);
 	cap.vel.y = -SPIN_SPEED_VER;
 }
 

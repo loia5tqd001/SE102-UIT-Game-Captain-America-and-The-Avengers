@@ -38,9 +38,9 @@ void CaptainPunching::HandleCollisions(Captain& cap, float dt, const std::vector
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 
 	float min_tx, min_ty, nx, ny;
-	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 
 	if (coEvents.size() == 0) return;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 
 	for (auto& e : coEvents)
 	{
