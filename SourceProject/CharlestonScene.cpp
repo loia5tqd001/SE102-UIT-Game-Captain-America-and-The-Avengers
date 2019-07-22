@@ -31,6 +31,7 @@ void CharlestonScene::LoadResources()
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
 	cap = std::make_unique<Captain>( Vector2{ 73.0f, 391.0f } ) ;
+	cap->is_debugging = true;
 	//cap = std::make_unique<Captain>(Vector2{ 100.0f, 0.0f });
 }
 
@@ -39,7 +40,7 @@ void CharlestonScene::Update(float dt)
 	grid->UpdateCells();
 	for (auto& obj : grid->GetObjectsInViewPort())
 	{
-		obj->Update(dt);
+		//obj->Update(dt);
 	}	
 	//Todo: Remove this when test's done
 	if (wnd.IsKeyPressed(VK_NUMPAD5))
@@ -72,11 +73,11 @@ void CharlestonScene::Draw()
 
 	for (auto& obj : grid->GetObjectsInViewPort())
 	{
-		obj->Render();
+		//obj->Render();
 	}
 	cap->Render();
 
-	grid->RenderCells();
+	//grid->RenderCells();
 	
 
 	#pragma region _TESTING_

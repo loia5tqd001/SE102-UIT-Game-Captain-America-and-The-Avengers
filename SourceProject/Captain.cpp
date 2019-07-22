@@ -549,10 +549,20 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	//default:
 	//	break;
 	//}
-
-	currentState->Update(*this, dt, coObjects);
+	static auto state1 = curState;
+	static auto state2 = curState;
 
 	animations.at(curState).Update(dt);
+	state1 = curState; // state before update / update is where setState may be called
+	currentState->Update(*this, dt, coObjects);
+	state2 = curState; // state after update
+	//animations.at(curState).Update(dt); // It was Here
+	if (state1 != state2)
+	{
+		int a = 0; a++;// breakpoint here
+	}
+	Debug::Out((int)curState);
+
 
 	// recalculate if image should be rendered
 	OnFlashing();
@@ -613,7 +623,7 @@ void Captain::Render() const
 {
 	VisibleObject::Render();
 	DebugDraw::DrawSolidRect(GetHitBox(), Colors::MyChineseBrown);
-	shield->Render();
+	//shield->Render();
 }
 
 RectF Captain::GetBBox() const

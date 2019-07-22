@@ -96,7 +96,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 		{
 			if (!cap.isFlashing)
 			{
-				if (auto bullet = dynamic_cast<BulletEnemyRocket*>(e.pCoObj));
+				if (auto bullet = dynamic_cast<BulletEnemyRocket*>(e.pCoObj));// TODO: why semicolin's here?
 				cap.health.Subtract(bullet->GetDamage());
 				cap.SetState(State::Captain_Injured);
 				//TODO: case BulletEnemyFlying

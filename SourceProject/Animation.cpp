@@ -25,6 +25,8 @@ void Animation::Update(float dt)
 			curFrame = 0;
 		}
 	}
+	auto size= sprite.GetFrameSize(curFrame);
+	Debug::Out("UpdatecurFrame: ", size.left, size.top, size.right, size.bottom);
 }
 
 void Animation::SetCusFrameHoldTime(UINT frameNumber, float holdTime)
@@ -35,14 +37,20 @@ void Animation::SetCusFrameHoldTime(UINT frameNumber, float holdTime)
 
 void Animation::Render(const Vector2& pos, const Vector2& vtScale, int alpha) const
 {
+	auto size= sprite.GetFrameSize(curFrame);
+	Debug::Out("RendercurFrame: ", size.left, size.top, size.right, size.bottom);
 	sprite.Draw(pos, curFrame, vtScale, alpha);
 }
 
 bool Animation::IsDoneCycle()
 {
 	if (!doneCycle) return false;
+	auto size= sprite.GetFrameSize(curFrame);
+	Debug::Out("When done: ", size.left, size.top, size.right, size.bottom);
 
-	else doneCycle = false, curFrame = nFrames - 1, holdingTime = 0.0f;
+	doneCycle = false, holdingTime = 0.0f, curFrame = nFrames - 1;
+	size= sprite.GetFrameSize(curFrame);
+	Debug::Out("When after done: ", size.left, size.top, size.right, size.bottom);
 	return true;	
 }
 
