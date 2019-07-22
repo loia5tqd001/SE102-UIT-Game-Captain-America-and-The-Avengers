@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "EnemyFly.h"
+#include "BulletEnemyFly.h"
 
 EnemyFly::EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap) :
 	Enemy(behavior, std::move(behaviorData), State::EnemyFly_Fly, 1, spawnPos, grid)
@@ -19,6 +20,8 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	pos.x += vel.x*dt;
 	pos.y += vel.y*dt;
+
+	SpawnBullet();
 
 	switch (curState)
 	{
@@ -102,7 +105,14 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 void EnemyFly::SpawnBullet()
 {
-	//TODO
+	if (pos.y > cap->GetPos().y) return;
+	counterSpawnBullet += GameTimer::Dt();
+	if (counterSpawnBullet >= 4.0f) {
+		const auto bulletPos = pos + Vector2{ 24.0f, 10.0f };
+		grid->SpawnObject(std::make_unique<BulletEnemyFly>(nx, this, bulletPos, cap));
+		Sounds::PlayAt(SoundId::BulletLazer);
+		counterSpawnBullet = 0;
+	}
 }
 
 void EnemyFly::TakeDamage(int damage)

@@ -75,6 +75,12 @@ enum class SpriteId
 
 	EnemyFly_Fly = 66,
 
+	BulletEnemyFly_Up = 67,
+	BulletEnemyFly_Down = 68,
+	BulletEnemyFly_Hor = 69,
+	BulletEnemyFly_CrossUp = 70,
+	BulletEnemyFly_CrossDown = 71,
+
 	Captain_Standing = 100,
 	Captain_Walking = 101,
 	Captain_Jump = 102,
@@ -217,6 +223,12 @@ enum class State
 
 	EnemyFly_Fly,
 	EnemyFly_Falling,
+
+	BulletEnemyFly_Up,
+	BulletEnemyFly_Down,
+	BulletEnemyFly_Hor,
+	BulletEnemyFly_CrossUp,
+	BulletEnemyFly_CrossDown,
 };
 
 enum class Behaviors // for enemy, moving ledges

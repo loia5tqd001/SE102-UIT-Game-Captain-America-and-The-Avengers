@@ -12,6 +12,7 @@ class EnemyFly :
 	Vector2 spawnPos;
 	Captain *cap;
 	float fallingCounter = 0;
+	float counterSpawnBullet = 0;
 public:
 	EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap);
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
