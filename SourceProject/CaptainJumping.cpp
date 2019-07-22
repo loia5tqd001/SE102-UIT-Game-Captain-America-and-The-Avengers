@@ -104,7 +104,8 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 			}
 			else
 			{
-				cap.SetState(State::Captain_Kicking);
+				//cap.SetState(State::Captain_Kicking);
+				cap.SetState(State::Captain_Falling);
 			}
 		}
 	}

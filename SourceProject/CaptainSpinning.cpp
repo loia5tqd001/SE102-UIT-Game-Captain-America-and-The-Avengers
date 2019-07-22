@@ -61,7 +61,8 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 			}
 			else
 			{
-				cap.SetState(State::Captain_Jumping);
+				//cap.SetState(State::Captain_Jumping);
+				cap.SetState(State::Captain_Falling);
 			}
 		}
 	}

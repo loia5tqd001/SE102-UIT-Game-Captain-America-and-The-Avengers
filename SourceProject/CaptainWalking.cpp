@@ -81,7 +81,7 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 	{
 		cap.pos.x += cap.vel.x * dt;
 		cap.pos.y += cap.vel.y * dt;
-		cap.SetState(State::Captain_Jumping);
+		//cap.SetState(State::Captain_Jumping);
 		return;
 	}
 

@@ -30,8 +30,8 @@ void CharlestonScene::LoadResources()
 
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
-	//cap = std::make_unique<Captain>( Vector2{ 73.0f, 391.0f } ) ;
-	cap = std::make_unique<Captain>(Vector2{ 100.0f, 0.0f });
+	cap = std::make_unique<Captain>( Vector2{ 73.0f, 391.0f } ) ;
+	//cap = std::make_unique<Captain>(Vector2{ 100.0f, 0.0f });
 }
 
 void CharlestonScene::Update(float dt)

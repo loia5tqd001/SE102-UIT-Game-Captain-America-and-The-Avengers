@@ -71,10 +71,44 @@ void CaptainFalling::OnKeyDown(Captain & cap, BYTE keyCode)
 void CaptainFalling::Update(Captain & cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	//Testing
-	HandleNoCollisions(cap, dt);
+	HandleCollisions(cap, dt, coObjects);
 	//Endtesting
 }
 
 void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
+	if (coEvents.size() == 0) { HandleNoCollisions(cap, dt); return; }
+
+	float min_tx, min_ty, nx, ny;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
+
+	if (coEvents.size() == 0) return;
+
+	cap.pos.x += min_tx * cap.vel.x * dt;
+	cap.pos.y += min_ty * cap.vel.y * dt;
+
+	if (nx != 0.0f) cap.vel.x = 0.0f;
+	if (ny != 0.0f) { cap.vel.y = 0.0f; cap.SetState(State::Captain_Standing); }
+
+	//// Collision logic with Goombas
+	//for (UINT i = 0; i < coEvents.size(); i++)
+	//{
+	//	const CollisionEvent& e = coEvents[i];
+
+	//	if (auto goomba = dynamic_cast<Goomba*>(e.pCoObj))
+	//	{
+	//		if (e.ny < 0.0f && goomba->GetState() != State::GoombaDie)
+	//		{
+	//			goomba->SetState(State::GoombaDie);
+	//			vel.y = -JUMP_DEFLECT_SPEED;
+	//			OnFlashing(true);
+	//		}
+
+	//		if (e.ny == 0.0f)
+	//		{
+	//			pos = posbak;
+	//		}
+	//	}
+	//}
 }
