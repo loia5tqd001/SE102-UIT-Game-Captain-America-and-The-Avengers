@@ -186,6 +186,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BossCharlestonScene.cpp" />
     <ClCompile Include="BreakableLedge.cpp" />
+    <ClCompile Include="BulletEnemyFly.cpp" />
     <ClCompile Include="BulletEnemyGun.cpp" />
     <ClCompile Include="BulletEnemyRocket.cpp" />
     <ClCompile Include="BulletEnemyWizard.cpp" />
@@ -264,6 +265,7 @@
     <ClInclude Include="BossCharlestonScene.h" />
     <ClInclude Include="BreakableLedge.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletEnemyFly.h" />
     <ClInclude Include="BulletEnemyGun.h" />
     <ClInclude Include="BulletEnemyRocket.h" />
     <ClInclude Include="BulletEnemyWizard.h" />

@@ -69,7 +69,13 @@
 	[          64,            12,       72,     161,               8,                6,         1,            0], //BulletEnemyWizard_SemiCross,
 	[          65,            12,       88,     160,               7,                8,         1,            0], //BulletEnemyWizard_Cross,
 	
-	[          66,            11,      120,     131,              28,               37,         2,          228], //EnemyFly_Fly	
+	[          66,            11,      120,     131,              28,               37,         2,          228], //EnemyFly_Fly
+	
+	[          66,            11,      278,     192,               5,                8,         1,            0], BulletEnemyFly_Up,
+	[          66,            11,      214,     192,               5,                8,         1,            0], BulletEnemyFly_Down,
+	[          66,            11,      214,     193,               8,                5,         1,            0], BulletEnemyFly_Hor,
+	[          66,            11,      260,     192,               8,                8,         1,            0], BulletEnemyFly_CrossUp,
+	[          66,            11,      228,     192,               8,                8,         1,            0], BulletEnemyFly_CrossDown,
 
 	[         100,            10,      357,      11,              22,               45,         1,            0], //Captain_Standing,
 	[         101,            10,      228,      13,              24,               43,         4,            8], //Captain_Walking,
@@ -83,13 +89,14 @@
 	[         109,            10,      128,      85,              38,               27,         2,            2], //Captain_SitPunch
 	[         110,            10,       38,      79,              39,               29,         2,            1], //Captain_Smash
 	[         111,            10,       68,      28,              20,               20,         2,           17], //Captain_Spin
-	[         112,            10,       32,     120,              20,               56,         3,            4], //Captain_Climb
-	[         113,            10,      169,     192,              29,               38,         1,            0], //Captain_Injure
-	[         114,            10,      128,     204,              30,               28,         2,          -70], //Captain_Die
-	[         115,            10,       89,     244,              18,               12,         2,           13], //Captain_Swimming
-	[         116,            10,      144,     243,              16,               13,         3,            8], //Captain_FallToWater
-	[         117,            10,      278,     248,              16,                7,         3,            4] //Captain_InWater
 
+    [         112,            10,       32,     120,              20,               56,         3,            4], //Captain_Climb
+    [         113,            10,      128,     204,              30,               28,         1,            0], //Captain_Injure
+    [         114,            10,       88,     209,              26,               23,         1,            0], //Captain_Die
+    [         115,            10,       89,     244,              18,               12,         2,           13], //Captain_Swimming
+    [         116,            10,      144,     243,              16,               13,         3,            8], //Captain_FallToWater
+    [         117,            10,      278,     248,              16,                7,         3,            4], //Captain_InWater
+	[         118,            10,        9,      83,              21,               27,         1,            0] //Captain_CoverLow
   ],
 
   "sounds": [

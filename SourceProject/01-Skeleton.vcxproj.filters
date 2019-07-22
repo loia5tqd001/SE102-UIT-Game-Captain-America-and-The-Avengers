@@ -267,6 +267,7 @@
     <ClCompile Include="EnemyFly.cpp">
       <Filter>Development\Objects\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="BulletEnemyFly.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -509,5 +510,6 @@
     <ClInclude Include="EnemyFly.h">
       <Filter>Development\Objects\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="BulletEnemyFly.h" />
   </ItemGroup>
 </Project>

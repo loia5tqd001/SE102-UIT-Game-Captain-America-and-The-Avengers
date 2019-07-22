@@ -87,13 +87,13 @@ enum class SpriteId
 	Captain_SitPunch = 109,
 	Captain_Smash = 110,
 	Captain_Spin = 111,
-
 	Captain_Climb = 112,
 	Captain_Injure = 113,
 	Captain_Dead = 114,
 	Captain_Swimming = 115,
 	Captain_FallToWater = 116,
-	Captain_InWater = 117
+	Captain_InWater = 117,
+	Captain_CoverLow = 118
 };
 
 enum class SoundId
