@@ -179,6 +179,7 @@ enum class State
 	Captain_Standing,
 	Captain_Walking,
 	Captain_Jumping, // use vel to keep track if it's jumping or falling
+	Captain_Falling,
 	Captain_Kicking,
 	Captain_Spinning,
 	Captain_Throwing,

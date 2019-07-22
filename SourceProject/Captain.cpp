@@ -6,11 +6,11 @@ static auto& setting = Settings::Instance();
 Captain::Captain(const Vector2& pos) :
 	VisibleObject(State::Captain_Standing, pos),
 	currentState(&stateStanding)
-
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
 	animations.emplace(State::Captain_Walking, Animation(SpriteId::Captain_Walking, 0.1f));
 	animations.emplace(State::Captain_Jumping, Animation(SpriteId::Captain_Jump, 0.3f));
+	animations.emplace(State::Captain_Falling, Animation(SpriteId::Captain_Falling, 0.3f));
 	animations.emplace(State::Captain_CoverTop, Animation(SpriteId::Captain_LookUp, 0.2f));
 	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.11f));
 	animations.emplace(State::Captain_Punching, Animation(SpriteId::Captain_Punching, 0.1f));
@@ -309,6 +309,7 @@ void Captain::SetState(State state)
 		case State::Captain_Standing    : currentState = &stateStanding    ; break;
 		case State::Captain_Walking     : currentState = &stateWalking     ; break;
 		case State::Captain_Jumping     : currentState = &stateJumping     ; break;
+		case State::Captain_Falling     : currentState = &stateFalling     ; break;
 		case State::Captain_Kicking     : currentState = &stateKicking     ; break;
 		case State::Captain_Spinning    : currentState = &stateSpinning    ; break;
 		case State::Captain_Throwing    : currentState = &stateThrowing    ; break;

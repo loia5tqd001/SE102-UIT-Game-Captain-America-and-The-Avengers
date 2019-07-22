@@ -13,7 +13,8 @@ private:
 
 	friend class CaptainStanding    ; CaptainStanding    stateStanding    ;      
 	friend class CaptainWalking     ; CaptainWalking     stateWalking     ;      
-	friend class CaptainJumping     ; CaptainJumping     stateJumping     ;      
+	friend class CaptainJumping     ; CaptainJumping     stateJumping     ;    
+	friend class CaptainFalling     ; CaptainFalling     stateFalling     ;
 	friend class CaptainKicking     ; CaptainKicking     stateKicking     ;      
 	friend class CaptainSpinning    ; CaptainSpinning    stateSpinning    ;      
 	friend class CaptainThrowing    ; CaptainThrowing    stateThrowing    ;      

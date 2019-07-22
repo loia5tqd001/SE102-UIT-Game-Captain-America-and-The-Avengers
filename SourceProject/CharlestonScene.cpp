@@ -30,7 +30,8 @@ void CharlestonScene::LoadResources()
 
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
-	cap = std::make_unique<Captain>( Vector2{ 73.0f, 391.0f } ) ;
+	//cap = std::make_unique<Captain>( Vector2{ 73.0f, 391.0f } ) ;
+	cap = std::make_unique<Captain>(Vector2{ 100.0f, 0.0f });
 }
 
 void CharlestonScene::Update(float dt)
@@ -51,6 +52,10 @@ void CharlestonScene::Update(float dt)
 		cap->SetState(State::Captain_Climbing);
 	}
 
+	if (wnd.IsKeyPressed(VK_NUMPAD7))
+	{
+		cap->SetState(State::Captain_Falling);
+	}
 	cap->Update(dt, grid->GetObjectsInViewPort()); 
 
 	cap->ClampWithin( map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f) );

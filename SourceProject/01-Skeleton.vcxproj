@@ -198,6 +198,7 @@
     <ClCompile Include="CaptainCoverLow.cpp" />
     <ClCompile Include="CaptainCoverTop.cpp" />
     <ClCompile Include="CaptainDead.cpp" />
+    <ClCompile Include="CaptainFalling.cpp" />
     <ClCompile Include="CaptainFallToWater.cpp" />
     <ClCompile Include="CaptainHealth.cpp" />
     <ClCompile Include="CaptainInjured.cpp" />
@@ -277,6 +278,7 @@
     <ClInclude Include="CaptainCoverLow.h" />
     <ClInclude Include="CaptainCoverTop.h" />
     <ClInclude Include="CaptainDead.h" />
+    <ClInclude Include="CaptainFalling.h" />
     <ClInclude Include="CaptainFallToWater.h" />
     <ClInclude Include="CaptainHealth.h" />
     <ClInclude Include="CaptainInjured.h" />
@@ -310,6 +312,7 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PittsburghScene.h" />
     <ClInclude Include="RedAlertScene.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="DebugDraw.h" />
     <ClInclude Include="DebugOut.h" />
@@ -339,6 +342,9 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="enums.h" />
     <ClInclude Include="Vector2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameProject.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
