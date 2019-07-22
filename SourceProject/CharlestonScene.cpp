@@ -55,7 +55,7 @@ void CharlestonScene::Update(float dt)
 
 	cap->ClampWithin( map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f) );
 
-	cam.CenterAround( cap->GetBBox().GetCenter() );
+	cam.CenterAround( cap->GetCenter() );
 	cam.ClampWithin( map->GetWorldBoundary() );
 	
 	grid->RemoveDestroyedObjects();

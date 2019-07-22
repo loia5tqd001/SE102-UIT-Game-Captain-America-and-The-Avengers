@@ -15,10 +15,9 @@ Captain::Captain(const Vector2& pos) :
 	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.11f));
 	animations.emplace(State::Captain_Punching, Animation(SpriteId::Captain_Punching, 0.1f));
 	animations.emplace(State::Captain_Throwing, Animation(SpriteId::Captain_Throw, 0.15f));
-	animations.emplace(State::Captain_Kicking, Animation(SpriteId::Captain_JumpKick, 0.3f));
+	animations.emplace(State::Captain_Kicking, Animation(SpriteId::Captain_JumpKick, 0.9f));
 	animations.emplace(State::Captain_SitPunching, Animation(SpriteId::Captain_SitPunch, 0.12f));
-	animations.emplace(State::Captain_Tackle, Animation(SpriteId::Captain_Smash, 0.35f));
-	
+	animations.emplace(State::Captain_Tackle, Animation(SpriteId::Captain_Smash, 0.35f));	
 	animations.emplace(State::Captain_Climbing, Animation(SpriteId::Captain_Climb, 0.2f));
 	animations.emplace(State::Captain_Injured, Animation(SpriteId::Captain_Injure, 0.4f));
 	animations.emplace(State::Captain_Dead, Animation(SpriteId::Captain_Dead));
@@ -524,15 +523,51 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 }
 
+Vector2 Captain::GetCenter() const
+{
+	if (curState == State::Captain_SitPunching) {
+		if (nx > 0) return GetBBox().GetCenter() - Vector2{ 7.0f, 0.0f };
+		else        return GetBBox().GetCenter() + Vector2{ 7.0f, 0.0f };
+	} else {
+		return GetBBox().GetCenter();
+	}
+}
+
 void Captain::Render() const
 {
 	VisibleObject::Render();
+	DebugDraw::DrawSolidRect( GetHitBox(), Colors::MyChineseBrown ); 
 	shield->Render();
 }
 
 RectF Captain::GetBBox() const
 {
-	return VisibleObject::GetBBox().Trim( (float)GetWidth() / 2 - 1, 0, (float)GetWidth() / 2 - 1, 0);
+	return VisibleObject::GetBBox().Trim( (float)GetWidth() / 2 - 3, 0, (float)GetWidth() / 2 - 3, 0);
+}
+
+RectF Captain::GetHitBox() const
+{
+	switch (curState)
+	{
+		case State::Captain_Kicking:
+			if (nx > 0) return VisibleObject::GetBBox().Trim(28, 10, 0, 8);
+			else        return VisibleObject::GetBBox().Trim(0, 10, 28, 8);
+
+		case State::Captain_Punching:
+			if (nx > 0) return VisibleObject::GetBBox().Trim(28, 6, 0, 29);
+			else        return VisibleObject::GetBBox().Trim(0, 6, 28, 29);
+
+		case State::Captain_SitPunching:
+			if (nx > 0) return VisibleObject::GetBBox().Trim(27, 5, 0, 16);
+			else        return VisibleObject::GetBBox().Trim(0, 5, 27, 16);
+
+		case State::Captain_Tackle:
+			if (nx > 0) return VisibleObject::GetBBox().Trim(31, 5, 0, 11);
+			else        return VisibleObject::GetBBox().Trim(0, 5, 31, 11);
+
+		default:
+			return {};
+	}
 }
 
 //inline bool Captain::IsInTheAir()
