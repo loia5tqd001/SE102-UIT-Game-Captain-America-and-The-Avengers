@@ -42,7 +42,7 @@ bool Animation::IsDoneCycle()
 {
 	if (!doneCycle) return false;
 
-	else doneCycle = false, curFrame = 0u, holdingTime = 0.0f;
+	else doneCycle = false, curFrame = nFrames - 1, holdingTime = 0.0f;
 	return true;	
 }
 
