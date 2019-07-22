@@ -3,7 +3,7 @@
 
 class CaptainTackle : public CaptainState
 {
-	static constexpr auto TACKLE_SPEED = 200.0f;
+	bool isStillOnGround;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

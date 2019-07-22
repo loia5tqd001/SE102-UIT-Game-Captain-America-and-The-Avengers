@@ -73,7 +73,7 @@ void AmbushTrigger::Update(float dt, const std::vector<GameObject*>& coObjects)
 		enemyRocket = dynamic_cast<EnemyRocket*>( grid->SpawnObject(
 			std::make_unique<EnemyRocket>(Behaviors::EnemyRocket_Ambush, Data{}, enemyRocketSpawnPos, grid)));
 	}
-	else if (enemyRocket == nullptr || !enemyRocket->GetBBox().IsIntersect(cam.GetBBox()))
+	else if (!enemyRocket->GetBBox().IsIntersect(cam.GetBBox()))
 	{
 		enemyRocket->SetState(State::Destroyed);
 		enemyRocket = dynamic_cast<EnemyRocket*>( grid->SpawnObject(

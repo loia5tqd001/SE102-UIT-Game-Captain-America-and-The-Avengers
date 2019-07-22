@@ -537,7 +537,7 @@ void Captain::Render() const
 {
 	VisibleObject::Render();
 	DebugDraw::DrawSolidRect( GetHitBox(), Colors::MyChineseBrown ); 
-	shield->Render();
+	shield->Render();	
 }
 
 RectF Captain::GetBBox() const

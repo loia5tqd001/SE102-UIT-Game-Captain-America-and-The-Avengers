@@ -1,11 +1,15 @@
 #include "pch.h"
 #include "CaptainTackle.h"
+#include "BulletEnemyGun.h"
 
 
 
 void CaptainTackle::Enter(Captain& cap, State fromState, Data&& data)
 {
+	assert(fromState == State::Captain_Sitting);
 	cap.vel.x = cap.nx * TACKLE_SPEED;
+	cap.vel.y = JUMP_SPEED_VER;
+	isStillOnGround = true;
 	Sounds::PlayAt(SoundId::Tackle);
 }
 
@@ -25,8 +29,10 @@ void CaptainTackle::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainTackle::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	cap.pos.x += cap.vel.x * dt;
-
+	if (!isStillOnGround) {
+		cap.SetState(State::Captain_Jumping);
+		// TODO: Set falling
+	}
 	if (cap.animations.at(cap.curState).IsDoneCycle())
 	{
 		cap.SetState(State::Captain_Standing);
@@ -43,19 +49,104 @@ void CaptainTackle::Update(Captain& cap, float dt, const std::vector<GameObject*
 		}
 	}
 
-	/*
-	if (wnd.IsKeyPressed(setting.Get(kControlDir)))
-	{
-		Debug::Out("Keep tackle");
-	}
-	else
-	{
-		Debug::Out("Done tackle");
-	}*/
+	HandleCollisions(cap, dt, coObjects);
 }
 
 void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	isStillOnGround = false;
+
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
+	if (coEvents.size() == 0)
+	{
+		cap.pos.x += cap.vel.x * dt;
+		cap.pos.y += cap.vel.y * dt;
+		return;
+	}
+
+	float min_tx, min_ty, nx, ny;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
+
+	if (coEvents.size() == 0) return;
+
+	cap.pos.x += min_tx * cap.vel.x * dt;
+	cap.pos.y += min_ty * cap.vel.y * dt;
+
+	for (auto& e : coEvents)
+	{
+		if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
+
+			switch (block->GetType())
+			{
+				case ClassId::RigidBlock:
+				case ClassId::PassableLedge:
+					isStillOnGround = true;
+					if (e.ny > 0) AssertUnreachable();
+					break;
+
+				case ClassId::NextMap:
+					if (sceneManager.GetCurScene().canGoNextMap) 
+						sceneManager.GoNextScene();
+					else cap.CollideWithPassableObjects(dt, e);
+					break;
+
+				case ClassId::Switch:
+				case ClassId::Door:
+					cap.CollideWithPassableObjects(dt, e);
+					break;
+
+				case ClassId::DamageBlock:
+					if (!cap.isFlashing) {
+						cap.health.Subtract(1);
+						cap.SetState(State::Captain_Injured);
+					}
+					break;
+
+				case ClassId::ClimbableBar:
+				case ClassId::Water:
+				default:
+					AssertUnreachable();
+			}
+		}
+		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
+		{
+			spawner->OnCollideWithCap();
+			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
+		}
+		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
+		{
+			if (!ambush->IsActive())
+				ambush->Active(coObjects);
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (dynamic_cast<MovingLedge*>(e.pCoObj) || dynamic_cast<MovingLedge*>(e.pCoObj))
+		{
+			AssertUnreachable();
+		}
+		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto item = dynamic_cast<Item*>(e.pCoObj))
+		{
+			item->BeingCollected();
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
+		{
+			enemy->TakeDamage(3);
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (dynamic_cast<Bullet*>(e.pCoObj)) {
+			if (!dynamic_cast<BulletEnemyGun*>(e.pCoObj) && !cap.isFlashing)
+			{
+				cap.SetState(State::Captain_Injured);
+				cap.health.Subtract(1);
+			}
+			else {
+				cap.CollideWithPassableObjects(dt, e);
+			}
+		}
+	}
 }
 
 
