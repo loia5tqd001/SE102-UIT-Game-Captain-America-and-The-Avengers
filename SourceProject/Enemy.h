@@ -18,6 +18,7 @@ public:
 	//enemy fly dont need data, just put pos to it and it will be fine
 	//also not every enemy will explode
 
+	RectF GetBBox() const override;
 	virtual void TakeDamage(int damage);
 	void OnOutOfViewPort() override { SetState(State::Explode); }
 	float GetPosX() { return pos.x; }

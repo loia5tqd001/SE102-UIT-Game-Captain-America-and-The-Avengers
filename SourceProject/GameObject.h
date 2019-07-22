@@ -21,8 +21,9 @@ public:
 	virtual void ClampWithin(const RectF& theBox);
 	virtual void RenderBoundingBox() const; // draw bounding box for better debugging
 
-	virtual State GetState() const = 0;
-	virtual RectF GetBBox () const = 0;
+	virtual State GetState () const = 0;
+	virtual RectF GetBBox  () const = 0;
+	virtual RectF GetHitBox() const;
 
 	virtual void Update(float dt, const std::vector<GameObject*>& coObjects = {}) = 0;
 	virtual void Render() const = 0;

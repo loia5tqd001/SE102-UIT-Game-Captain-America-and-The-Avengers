@@ -99,7 +99,7 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
 			if (!ambush->IsActive())
-				ambush->Active(coObjects);
+				ambush->Active();
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto item = dynamic_cast<Item*>(e.pCoObj))

@@ -109,6 +109,7 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 
 	// when standing, almost do nothin, only respond to collisions
 	HandleCollisions(cap, dt, coObjects);
+	// TODO: do AABB before Swept AABB
 }
 
 void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

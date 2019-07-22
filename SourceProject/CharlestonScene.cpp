@@ -76,7 +76,7 @@ void CharlestonScene::Draw()
 
 	#pragma region _TESTING_
 
-	if (1) // test EnemyWizard
+	if (0) // test EnemyWizard
 	{
 	    Data data;
 		data.Add("water-velocity", 16.9f);
@@ -88,7 +88,7 @@ void CharlestonScene::Draw()
 
 		enemyWizard.Render();
 	}
-	if (1) // test EnemyFly
+	if (0) // test EnemyFly
 	{
 		Data data;
 		data.Add("water-velocity", 16.9f);

@@ -30,10 +30,15 @@ void Enemy::UpdateAnimation(float dt)
 	animations.at(curState).Update(dt);
 }
 
+RectF Enemy::GetBBox() const
+{
+	if (curState == beforeExplode || curState == State::Explode) return{};
+	return VisibleObject::GetBBox();
+}
+
 void Enemy::TakeDamage(int damage)
 {
 	assert(damage > 0);
-	if (isFlashing) return; // has just being damaged and is flashing, don't be too evil, give me time to recover please
 
 	health -= damage;
 	if (health <= 0) {

@@ -5,6 +5,11 @@ void GameObject::RenderBoundingBox() const
 	DebugDraw::DrawSolidRect( GetBBox(), bboxColor ); 
 }
 
+RectF GameObject::GetHitBox() const
+{
+	return {};
+}
+
 void GameObject::GetDxDy(float dt, float& dx, float& dy) const
 {
 	dx = vel.x * dt;

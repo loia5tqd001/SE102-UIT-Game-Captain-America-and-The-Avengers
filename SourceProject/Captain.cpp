@@ -562,8 +562,8 @@ RectF Captain::GetHitBox() const
 			else        return VisibleObject::GetBBox().Trim(0, 5, 27, 16);
 
 		case State::Captain_Tackle:
-			if (nx > 0) return VisibleObject::GetBBox().Trim(31, 5, 0, 11);
-			else        return VisibleObject::GetBBox().Trim(0, 5, 31, 11);
+			if (nx > 0) return VisibleObject::GetBBox().Trim(5, 5, 0, 11);
+			else        return VisibleObject::GetBBox().Trim(0, 5, 5, 11);
 
 		default:
 			return {};

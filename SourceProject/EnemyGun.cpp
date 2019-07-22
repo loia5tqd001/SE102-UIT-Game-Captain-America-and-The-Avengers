@@ -6,7 +6,7 @@
 EnemyGun::EnemyGun(Behaviors behavior, const Data& behaviorData, Vector2 spawnPos, Grid* grid) :
 	Enemy(behavior, std::move(behaviorData), State::EnemyGun_BeforeExplode, 1, spawnPos, grid)
 {
-	animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode, 0.3f));
+	animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode, 0.2f));
 	animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.3f));
 	animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.8f));
 	animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 1.2f));

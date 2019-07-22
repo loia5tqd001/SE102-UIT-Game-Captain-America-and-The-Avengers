@@ -114,19 +114,19 @@ void Grid::UpdateCells()
 		{
 			const RectF oBbox = o->GetBBox();
 
-			if (!oBbox.IsIntersect(RectF{ {}, cellSize*width, cellSize*height }))
+			if (oBbox.IsNone()) return false; // gonna die soon
+
+			if (!oBbox.IsIntersect(RectF{ {}, cellSize*width, cellSize*height })) // run out of the world
 			{
 				dynamic_cast<VisibleObject*>(o)->SetState(State::Destroyed);
+				return true;
 			}
 			if ( x < viewPortArea.xs && x > viewPortArea.xe ||
-			     y < viewPortArea.ys && y > viewPortArea.ye )
+			     y < viewPortArea.ys && y > viewPortArea.ye ) // run out of viewport
 			{
 				dynamic_cast<VisibleObject*>(o)->SetState(State::Destroyed);
+				return true;
 			}
-
-			// objects IsNone are either Destroyed or Die and won't be moving, so no need to care updating
-			// NOTE: but if game has objects flying around after died we should rewrite this
-			if (oBbox.IsNone()) return false; 
 
 			// Objects offscreen should be updated when totally left their old cell
 			if (!oBbox.IsIntersect( cell.GetBBox() ))
@@ -153,14 +153,17 @@ void Grid::UpdateCells()
 
 void Grid::RemoveDestroyedObjects()
 {
-	for (UINT x = viewPortArea.xs; x <= viewPortArea.xe; x++)
-	for (UINT y = viewPortArea.ys; y <= viewPortArea.ye; y++)
-	{
-		Cell& cell = cells[x * height + y];
-		Utils::RemoveIf(cell.movingObjects, [](auto o) { return o->GetState() == State::Destroyed;} );
-	}
+	//for (UINT x = viewPortArea.xs; x <= viewPortArea.xe; x++)
+	//for (UINT y = viewPortArea.ys; y <= viewPortArea.ye; y++)
+	//{
+	//	Cell& cell = cells[x * height + y];
+	//	Utils::RemoveIf(cell.movingObjects, [](auto o) 
+	//	{ 
+	//		return o->GetState() == State::Destroyed;
+	//	} );
+	//}
 
-	Utils::RemoveIf(objectHolder, [](auto& o) { return o->GetState() == State::Destroyed; });
+	//Utils::RemoveIf(objectHolder, [](auto& o) { return o->GetState() == State::Destroyed; });
 	RecalculateObjectsInViewPort();
 }
 

@@ -58,6 +58,6 @@ public:
 	Vector2 GetCenter() const;
 	void Render() const override;
 	RectF GetBBox() const override;
-	RectF GetHitBox() const;
+	RectF GetHitBox() const override;
 };
 
