@@ -4,12 +4,27 @@
 
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
+	assert(fromState == State::Captain_Climbing || fromState == State::Captain_CoverLow 
+		|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
+		|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
+		|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
+	    || fromState == State::Captain_Kicking);
 	switch (fromState)
 	{
+		case State::Captain_Climbing:
+			break;
 		case State::Captain_InWater:
+			break;
+		case State::Captain_CoverLow:
+			break;
 		case State::Captain_Swimming:
-			canHigher = false;
 			cap.vel.y = -JUMP_SPEED_VER;
+			break;
+		case State::Captain_CoverTop:
+			break;
+		case State::Captain_Sitting:
+			break;
+		case State::Captain_Standing:
 			break;
 		case State::Captain_Walking:
 			if (cap.lastKeyDown == KeyControls::Down) {
@@ -18,15 +33,10 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 				cap.vel.y = -JUMP_SPEED_VER;
 			}
 			break;
-		case State::Captain_Spinning:
-			cap.vel.y = JUMP_SPEED_VER;
-			break;
 		default:
-			canHigher = true;
-			cap.vel.y = -JUMP_SPEED_VER;
+			AssertUnreachable();
 			break;
 	}
-	isJumpReleased = false;
 }
 
 Data CaptainJumping::Exit(Captain& cap, State toState)
@@ -35,8 +45,9 @@ Data CaptainJumping::Exit(Captain& cap, State toState)
 	switch (toState)
 	{
 		case State::Captain_Kicking:
-			data.Add(CAN_JUMP_HIGHER, canHigher);
 			data.Add(IS_JUMP_RELEASED, isJumpReleased);
+			data.Add(JUMP_HEIGHT_RealCounter, JumpHeightRealCounter);
+			data.Add(JUMP_HEIGHT_NeedCounter, JumpHeightNeedCounter);
 			break;
 	}
 	return std::move(data);
@@ -44,6 +55,8 @@ Data CaptainJumping::Exit(Captain& cap, State toState)
 
 void CaptainJumping::OnKeyUp(Captain& cap, BYTE keyCode)
 {
+	if (keyCode == setting.Get(KeyControls::Jump))
+		isJumpReleased = true;
 }
 
 void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
@@ -67,43 +80,69 @@ void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	cap.vel.x = 0.0f;
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
-		cap.vel.x -= JUMP_SPEED_HOR;
+		cap.vel.x = MOVING_HOR;
+		cap.nx = -1;
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
-		cap.vel.x += JUMP_SPEED_HOR;
+		cap.vel.x = -MOVING_HOR;
+		cap.nx = 1;
 	}
-	if (!wnd.IsKeyPressed(setting.Get(KeyControls::Jump)))
-	{
-		isJumpReleased = true;
-	}
-
-	if (cap.animations.at(cap.curState).IsDoneCycle())
-	{
-		static int count = 0;
-		if (isJumpReleased) {
-			// falling
-			cap.vel.y = JUMP_SPEED_VER;
-			isJumpReleased = false;
+	if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
+		if (!isJumpReleased) {
+			JumpHeightNeedCounter += JUMP_SPEED * dt;
+			cap.vel.y = -JUMP_SPEED;
+			JumpHeightRealCounter += JUMP_SPEED *dt;
 		}
-		else // still holding jump
-		{
-			if (canHigher) {
-				// automatic do one more cycle
-				canHigher = false;
-			}
-			else // jump too high
+		else {
+			if (JumpHeightRealCounter < JumpHeightNeedCounter)
 			{
-				cap.SetState(State::Captain_Spinning);
+				cap.vel.y = -JUMP_SPEED;
+				JumpHeightRealCounter += JUMP_SPEED*dt;
+			}
+			else
+			{
+				cap.SetState(State::Captain_Kicking);
 			}
 		}
-
 	}
+	else {
+		if (JumpHeightRealCounter < JumpHeightNeedCounter)
+		{
+			cap.vel.y = -JUMP_SPEED;
+			JumpHeightRealCounter += JUMP_SPEED*dt;
+		}
+		else
+		{
+			cap.SetState(State::Captain_Spinning);
+		}
+	}
+
+	//if (cap.animations.at(cap.curState).IsDoneCycle())
+	//{
+	//	static int count = 0;
+	//	if (isJumpReleased) {
+	//		// falling
+	//		cap.vel.y = JUMP_SPEED_VER;
+	//		isJumpReleased = false;
+	//	}
+	//	else // still holding jump
+	//	{
+	//		if (canHigher) {
+	//			// automatic do one more cycle
+	//			canHigher = false;
+	//		}
+	//		else // jump too high
+	//		{
+	//			cap.SetState(State::Captain_Spinning);
+	//		}
+	//	}
+
+	//}
 	//Debug::Out(cap.vel.y, 0.0001 * signed(cap.vel.y) * dt);
-	cap.vel.y += 0.0003 * signed(cap.vel.y) * dt;
+	//cap.vel.y += 0.0003 * signed(cap.vel.y) * dt;
 	//Debug::Out(cap.vel.y, 0.0001 * signed(cap.vel.y) * dt);
 	HandleCollisions(cap, dt, coObjects);
 }

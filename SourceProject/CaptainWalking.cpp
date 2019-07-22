@@ -44,6 +44,10 @@ void CaptainWalking::OnKeyDown(Captain& cap, BYTE keyCode)
 			cap.SetState(State::Captain_Throwing);
 			return;
 		}
+		else {
+			cap.SetState(State::Captain_Punching);
+			return;
+		}
 	}
 	
 

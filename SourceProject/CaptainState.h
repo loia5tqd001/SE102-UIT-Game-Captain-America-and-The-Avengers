@@ -20,10 +20,10 @@ public:
 
 protected:
 	// define properties for subclasses here. Those states need to communicate via Data, which need unified property name
-	static constexpr auto CAN_JUMP_HIGHER = "can-higher";
 	static constexpr auto IS_JUMP_RELEASED = "is-jump-released";
+	static constexpr auto JUMP_HEIGHT_RealCounter = "JumpHeightRealCounter";
+	static constexpr auto JUMP_HEIGHT_NeedCounter = "JumpHeightNeedCounter";
 	static constexpr auto IS_TO_SIT_TACKLE = "is-to-sit-tackle";
-
 
 	static constexpr float WATER_FLOW_SPEED = -20.0f;
 	static constexpr float CAP_SWIMMING_SPEED = 50.0f;
@@ -31,7 +31,11 @@ protected:
 	static constexpr auto TACKLE_SPEED = 200.0f;
 
 
+	static constexpr auto MOVING_HOR = 45.0f;
 	static constexpr auto JUMP_SPEED_VER = 170.0f;
 	static constexpr auto JUMP_SPEED_HOR = 45.0f;
+	static constexpr auto MAX_JUMP_HEIGHT = 70.0f;
+	static constexpr auto MIN_JUMP_HEIGHT = 30.0f;
+	static constexpr auto JUMP_SPEED = 170.0f;
 };
 

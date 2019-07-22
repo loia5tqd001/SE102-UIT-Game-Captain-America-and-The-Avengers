@@ -6,8 +6,8 @@ class CaptainKicking : public CaptainState
 private:
 	State lastState;
 	bool isJumpReleased;
-	bool canHigher;
-
+	float JumpHeightRealCounter;
+	float JumpHeightNeedCounter;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

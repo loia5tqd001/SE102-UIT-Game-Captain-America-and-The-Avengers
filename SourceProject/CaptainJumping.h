@@ -4,8 +4,9 @@
 class CaptainJumping : public CaptainState
 {
 private:
-	bool isJumpReleased;
-	bool canHigher;
+	bool isJumpReleased = false;
+	float JumpHeightRealCounter = 0;
+	float JumpHeightNeedCounter = MIN_JUMP_HEIGHT;
 
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
