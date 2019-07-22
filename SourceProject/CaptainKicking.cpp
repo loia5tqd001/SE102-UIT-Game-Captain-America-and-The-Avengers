@@ -33,16 +33,16 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 	{
 		cap.SetState(lastState);
 	}
-	cap.vel.x = 0.0f;
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
-		cap.vel.x -= 10.0f;
+		cap.vel.x = -JUMP_SPEED_HOR;
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
-		cap.vel.x += 10.0f;
+		cap.vel.x = JUMP_SPEED_HOR;
 	}
 	HandleCollisions(cap, dt, coObjects);
+	Debug::Out(cap.pos.x, cap.pos.y);
 }
 
 void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

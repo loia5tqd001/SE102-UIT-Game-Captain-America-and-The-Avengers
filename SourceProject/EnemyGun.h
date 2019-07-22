@@ -8,7 +8,7 @@ private:
 	static constexpr float JUMP_SPEED         =  50.0f;
 	static constexpr float FALL_BACK	      =   50.0f;
 
-	float walkingSpeed = 15.0f;
+	float walkingSpeed = 70.0f;
 	bool justShoot = false;
 
 	void OnBehaviorShoot();

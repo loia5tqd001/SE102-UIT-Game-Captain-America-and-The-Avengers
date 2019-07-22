@@ -9,10 +9,33 @@ void CaptainSitPunching::Enter(Captain& cap, State fromState, Data&& data)
 	assert(fromState == State::Captain_Sitting || fromState == State::Captain_CoverLow);
 	cap.vel.y = 0;
 	cap.vel.x = 0;
+	Sounds::PlayAt(SoundId::Punch);
+	if (fromState == State::Captain_Sitting)
+	{
+		// adjust position due to difference between sitting witdh and sitpunching width
+		auto sittingWidth = cap.animations.at(State::Captain_Sitting).GetFrameSize().GetWidth();
+		auto sitpunchingWidth = cap.animations.at(State::Captain_SitPunching).GetFrameSize().GetWidth();
+		dentaX = (float(sittingWidth) - float(sitpunchingWidth)) / 2;
+		if (cap.nx < 0) {
+			cap.pos.x += dentaX;
+		}
+		else {
+			cap.pos.x -= dentaX;
+		}
+	}
 }
 
 Data CaptainSitPunching::Exit(Captain& cap, State toState)
 {
+	if (toState == State::Captain_Sitting)
+	{
+		if (cap.nx < 0) {
+			cap.pos.x -= dentaX;
+		}
+		else {
+			cap.pos.x += dentaX;
+		}
+	}
 	return Data{};
 }
 
