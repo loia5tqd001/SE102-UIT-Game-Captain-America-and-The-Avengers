@@ -16,6 +16,7 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 		isJumpReleased = data.Get<bool>(IS_JUMP_RELEASED);
 	}
 	else {
+		 Debug::Out("gg");
 		 isKicked = false;
 		 isJumpReleased = false;
 		 JumpHeightRealCounter = 0;
@@ -62,6 +63,8 @@ Data CaptainJumping::Exit(Captain& cap, State toState)
 	data.Add(JUMP_HEIGHT_RealCounter, JumpHeightRealCounter);
 	data.Add(JUMP_HEIGHT_NeedCounter, JumpHeightNeedCounter);
 	data.Add(IS_KICKED, isKicked);
+	data.Add(SPIN_TIME_DOWN, 0.0f);
+	data.Add(SPIN_TIME_UP, 0.0f);
 	return std::move(data);
 }
 

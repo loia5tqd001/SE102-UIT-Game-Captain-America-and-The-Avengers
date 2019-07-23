@@ -6,19 +6,31 @@
 
 void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Kicking);
+	//assert(fromState == State::Captain_Jumping || fromState == State::Captain_Kicking);
 	cap.vel.y = -SPIN_SPEED_VER;
 
 	isKicked = data.Get<bool>(IS_KICKED);
+	if (isKicked)
+	{
+		if (fromState == State::Captain_Kicking || fromState == State::Captain_Jumping) {
+			timeUp = data.Get<float>(SPIN_TIME_UP);
+			timeDown = data.Get<float>(SPIN_TIME_DOWN);
+		}
+	}
+	else
+	{
+		timeUp = 0;
+		timeDown = 0;
+	}
 	Sounds::PlayAt(SoundId::Tackle);
 }
 
 Data CaptainSpinning::Exit(Captain& cap, State toState)
 {
 	Data data;
-	timeUp = 0;
-	timeDown = 0;
 	data.Add(IS_KICKED, isKicked);
+	data.Add(SPIN_TIME_DOWN, timeDown);
+	data.Add(SPIN_TIME_UP, timeUp);
 	return std::move(data);
 }
 
@@ -58,22 +70,22 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 	}
 
 
-		if (timeUp < TIME_KEEP_SPIN) {
-			timeUp += GameTimer::Dt();
-			cap.vel.y = -SPIN_SPEED_HOR;
+	if (timeUp < TIME_KEEP_SPIN) {
+		timeUp += GameTimer::Dt();
+		cap.vel.y = -SPIN_SPEED_HOR;
+	}
+	else
+	{
+		isKicked = false;
+		if (timeDown < TIME_KEEP_SPIN)
+		{
+			timeDown += GameTimer::Dt();
+			cap.vel.y = SPIN_SPEED_HOR;
 		}
 		else
 		{
-			isKicked = false;
-			if (timeDown < TIME_KEEP_SPIN)
-			{
-				timeDown += GameTimer::Dt();
-				cap.vel.y = SPIN_SPEED_HOR;
-			}
-			else
-			{
-				cap.SetState(State::Captain_Falling);
-			}
+			cap.SetState(State::Captain_Falling);
+		}
 	}
 
 	cap.animations.at(cap.curState).Update(dt);

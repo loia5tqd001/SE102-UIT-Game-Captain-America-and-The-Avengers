@@ -13,6 +13,12 @@ void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 	    JumpHeightRealCounter = data.Get<float>(JUMP_HEIGHT_RealCounter);
 		JumpHeightNeedCounter = data.Get<float>(JUMP_HEIGHT_NeedCounter);
 	}
+	if (fromState == State::Captain_Spinning)
+	{
+		timeUp = data.Get<float>(SPIN_TIME_UP);
+		timeDown = data.Get<float>(SPIN_TIME_DOWN);
+	}
+	Sounds::PlayAt(SoundId::Punch);
 }
 
 Data CaptainKicking::Exit(Captain& cap, State toState)
@@ -24,6 +30,10 @@ Data CaptainKicking::Exit(Captain& cap, State toState)
 	case State::Captain_Jumping:
 		data.Add(JUMP_HEIGHT_RealCounter, JumpHeightRealCounter);
 		data.Add(JUMP_HEIGHT_NeedCounter, JumpHeightNeedCounter);
+		break;
+	case State::Captain_Spinning:
+		data.Add(SPIN_TIME_DOWN, timeDown);
+		data.Add(SPIN_TIME_UP, timeUp);
 		break;
 	}
 	data.Add(IS_JUMP_RELEASED, isJumpReleased);
@@ -55,12 +65,24 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 	{
 		cap.vel.x = MOVING_HOR;
 	}
+	if (lastState == State::Captain_Jumping) {
+		if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
+			if (!isJumpReleased) {
+				JumpHeightNeedCounter += JUMP_SPEED * dt;
+				cap.vel.y = -JUMP_SPEED;
+				JumpHeightRealCounter += JUMP_SPEED * dt;
+			}
+			else {
+				if (JumpHeightRealCounter < JumpHeightNeedCounter)
+				{
+					cap.vel.y = -JUMP_SPEED;
+					JumpHeightRealCounter += JUMP_SPEED * dt;
+				}
+				else
+				{
 
-	if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
-		if (!isJumpReleased) {
-			JumpHeightNeedCounter += JUMP_SPEED * dt;
-			cap.vel.y = -JUMP_SPEED;
-			JumpHeightRealCounter += JUMP_SPEED * dt;
+				}
+			}
 		}
 		else {
 			if (JumpHeightRealCounter < JumpHeightNeedCounter)
@@ -70,31 +92,48 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 			}
 			else
 			{
-				//if (lastState == State::Captain_Jumping)
-				//	cap.SetState(lastState);
-				//else if (lastState == State::Captain_Spinning)
-				//	cap.SetState(State::Captain_Falling); //fix
+				timeUp += GameTimer::Dt();
+				cap.vel.y = -SPIN_SPEED_HOR;
+				if (cap.animations.at(cap.curState).IsDoneCycle())
+				{
+					cap.SetState(State::Captain_Spinning);
+					return;
+				}
 			}
 		}
-	}
-	else {
-		if (JumpHeightRealCounter < JumpHeightNeedCounter)
+		if (cap.animations.at(cap.curState).IsDoneCycle())
 		{
-			cap.vel.y = -JUMP_SPEED;
-			JumpHeightRealCounter += JUMP_SPEED * dt;
+			cap.SetState(State::Captain_Jumping);
+		}
+	}
+	else if (lastState == State::Captain_Spinning)
+	{
+		if (timeUp < TIME_KEEP_SPIN) {
+			timeUp += GameTimer::Dt();
+			cap.vel.y = -SPIN_SPEED_HOR;
 		}
 		else
 		{
+			isKicked = false;
+			if (timeDown < TIME_KEEP_SPIN)
+			{
+				timeDown += GameTimer::Dt();
+				cap.vel.y = SPIN_SPEED_HOR;
+			}
+			else
+			{
+				if (cap.animations.at(cap.curState).IsDoneCycle())
+					cap.SetState(State::Captain_Falling);
+			}
+		}
+		if (cap.animations.at(cap.curState).IsDoneCycle())
+		{
+			cap.SetState(State::Captain_Spinning);
 		}
 	}
-	if (cap.animations.at(cap.curState).IsDoneCycle())
+	else if (lastState == State::Captain_Falling)
 	{
-		if (lastState == State::Captain_Jumping)
-			cap.SetState(lastState);
-		else if (lastState == State::Captain_Spinning)
-		{
-			cap.SetState(State::Captain_Falling);
-		}
+		cap.SetState(State::Captain_Falling);
 	}
 
 	HandleCollisions(cap, dt, coObjects);
@@ -102,11 +141,10 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 
 void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (lastState == State::Captain_Spinning) return;
 	// collision with captain kick
 	cap.pos.x += cap.vel.x*dt;
 	cap.pos.y += cap.vel.y*dt;
-
+	
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0) { return; }
 

@@ -8,6 +8,8 @@ private:
 	bool isJumpReleased;
 	float JumpHeightRealCounter;
 	float JumpHeightNeedCounter;
+	float timeUp = 0;
+	float timeDown = 0;
 	bool isKicked = true;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;

@@ -25,6 +25,8 @@ protected:
 	static constexpr auto JUMP_HEIGHT_RealCounter = "JumpHeightRealCounter";
 	static constexpr auto JUMP_HEIGHT_NeedCounter = "JumpHeightNeedCounter";
 	static constexpr auto IS_TO_SIT_TACKLE = "is-to-sit-tackle";
+	static constexpr auto SPIN_TIME_UP = "spin-up-time-counter";
+	static constexpr auto SPIN_TIME_DOWN = "spin-down-time-counter";
 
 	static constexpr float WATER_FLOW_SPEED = -20.0f;
 	static constexpr float CAP_SWIMMING_SPEED = 50.0f;
@@ -44,5 +46,9 @@ protected:
 
 	static constexpr auto INJURE_FALL_SPEED = 80.0f;
 	static constexpr auto INJURE_DISTANCE = 20.0f;
+
+	static constexpr auto SPIN_SPEED_VER = 50.0f;
+	static constexpr auto SPIN_SPEED_HOR = 60.0f;
+	static constexpr auto TIME_KEEP_SPIN = 0.3f;
 };
 

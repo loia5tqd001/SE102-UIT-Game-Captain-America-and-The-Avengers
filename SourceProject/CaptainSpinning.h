@@ -4,10 +4,6 @@
 class CaptainSpinning : public CaptainState
 {
 private:
-	static constexpr auto SPIN_SPEED_VER = 50.0f;
-	static constexpr auto SPIN_SPEED_HOR = 60.0f;
-	static constexpr auto TIME_KEEP_SPIN = 0.3f;
-
 	float timeUp = 0;
 	float timeDown = 0;
 	bool isKicked = false;
