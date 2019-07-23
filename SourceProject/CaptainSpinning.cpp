@@ -44,7 +44,7 @@ void CaptainSpinning::OnKeyUp(Captain& cap, BYTE keyCode)
 
 void CaptainSpinning::OnKeyDown(Captain& cap, BYTE keyCode)
 {
-	if (isKicked == false) {
+	if (!isKicked) {
 		if (keyCode == setting.Get(KeyControls::Attack))
 		{
 			isKicked = true;
@@ -76,7 +76,6 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 	}
 	else
 	{
-		isKicked = false;
 		if (timeDown < TIME_KEEP_SPIN)
 		{
 			timeDown += GameTimer::Dt();
@@ -84,6 +83,7 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 		}
 		else
 		{
+			isKicked = false;
 			cap.SetState(State::Captain_Falling);
 		}
 	}

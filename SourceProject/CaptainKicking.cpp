@@ -133,7 +133,8 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 	}
 	else if (lastState == State::Captain_Falling)
 	{
-		cap.SetState(State::Captain_Falling);
+		if (cap.animations.at(cap.curState).IsDoneCycle())
+			cap.SetState(State::Captain_Falling);
 	}
 
 	HandleCollisions(cap, dt, coObjects);
