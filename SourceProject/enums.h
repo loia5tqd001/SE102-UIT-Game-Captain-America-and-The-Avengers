@@ -233,6 +233,8 @@ enum class State
 	BulletEnemyFly_Hor,
 	BulletEnemyFly_CrossUp,
 	BulletEnemyFly_CrossDown,
+
+	NotExist //Use to initialize
 };
 
 enum class Behaviors // for enemy, moving ledges

@@ -9,18 +9,18 @@ void CaptainInjured::HandleNoCollisions(Captain & cap, float dt)
 
 void CaptainInjured::Enter(Captain& cap, State fromState, Data&& data)
 {
+
+	pendingSwitchState = State::NotExist;
+	DistanceLeftToClimb = 0.0f;
 	cap.isFlashing = true;
 	cap.vel.x = INJURE_FALL_SPEED * cap.nx*-1.0f;
 	cap.vel.y = FALL_SPEED_VER;
 	posxWhenGotInjure = cap.pos.x;
-
-	Debug::out("%f\n",cap.vel.y);
+	cap.shield->SetState(State::Invisible);
 }
 
 Data CaptainInjured::Exit(Captain& cap, State toState)
 {
-	Data data;
-	data.Add<float>("waterLevel", waterLevel);
 	return std::move(data);
 }
 
@@ -34,11 +34,15 @@ void CaptainInjured::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	//Todo: Health <0 --->Die
-	if (cap.health.Get()<=0)
+	//Health < 0 --->Die
+	if (cap.health.Get() <= 0 && cap.curState != State::Captain_Dead)
 	{
-		cap.SetState(State::Captain_Dead);
-		return;
+		pendingSwitchState = State::Captain_Dead;
+	}
+
+	if (pendingSwitchState == State::Captain_Climbing)
+	{
+		//Todo: Complete this later
 	}
 	//Collision objects left
 	HandleCollisions(cap, dt, coObjects);
@@ -52,11 +56,32 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 	float min_tx, min_ty, nx, ny;
 	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 
+	//Todo: Handle other Ledge
+	
 	if (coEvents.size() == 0) return;
 
 	cap.pos.x += min_tx * cap.vel.x * dt;
 	cap.pos.y += min_ty * cap.vel.y * dt;
 
+	if (pendingSwitchState == State::Captain_Dead)
+	{
+		for (auto& e : coEvents)
+		{
+			if (auto block = dynamic_cast<Block*>(e.pCoObj))
+			{
+				if (block->GetType() == ClassId::PassableLedge)
+				{
+					cap.SetState(State::Captain_Dead);
+					return;
+				}
+			}
+		}
+
+		HandleNoCollisions(cap, dt);
+		return;
+	}
+
+	//Fall down Distance of Cap
 	if (cap.nx > 0)
 	{
 		if (posxWhenGotInjure - cap.pos.x >= INJURE_DISTANCE)
@@ -73,6 +98,9 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 			return;
 		}
 	}
+
+	
+
 	for (auto& e : coEvents)
 	{
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
@@ -92,25 +120,34 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 		{
-			cap.CollideWithPassableObjects(dt, e);
-			//if (cap.isFlashing) { // undamagable
-			//	cap.CollideWithPassableObjects(dt, e);
-			//}
-			//else {
-			//	cap.SetState(State::Captain_Injured);
-			//	cap.health.Subtract(1);
-			//	enemy->TakeDamage(1);
-			//}
+			cap.CollideWithPassableObjects(dt, e); //Cap is flashing, immortal
 		}
 		else if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
 
 			switch (block->GetType())
 			{
-			case ClassId::Water:
-				return;
-				if (e.ny < 0) cap.SetState(State::Captain_FallToWater);
+			case ClassId::PassableLedge:
+				if (pendingSwitchState == State::Captain_Dead)
+				{
+					cap.SetState(State::Captain_Dead);
+					return;
+				}
 				break;
-
+			case ClassId::Water:
+				if (e.ny < 0)
+				{
+					data.Add("waterLevel", block->GetPos().y);
+					cap.SetState(State::Captain_FallToWater);
+				}
+				break;
+				//Todo: Upgrade this
+			case ClassId::ClimbableBar:
+				if (e.ny < 0)
+				{
+					pendingSwitchState = State::Captain_Climbing;
+					cap.CollideWithPassableObjects(dt, e);
+				}
+				break;
 			case ClassId::NextMap:
 				if (sceneManager.GetCurScene().canGoNextMap)
 					sceneManager.GoNextScene();
@@ -130,8 +167,6 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 					cap.SetState(State::Captain_Injured);
 				}
 				break;
-
-			case ClassId::PassableLedge:
 			case ClassId::RigidBlock:
 				break;
 
@@ -139,15 +174,13 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 				AssertUnreachable();
 			}
 		}
-		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
+		else if (dynamic_cast<Capsule*>(e.pCoObj))
+		{
 			cap.CollideWithPassableObjects(dt, e);
 		}
-		else if (dynamic_cast<Bullet*>(e.pCoObj)) {
-			if (!cap.isFlashing)
-			{
-				cap.SetState(State::Captain_Injured);
-				cap.health.Subtract(1);
-			}
+		else if (dynamic_cast<Bullet*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
 		}
 	}
 

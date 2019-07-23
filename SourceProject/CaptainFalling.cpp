@@ -17,14 +17,8 @@ void CaptainFalling::Enter(Captain & cap, State fromState, Data && data)
 
 Data CaptainFalling::Exit(Captain & cap, State toState)
 {
-	Data data;
+	
 	isKicked = false;
-	switch (toState)
-	{
-	case State::Captain_FallToWater:
-		data.Add("waterLevel", waterLevel);
-		break;
-	}
 	data.Add(IS_KICKED, isKicked);
 	return std::move(data);
 }
@@ -152,7 +146,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 			case ClassId::Water:
 				if (e.ny < 0)
 				{
-					waterLevel = block->GetPos().y;
+					data.Add("waterLevel", block->GetPos().y);
 					cap.SetState(State::Captain_FallToWater);
 				}
 				break;
@@ -171,7 +165,10 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 
 			case ClassId::ClimbableBar:
 				if (e.ny < 0)
+				{
+					data.Add("ClimbableBarRectF", block->GetBBox());
 					cap.SetState(State::Captain_Climbing);
+				}
 				break;
 
 			case ClassId::DamageBlock:
@@ -211,8 +208,8 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 		{
 			if (!cap.isFlashing)
 			{
-				cap.SetState(State::Captain_Injured);
 				cap.health.Subtract(1);
+				cap.SetState(State::Captain_Injured);
 			}
 		}
 	}

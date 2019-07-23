@@ -5,6 +5,7 @@
 
 void CaptainDead::Enter(Captain& cap, State fromState, Data&& data)
 {
+	cap.shield->SetState(State::Invisible);
 }
 
 Data CaptainDead::Exit(Captain& cap, State toState)

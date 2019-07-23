@@ -3,7 +3,7 @@
 class CaptainFalling :	public CaptainState
 {
 private:
-	float waterLevel;
+	Data data;
 	void HandleNoCollisions(Captain& cap, float dt);
 
 	bool isKicked = false;

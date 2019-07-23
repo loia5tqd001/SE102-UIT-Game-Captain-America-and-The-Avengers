@@ -3,8 +3,10 @@
 
 class CaptainInjured : public CaptainState
 {
+	State pendingSwitchState;
+	Data data;
 	float posxWhenGotInjure;
-	float waterLevel;
+	float DistanceLeftToClimb;
 	void HandleNoCollisions(Captain &cap, float dt);
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
