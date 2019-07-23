@@ -3,6 +3,7 @@
 class AmbushTrigger : public InvisibleObject
 {
 	State state = State::Ambush_NotYet;
+	Captain* captain;
 	Grid* const grid; // to spawn enemies
 	const RectF lockCamera; // to lock camera
 	const RectF lockCaptain;  // to lock captain
@@ -27,7 +28,7 @@ public:
 	inline State GetState() const override { return state; } 
 
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {}) override;
-	void OnCollideWithCap(); // call when captain first collide with ambush trigger
+	void OnCollideWithCap(Captain* cap); // call when captain first collide with ambush trigger
 
 	static void SetInstance(AmbushTrigger* inst);	
 	static AmbushTrigger*& Instance();

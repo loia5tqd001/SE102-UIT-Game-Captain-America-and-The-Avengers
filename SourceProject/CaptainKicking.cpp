@@ -120,7 +120,7 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 	{
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
 		{
-			spawner->OnCollideWithCap();
+			spawner->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto ambushTrigger = dynamic_cast<AmbushTrigger*>(e.pCoObj))

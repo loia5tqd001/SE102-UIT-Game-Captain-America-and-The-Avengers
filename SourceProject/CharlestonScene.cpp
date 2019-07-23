@@ -19,7 +19,6 @@ CharlestonScene::CharlestonScene()
 	{
 		Sounds::PlayLoop( GetBgMusic() );
 	}
-
 }
 
 void CharlestonScene::LoadResources()
@@ -36,24 +35,19 @@ void CharlestonScene::Update(float dt)
 	grid->UpdateCells(); 
 
 	for (auto& obj : grid->GetObjectsInViewPort()) // update objects
-	{
 		obj->Update(dt);
-	}	
 
 	cap->Update(dt, grid->GetObjectsInViewPort()); // update Captain
 
 	// clamping
-	if (ambush->GetState() == State::Ambush_Being)
-	{
+	if (ambush->GetState() == State::Ambush_Being) {
 		cap->ClampWithin(ambush->GetLockCaptain());
 		cam.ClampWithin(ambush->GetLockCamera());
 	}
-	else
-	{
+	else {
 		cap->ClampWithin( map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f) ); 
 		cam.CenterAround( cap->GetCenter() );
 		cam.ClampWithin( map->GetWorldBoundary() );
-
 	}
 
 	if (wnd.IsKeyPressed(VK_NUMPAD5))
@@ -75,20 +69,30 @@ void CharlestonScene::Update(float dt)
 	{
 		cap->SetState(State::Captain_Injured);
 	}
-
-	//cap->Update(dt, grid->GetObjectsInViewPort()); 
-
-
 }
 
 void CharlestonScene::Draw()
 {	
-	map->Render();
+	map->Render(); // layer0
+
+	std::vector<GameObject*> layer1; // capsule, item
+	std::vector<GameObject*> layer2; // bullet, enemy, ledge (other visible objects)
+	// layer3: captain
+	std::vector<GameObject*> layer4; // invisible object
+
+	for (auto& obj : grid->GetObjectsInViewPort()) {
+		if (dynamic_cast<Capsule*>(obj) || dynamic_cast<Item*>(obj)) 
+			layer1.emplace_back(obj);
+		else if (dynamic_cast<VisibleObject*>(obj)) 
+			layer2.emplace_back(obj);
+		else 
+			layer4.emplace_back(obj);
+	}
+
+	for (auto& obj : layer1) obj->Render();
+	for (auto& obj : layer2) obj->Render();
 	cap->Render();
-
-	for (auto& obj : grid->GetObjectsInViewPort())
-		obj->Render();
-
+	for (auto& obj : layer4) obj->Render();
 
 	grid->RenderCells();
 	
@@ -118,26 +122,6 @@ void CharlestonScene::Draw()
 
 		enemyFly.Render();
 	}
-
-	//if (0)
-	//{
-	//	static cap->ain cap->Vector2(0, 100));
-	//	std::vector<GameObject*> co;
-	//	cap->Update(GameTimer::Dt(), co);
-
-	//	cap->Render();
-
-	//	//test shield
-	//	static cap->ain *cap->ain = &cap->
-	//	static Shield shield(cap->ain);
-	//	shield.Update(GameTimer::Dt(), co);
-	//	static auto& setting = Settings::Instance();
-	//	if (wnd.IsKeyPressed('T'))
-	//		shield.ThrowAway();
-
-	//	shield.Render();
-	//}
-
 }
 
 void CharlestonScene::OnKeyDown(BYTE keyCode)

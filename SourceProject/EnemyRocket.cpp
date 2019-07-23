@@ -3,14 +3,15 @@
 #include "Captain.h"
 #include "BulletEnemyRocket.h"
 
-EnemyRocket::EnemyRocket(Behaviors behavior, const Data& behaviorData, Vector2 spawnPos, Grid* grid) :
-	Enemy(behavior, std::move(behaviorData), State::EnemyRocket_BeforeExplode, 2, spawnPos, grid)
+EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
+	Enemy(behavior, std::move(behaviorData), State::EnemyRocket_BeforeExplode, 2, spawnPos, grid),
+	cap(cap)
 {
 	animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode, 0.2f));
-	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.3f));
-	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.1f));
+	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.09f));
+	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.15f));
 	animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.2f));
-
+	nx = - cap->GetNx();
 	SetState(State::EnemyRocket_Walking);
 	switch (behavior)
 	{
@@ -33,13 +34,14 @@ void EnemyRocket::OnBehaviorShoot()
 	assert(behavior == Behaviors::EnemyRocket_ShootStraight ||
 	       behavior == Behaviors::EnemyRocket_ShootCross);
 
+	nx = cap->GetPos().x > pos.x ? 1 : -1;
 	// Walk -> Stand&Shoot -> Sit&Shoot-> Stand&Shoot -> Repeat
 	if (animations.at(curState).IsDoneCycle())
 	switch (curState)
 	{
 		case State::EnemyRocket_Walking:
 			if (++countWalkStep >= 4) 
-				SetState(State::EnemyRocket_Sitting);
+				SetState(State::EnemyRocket_Stand);
 			break;
 
 		case State::EnemyRocket_Stand:
@@ -147,14 +149,14 @@ void EnemyRocket::SpawnRocket()
 	if (isFlashing) return;
 	if (curState == State::EnemyRocket_Sitting)
 	{
-		const auto bulletPos = pos + Vector2{ 23.0f, 3.0f };
-		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, pos));
+		const auto bulletPos = pos + Vector2{ 18.0f, 3.0f };
+		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, bulletPos));
 		Sounds::PlayAt(SoundId::Explosion);
 	}
-	else if (curState == State::EnemyGun_Stand)
+	else if (curState == State::EnemyRocket_Stand)
 	{
-		const auto bulletPos = pos + Vector2{ 22.0f, 3.0f };
-		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, pos));
+		const auto bulletPos = pos + Vector2{ 17.0f, 3.0f };
+		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, bulletPos));
 		Sounds::PlayAt(SoundId::Explosion);
 	}
 }

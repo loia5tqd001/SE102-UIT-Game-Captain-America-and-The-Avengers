@@ -5,18 +5,19 @@
 class EnemyGun : public Enemy
 {
 private:
-	static constexpr float JUMP_SPEED         =  50.0f;
-	static constexpr float FALL_BACK	      =   50.0f;
+	static constexpr float JUMP_SPEED    = 50.0f;
+	static constexpr float FALL_BACK	 = 50.0f;
 
-	float walkingSpeed = 70.0f;
+	float WALKING_SPEED = 170.0f;
 	bool justShoot = false;
+	Captain* cap;
 
 	void OnBehaviorShoot();
 	void OnBehaviorRunOnly();
 	void OnBehaviorAmbush();
 
 public:
-	EnemyGun(Behaviors behavior, const Data& behaviorData, Vector2 spawnPos, Grid* grid);
+	EnemyGun(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid);
 
 	void SetState(State state) override;
 	void SpawnBullet();

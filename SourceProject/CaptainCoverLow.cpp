@@ -89,7 +89,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 	{
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
 		{
-			spawner->OnCollideWithCap();
+			spawner->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
 		}
 		if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
@@ -106,7 +106,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
 			// TODO: cover low mean can't collide with ambush trigger
-			ambush->OnCollideWithCap();
+			ambush->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto item = dynamic_cast<Item*>(e.pCoObj))

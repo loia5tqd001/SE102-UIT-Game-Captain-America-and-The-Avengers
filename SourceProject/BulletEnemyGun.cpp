@@ -2,7 +2,7 @@
 #include "BulletEnemyGun.h"
 
 BulletEnemyGun::BulletEnemyGun(int nx, Enemy *enemy, const Vector2& spawnPos, Vector2 vel) :
-	Bullet(State::BulletEnemyGun, 1, spawnPos, vel, nx, enemy)
+	Bullet(State::BulletEnemyGun, 1, spawnPos, { nx * BULLET_MOVING, 0.0f }, nx, enemy)
 {
 	animations.emplace(State::BulletEnemyGun, Animation(SpriteId::BulletEnemyGun, 0.1f));
 

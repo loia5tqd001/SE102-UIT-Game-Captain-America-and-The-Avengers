@@ -3,13 +3,15 @@
 #include "Captain.h"
 #include "BulletEnemyGun.h"
 
-EnemyGun::EnemyGun(Behaviors behavior, const Data& behaviorData, Vector2 spawnPos, Grid* grid) :
-	Enemy(behavior, std::move(behaviorData), State::EnemyGun_BeforeExplode, 1, spawnPos, grid)
+EnemyGun::EnemyGun(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
+	Enemy(behavior, Data{}, State::EnemyGun_BeforeExplode, 1, spawnPos, grid),
+	cap(cap)
 {
 	animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode, 0.2f));
 	animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.3f));
-	animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.8f));
-	animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 1.2f));
+	animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.4f));
+	animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 1.5f));
+	nx = -cap->GetNx(); // always first toward Captain
 
 	switch (behavior)
 	{
@@ -18,14 +20,16 @@ EnemyGun::EnemyGun(Behaviors behavior, const Data& behaviorData, Vector2 spawnPo
 			animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 0.1f));
 			SetState(State::EnemyGun_Sitting);
 			break;
+
 		case Behaviors::EnemyGun_Shoot:
 			SetState(State::EnemyGun_Sitting);
 			break;
+
 		case Behaviors::EnemyGun_RunOnly:
+			WALKING_SPEED *= 2;
 			SetState(State::EnemyGun_Walking);
-			walkingSpeed *= 3;
-			// TODO: vel.x = toward captain * speed * 2
 			break;
+
 		case Behaviors::EnemyGun_Ambush:
 			SetState(State::EnemyGun_Walking);
 			break;
@@ -40,6 +44,7 @@ void EnemyGun::OnBehaviorShoot()
 	       behavior == Behaviors::EnemyGun_ShootFast);
 
 	// Sit -> Stand -> Shoot -> Stand -> Repeat
+	nx = cap->GetPos().x > pos.x ? 1 : -1;
 	if (animations.at(curState).IsDoneCycle())
 	switch (curState)
 	{
@@ -140,7 +145,7 @@ void EnemyGun::SetState(State state)
 		vel.x = 0.0f;
 		break;
 	case State::EnemyGun_Walking:
-		vel.x = nx * walkingSpeed;
+		vel.x = nx * WALKING_SPEED;
 		break;
 	case State::EnemyGun_Sitting:
 		vel.x = 0.0f;
@@ -159,13 +164,13 @@ void EnemyGun::SpawnBullet()
 	if (isFlashing) return;
 	if (curState == State::EnemyGun_Sitting)
 	{
-		const auto bulletPos = pos + Vector2{ 24.0f, 10.0f };
+		const auto bulletPos = pos + Vector2{ 24.0f, 11.0f };
 		grid->SpawnObject(std::make_unique<BulletEnemyGun>(nx, this, bulletPos));
 		Sounds::PlayAt(SoundId::BulletNormal);
 	}
 	else if (curState == State::EnemyGun_Stand)
 	{
-		const auto bulletPos = pos + Vector2{ 24.0f, 3.0f };
+		const auto bulletPos = pos + Vector2{ 19.0f, 3.0f };
 		grid->SpawnObject(std::make_unique<BulletEnemyGun>(nx, this, bulletPos));
 		Sounds::PlayAt(SoundId::Explosion);
 	}

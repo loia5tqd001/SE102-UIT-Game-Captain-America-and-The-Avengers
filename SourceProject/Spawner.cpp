@@ -3,11 +3,12 @@
 #include "EnemyGun.h"
 #include "EnemyRocket.h"
 
-Spawner::Spawner(Vector2 pos, UINT w, UINT h, Behaviors behav, Vector2 objSpawnPos, Data&& data, Grid* grid) :
+Spawner::Spawner(Vector2 pos, UINT w, UINT h, Behaviors behav, Vector2 objSpawnPos, int expectCapNx, Data&& data, Grid* grid) :
 	InvisibleObject(pos, w, h),
 	objectBehavior(behav),
 	objSpawnPos(objSpawnPos),
-	behaviorData(data),
+	expectCapNx(expectCapNx),
+	//behaviorData(data),
 	grid(grid)
 {
 }
@@ -34,17 +35,18 @@ void Spawner::Update(float dt, const std::vector<GameObject*>& coObjects)
 	}
 }
 
-void Spawner::OnCollideWithCap()
+void Spawner::OnCollideWithCap(Captain* cap)
 {
 	if (!readyToSpawn) return;
 	if (enemy) return; // if object's still alive
+	if (cap->GetNx() != expectCapNx) return;
 	else {
 		switch (objectBehavior)
 		{
 			case Behaviors::EnemyGun_Shoot    : 
 			case Behaviors::EnemyGun_ShootFast: 
 			case Behaviors::EnemyGun_RunOnly  :
-				enemy = std::make_shared<EnemyGun>(objectBehavior, behaviorData, objSpawnPos, grid);
+				enemy = std::make_shared<EnemyGun>(objectBehavior, objSpawnPos, cap, grid);
 				grid->SpawnObject(enemy);
 				readyToSpawn = false;
 				break;
@@ -52,7 +54,7 @@ void Spawner::OnCollideWithCap()
 			case Behaviors::EnemyRocket_ShootStraight :
 			case Behaviors::EnemyRocket_ShootCross    :
 			case Behaviors::EnemyRocket_BackAndForth  :
-				enemy = std::make_shared<EnemyRocket>(objectBehavior, behaviorData, objSpawnPos, grid);
+				enemy = std::make_shared<EnemyRocket>(objectBehavior, objSpawnPos, cap, grid);
 				grid->SpawnObject(enemy);
 				readyToSpawn = false;
 				break;

@@ -120,12 +120,12 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 	{
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
 		{
-			spawner->OnCollideWithCap();
+			spawner->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto ambushTrigger = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
-			ambushTrigger->OnCollideWithCap();
+			ambushTrigger->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto item = dynamic_cast<Item*>(e.pCoObj))

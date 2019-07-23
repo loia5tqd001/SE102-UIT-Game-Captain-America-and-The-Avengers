@@ -29,11 +29,12 @@ const RectF& AmbushTrigger::GetLockCaptain() const
 	return lockCaptain;
 }
 
-void AmbushTrigger::OnCollideWithCap()
+void AmbushTrigger::OnCollideWithCap(Captain* cap)
 {
 	if (state == State::Ambush_Being || state == State::Ambush_HasDone) return;
 
 	state = State::Ambush_Being;
+	captain = cap;
 
 	for (auto& o : grid->GetObjectsInViewPort()) 
 	{
@@ -54,13 +55,13 @@ void AmbushTrigger::OnCollideWithCap()
 
 void AmbushTrigger::SpawnEnemyGun()
 {
-	enemyGun = std::make_shared<EnemyGun>(Behaviors::EnemyGun_Ambush, Data{}, enemyGunSpawnPos, grid);
+	enemyGun = std::make_shared<EnemyGun>(Behaviors::EnemyGun_Ambush, enemyGunSpawnPos, captain, grid);
 	grid->SpawnObject(enemyGun);
 }
 
 void AmbushTrigger::SpawnEnemyRocket()
 {
-	enemyRocket = std::make_shared<EnemyRocket>(Behaviors::EnemyRocket_Ambush, Data{}, enemyRocketSpawnPos, grid);
+	enemyRocket = std::make_shared<EnemyRocket>(Behaviors::EnemyRocket_Ambush, enemyRocketSpawnPos, captain, grid);
 	grid->SpawnObject(enemyRocket);
 }
 

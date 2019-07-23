@@ -111,12 +111,12 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 		}
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
 		{
-			spawner->OnCollideWithCap();
+			spawner->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
-			ambush->OnCollideWithCap();
+			ambush->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (dynamic_cast<MovingLedge*>(e.pCoObj) || dynamic_cast<MovingLedge*>(e.pCoObj))

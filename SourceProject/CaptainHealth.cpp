@@ -19,7 +19,6 @@ void CaptainHealth::Set(int h)
 {
 	assert(h >= 0 && h <= 12);
 	health = h;
-	// TODO: If health <= 0. Captain.SetState(Die)
 }
 
 void CaptainHealth::Draw() const

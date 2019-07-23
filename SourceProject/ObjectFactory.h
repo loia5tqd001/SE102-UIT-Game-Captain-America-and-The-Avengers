@@ -43,7 +43,8 @@ struct ObjectFactory
 		const auto width = objJson[4].asUInt();
 		const auto height = objJson[5].asUInt();
 		const auto spawnPos = Vector2{ objJson[6].asFloat(), objJson[7].asFloat() };
-		return std::make_unique<Spawner>(pos, width, height, behavior, spawnPos, Data{}, grid);
+		const auto expectCapNx = pos.x < spawnPos.x ? 1 : -1; 
+		return std::make_unique<Spawner>(pos, width, height, behavior, spawnPos, expectCapNx, Data{}, grid);
 	}
 
 	template<>

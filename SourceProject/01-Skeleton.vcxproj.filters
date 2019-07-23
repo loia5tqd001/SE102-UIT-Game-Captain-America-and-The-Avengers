@@ -58,6 +58,15 @@
     <Filter Include="Development\Objects\Captain">
       <UniqueIdentifier>{b27bc3c2-1f5b-4742-b75e-9085145db342}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Development\Objects\Captain\H">
+      <UniqueIdentifier>{d3dd87c9-7368-4868-8602-783c52a9af2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Objects\Captain\D">
+      <UniqueIdentifier>{02ce4bf4-1662-496e-ae69-a93962148c97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development\Objects\Captain\L">
+      <UniqueIdentifier>{52790d83-62af-4029-ae69-98b0eb44c3a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -207,65 +216,69 @@
     <ClCompile Include="Shield.cpp">
       <Filter>Development\Objects\Captain</Filter>
     </ClCompile>
-    <ClCompile Include="CaptainStanding.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainJumping.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainKicking.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
     <ClCompile Include="CaptainState.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainDead.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainFallToWater.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainInjured.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainInWater.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainPunching.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainSitPunching.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainSitting.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainSpinning.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainSwimming.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainTackle.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainThrowing.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainWalking.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainClimbing.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainCoverLow.cpp">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClCompile>
-    <ClCompile Include="CaptainCoverTop.cpp">
       <Filter>Development\Objects\Captain</Filter>
     </ClCompile>
     <ClCompile Include="EnemyFly.cpp">
       <Filter>Development\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletEnemyFly.cpp" />
+    <ClCompile Include="CaptainClimbing.cpp">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainCoverLow.cpp">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainCoverTop.cpp">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainDead.cpp">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainFallToWater.cpp">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainInjured.cpp">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainInWater.cpp">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainPunching.cpp">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainSitPunching.cpp">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainSpinning.cpp">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainSitting.cpp">
+      <Filter>Development\Objects\Captain\L</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainStanding.cpp">
+      <Filter>Development\Objects\Captain\L</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainTackle.cpp">
+      <Filter>Development\Objects\Captain\L</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainWalking.cpp">
+      <Filter>Development\Objects\Captain\L</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainThrowing.cpp">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainSwimming.cpp">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainFalling.cpp">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainKicking.cpp">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptainJumping.cpp">
+      <Filter>Development\Objects\Captain\H</Filter>
     </ClCompile>
     <ClCompile Include="BulletEnemyFly.cpp" />
     <ClCompile Include="CaptainFalling.cpp">
@@ -447,71 +460,76 @@
     <ClInclude Include="Shield.h">
       <Filter>Development\Objects\Captain</Filter>
     </ClInclude>
-    <ClInclude Include="CaptainStanding.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
     <ClInclude Include="Shield.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainKicking.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainJumping.h">
       <Filter>Development\Objects\Captain</Filter>
     </ClInclude>
     <ClInclude Include="CaptainState.h">
       <Filter>Development\Objects\Captain</Filter>
     </ClInclude>
-    <ClInclude Include="CaptainWalking.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainCoverTop.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainDead.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainFallToWater.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainInjured.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainInWater.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainPunching.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainSitPunching.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainSitting.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainSpinning.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainSwimming.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainTackle.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainThrowing.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
     <ClInclude Include="Captain.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainClimbing.h">
-      <Filter>Development\Objects\Captain</Filter>
-    </ClInclude>
-    <ClInclude Include="CaptainCoverLow.h">
       <Filter>Development\Objects\Captain</Filter>
     </ClInclude>
     <ClInclude Include="EnemyFly.h">
       <Filter>Development\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletEnemyFly.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="CaptainClimbing.h">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainCoverLow.h">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainCoverTop.h">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainDead.h">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainFallToWater.h">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainInjured.h">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainInWater.h">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainPunching.h">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainSitPunching.h">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainSpinning.h">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainSitting.h">
+      <Filter>Development\Objects\Captain\L</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainStanding.h">
+      <Filter>Development\Objects\Captain\L</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainTackle.h">
+      <Filter>Development\Objects\Captain\L</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainWalking.h">
+      <Filter>Development\Objects\Captain\L</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainThrowing.h">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainSwimming.h">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainFalling.h">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainKicking.h">
+      <Filter>Development\Objects\Captain\H</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainJumping.h">
+      <Filter>Development\Objects\Captain\H</Filter>
     </ClInclude>
     <ClInclude Include="BulletEnemyFly.h" />
     <ClInclude Include="resource.h" />

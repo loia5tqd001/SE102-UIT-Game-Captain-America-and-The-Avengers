@@ -5,7 +5,7 @@
 class EnemyRocket : public Enemy
 {
 private:
-	static constexpr float WALKING_SPEED = 15.0f;
+	static constexpr float WALKING_SPEED = 50.0f;
 	static constexpr float JUMP_SPEED = 50.0f;
 	static constexpr float GRAVITY = 50.0f;
 	static constexpr float FALL_BACK = 50.0f;
@@ -18,9 +18,10 @@ private:
 	int countWalkStep = 0;
 	bool justShoot = false;
 	bool isLastForth = false; 
+	Captain* cap;
 
 public:
-	EnemyRocket(Behaviors behavior, const Data& behaviorData, Vector2 spawnPos, Grid* grid);
+	EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid);
 
 	void SetState(State state) override;
 	void SpawnRocket();
