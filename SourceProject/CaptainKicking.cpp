@@ -5,7 +5,7 @@
 
 void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Spinning);
+	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Spinning || fromState == State::Captain_Falling);
 	lastState = fromState;
 	if (fromState == State::Captain_Jumping)
 	{
@@ -18,14 +18,16 @@ void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 Data CaptainKicking::Exit(Captain& cap, State toState)
 {
 	Data data;
+	isKicked = true;
 	switch (toState)
 	{
-	case State::Captain_Kicking:
-		data.Add(IS_JUMP_RELEASED, isJumpReleased);
+	case State::Captain_Jumping:
 		data.Add(JUMP_HEIGHT_RealCounter, JumpHeightRealCounter);
 		data.Add(JUMP_HEIGHT_NeedCounter, JumpHeightNeedCounter);
 		break;
 	}
+	data.Add(IS_JUMP_RELEASED, isJumpReleased);
+	data.Add(IS_KICKED, isKicked);
 	return std::move(data);
 }
 
@@ -33,6 +35,10 @@ void CaptainKicking::OnKeyUp(Captain& cap, BYTE keyCode)
 {
 	if (keyCode == setting.Get(KeyControls::Jump))
 		isJumpReleased = true;
+	if (keyCode == setting.Get(KeyControls::Left))
+		cap.vel.x = 0;
+	if (keyCode == setting.Get(KeyControls::Right))
+		cap.vel.x = 0;
 }
 
 void CaptainKicking::OnKeyDown(Captain& cap, BYTE keyCode)
@@ -41,13 +47,6 @@ void CaptainKicking::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (cap.animations.at(cap.curState).IsDoneCycle())
-	{
-		if (lastState == State::Captain_Jumping)
-			cap.SetState(lastState);
-		else if (lastState == State::Captain_Spinning)
-			cap.SetState(State::Captain_Falling); //fix
-	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.vel.x = -MOVING_HOR;
@@ -71,10 +70,10 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 			}
 			else
 			{
-				if (lastState == State::Captain_Jumping)
-					cap.SetState(lastState);
-				else if (lastState == State::Captain_Spinning)
-					cap.SetState(State::Captain_Falling); //fix
+				//if (lastState == State::Captain_Jumping)
+				//	cap.SetState(lastState);
+				//else if (lastState == State::Captain_Spinning)
+				//	cap.SetState(State::Captain_Falling); //fix
 			}
 		}
 	}
@@ -88,15 +87,130 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 		{
 		}
 	}
+	if (cap.animations.at(cap.curState).IsDoneCycle())
+	{
+		if (lastState == State::Captain_Jumping)
+			cap.SetState(lastState);
+		else if (lastState == State::Captain_Spinning)
+		{
+			cap.SetState(State::Captain_Falling);
+		}
+	}
 
 	HandleCollisions(cap, dt, coObjects);
 }
 
 void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	if (lastState == State::Captain_Spinning) return;
 	// collision with captain kick
 	cap.pos.x += cap.vel.x*dt;
 	cap.pos.y += cap.vel.y*dt;
+
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
+	if (coEvents.size() == 0) { return; }
+
+	float min_tx, min_ty, nx, ny;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
+
+	if (coEvents.size() == 0) return;
+
+
+	for (auto&e : coEvents)
+	{
+		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
+		{
+			spawner->OnCollideWithCap();
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto ambushTrigger = dynamic_cast<AmbushTrigger*>(e.pCoObj))
+		{
+			//ambushTrigger->Active();
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto item = dynamic_cast<Item*>(e.pCoObj))
+		{
+			item->BeingCollected();
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
+		{
+			if (cap.isFlashing) //immortal
+			{
+				cap.CollideWithPassableObjects(dt, e);
+			}
+			else
+			{
+				cap.SetState(State::Captain_Injured);
+				enemy->TakeDamage(1);
+			}
+		}
+		else if (auto block = dynamic_cast<Block*>(e.pCoObj))
+		{
+			switch (block->GetType())
+			{
+			case ClassId::Water:
+				if (e.ny < 0)
+				{
+					cap.SetState(State::Captain_FallToWater);
+				}
+				break;
+			case ClassId::NextMap:
+				break;
+
+			case ClassId::Switch:
+				break;
+				//Todo: Handle this
+			case ClassId::Door:
+				break;
+
+			case ClassId::ClimbableBar:
+				if (e.ny < 0)
+					cap.SetState(State::Captain_Climbing);
+				break;
+
+			case ClassId::DamageBlock:
+				if (!cap.isFlashing)
+				{
+					cap.health.Subtract(1);
+					cap.SetState(State::Captain_Injured);
+				}
+				break;
+
+			case ClassId::PassableLedge:
+				if (e.ny < 0) {
+					cap.SetState(State::Captain_Sitting);
+					Sounds::PlayAt(SoundId::Grounding);
+				}
+				else {
+					cap.CollideWithPassableObjects(dt, e);
+				}
+				break;
+
+			case ClassId::RigidBlock:
+				if (e.ny > 0) {
+					cap.SetState(State::Captain_Sitting);
+					Sounds::PlayAt(SoundId::Grounding);
+				}
+				break;
+
+			default:
+				AssertUnreachable();
+			}
+		}
+		else if (auto capsule = dynamic_cast<Capsule*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
+		{
+			if (!cap.isFlashing)
+			{
+				cap.SetState(State::Captain_Injured);
+				cap.health.Subtract(1);
+			}
+		}
+	}
 }
 
 

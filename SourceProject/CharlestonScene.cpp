@@ -76,7 +76,7 @@ void CharlestonScene::Update(float dt)
 		cap->SetState(State::Captain_Injured);
 	}
 
-	cap->Update(dt, grid->GetObjectsInViewPort()); 
+	//cap->Update(dt, grid->GetObjectsInViewPort()); 
 
 }
 

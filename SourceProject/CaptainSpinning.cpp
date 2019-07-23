@@ -8,6 +8,8 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 {
 	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Kicking);
 	cap.vel.y = -SPIN_SPEED_VER;
+
+	isKicked = data.Get<bool>(IS_KICKED);
 }
 
 Data CaptainSpinning::Exit(Captain& cap, State toState)
@@ -15,20 +17,26 @@ Data CaptainSpinning::Exit(Captain& cap, State toState)
 	Data data;
 	timeUp = 0;
 	timeDown = 0;
-	// i dont thing we need to pass data in this case
-	return data;
+	data.Add(IS_KICKED, isKicked);
+	return std::move(data);
 }
 
 void CaptainSpinning::OnKeyUp(Captain& cap, BYTE keyCode)
 {
-
+	if (keyCode == setting.Get(KeyControls::Left))
+		cap.vel.x = 0;
+	if (keyCode == setting.Get(KeyControls::Right))
+		cap.vel.x = 0;
 }
 
 void CaptainSpinning::OnKeyDown(Captain& cap, BYTE keyCode)
 {
-	if (keyCode == setting.Get(KeyControls::Attack))
-	{
-		cap.SetState(State::Captain_Kicking);
+	if (isKicked == false) {
+		if (keyCode == setting.Get(KeyControls::Attack))
+		{
+			isKicked = true;
+			cap.SetState(State::Captain_Kicking);
+		}
 	}
 }
 
@@ -56,6 +64,7 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 		}
 		else
 		{
+			isKicked = false;
 			if (timeDown < TIME_KEEP_SPIN)
 			{
 				timeDown += GameTimer::Dt();
@@ -63,12 +72,12 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 			}
 			else
 			{
-				//cap.SetState(State::Captain_Jumping);
 				cap.SetState(State::Captain_Falling);
 			}
 		}
 	}
 
+	cap.animations.at(cap.curState).Update(dt);
 	HandleCollisions(cap, dt, coObjects);
 }
 

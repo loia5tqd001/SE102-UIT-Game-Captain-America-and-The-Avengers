@@ -4,12 +4,19 @@
 
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Climbing || fromState == State::Captain_CoverLow 
+	/*assert(fromState == State::Captain_Climbing || fromState == State::Captain_CoverLow 
 		|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
 		|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
 		|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
-	    || fromState == State::Captain_Kicking);
-	if (fromState != State::Captain_Kicking) {
+	    || fromState == State::Captain_Kicking);*/
+	if (fromState == State::Captain_Kicking)
+	{
+		JumpHeightRealCounter = data.Get<float>(JUMP_HEIGHT_RealCounter);
+		JumpHeightNeedCounter = data.Get<float>(JUMP_HEIGHT_NeedCounter);
+		isJumpReleased = data.Get<bool>(IS_JUMP_RELEASED);
+	}
+	else {
+		 isKicked = false;
 		 isJumpReleased = false;
 		 JumpHeightRealCounter = 0;
 		 JumpHeightNeedCounter = MIN_JUMP_HEIGHT;
@@ -39,7 +46,6 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 			}
 			break;
 		default:
-			AssertUnreachable();
 			break;
 	}
 }
@@ -50,11 +56,12 @@ Data CaptainJumping::Exit(Captain& cap, State toState)
 	switch (toState)
 	{
 		case State::Captain_Kicking:
-			data.Add(IS_JUMP_RELEASED, isJumpReleased);
-			data.Add(JUMP_HEIGHT_RealCounter, JumpHeightRealCounter);
-			data.Add(JUMP_HEIGHT_NeedCounter, JumpHeightNeedCounter);
 			break;
 	}
+	data.Add(IS_JUMP_RELEASED, isJumpReleased);
+	data.Add(JUMP_HEIGHT_RealCounter, JumpHeightRealCounter);
+	data.Add(JUMP_HEIGHT_NeedCounter, JumpHeightNeedCounter);
+	data.Add(IS_KICKED, isKicked);
 	return std::move(data);
 }
 
@@ -62,13 +69,20 @@ void CaptainJumping::OnKeyUp(Captain& cap, BYTE keyCode)
 {
 	if (keyCode == setting.Get(KeyControls::Jump))
 		isJumpReleased = true;
+	if (keyCode == setting.Get(KeyControls::Left))
+		cap.vel.x = 0;
+	if (keyCode == setting.Get(KeyControls::Right))
+		cap.vel.x = 0;
 }
 
 void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
 {
 	if (keyCode == setting.Get(KeyControls::Attack))
 	{
-		cap.SetState(State::Captain_Kicking);
+		if (!isKicked) {
+			isKicked = true;
+			cap.SetState(State::Captain_Kicking);
+		}
 	}
 	else {
 		if (keyCode == setting.Get(KeyControls::Left)) {
@@ -178,7 +192,7 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
-			ambush->OnCollideWithCap();
+			//ambush->OnCollideWithCap();
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto item = dynamic_cast<Item*>(e.pCoObj))

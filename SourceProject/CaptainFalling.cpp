@@ -11,7 +11,8 @@ void CaptainFalling::Enter(Captain & cap, State fromState, Data && data)
 {
 	//Todo: Check if Cap is already on the ground or brick or something, switch to another state immediately
 	cap.vel.y = FALL_SPEED_VER;
-	cap.shield->SetState(State::Invisible);
+
+	isKicked = data.Get<bool>(IS_KICKED);
 }
 
 Data CaptainFalling::Exit(Captain & cap, State toState)
@@ -28,12 +29,14 @@ Data CaptainFalling::Exit(Captain & cap, State toState)
 	//	break;
 	//}
 	Data data;
+	isKicked = false;
 	switch (toState)
 	{
 	case State::Captain_FallToWater:
 		data.Add("waterLevel", waterLevel);
 		break;
 	}
+	data.Add(IS_KICKED, isKicked);
 	return std::move(data);
 }
 
@@ -83,6 +86,14 @@ void CaptainFalling::OnKeyDown(Captain & cap, BYTE keyCode)
 			cap.nx = 1;
 		}
 	}
+	if (!isKicked)
+	{
+		if (keyCode == setting.Get(KeyControls::Attack))
+		{
+			isKicked = true;
+			cap.SetState(State::Captain_Kicking);
+		}
+	}
 
 }
 
@@ -125,7 +136,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 		}
 		else if (auto ambushTrigger = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
-			ambushTrigger->Active();
+			//ambushTrigger->Active();
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto item = dynamic_cast<Item*>(e.pCoObj))
