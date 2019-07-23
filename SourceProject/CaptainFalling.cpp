@@ -17,17 +17,6 @@ void CaptainFalling::Enter(Captain & cap, State fromState, Data && data)
 
 Data CaptainFalling::Exit(Captain & cap, State toState)
 {
-	//switch (toState)
-	//{
-	//case State::Captain_FallToWater:
-	//{
-	//	Data data;
-	//	data.Add("waterLevel", waterLevel);
-	//	return std::move(data);
-	//}
-	//default:
-	//	break;
-	//}
 	Data data;
 	isKicked = false;
 	switch (toState)
@@ -136,7 +125,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 		}
 		else if (auto ambushTrigger = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
-			//ambushTrigger->Active();
+			ambushTrigger->OnCollideWithCap();
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto item = dynamic_cast<Item*>(e.pCoObj))

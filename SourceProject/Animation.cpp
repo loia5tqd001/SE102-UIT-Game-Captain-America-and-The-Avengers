@@ -29,7 +29,7 @@ void Animation::Update(float dt)
 
 void Animation::SetCusFrameHoldTime(UINT frameNumber, float holdTime)
 {
-	assert(float(holdTime) >= 0.0f);
+	assert(float(holdTime) > 0.0f);
 	cusHoldTimeMap[frameNumber] = holdTime;
 }
 

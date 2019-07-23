@@ -41,5 +41,8 @@ protected:
 
 	static constexpr auto FALL_SPEED_VER = JUMP_SPEED_VER;
 	static constexpr auto FALL_SPEED_HOR = JUMP_SPEED_HOR;
+
+	static constexpr auto INJURE_FALL_SPEED = 80.0f;
+	static constexpr auto INJURE_DISTANCE = 20.0f;
 };
 

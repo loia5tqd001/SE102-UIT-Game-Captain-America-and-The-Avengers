@@ -268,7 +268,9 @@
       <Filter>Development\Objects\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="BulletEnemyFly.cpp" />
-    <ClCompile Include="CaptainFalling.cpp" />
+    <ClCompile Include="CaptainFalling.cpp">
+      <Filter>Development\Objects\Captain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -513,7 +515,9 @@
     </ClInclude>
     <ClInclude Include="BulletEnemyFly.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="CaptainFalling.h" />
+    <ClInclude Include="CaptainFalling.h">
+      <Filter>Development\Objects\Captain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameProject.rc" />

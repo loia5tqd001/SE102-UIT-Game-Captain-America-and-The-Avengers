@@ -78,6 +78,7 @@ void CharlestonScene::Update(float dt)
 
 	//cap->Update(dt, grid->GetObjectsInViewPort()); 
 
+
 }
 
 void CharlestonScene::Draw()

@@ -6,7 +6,8 @@
 void CaptainFallToWater::Enter(Captain& cap, State fromState, Data&& data)
 {
 	//Todo: posx.y = .... Cap's positon must be underwater
-	cap.pos.y = 463 - cap.GetBBox().GetHeight();
+	
+	cap.pos.y = data.Get<float>("waterLevel") - cap.GetBBox().GetHeight();
 	cap.vel.y = 0.0f;
 	cap.shield->SetState(State::Invisible);
 }
