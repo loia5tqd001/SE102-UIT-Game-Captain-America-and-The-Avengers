@@ -175,6 +175,10 @@ enum class State
 	Capsule_Idle,
 	Capsule_Openning,
 
+	Ambush_NotYet,
+	Ambush_Being,
+	Ambush_HasDone,
+
 	Explode,
 
 	Shield_Side,

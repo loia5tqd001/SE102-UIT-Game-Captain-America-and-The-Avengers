@@ -11,6 +11,7 @@
 #include <fstream>
 #include <memory>
 #include <optional>
+#include <iterator>
 #include <any>
 
 // === STL containers ===

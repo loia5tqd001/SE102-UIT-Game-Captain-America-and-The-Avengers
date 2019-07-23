@@ -36,6 +36,11 @@ struct RectF
 		left += dl, top += dt, right -= dr, bottom -= db;
 		return *this;
 	}
+	RectF GetTrim(float dl, float dt, float dr, float db) const
+	{
+		auto copy = *this;
+		return copy.Trim(dl, dt, dr, db);
+	}
 	bool IsIntersect(const RectF& other) const
 	{
 		return left < other.right && right > other.left

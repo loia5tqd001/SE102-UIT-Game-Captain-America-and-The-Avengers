@@ -9,8 +9,8 @@ protected:
 	bool shouldDrawImage = true;
 
 	bool  isFlashing = false;
-	float timePassed;
-	UINT  nFrameUnrendered;
+	float timePassed = 0.0f;
+	UINT  nFrameUnrendered = 0u;
 	void  OnFlashing(std::optional<bool> setFlashing = {});
 
 public:

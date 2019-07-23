@@ -28,11 +28,10 @@ void Grid::LoadResources(const Json::Value& root)
 void Grid::LoadObjects(const Json::Value& grid)
 {
 	const Json::Value& jsonObjects = grid["objects"];
-	objectHolder.reserve( jsonObjects.size() );
 
+	std::shared_ptr<GameObject> object;
 	for (const auto& jsonObj : jsonObjects)
 	{
-		static std::unique_ptr<GameObject> object;
 		const int classId  = jsonObj[0].asInt();
 		switch ((ClassId)classId)
 		{
@@ -57,36 +56,36 @@ void Grid::LoadObjects(const Json::Value& grid)
 
 			case ClassId::AmbushTrigger:
 				object = ObjectFactory::Create<AmbushTrigger>(jsonObj, this);
+				AmbushTrigger::SetInstance(dynamic_cast<AmbushTrigger*>( object.get() ));
 				break;
 
 			default:
 				ThrowMyException("Can't find class id:", classId);
 		}
 
-		SpawnObject(std::move(object), false);
+		SpawnObject(object, IsMoving::Static);
 	}
 }
 
-GameObject* Grid::SpawnObject(std::unique_ptr<GameObject> obj, bool isMoving)
+GameObject* Grid::SpawnObject(std::shared_ptr<GameObject> obj, IsMoving isMoving)
 {
-	Area area = CalcCollidableArea( obj->GetBBox() );
+	Area area = GetCells( obj->GetBBox() );
 
 	for (UINT x = area.xs; x <= area.xe; x++)
 	for (UINT y = area.ys; y <= area.ye; y++)
 	{
-		if (isMoving) {
-			cells[x * height + y].movingObjects.emplace( obj.get() );
+		if (isMoving == IsMoving::Moving) {
+			cells[x * height + y].movingObjects.emplace( obj );
 		}
 		else {
-			cells[x * height + y].staticObjects.emplace( obj.get() );
+			cells[x * height + y].staticObjects.emplace( obj );
 		}
 	}
 
-	objectHolder.emplace_back( std::move(obj) );
-	return objectHolder.back().get();
+	return obj.get();
 }
 
-Area Grid::CalcCollidableArea(const RectF& bbox, int broadX, int broadY) const
+Area Grid::GetCells(const RectF& bbox, int broadX, int broadY) const
 {
 	return 	{
 		UINT(max(0         ,      bbox.left   / cellSize      - broadX)),
@@ -98,88 +97,67 @@ Area Grid::CalcCollidableArea(const RectF& bbox, int broadX, int broadY) const
 
 void Grid::UpdateCells()
 {
-	// recalculate viewPortArea every frame
-	viewPortArea = CalcCollidableArea( cam.GetBBox() );
-	const auto updateArea = CalcCollidableArea( cam.GetBBox(), 1, 1 );
-
-	std::unordered_set<GameObject*> shouldBeUpdatedObjects;
-
-	for (UINT x = updateArea.xs; x <= updateArea.xe; x++)
-	for (UINT y = updateArea.ys; y <= updateArea.ye; y++)
-	{
-		Cell& cell = cells[x * height + y];
-		if (cell.movingObjects.size() == 0) continue;
-
-		Utils::RemoveIf(cell.movingObjects, [&](auto& o)
-		{
-			const RectF oBbox = o->GetBBox();
-
-			if (oBbox.IsNone()) return false; // gonna die soon
-
-			if (!oBbox.IsIntersect(RectF{ {}, cellSize*width, cellSize*height })) // run out of the world
-			{
-				dynamic_cast<VisibleObject*>(o)->SetState(State::Destroyed);
-				return true;
-			}
-			if ( x < viewPortArea.xs && x > viewPortArea.xe ||
-			     y < viewPortArea.ys && y > viewPortArea.ye ) // run out of viewport
-			{
-				dynamic_cast<VisibleObject*>(o)->SetState(State::Destroyed);
-				return true;
-			}
-
-			// Objects offscreen should be updated when totally left their old cell
-			if (!oBbox.IsIntersect( cell.GetBBox() ))
-			{
-				shouldBeUpdatedObjects.emplace(o);	
-				return true;
-			}
-
-			return false;
-		});
-	}
-
-	for (auto& obj : shouldBeUpdatedObjects)
-	{
-		Area area = CalcCollidableArea( obj->GetBBox() );
-
-		for (UINT x = area.xs; x <= area.xe; x++)
-		for (UINT y = area.ys; y <= area.ye; y++)
-		{
-			cells[x * height + y].movingObjects.emplace( obj );
-		}
-	}
-}
-
-void Grid::RemoveDestroyedObjects()
-{
-	//for (UINT x = viewPortArea.xs; x <= viewPortArea.xe; x++)
-	//for (UINT y = viewPortArea.ys; y <= viewPortArea.ye; y++)
-	//{
-	//	Cell& cell = cells[x * height + y];
-	//	Utils::RemoveIf(cell.movingObjects, [](auto o) 
-	//	{ 
-	//		return o->GetState() == State::Destroyed;
-	//	} );
-	//}
-
-	//Utils::RemoveIf(objectHolder, [](auto& o) { return o->GetState() == State::Destroyed; });
-	RecalculateObjectsInViewPort();
-}
-
-void Grid::RecalculateObjectsInViewPort()
-{
-	std::unordered_set<GameObject*> result;
+	// calculate which cells are cells in viewport
+	viewPortArea = GetCells( cam.GetBBox() );
+	std::unordered_set<GameObject*> objsInViewPort; // use unordered_set to make them unique
+	std::unordered_set<std::shared_ptr<GameObject>> objsOutOfCell;
+	
+	// * Moving objects(Enemy, Item and Bullet), they will be Destroyed when out of Camera.
+	// = Update Cells:
+	// 1. SetState = Destroyed for moving objects go out of Camera.
+	// 2. Remove objects have state of destroyed from Cells 
+	// 3. Update cell for objects go out of cell
+	// 4. Recalculate curObjectsInViewPort for the outside to handle collision.
 
 	for (UINT x = viewPortArea.xs; x <= viewPortArea.xe; x++)
 	for (UINT y = viewPortArea.ys; y <= viewPortArea.ye; y++)
 	{
-		const Cell& cell = cells[x * height + y];
-		result.insert(cell.staticObjects.begin(), cell.staticObjects.end());
-		result.insert(cell.movingObjects.begin(), cell.movingObjects.end());
+		Cell& cell = cells[x * height + y];
+		
+		Utils::RemoveIf(cell.movingObjects, [&](auto& mo) { // remove (moving) objects from cell if:
+			const auto moBBox = mo->GetBBox();
+
+			if (moBBox.IsNone()) // objects can't collide - beforeExplode/Explode - not remove
+			{
+				objsInViewPort.emplace(mo.get()); // we still want to draw them (their image)
+				return false; 
+			}
+			if (!moBBox.IsIntersect(cam.GetBBox()))
+			{
+				dynamic_cast<VisibleObject*>(mo.get())->SetState(State::Destroyed);
+			}
+			if (mo->GetState() == State::Destroyed)
+			{
+				return true; // remove from cell
+			}
+
+			objsInViewPort.emplace(mo.get()); // to go to this line mean objects should be to handle collision.
+
+			if (!moBBox.IsIntersect(cell.GetBBox())) // if object goes out of cell
+			{
+				objsOutOfCell.emplace(mo);
+				return true; // remove from cell to readd to right cell later
+			}
+			return false;
+		});
+		// We insert moving objects above, now static objects below:
+		std::transform(cell.staticObjects.begin(), cell.staticObjects.end(), std::inserter(objsInViewPort, objsInViewPort.end()),
+					   [](auto& sharedPtr){ return sharedPtr.get(); });
 	}
 
-	curObjectsInViewPort = { result.begin(), result.end() };
+	// curObjectsInViewPort is vector instead of unordered_set to inline the getter GetObjectsInViewPort()
+	curObjectsInViewPort = { objsInViewPort.begin(), objsInViewPort.end() };
+
+	for (auto& obj : objsOutOfCell)
+	{
+		Area newCells = GetCells( obj->GetBBox() );
+
+		for (UINT x = newCells.xs; x <= newCells.xe; x++)
+		for (UINT y = newCells.ys; y <= newCells.ye; y++)
+		{
+			cells[x * height + y].movingObjects.emplace( obj );
+		}
+	}
 }
 
 void Grid::RenderCells() const

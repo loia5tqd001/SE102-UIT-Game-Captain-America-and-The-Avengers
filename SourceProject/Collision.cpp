@@ -8,7 +8,7 @@ CollisionEvent CollisionDetector::SweptAABBEx(const GameObject & obj1, const Gam
 	if (v1 == v2) return {}; // if two objects'r moving along together, obviously no collisions
 
 	const RectF rect1 = type == TypeCheck::Bbox ? 
-		                obj1.GetBBox() : obj1.GetHitBox();
+		                obj1.GetBBox() : dynamic_cast<const VisibleObject&>(obj1).VisibleObject::GetBBox();
 	const RectF rect2 = obj2.GetBBox();
 
 	// relative motion this frame = relative velocity times dt(denta-time this frame)

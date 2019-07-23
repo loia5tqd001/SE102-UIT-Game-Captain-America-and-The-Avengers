@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CharlestonScene.h"
-
 #include "EnemyGun.h"
 #include "BulletEnemyGun.h"
 #include "EnemyRocket.h"
@@ -8,10 +7,9 @@
 #include "EnemyFly.h"
 #include "EnemyWizard.h"
 
-
 static auto& cam = Camera::Instance();
 static auto& wnd = Window::Instance();
-
+static auto& ambush = AmbushTrigger::Instance();
 
 CharlestonScene::CharlestonScene()
 {
@@ -30,19 +28,34 @@ void CharlestonScene::LoadResources()
 
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
-	cap = std::make_unique<Captain>( Vector2{ 73.0f, 391.0f } ) ;
-	cap->is_debugging = true;
-	//cap = std::make_unique<Captain>(Vector2{ 100.0f, 0.0f });
+	cap = std::make_unique<Captain>( Vector2{ 173.0f, 391.0f } ) ;
 }
 
 void CharlestonScene::Update(float dt)
 {
-	grid->UpdateCells();
-	for (auto& obj : grid->GetObjectsInViewPort())
+	grid->UpdateCells(); 
+
+	for (auto& obj : grid->GetObjectsInViewPort()) // update objects
 	{
-		//obj->Update(dt);
+		obj->Update(dt);
 	}	
-	//Todo: Remove this when test's done
+
+	cap->Update(dt, grid->GetObjectsInViewPort()); // update Captain
+
+	// clamping
+	if (ambush->GetState() == State::Ambush_Being)
+	{
+		cap->ClampWithin(ambush->GetLockCaptain());
+		cam.ClampWithin(ambush->GetLockCamera());
+	}
+	else
+	{
+		cap->ClampWithin( map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f) ); 
+		cam.CenterAround( cap->GetCenter() );
+		cam.ClampWithin( map->GetWorldBoundary() );
+
+	}
+
 	if (wnd.IsKeyPressed(VK_NUMPAD5))
 	{
 		cap->SetState(State::Captain_FallToWater);
@@ -57,27 +70,19 @@ void CharlestonScene::Update(float dt)
 	{
 		cap->SetState(State::Captain_Falling);
 	}
-	cap->Update(dt, grid->GetObjectsInViewPort()); 
 
-	cap->ClampWithin( map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f) );
-
-	cam.CenterAround( cap->GetCenter() );
-	cam.ClampWithin( map->GetWorldBoundary() );
-	
-	grid->RemoveDestroyedObjects();
 }
 
 void CharlestonScene::Draw()
 {	
 	map->Render();
-
-	for (auto& obj : grid->GetObjectsInViewPort())
-	{
-		//obj->Render();
-	}
 	cap->Render();
 
-	//grid->RenderCells();
+	for (auto& obj : grid->GetObjectsInViewPort())
+		obj->Render();
+
+
+	grid->RenderCells();
 	
 
 	#pragma region _TESTING_
@@ -124,16 +129,6 @@ void CharlestonScene::Draw()
 
 	//	shield.Render();
 	//}
-#pragma endregion
-
-	if (wnd.IsKeyPressed('A'))
-		cam.MoveBy( { -5.0f, 0.0f });
-	if (wnd.IsKeyPressed('W'))
-		cam.MoveBy( { 0.0f, -5.0f });
-	if (wnd.IsKeyPressed('D'))
-		cam.MoveBy( { 5.0f, 0.0f });
-	if (wnd.IsKeyPressed('S'))
-		cam.MoveBy( { 0.0f, 5.0f });
 
 }
 

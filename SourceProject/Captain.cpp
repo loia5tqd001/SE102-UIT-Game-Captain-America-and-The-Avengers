@@ -228,7 +228,7 @@ void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
 //		}
 //		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 //		{
-//			if (!ambush->IsActive())
+//			Data Exit
 //				ambush->Active(coObjects);
 //			CollideWithPassableObjects(dt, e);
 //		}
@@ -549,19 +549,19 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	//default:
 	//	break;
 	//}
-	static auto state1 = curState;
-	static auto state2 = curState;
+	//static auto state1 = curState;
+	//static auto state2 = curState;
 
 	animations.at(curState).Update(dt);
-	state1 = curState; // state before update / update is where setState may be called
+	//state1 = curState; // state before update / update is where setState may be called
 	currentState->Update(*this, dt, coObjects);
-	state2 = curState; // state after update
+	//state2 = curState; // state after update
 	//animations.at(curState).Update(dt); // It was Here
-	if (state1 != state2)
-	{
-		int a = 0; a++;// breakpoint here
-	}
-	Debug::Out((int)curState);
+	//if (state1 != state2)
+	//{
+	//	int a = 0; a++;// breakpoint here
+	//}
+	//Debug::Out((int)curState);
 
 
 	// recalculate if image should be rendered

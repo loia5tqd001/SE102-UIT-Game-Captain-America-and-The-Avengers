@@ -116,8 +116,7 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
-			if (!ambush->IsActive())
-				ambush->Active();
+			ambush->OnCollideWithCap();
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (dynamic_cast<MovingLedge*>(e.pCoObj) || dynamic_cast<MovingLedge*>(e.pCoObj))
@@ -157,7 +156,10 @@ void CaptainTackle::HandleDeadlingDamage(Captain& cap, float dt, const std::vect
 	{
 		if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 		{
-			enemy->TakeDamage(3);
+			if (enemy->GetBBox().IsIntersect(cap.GetHitBox()))
+			{
+				enemy->TakeDamage(3);
+			}
 		}
 	}
 }

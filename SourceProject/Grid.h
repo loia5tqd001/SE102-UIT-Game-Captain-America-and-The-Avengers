@@ -3,12 +3,13 @@
 struct Cell
 {
 	RectF boundingBox;
-	std::unordered_set<GameObject*> staticObjects; 
-	std::unordered_set<GameObject*> movingObjects; // objects moving around from cells to cells
-	const RectF& GetBBox() const { return boundingBox; }
+	std::unordered_set<std::shared_ptr<GameObject>> staticObjects; 
+	std::unordered_set<std::shared_ptr<GameObject>> movingObjects; // objects moving around from cells to cells
+	inline const RectF& GetBBox() const { return boundingBox; }
 };
 
 struct Area { UINT xs = 0, xe = 0, ys = 0, ye = 0; };
+enum class IsMoving { Moving, Static };
 
 // We implement grid by this: https://tranminhtuan11a1.blogspot.com/2014/06/
 class Grid 
@@ -16,26 +17,20 @@ class Grid
 private:
 	UINT cellSize, width, height;
 	std::vector<Cell> cells;
-	std::vector<std::unique_ptr<GameObject>> objectHolder; // responsible for deleting objects, use this to avoid using slow and complicated shared_ptr
 	std::vector<GameObject*> curObjectsInViewPort; // being recalculated every frame 
-	Area viewPortArea;
+	Area viewPortArea; // being recalculated every frame
 
-private:
 	Grid(const Grid&) = delete;
-	Area CalcCollidableArea(const RectF& bbox, int broadX = 0, int broadY = 0) const;
-
+	Area GetCells(const RectF& bbox, int broadX = 0, int broadY = 0) const;
 	void LoadObjects(const Json::Value& grid);
 	void LoadResources(const Json::Value& root);
-	void RecalculateObjectsInViewPort();
 
 public:
 	Grid(const Json::Value& root);
-
 	void UpdateCells();
-	void RenderCells() const;
-
-	GameObject* SpawnObject(std::unique_ptr<GameObject> obj, bool isMoving = true);
+	void RenderCells() const; // draw cells for better debugging
+	GameObject* SpawnObject(std::shared_ptr<GameObject> obj, IsMoving isMoving = IsMoving::Moving);
 	inline const auto& GetObjectsInViewPort() const { return curObjectsInViewPort; }
-	void RemoveDestroyedObjects();
+	inline RectF GetGridBBox() const { return { {}, cellSize*width, cellSize*height }; }
 };
 

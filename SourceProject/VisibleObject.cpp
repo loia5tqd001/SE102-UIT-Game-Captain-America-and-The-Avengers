@@ -3,7 +3,9 @@
 VisibleObject::VisibleObject(State initState, Vector2 pos, Vector2 vel, int nx) :
 	GameObject(pos, vel),
 	curState(initState), 
-	nx(nx) 
+	nx(nx),
+	timePassed(0.0f),
+	nFrameUnrendered(0u)
 {
 	assert(std::abs(nx) == 1.0f);
 	animations.emplace( State::Destroyed, Animation(SpriteId::Invisible) );

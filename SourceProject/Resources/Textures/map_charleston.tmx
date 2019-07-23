@@ -47,13 +47,13 @@
   <object id="37" name="NextMap" x="1968" y="352" width="48" height="85"/>
  </objectgroup>
  <objectgroup color="#00ff00" id="5" name="Spawners(classid=9)">
-  <object id="47" name="1.gun-shoot(0)" x="256" y="0" width="16" height="480"/>
+  <object id="47" name="1.gun-shoot(0)" x="184" y="0" width="16" height="480"/>
   <object id="48" name="1.enemyGun" x="73" y="405" width="24" height="32"/>
-  <object id="65" name="2.rocket-shootstr(10)" x="256" y="0" width="16" height="480"/>
-  <object id="49" name="2.enemyRocket" x="373" y="397" width="24" height="40"/>
+  <object id="65" name="2.rocket-shootstr(10)" x="254" y="0" width="16" height="480"/>
+  <object id="49" name="2.enemyRocket" x="352" y="397" width="24" height="40"/>
   <object id="50" name="3.rocket-shootcr(11)" x="352" y="0" width="16" height="480"/>
   <object id="66" name="3.enemyRocket" x="445" y="397" width="24" height="40"/>
-  <object id="67" name="4.gun-shoot(0)" x="352" y="0" width="16" height="480"/>
+  <object id="67" name="4.gun-shoot(0)" x="270" y="0" width="16" height="480"/>
   <object id="68" name="4.enemyGun" x="163" y="405" width="24" height="32"/>
   <object id="55" name="5.rocket-bnf(12)" x="480" y="0" width="16" height="480"/>
   <object id="69" name="5.enemyRocket" x="576" y="317" width="24" height="40"/>
