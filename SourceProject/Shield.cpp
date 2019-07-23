@@ -133,8 +133,8 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		}
 		else if (capState == State::Captain_CoverLow)
 		{
-			pos.x = capPos.x + 24;
-			pos.y = capPos.y - 3;
+			pos.x = capPos.x - 3;
+			pos.y = capPos.y + 24;
 			SetState(State::Shield_Down);
 		}
 		else if (capState == State::Captain_Falling)

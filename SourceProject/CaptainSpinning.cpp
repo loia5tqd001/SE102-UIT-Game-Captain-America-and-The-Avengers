@@ -10,6 +10,7 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 	cap.vel.y = -SPIN_SPEED_VER;
 
 	isKicked = data.Get<bool>(IS_KICKED);
+	Sounds::PlayAt(SoundId::Tackle);
 }
 
 Data CaptainSpinning::Exit(Captain& cap, State toState)
@@ -56,8 +57,7 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 			cap.SetState(State::Captain_CoverLow);
 	}
 
-	if (cap.animations.at(cap.curState).IsDoneCycle())
-	{
+
 		if (timeUp < TIME_KEEP_SPIN) {
 			timeUp += GameTimer::Dt();
 			cap.vel.y = -SPIN_SPEED_HOR;
@@ -74,7 +74,6 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 			{
 				cap.SetState(State::Captain_Falling);
 			}
-		}
 	}
 
 	cap.animations.at(cap.curState).Update(dt);
