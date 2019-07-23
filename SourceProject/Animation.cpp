@@ -49,8 +49,8 @@ void Animation::Render(const Vector2& pos, const Vector2& vtScale, int alpha) co
 bool Animation::IsDoneCycle()
 {
 	if (!doneCycle) return false;
-
 	doneCycle = false, holdingTime = 0.0f, curFrame = 0;
+
 	return true;	
 }
 

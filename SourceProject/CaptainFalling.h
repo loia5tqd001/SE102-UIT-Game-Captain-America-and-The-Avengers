@@ -3,6 +3,7 @@
 class CaptainFalling :	public CaptainState
 {
 private:
+	float waterLevel;
 	void HandleNoCollisions(Captain& cap, float dt);
 public:
 	void Enter(Captain& cap, State fromState, Data&& data = {}) override; // handle when change to this state

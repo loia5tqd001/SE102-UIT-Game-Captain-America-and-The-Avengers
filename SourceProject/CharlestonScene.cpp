@@ -71,6 +71,13 @@ void CharlestonScene::Update(float dt)
 		cap->SetState(State::Captain_Falling);
 	}
 
+	if (wnd.IsKeyPressed(VK_NUMPAD8))
+	{
+		cap->SetState(State::Captain_Injured);
+	}
+
+	cap->Update(dt, grid->GetObjectsInViewPort()); 
+
 }
 
 void CharlestonScene::Draw()

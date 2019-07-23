@@ -22,7 +22,7 @@ Captain::Captain(const Vector2& pos) :
 	animations.emplace(State::Captain_Injured, Animation(SpriteId::Captain_Injure, 0.4f));
 	animations.emplace(State::Captain_Dead, Animation(SpriteId::Captain_Dead));
 	animations.emplace(State::Captain_Swimming, Animation(SpriteId::Captain_Swimming, 0.1f));
-	animations.emplace(State::Captain_FallToWater, Animation(SpriteId::Captain_FallToWater, 1.0f));
+	animations.emplace(State::Captain_FallToWater, Animation(SpriteId::Captain_FallToWater, 0.1f));
 	animations.emplace(State::Captain_InWater, Animation(SpriteId::Captain_InWater, 0.2f));
 	animations.emplace(State::Captain_Spinning, Animation(SpriteId::Captain_Spin, 0.01f));
 
