@@ -46,15 +46,15 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 		if (lastState == State::Captain_Jumping)
 			cap.SetState(lastState);
 		else if (lastState == State::Captain_Spinning)
-			cap.SetState(State::Captain_Spinning); //fix
+			cap.SetState(State::Captain_Falling); //fix
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
-		cap.vel.x = MOVING_HOR;
+		cap.vel.x = -MOVING_HOR;
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
-		cap.vel.x = -MOVING_HOR;
+		cap.vel.x = MOVING_HOR;
 	}
 
 	if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
@@ -74,7 +74,7 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 				if (lastState == State::Captain_Jumping)
 					cap.SetState(lastState);
 				else if (lastState == State::Captain_Spinning)
-					cap.SetState(State::Captain_Spinning); //fix
+					cap.SetState(State::Captain_Falling); //fix
 			}
 		}
 	}

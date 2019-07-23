@@ -13,6 +13,8 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 Data CaptainSpinning::Exit(Captain& cap, State toState)
 {
 	Data data;
+	timeUp = 0;
+	timeDown = 0;
 	// i dont thing we need to pass data in this case
 	return data;
 }
@@ -34,7 +36,7 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 {
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
-		cap.vel.x = SPIN_SPEED_HOR;
+		cap.vel.x = -SPIN_SPEED_HOR;
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{

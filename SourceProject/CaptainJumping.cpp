@@ -9,6 +9,11 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 		|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
 		|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
 	    || fromState == State::Captain_Kicking);
+	if (fromState != State::Captain_Kicking) {
+		 isJumpReleased = false;
+		 JumpHeightRealCounter = 0;
+		 JumpHeightNeedCounter = MIN_JUMP_HEIGHT;
+	}
 	switch (fromState)
 	{
 		case State::Captain_Climbing:
@@ -66,14 +71,12 @@ void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
 		cap.SetState(State::Captain_Kicking);
 	}
 	else {
-		int dir = 0;
 		if (keyCode == setting.Get(KeyControls::Left)) {
-			dir --;
+			cap.nx = -1;
 		}
 		else if (keyCode == setting.Get(KeyControls::Right)) {
-			dir ++;
+			cap.nx = 1;
 		}
-		if (dir != 0) cap.nx = dir;
 	}
 		
 }
@@ -82,12 +85,12 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 {
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
-		cap.vel.x = MOVING_HOR;
+		cap.vel.x = -MOVING_HOR;
 		cap.nx = -1;
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
-		cap.vel.x = -MOVING_HOR;
+		cap.vel.x = +MOVING_HOR;
 		cap.nx = 1;
 	}
 	if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
@@ -104,7 +107,6 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 			}
 			else
 			{
-				//cap.SetState(State::Captain_Kicking);
 				cap.SetState(State::Captain_Falling);
 			}
 		}

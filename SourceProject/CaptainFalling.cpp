@@ -70,6 +70,16 @@ void CaptainFalling::OnKeyDown(Captain & cap, BYTE keyCode)
 
 void CaptainFalling::Update(Captain & cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
+	{
+		cap.vel.x = -MOVING_HOR;
+		cap.nx = -1;
+	}
+	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
+	{
+		cap.vel.x = +MOVING_HOR;
+		cap.nx = 1;
+	}
 	//Testing
 	HandleCollisions(cap, dt, coObjects);
 	//Endtesting

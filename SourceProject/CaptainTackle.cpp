@@ -30,7 +30,7 @@ void CaptainTackle::OnKeyDown(Captain& cap, BYTE keyCode)
 void CaptainTackle::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (!isStillOnGround) {
-		cap.SetState(State::Captain_Jumping);
+		cap.SetState(State::Captain_Falling);
 		// TODO: Set falling
 	}
 	if (cap.animations.at(cap.curState).IsDoneCycle())
