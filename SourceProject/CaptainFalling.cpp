@@ -99,7 +99,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 	cap.pos.y += min_ty * cap.vel.y * dt;
 
 	if (nx != 0.0f) cap.vel.x = 0.0f;
-	if (ny != 0.0f) { cap.vel.y = 0.0f; cap.SetState(State::Captain_Standing); }
+	if (ny < 0.0f) { cap.vel.y = 0.0f; cap.SetState(State::Captain_Standing); }
 
 	//// Collision logic with Goombas
 	//for (UINT i = 0; i < coEvents.size(); i++)

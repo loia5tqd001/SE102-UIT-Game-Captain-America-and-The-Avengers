@@ -15,9 +15,9 @@ void Animation::Update(float dt)
 {
 	holdingTime += dt;
 
-	while (holdingTime >= GetCurFrameHoldTime(curFrame))
+	while (holdingTime >= GetFrameHoldTime(curFrame))
 	{
-		holdingTime -= GetCurFrameHoldTime(curFrame);
+		holdingTime -= GetFrameHoldTime(curFrame);
 		curFrame++;
 		if (curFrame >= nFrames)
 		{
@@ -31,8 +31,16 @@ void Animation::Update(float dt)
 
 void Animation::SetCusFrameHoldTime(UINT frameNumber, float holdTime)
 {
-	assert(float(holdTime) > 0.0f);
+	assert(float(holdTime) >= 0.0f);
 	cusHoldTimeMap[frameNumber] = holdTime;
+}
+
+void Animation::EraseCusFrameHoldTime(UINT frameNumber)
+{
+	if (cusHoldTimeMap.count(frameNumber) > 0)
+		cusHoldTimeMap.erase(frameNumber);
+	else
+		return;
 }
 
 void Animation::Render(const Vector2& pos, const Vector2& vtScale, int alpha) const

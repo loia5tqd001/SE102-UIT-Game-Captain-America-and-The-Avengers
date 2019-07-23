@@ -29,6 +29,9 @@ void CaptainSwimming::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainSwimming::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	auto animation = &cap.animations.at(cap.curState);
+	animation->EraseCusFrameHoldTime(0);
+
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.vel.x = -CAP_SWIMMING_SPEED + WATER_FLOW_SPEED;
@@ -44,7 +47,10 @@ void CaptainSwimming::Update(Captain& cap, float dt, const std::vector<GameObjec
 		cap.SetState(State::Captain_InWater);
 	}
 	else
+	{
 		cap.vel.x = WATER_FLOW_SPEED;
+		animation->SetCusFrameHoldTime(0, 0.0f);
+	}
 
 	cap.pos.x += cap.vel.x*dt;
 }
