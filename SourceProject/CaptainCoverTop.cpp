@@ -5,7 +5,7 @@
 
 void CaptainCoverTop::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Standing);
+	assert(fromState == State::Captain_Standing || fromState == State::Captain_Throwing);
 	cap.vel.x = 0;
 	cap.vel.y = 0;
 }

@@ -66,11 +66,6 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 Data CaptainJumping::Exit(Captain& cap, State toState)
 {
 	Data data;
-	switch (toState)
-	{
-		case State::Captain_Kicking:
-			break;
-	}
 	data.Add(IS_JUMP_RELEASED, isJumpReleased);
 	data.Add(JUMP_HEIGHT_RealCounter, JumpHeightRealCounter);
 	data.Add(JUMP_HEIGHT_NeedCounter, JumpHeightNeedCounter);
@@ -118,20 +113,19 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 	if (setAnotherState)
 		return;
 
-
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
-		cap.vel.x = -MOVING_HOR;
+		cap.vel.x = - MOVING_HOR;
 		cap.nx = -1;
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
-		cap.vel.x = +MOVING_HOR;
+		cap.vel.x = + MOVING_HOR;
 		cap.nx = 1;
 	}
 	if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
 		if (!isJumpReleased) {
-			JumpHeightNeedCounter += JUMP_SPEED * dt;
+			JumpHeightNeedCounter += (JUMP_SPEED-50) * dt;
 			cap.vel.y = -JUMP_SPEED;
 			JumpHeightRealCounter += JUMP_SPEED *dt;
 		}

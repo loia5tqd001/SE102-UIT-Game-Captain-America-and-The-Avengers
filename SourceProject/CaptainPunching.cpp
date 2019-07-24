@@ -27,11 +27,11 @@ void CaptainPunching::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainPunching::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	HandleCollisions(cap, dt, coObjects);
 	if (cap.animations.at(cap.curState).IsDoneCycle()) {
 
 		cap.SetState(State::Captain_Standing); //move to Captain_Walking, Captain_Walking should handle nx, KeyControls press, up and down
 	}
-	HandleCollisions(cap, dt, coObjects);
 }
 
 void CaptainPunching::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

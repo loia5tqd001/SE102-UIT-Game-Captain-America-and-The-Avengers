@@ -11,5 +11,5 @@ public:
 
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	RectF GetBBox() const override;
-	void Reflect() { vel.x = -std::sqrt(vel.x); vel.y = -std::abs(vel.x); }
+	void Reflect();
 };

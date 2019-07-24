@@ -43,6 +43,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 	case State::Shield_Straight:
 	{
 		UpdateByCapState(cap.GetState(), cap.GetPos());
+		HandleStraightCollison(dt, coObjects);
 		break;
 	}
 	case State::Shield_Up:
@@ -323,7 +324,7 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 
 			if (auto bullet = dynamic_cast<BulletEnemyGun*>(e.pCoObj)) //
 			{
-				if (e.ny < 0.0f)
+				if (e.ny > 0.0f)
 				{
 					bullet->Reflect();
 					Sounds::PlayAt(SoundId::ShieldCollide);
@@ -341,6 +342,28 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 			{
 				enemy->TakeDamage(1);
 				Debug::out("Take damage enemy\n");
+			}
+		}
+	}
+}
+
+void Shield::HandleStraightCollison(float dt, const std::vector<GameObject*>& coObjects)
+{
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	if (coEvents.size() == 0) return;
+	if (isOnCaptain)
+	{  
+		for (UINT i = 0; i < coEvents.size(); i++)
+		{
+			const CollisionEvent& e = coEvents[i];
+
+			if (auto bullet = dynamic_cast<BulletEnemyGun*>(e.pCoObj)) //
+			{
+				if (nx >0 && e.nx < 0.0f || nx <0 && e.nx > 0.0f)
+				{
+					bullet->Reflect();
+					Sounds::PlayAt(SoundId::ShieldCollide);
+				}
 			}
 		}
 	}

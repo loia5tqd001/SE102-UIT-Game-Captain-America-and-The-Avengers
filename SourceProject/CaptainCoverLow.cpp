@@ -38,50 +38,32 @@ void CaptainCoverLow::OnKeyDown(Captain& cap, BYTE keyCode)
 		else
 			cap.SetState(State::Captain_SitPunching);
 	}
-	if (keyCode == setting.Get(KeyControls::Left))
-	{
-		if (isOnGround)
-			cap.SetState(State::Captain_Walking);
-		else
-			cap.SetState(State::Captain_Falling);
-	}
-	if (keyCode == setting.Get(KeyControls::Right))
-	{
-		if (isOnGround)
-			cap.SetState(State::Captain_Walking);
-		else
-			cap.SetState(State::Captain_Falling);
-	}
-	if (keyCode == setting.Get(KeyControls::Up))
-	{
-		if (isOnGround)
-			cap.SetState(State::Captain_Standing);
-		else
-			cap.SetState(State::Captain_Falling);
-	}
 }
 
 void CaptainCoverLow::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	HandleCollisions(cap, dt, coObjects);
 	cap.vel.x = 0.0f;
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.nx = -1;
 		if (!isOnGround)
 			cap.vel.x = -MOVE_HOR;
+		else
+			cap.SetState(State::Captain_Walking);
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
 		cap.nx = 1;
 		if (!isOnGround)
 			cap.vel.x = MOVE_HOR;
+		else
+			cap.SetState(State::Captain_Walking);
 	}
-	HandleCollisions(cap, dt, coObjects);
 }
 
 void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	isOnGround = false;
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
 	{
@@ -175,11 +157,10 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::PassableLedge:
-				if (e.ny < 0 ) isOnGround = true;
 				break;
 			case ClassId::RigidBlock:
 				if (e.ny < 0) {
-					//cap.vel.x = 0;
+					cap.vel.x = 0;
 					isOnGround = true;
 				}
 				break;

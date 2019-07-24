@@ -10,6 +10,7 @@ private:
 	bool isKicked = false;
 
 	bool setAnotherState = false;
+	bool ignoreUpdate = false;
 
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;

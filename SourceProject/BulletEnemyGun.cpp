@@ -21,3 +21,9 @@ RectF BulletEnemyGun::GetBBox() const
 	return VisibleObject::GetBBox();
 }
 
+void BulletEnemyGun::Reflect()
+{
+	vel.x = -vel.x;
+	vel.y = -std::abs(vel.x);
+}
+

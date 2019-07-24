@@ -8,7 +8,7 @@ Captain::Captain(const Vector2& pos) :
 	currentState(&stateStanding)
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
-	animations.emplace(State::Captain_Walking, Animation(SpriteId::Captain_Walking, 0.1f));
+	animations.emplace(State::Captain_Walking, Animation(SpriteId::Captain_Walking, 0.15f));
 	animations.emplace(State::Captain_Jumping, Animation(SpriteId::Captain_Jump, 0.3f));
 	animations.emplace(State::Captain_Falling, Animation(SpriteId::Captain_Falling, 0.3f));
 	animations.emplace(State::Captain_CoverTop, Animation(SpriteId::Captain_LookUp, 0.2f));

@@ -37,11 +37,20 @@ void CaptainThrowing::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainThrowing::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (cap.animations.at(State::Captain_Throwing).IsDoneCycle()) {
-
-		cap.SetState(State::Captain_Standing); //move to Captain_Walking, Captain_Walking should handle nx, KeyControls press, up and down
-	}
 	HandleCollisions(cap, dt, coObjects);
+	if (cap.animations.at(State::Captain_Throwing).IsDoneCycle()) {
+		if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
+		{
+			cap.SetState(State::Captain_Sitting);
+			return;
+		}
+		if (wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
+		{
+			cap.SetState(State::Captain_CoverTop);
+			return;
+		}
+		cap.SetState(State::Captain_Standing);
+	}
 }
 
 void CaptainThrowing::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

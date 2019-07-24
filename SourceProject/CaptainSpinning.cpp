@@ -90,14 +90,14 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 
 	if (timeUp < TIME_KEEP_SPIN) {
 		timeUp += GameTimer::Dt();
-		cap.vel.y = -SPIN_SPEED_HOR;
+		cap.vel.y = -SPIN_SPEED_VER;
 	}
 	else
 	{
 		if (timeDown < TIME_KEEP_SPIN)
 		{
 			timeDown += GameTimer::Dt();
-			cap.vel.y = SPIN_SPEED_HOR;
+			cap.vel.y = SPIN_SPEED_VER;
 		}
 		else
 		{
@@ -198,6 +198,7 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::PassableLedge:
+				cap.CollideWithPassableObjects(dt, e);
 			case ClassId::RigidBlock:
 				break;
 
