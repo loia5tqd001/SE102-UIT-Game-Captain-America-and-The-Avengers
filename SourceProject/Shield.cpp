@@ -185,7 +185,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		{
 			pos.x = capPos.x - 3;
 			pos.y = capPos.y + 5;
-			SetState(State::Shield_Side);
+			SetState(State::Shield_Straight);
 			nx = -nx;
 			flipPosx(); //the only state that shield is flip already, so flip 2 times then it will back in the work
 		}
