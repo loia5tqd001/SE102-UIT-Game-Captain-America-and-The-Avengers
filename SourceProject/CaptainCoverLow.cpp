@@ -20,7 +20,7 @@ void CaptainCoverLow::OnKeyUp(Captain& cap, BYTE keyCode)
 	if (keyCode == setting.Get(KeyControls::Down))
 	{
 		if (!isOnGround)
-			cap.SetState(State::Captain_Jumping);
+			cap.SetState(State::Captain_Falling);
 		else
 			cap.SetState(State::Captain_Standing);
 	}
@@ -40,15 +40,24 @@ void CaptainCoverLow::OnKeyDown(Captain& cap, BYTE keyCode)
 	}
 	if (keyCode == setting.Get(KeyControls::Left))
 	{
-		cap.SetState(State::Captain_Walking);
+		if (isOnGround)
+			cap.SetState(State::Captain_Walking);
+		else
+			cap.SetState(State::Captain_Falling);
 	}
 	if (keyCode == setting.Get(KeyControls::Right))
 	{
-		cap.SetState(State::Captain_Walking);
+		if (isOnGround)
+			cap.SetState(State::Captain_Walking);
+		else
+			cap.SetState(State::Captain_Falling);
 	}
 	if (keyCode == setting.Get(KeyControls::Up))
 	{
-		cap.SetState(State::Captain_Standing);
+		if (isOnGround)
+			cap.SetState(State::Captain_Standing);
+		else
+			cap.SetState(State::Captain_Falling);
 	}
 }
 
@@ -56,11 +65,13 @@ void CaptainCoverLow::Update(Captain& cap, float dt, const std::vector<GameObjec
 {
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
+		cap.nx = -1;
 		if (!isOnGround)
 			cap.vel.x = -MOVE_HOR;
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
+		cap.nx = 1;
 		if (!isOnGround)
 			cap.vel.x = MOVE_HOR;
 	}
@@ -136,7 +147,9 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 			switch (block->GetType())
 			{
 			case ClassId::Water:
-				if (e.ny < 0) {};
+				if (e.ny < 0) {
+					cap.vel.x = 0;
+				};
 				break;
 
 			case ClassId::NextMap:
@@ -160,7 +173,11 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::PassableLedge:
+				break;
 			case ClassId::RigidBlock:
+				if (e.ny < 0) {
+					cap.vel.x = 0;
+				}
 				break;
 
 			default:

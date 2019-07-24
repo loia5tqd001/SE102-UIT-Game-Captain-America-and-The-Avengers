@@ -4,11 +4,11 @@
 
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Climbing || fromState == State::Captain_CoverLow 
+	assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
 		|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
 		|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
 		|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
-	    || fromState == State::Captain_Kicking  || fromState == State::Captain_Throwing);
+	    || fromState == State::Captain_Kicking);
 	if (fromState == State::Captain_Kicking)
 	{
 		JumpHeightRealCounter = data.Get<float>(JUMP_HEIGHT_RealCounter);

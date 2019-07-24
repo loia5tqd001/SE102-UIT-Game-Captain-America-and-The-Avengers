@@ -167,6 +167,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		{
 			pos.x = capPos.x - 3;
 			pos.y = capPos.y + 24;
+			nx = -cap.GetNx();
 			SetState(State::Shield_Down);
 		}
 		else if (capState == State::Captain_Falling)

@@ -5,7 +5,8 @@
 
 void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Spinning || fromState == State::Captain_Falling);
+	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Spinning 
+		|| fromState == State::Captain_Falling || fromState == State::Captain_CoverLow);
 	lastState = fromState;
 	if (fromState == State::Captain_Jumping)
 	{
@@ -138,6 +139,14 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 		}
 	}
 	else if (lastState == State::Captain_Falling)
+	{
+		if (cap.animations.at(cap.curState).IsDoneCycle())
+		{
+			cap.SetState(State::Captain_Falling);
+			return;
+		}
+	}
+	else if (lastState == State::Captain_CoverLow)
 	{
 		if (cap.animations.at(cap.curState).IsDoneCycle())
 		{

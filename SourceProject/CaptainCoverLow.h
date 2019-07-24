@@ -3,8 +3,8 @@
 
 class CaptainCoverLow : public CaptainState
 {
-	static constexpr auto GRAVITY = 100.0f;
-	static constexpr auto MOVE_HOR = 100.0f;
+	static constexpr auto GRAVITY = 170.0f;
+	static constexpr auto MOVE_HOR = 50.0f;
 
 	bool isOnGround = false;
 public:
