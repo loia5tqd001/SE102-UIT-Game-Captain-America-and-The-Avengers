@@ -63,6 +63,7 @@ void CaptainCoverLow::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainCoverLow::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	cap.vel.x = 0.0f;
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.nx = -1;
@@ -80,6 +81,7 @@ void CaptainCoverLow::Update(Captain& cap, float dt, const std::vector<GameObjec
 
 void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	isOnGround = false;
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
 	{
@@ -173,10 +175,12 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::PassableLedge:
+				if (e.ny < 0 ) isOnGround = true;
 				break;
 			case ClassId::RigidBlock:
 				if (e.ny < 0) {
-					cap.vel.x = 0;
+					//cap.vel.x = 0;
+					isOnGround = true;
 				}
 				break;
 

@@ -11,7 +11,7 @@ protected:
 	float timeFlashing = 0.3f;
 	bool  isFlashing = false;
 	float timePassed = 0.0f;
-	UINT  nFrameUnrendered = 0u;
+	UINT  nFrameRendered = 0u;
 	void  OnFlashing(std::optional<bool> setFlashing = {});
 
 public:

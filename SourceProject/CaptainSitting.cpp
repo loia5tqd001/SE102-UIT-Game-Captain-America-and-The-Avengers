@@ -42,14 +42,19 @@ void CaptainSitting::OnKeyDown(Captain& cap, BYTE keyCode)
 	{
 		dir --;
 	}
-	if (keyCode == setting.Get(KeyControls::Right))
+	else if (keyCode == setting.Get(KeyControls::Right))
 	{
 		dir ++;
 	}
-	if (keyCode == setting.Get(KeyControls::Attack))
+	else if (keyCode == setting.Get(KeyControls::Attack))
 	{
 		cap.SetState(State::Captain_SitPunching);
 	}
+	else if (keyCode == setting.Get(KeyControls::Jump) && !wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
+	{
+		cap.SetState(State::Captain_Jumping);
+	}
+
 	if (dir != 0)
 	{
 		cap.nx = dir;
@@ -70,18 +75,10 @@ void CaptainSitting::Update(Captain& cap, float dt, const std::vector<GameObject
 			cap.SetState(State::Captain_Standing);
 		}
 	}
-	if (wnd.IsKeyPressed(setting.Get(KeyControls::Jump)))
+	if (wnd.IsKeyPressed(setting.Get(KeyControls::Jump)) && wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
 	{
-		int dir = 0;
-		if (wnd.IsKeyPressed(setting.Get(KeyControls::Left))) dir --;
-		if (wnd.IsKeyPressed(setting.Get(KeyControls::Right))) dir ++;
-		if (dir == 0) {
-			cap.SetState(State::Captain_Falling);
-			cap.pos.y += 1.0f;
-		} else {
-			cap.nx = dir;
-			cap.SetState(State::Captain_Jumping);
-		}
+		cap.SetState(State::Captain_Falling);
+		cap.pos.y += 1.0f;
 	}
 }
 

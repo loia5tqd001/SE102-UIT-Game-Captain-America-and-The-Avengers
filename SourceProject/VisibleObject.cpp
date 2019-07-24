@@ -5,7 +5,7 @@ VisibleObject::VisibleObject(State initState, Vector2 pos, Vector2 vel, int nx) 
 	curState(initState), 
 	nx(nx),
 	timePassed(0.0f),
-	nFrameUnrendered(0u)
+	nFrameRendered(0u)
 {
 	assert(std::abs(nx) == 1.0f);
 	animations.emplace( State::Destroyed, Animation(SpriteId::Invisible) );
@@ -22,7 +22,7 @@ void VisibleObject::OnFlashing(std::optional<bool> setFlashing)
 	if (setFlashing.has_value()) {
 		isFlashing = setFlashing.value();
 		timePassed = 0.0f;
-		nFrameUnrendered = 0;
+		nFrameRendered = 0;
 	}
 
 	if (isFlashing == false) { // currently not in flashing
@@ -30,13 +30,12 @@ void VisibleObject::OnFlashing(std::optional<bool> setFlashing)
 	}
 	else if ((timePassed += GameTimer::Dt()) <= timeFlashing) { // if in flashing, accumulate timePassed, check if still in flashing
 
-		// my flashing rule: render each 1 frame per 10:
-		if (++nFrameUnrendered >= 2) {
-			shouldDrawImage = true;
-			nFrameUnrendered = 0;
+		if (++nFrameRendered > 2) {
+			shouldDrawImage = false;
+			nFrameRendered = 0;
 		}
 		else {
-			shouldDrawImage = false;
+			shouldDrawImage = true;
 		}
 	}
 	else { // after calculating timePassed, realise time to done flashing

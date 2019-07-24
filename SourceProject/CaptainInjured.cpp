@@ -9,7 +9,6 @@ void CaptainInjured::HandleNoCollisions(Captain & cap, float dt)
 
 void CaptainInjured::Enter(Captain& cap, State fromState, Data&& data)
 {
-
 	pendingSwitchState = State::NotExist;
 	DistanceLeftToClimb = 0.0f;
 	cap.isFlashing = true;

@@ -12,14 +12,14 @@ Captain::Captain(const Vector2& pos) :
 	animations.emplace(State::Captain_Jumping, Animation(SpriteId::Captain_Jump, 0.3f));
 	animations.emplace(State::Captain_Falling, Animation(SpriteId::Captain_Falling, 0.3f));
 	animations.emplace(State::Captain_CoverTop, Animation(SpriteId::Captain_LookUp, 0.2f));
-	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.11f));
+	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.08f));
 	animations.emplace(State::Captain_Punching, Animation(SpriteId::Captain_Punching, 0.1f));
 	animations.emplace(State::Captain_Throwing, Animation(SpriteId::Captain_Throw, 0.15f));
 	animations.emplace(State::Captain_Kicking, Animation(SpriteId::Captain_JumpKick, 0.15f));
 	animations.emplace(State::Captain_SitPunching, Animation(SpriteId::Captain_SitPunch, 0.12f));
 	animations.emplace(State::Captain_Tackle, Animation(SpriteId::Captain_Smash, 0.35f));
 	animations.emplace(State::Captain_Climbing, Animation(SpriteId::Captain_Climb, 0.2f));
-	animations.emplace(State::Captain_Injured, Animation(SpriteId::Captain_Injure, 0.2f));
+	animations.emplace(State::Captain_Injured, Animation(SpriteId::Captain_Injure, 0.3f));
 	animations.emplace(State::Captain_Dead, Animation(SpriteId::Captain_Dead));
 	animations.emplace(State::Captain_Swimming, Animation(SpriteId::Captain_Swimming, 0.1f));
 	animations.emplace(State::Captain_FallToWater, Animation(SpriteId::Captain_FallToWater, 0.07f));
@@ -32,7 +32,7 @@ Captain::Captain(const Vector2& pos) :
 	shield = std::make_unique<Shield>(*this);
 
 	bboxColor = Colors::MyPoisonGreen;
-	timeFlashing = 1.8f;
+	timeFlashing = 2.0f;
 }
 
 Vector2 Captain::GetCenter() const

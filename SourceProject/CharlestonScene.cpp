@@ -27,7 +27,8 @@ void CharlestonScene::LoadResources()
 
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
-	cap = std::make_unique<Captain>( Vector2{ 173.0f, 391.0f } ) ;
+	//cap = std::make_unique<Captain>( Vector2{ 173.0f, 391.0f } ) ;
+	cap = std::make_unique<Captain>( Vector2{ 1673.0f, 391.0f } ) ;
 	//cap = std::make_unique<Captain>(Vector2{ 53.0f, 20.0f });
 }
 

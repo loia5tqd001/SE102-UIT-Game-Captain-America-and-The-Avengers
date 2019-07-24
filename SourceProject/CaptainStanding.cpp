@@ -6,7 +6,7 @@
 void CaptainStanding::Enter(Captain& cap, State fromState, Data&& data)
 {
 	cap.vel.x;
-	cap.vel.y = 10.0f;
+	cap.vel.y = 170.0f;
 	isToSittingTackle = false;
 }
 
@@ -95,20 +95,8 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 	}
 
 
-
-	//if (isLastPressedDir && wnd.IsKeyPressed(kControlDir))
-	//{
-	//	timePressedDir += dt;
-	//}
-	//else
-	//{
-	//	timePressedDir = 0.0f;
-	//}
-
-
 	// when standing, almost do nothin, only respond to collisions
 	HandleCollisions(cap, dt, coObjects);
-	// TODO: do AABB before Swept AABB
 }
 
 void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
