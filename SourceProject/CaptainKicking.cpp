@@ -253,7 +253,7 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 				break;
 
 			case ClassId::RigidBlock:
-				if (e.ny > 0) {
+				if (e.ny < 0) {
 					cap.SetState(State::Captain_Sitting);
 					Sounds::PlayAt(SoundId::Grounding);
 				}

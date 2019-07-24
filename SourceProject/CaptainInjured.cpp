@@ -16,7 +16,6 @@ void CaptainInjured::Enter(Captain& cap, State fromState, Data&& data)
 	cap.vel.x = INJURE_FALL_SPEED * cap.nx*-1.0f;
 	cap.vel.y = FALL_SPEED_VER;
 	posxWhenGotInjure = cap.pos.x;
-	cap.shield->SetState(State::Invisible);
 }
 
 Data CaptainInjured::Exit(Captain& cap, State toState)

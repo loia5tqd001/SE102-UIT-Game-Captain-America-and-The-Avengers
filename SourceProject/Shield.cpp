@@ -88,7 +88,6 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 					pos.x -= 10;
 					pos.y += 8;
 				}
-				Debug::Out("hehe");
 			}
 			//to the max_distance
 			static float flagDistance = 0;
@@ -212,13 +211,11 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		{
 			//we dont have sprite to calculate this correctly
 			pos.x = capPos.x - 2;
-			pos.y = capPos.y + 16;
+			pos.y = capPos.y + 90;
 			SetState(State::Shield_Side);
 		}
 		else if (capState == State::Captain_Spinning)
 		{
-			pos.x = capPos.x - 2;
-			pos.y = capPos.y + 16;
 			SetState(State::Invisible);
 		}
 		else if (capState==State::Captain_CoverTop)
@@ -232,6 +229,22 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 			pos.x = capPos.x - 1;
 			pos.y = capPos.y + 3;
 			SetState(State::Shield_Side);
+		}
+		else if (capState == State::Captain_Injured)
+		{
+			SetState(State::Invisible);
+		}
+		else if (capState == State::Captain_InWater)
+		{
+			SetState(State::Invisible);
+		}
+		else if (capState == State::Captain_Swimming)
+		{
+			SetState(State::Invisible);
+		}
+		else if (capState == State::Captain_Dead)
+		{
+			SetState(State::Invisible);
 		}
 		if (nx < 0)
 		{
