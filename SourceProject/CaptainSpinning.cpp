@@ -6,8 +6,9 @@
 
 void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 {
-	//assert(fromState == State::Captain_Jumping || fromState == State::Captain_Kicking);
+	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Kicking);
 	cap.vel.y = -SPIN_SPEED_VER;
+	beginnx = cap.nx;
 
 	isKicked = data.Get<bool>(IS_KICKED);
 	if (isKicked)
@@ -27,6 +28,7 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 
 Data CaptainSpinning::Exit(Captain& cap, State toState)
 {
+	cap.nx = beginnx;
 	Data data;
 	data.Add(IS_KICKED, isKicked);
 	data.Add(SPIN_TIME_DOWN, timeDown);
@@ -49,12 +51,22 @@ void CaptainSpinning::OnKeyDown(Captain& cap, BYTE keyCode)
 		{
 			isKicked = true;
 			cap.SetState(State::Captain_Kicking);
+			return;
 		}
 	}
 }
 
 void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	if (counterTimeFlip >= 0.15f)
+	{
+		counterTimeFlip = 0;
+		cap.nx = -cap.nx;
+	}
+	else counterTimeFlip += GameTimer::Dt();
+	cap.animations.at(cap.curState).Update(dt);
+	HandleCollisions(cap, dt, coObjects);
+
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.vel.x = -SPIN_SPEED_HOR;
@@ -66,9 +78,11 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
 	{
 		if (timeUp >= TIME_KEEP_SPIN && timeDown >= TIME_KEEP_SPIN)
+		{
 			cap.SetState(State::Captain_CoverLow);
+			return;
+		}
 	}
-
 
 	if (timeUp < TIME_KEEP_SPIN) {
 		timeUp += GameTimer::Dt();
@@ -85,11 +99,9 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 		{
 			isKicked = false;
 			cap.SetState(State::Captain_Falling);
+			return;
 		}
 	}
-
-	cap.animations.at(cap.curState).Update(dt);
-	HandleCollisions(cap, dt, coObjects);
 }
 
 void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

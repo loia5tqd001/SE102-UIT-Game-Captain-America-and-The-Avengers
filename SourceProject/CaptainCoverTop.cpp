@@ -28,21 +28,43 @@ void CaptainCoverTop::OnKeyDown(Captain& cap, BYTE keyCode)
 	if (keyCode == setting.Get(KeyControls::Attack))
 	{
 		if (cap.shieldOn)
+		{
 			cap.SetState(State::Captain_Throwing);
+			return;
+		}
 		else
+		{
 			cap.SetState(State::Captain_Punching);
+			return;
+		}
+	}
+	if (keyCode == setting.Get(KeyControls::Jump))
+	{
+		{
+			cap.SetState(State::Captain_Jumping);
+			return;
+		}
 	}
 	if (keyCode == setting.Get(KeyControls::Left))
 	{
-		cap.SetState(State::Captain_Walking);
+		{
+			cap.SetState(State::Captain_Walking);
+			return; 
+		}
 	}
 	if (keyCode == setting.Get(KeyControls::Right))
 	{
-		cap.SetState(State::Captain_Walking);
+		{
+			cap.SetState(State::Captain_Walking);
+			return;
+		}
 	}
 	if (keyCode == setting.Get(KeyControls::Down))
 	{
-		cap.SetState(State::Captain_Standing);
+		{
+			cap.SetState(State::Captain_Standing);
+			return;
+		}
 	}
 }
 

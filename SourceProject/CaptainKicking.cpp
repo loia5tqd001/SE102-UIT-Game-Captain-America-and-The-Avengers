@@ -65,6 +65,7 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 	{
 		cap.vel.x = MOVING_HOR;
 	}
+	HandleCollisions(cap, dt, coObjects);
 	if (lastState == State::Captain_Jumping) {
 		if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
 			if (!isJumpReleased) {
@@ -104,6 +105,7 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 		if (cap.animations.at(cap.curState).IsDoneCycle())
 		{
 			cap.SetState(State::Captain_Jumping);
+			return;
 		}
 	}
 	else if (lastState == State::Captain_Spinning)
@@ -123,21 +125,27 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 			else
 			{
 				if (cap.animations.at(cap.curState).IsDoneCycle())
+				{
 					cap.SetState(State::Captain_Falling);
+					return;
+				}
 			}
 		}
 		if (cap.animations.at(cap.curState).IsDoneCycle())
 		{
 			cap.SetState(State::Captain_Spinning);
+			return;
 		}
 	}
 	else if (lastState == State::Captain_Falling)
 	{
 		if (cap.animations.at(cap.curState).IsDoneCycle())
+		{
 			cap.SetState(State::Captain_Falling);
+			return;
+		}
 	}
 
-	HandleCollisions(cap, dt, coObjects);
 }
 
 void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

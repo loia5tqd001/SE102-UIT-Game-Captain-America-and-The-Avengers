@@ -4,11 +4,11 @@
 
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
-	/*assert(fromState == State::Captain_Climbing || fromState == State::Captain_CoverLow 
+	assert(fromState == State::Captain_Climbing || fromState == State::Captain_CoverLow 
 		|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
 		|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
 		|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
-	    || fromState == State::Captain_Kicking);*/
+	    || fromState == State::Captain_Kicking  || fromState == State::Captain_Throwing);
 	if (fromState == State::Captain_Kicking)
 	{
 		JumpHeightRealCounter = data.Get<float>(JUMP_HEIGHT_RealCounter);
@@ -85,6 +85,7 @@ void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
 		if (!isKicked) {
 			isKicked = true;
 			cap.SetState(State::Captain_Kicking);
+			return;
 		}
 	}
 	else {
@@ -100,6 +101,7 @@ void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	HandleCollisions(cap, dt, coObjects);
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.vel.x = -MOVING_HOR;
@@ -125,6 +127,7 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 			else
 			{
 				cap.SetState(State::Captain_Falling);
+				return;
 			}
 		}
 	}
@@ -137,6 +140,7 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 		else
 		{
 			cap.SetState(State::Captain_Spinning);
+			return;
 		}
 	}
 
@@ -164,7 +168,6 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 	//Debug::Out(cap.vel.y, 0.0001 * signed(cap.vel.y) * dt);
 	//cap.vel.y += 0.0003 * signed(cap.vel.y) * dt;
 	//Debug::Out(cap.vel.y, 0.0001 * signed(cap.vel.y) * dt);
-	HandleCollisions(cap, dt, coObjects);
 }
 
 

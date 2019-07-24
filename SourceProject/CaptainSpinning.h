@@ -7,6 +7,8 @@ private:
 	float timeUp = 0;
 	float timeDown = 0;
 	bool isKicked = false;
+	int beginnx = 1;
+	float counterTimeFlip = 0;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

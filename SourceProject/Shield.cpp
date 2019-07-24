@@ -55,8 +55,40 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 			timeToThrow += GameTimer::Dt();
 			if (timeToThrow < 0.1f)
 			{
-				UpdateByCapState(cap.GetState(), cap.GetPos());
+				if (cap.GetState() == State::Captain_Throwing) {
+					UpdateByCapState(cap.GetState(), cap.GetPos());
+				}
+				else
+				{
+					if (!isMoved) {
+						isMoved = true;
+						if (cap.GetNx() == 1) {
+							pos.x += 20;
+						}
+						else
+						{
+							pos.x -= 20;
+						}
+						pos.y += 8;
+					}
+				}
 				return;
+			}
+			if (!isMoved)
+			{
+				/*pos.x = capPos.x - 5;
+				pos.y = capPos.y - 7;*/
+				isMoved = true;
+				if (cap.GetNx() == 1) {
+					pos.x += 10;
+					pos.y += 8;
+				}
+				else
+				{
+					pos.x -= 10;
+					pos.y += 8;
+				}
+				Debug::Out("hehe");
 			}
 			//to the max_distance
 			static float flagDistance = 0;
@@ -194,6 +226,12 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 			pos.y = capPos.y - 4;
 			SetState(State::Shield_Up);
 		}
+		else if (capState == State::Captain_Punching)
+		{
+			pos.x = capPos.x - 1;
+			pos.y = capPos.y + 3;
+			SetState(State::Shield_Side);
+		}
 		if (nx < 0)
 		{
 			flipPosx(); //case that captain turn left
@@ -209,21 +247,28 @@ void Shield::flipPosx()
 
 void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (nx < 0 && pos.x < cap.GetPos().x)
+	if (nx < 0 && pos.x < cap.GetPos().x + cap.GetWidth())
 	{
-		UpdateByCapState(cap.GetState(), cap.GetPos());
-		isOnCaptain = true;
-		distance = 0;
 		cap.setShieldOn(true);
-		timeToThrow = 0;
+		if (nx < 0 && pos.x < cap.GetPos().x + cap.GetWidth() / 4)
+		{
+			UpdateByCapState(cap.GetState(), cap.GetPos());
+			isOnCaptain = true;
+			distance = 0;
+			timeToThrow = 0;
+			isMoved = false;
+		}
 	}
-	else if (nx > 0 && pos.x > cap.GetPos().x)
-	{
-		UpdateByCapState(cap.GetState(), cap.GetPos());
-		isOnCaptain = true;
-		distance = 0;
+	else if (nx > 0 && pos.x > cap.GetPos().x) {
 		cap.setShieldOn(true);
-		timeToThrow = 0;
+		if (nx > 0 && pos.x > cap.GetPos().x + cap.GetWidth() / 4)
+		{
+			UpdateByCapState(cap.GetState(), cap.GetPos());
+			isOnCaptain = true;
+			distance = 0;
+			timeToThrow = 0;
+			isMoved = false;
+		}
 	}
 }
 

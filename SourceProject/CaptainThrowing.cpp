@@ -28,8 +28,11 @@ void CaptainThrowing::OnKeyUp(Captain& cap, BYTE keyCode)
 
 void CaptainThrowing::OnKeyDown(Captain& cap, BYTE keyCode)
 {
-	assert(!cap.shieldOn);
-	//Captain_Walking should handle nx, KeyControls press, up and down => shorten the code
+	if (keyCode == setting.Get(KeyControls::Jump))
+	{
+		cap.SetState(State::Captain_Jumping);
+		return;
+	}
 }
 
 void CaptainThrowing::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

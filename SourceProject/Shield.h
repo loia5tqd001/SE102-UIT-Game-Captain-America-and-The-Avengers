@@ -11,6 +11,7 @@ private:
 	void UpdateByCapState(State capState, Vector2 capPos);
 	void flipPosx();
 	float timeToThrow = 0.0f;
+	bool isMoved = false;
 
 	//TODO: write this later, after finishing the animation with captain
 	void HandleSideCollison(float dt, const std::vector<GameObject*>& coObjects);  //with bullet
