@@ -6,6 +6,7 @@
 
 void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 {
+	SetAnotherState = false;
 	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Kicking);
 	cap.vel.y = -SPIN_SPEED_VER;
 	beginnx = cap.nx;
@@ -66,7 +67,10 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 	else counterTimeFlip += GameTimer::Dt();
 	cap.animations.at(cap.curState).Update(dt);
 	HandleCollisions(cap, dt, coObjects);
-
+	if (SetAnotherState)
+	{
+		return;
+	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.vel.x = -SPIN_SPEED_HOR;
@@ -185,7 +189,10 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 
 			case ClassId::DamageBlock: //case that DamageBlock is at the roof
 				if (!cap.isFlashing)
+				{
+					SetAnotherState = true;
 					cap.SetState(State::Captain_Injured);
+				}
 				break;
 
 			case ClassId::PassableLedge:

@@ -137,7 +137,6 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 			case ClassId::Water:
 				if (e.ny < 0)
 				{
-					data.Add("waterLevel", block->GetPos().y);
 					cap.SetState(State::Captain_FallToWater);
 				}
 				break;

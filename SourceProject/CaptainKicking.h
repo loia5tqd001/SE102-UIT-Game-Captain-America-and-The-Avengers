@@ -11,6 +11,8 @@ private:
 	float timeUp = 0;
 	float timeDown = 0;
 	bool isKicked = true;
+
+	bool SetAnotherState = false;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

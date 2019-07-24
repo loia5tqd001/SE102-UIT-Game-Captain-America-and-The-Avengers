@@ -5,6 +5,8 @@
 
 void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 {
+	SetAnotherState = false;
+
 	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Spinning 
 		|| fromState == State::Captain_Falling || fromState == State::Captain_CoverLow);
 	lastState = fromState;
@@ -67,6 +69,12 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 		cap.vel.x = MOVING_HOR;
 	}
 	HandleCollisions(cap, dt, coObjects);
+
+	if (SetAnotherState)
+	{
+		return;
+	}
+
 	if (lastState == State::Captain_Jumping) {
 		if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
 			if (!isJumpReleased) {
@@ -208,6 +216,7 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 			case ClassId::Water:
 				if (e.ny < 0)
 				{
+					SetAnotherState = true;
 					cap.SetState(State::Captain_FallToWater);
 				}
 				break;

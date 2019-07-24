@@ -9,6 +9,8 @@ private:
 	bool isKicked = false;
 	int beginnx = 1;
 	float counterTimeFlip = 0;
+
+	bool SetAnotherState = false;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;
