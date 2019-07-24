@@ -53,7 +53,7 @@
   <object id="49" name="2.enemyRocket" x="352" y="397" width="24" height="40"/>
   <object id="50" name="3.rocket-shootcr(11)" x="352" y="0" width="16" height="480"/>
   <object id="66" name="3.enemyRocket" x="445" y="397" width="24" height="40"/>
-  <object id="67" name="4.gun-shoot(0)" x="270" y="0" width="16" height="480"/>
+  <object id="67" name="4.gun-shoot(0)" x="280" y="0" width="16" height="480"/>
   <object id="68" name="4.enemyGun" x="163" y="405" width="24" height="32"/>
   <object id="55" name="5.rocket-bnf(12)" x="480" y="0" width="16" height="480"/>
   <object id="69" name="5.enemyRocket" x="576" y="317" width="24" height="40"/>

@@ -30,7 +30,9 @@ private:
 	KeyControls lastKeyDown, lastKeyUp;
 	std::chrono::steady_clock::time_point timeLastKeyDown, timeLastKeyUp;
 
+	bool PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects); // return true if there's AABB collision with enemy and bullet already
 	void CollideWithPassableObjects(float dt, const CollisionEvent& e);
+	void HandleHitBox(float dt,  const std::vector<GameObject*>& coObjects);
 
 public:
 	Captain(const Vector2& pos); // captain position is being set when scene is set, no need to use constructor

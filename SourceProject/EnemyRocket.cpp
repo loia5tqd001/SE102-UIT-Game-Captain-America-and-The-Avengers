@@ -4,13 +4,13 @@
 #include "BulletEnemyRocket.h"
 
 EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
-	Enemy(behavior, std::move(behaviorData), State::EnemyRocket_BeforeExplode, 2, spawnPos, grid),
+	Enemy(behavior, Data{}, State::EnemyRocket_BeforeExplode, 2, spawnPos, grid),
 	cap(cap)
 {
 	animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode, 0.2f));
 	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.09f));
-	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.15f));
-	animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.2f));
+	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.75f));
+	animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.75f));
 	nx = - cap->GetNx();
 	SetState(State::EnemyRocket_Walking);
 	switch (behavior)
@@ -53,6 +53,7 @@ void EnemyRocket::OnBehaviorShoot()
 				SetState(State::EnemyRocket_Sitting);
 				justShoot = false;
 			}
+			break;
 
 		case State::EnemyRocket_Sitting:
 			if (!justShoot) {
@@ -63,6 +64,7 @@ void EnemyRocket::OnBehaviorShoot()
 				SetState(State::EnemyRocket_Stand);
 				justShoot = false;
 			}
+			break;
 
 		case State::EnemyRocket_BeforeExplode:
 		case State::Explode:
@@ -149,13 +151,13 @@ void EnemyRocket::SpawnRocket()
 	if (isFlashing) return;
 	if (curState == State::EnemyRocket_Sitting)
 	{
-		const auto bulletPos = pos + Vector2{ 18.0f, 3.0f };
+		const auto bulletPos = pos + Vector2{ 20.0f, 3.0f };
 		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, bulletPos));
 		Sounds::PlayAt(SoundId::Explosion);
 	}
 	else if (curState == State::EnemyRocket_Stand)
 	{
-		const auto bulletPos = pos + Vector2{ 17.0f, 3.0f };
+		const auto bulletPos = pos + Vector2{ 19.0f, 3.0f };
 		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, bulletPos));
 		Sounds::PlayAt(SoundId::Explosion);
 	}
@@ -163,6 +165,8 @@ void EnemyRocket::SpawnRocket()
 
 void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	UpdateAnimation(dt);
+
 	switch (behavior)
 	{
 		case Behaviors::EnemyRocket_ShootStraight:
@@ -181,6 +185,4 @@ void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 	pos.x += vel.x*dt;
 	pos.y += vel.y*dt;
-
-	UpdateAnimation(dt);
 }

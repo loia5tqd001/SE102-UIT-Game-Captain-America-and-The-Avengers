@@ -1,14 +1,13 @@
 #include "pch.h"
 
 /// Resource: https://www.gamedev.net/articles/programming/general-and-gameplay-programming/swept-aabb-collision-detection-and-response-r3084/
-CollisionEvent CollisionDetector::SweptAABBEx(const GameObject & obj1, const GameObject & obj2, float dt, TypeCheck type)
+CollisionEvent CollisionDetector::SweptAABBEx(const GameObject & obj1, const GameObject & obj2, float dt)
 {
 	const auto v1 = obj1.GetVelocity();
 	const auto v2 = obj2.GetVelocity();	
 	if (v1 == v2) return {}; // if two objects'r moving along together, obviously no collisions
 
-	const RectF rect1 = type == TypeCheck::Bbox ? 
-		                obj1.GetBBox() : dynamic_cast<const VisibleObject&>(obj1).VisibleObject::GetBBox();
+	const RectF rect1 = obj1.GetBBox();
 	const RectF rect2 = obj2.GetBBox();
 
 	// relative motion this frame = relative velocity times dt(denta-time this frame)
@@ -70,13 +69,13 @@ CollisionEvent CollisionDetector::SweptAABBEx(const GameObject & obj1, const Gam
 	return { entryTime, nx, ny, const_cast<GameObject&>(obj2) };	
 }
 
-std::vector<CollisionEvent> CollisionDetector::CalcPotentialCollisions(const GameObject & obj, const std::vector<GameObject*>& coObjs, float dt, TypeCheck type)
+std::vector<CollisionEvent> CollisionDetector::CalcPotentialCollisions(const GameObject & obj, const std::vector<GameObject*>& coObjs, float dt)
 {
 	std::vector<CollisionEvent> potentialCollisions;
 
 	for (UINT i = 0; i < coObjs.size(); i++)
 	{
-		CollisionEvent e = SweptAABBEx(obj, *coObjs.at(i), dt, type);
+		CollisionEvent e = SweptAABBEx(obj, *coObjs.at(i), dt);
 		if (e) potentialCollisions.emplace_back(std::move(e));
 	}
 	return potentialCollisions;

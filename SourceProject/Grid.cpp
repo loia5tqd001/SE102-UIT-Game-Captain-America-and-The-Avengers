@@ -117,6 +117,10 @@ void Grid::UpdateCells()
 		Utils::RemoveIf(cell.movingObjects, [&](auto& mo) { // remove (moving) objects from cell if:
 			const auto moBBox = mo->GetBBox();
 
+			if (mo->GetState() == State::Destroyed)
+			{
+				return true; // remove from cell
+			}
 			if (moBBox.IsNone()) // objects can't collide - beforeExplode/Explode - not remove
 			{
 				objsInViewPort.emplace(mo.get()); // we still want to draw them (their image)
@@ -125,10 +129,6 @@ void Grid::UpdateCells()
 			if (!moBBox.IsIntersect(cam.GetBBox()))
 			{
 				dynamic_cast<VisibleObject*>(mo.get())->SetState(State::Destroyed);
-			}
-			if (mo->GetState() == State::Destroyed)
-			{
-				return true; // remove from cell
 			}
 
 			objsInViewPort.emplace(mo.get()); // to go to this line mean objects should be to handle collision.

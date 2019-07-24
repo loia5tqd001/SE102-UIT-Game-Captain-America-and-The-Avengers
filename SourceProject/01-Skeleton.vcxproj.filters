@@ -473,7 +473,6 @@
       <Filter>Development\Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="BulletEnemyFly.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="CaptainClimbing.h">
       <Filter>Development\Objects\Captain\D</Filter>
     </ClInclude>
@@ -536,8 +535,5 @@
     <ClInclude Include="CaptainFalling.h">
       <Filter>Development\Objects\Captain</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="GameProject.rc" />
   </ItemGroup>
 </Project>

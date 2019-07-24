@@ -2,7 +2,8 @@
 #include "BulletEnemyRocket.h"
 
 BulletEnemyRocket::BulletEnemyRocket(int nx, int type, Enemy *enemy, const Vector2 & spawnPos, Vector2 vel) :
-	Bullet(State::BulletEnemyRocket_Horizontal, 1, spawnPos, { nx * BULLET_MOVING, 0.0f }, nx, enemy),
+	Bullet(type ? State::BulletEnemyRocket_Cross : State::BulletEnemyRocket_Horizontal, 
+		   1, spawnPos, { nx * BULLET_MOVING, 0.0f }, nx, enemy),
 	type(type)
 {
 	animations.emplace(State::BulletEnemyRocket_Cross, Animation(SpriteId::BulletEnemyRocket_Cross, 0.1f));
@@ -12,6 +13,7 @@ BulletEnemyRocket::BulletEnemyRocket(int nx, int type, Enemy *enemy, const Vecto
 }
 void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	animations.at(curState).Update(dt);
 	pos.x += vel.x * dt;
 	pos.y += vel.y * dt;
 	if (type != 0)
@@ -20,12 +22,12 @@ void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjec
 		if (abs(vel.y) < BULLET_MOVING / 5)
 		{
 			vel.y -= 0.4f;
-			vel.x = std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
+			vel.x = nx * std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
 		}
 		else if (abs(vel.y) < BULLET_MOVING)
 		{
 			vel.y -= 0.8f;
-			vel.x = std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
+			vel.x = nx * std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
 		}
 	}
 }

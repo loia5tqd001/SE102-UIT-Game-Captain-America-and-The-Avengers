@@ -50,7 +50,6 @@ void CaptainTackle::Update(Captain& cap, float dt, const std::vector<GameObject*
 	}
 
 	HandleCollisions(cap, dt, coObjects); 
-	HandleDeadlingDamage(cap, dt, coObjects); // handle collision for hitbox - deal damage
 }
 
 void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -133,13 +132,14 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 		}
 		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 		{
+			enemy->TakeDamage(3);
 			cap.CollideWithPassableObjects(dt, e);
 		}
-		else if (dynamic_cast<Bullet*>(e.pCoObj)) {
+		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj)) {
 			if (!dynamic_cast<BulletEnemyGun*>(e.pCoObj) && !cap.isFlashing)
 			{
 				cap.SetState(State::Captain_Injured);
-				cap.health.Subtract(1);
+				cap.health.Subtract(bullet->GetDamage());
 			}
 			else {
 				cap.CollideWithPassableObjects(dt, e);
@@ -147,21 +147,3 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 		}
 	}
 }
-
-void CaptainTackle::HandleDeadlingDamage(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
-{
-	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt, TypeCheck::HitBox);
-
-	for (auto& e : coEvents)
-	{
-		if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
-		{
-			if (enemy->GetBBox().IsIntersect(cap.GetHitBox()))
-			{
-				enemy->TakeDamage(3);
-			}
-		}
-	}
-}
-
-

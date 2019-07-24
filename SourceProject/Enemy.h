@@ -7,8 +7,8 @@ protected:
 
 	int health;
 	Grid* grid;
-	State beforeExplode = State::Destroyed;
-    State Explode = State::Destroyed; //wizard need this
+	State beforeExplode;
+    State Explode = State::Explode; //wizard need this
     Behaviors behavior;
 	const Data& behaviorData;
 

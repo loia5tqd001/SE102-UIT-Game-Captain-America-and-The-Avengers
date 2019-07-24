@@ -34,6 +34,50 @@ Captain::Captain(const Vector2& pos) :
 	bboxColor = Colors::MyPoisonGreen;
 }
 
+Vector2 Captain::GetCenter() const
+{
+	if (curState == State::Captain_SitPunching) {
+		if (nx > 0) return GetBBox().GetCenter() - Vector2{ 7.0f, 0.0f };
+		else        return GetBBox().GetCenter() + Vector2{ 7.0f, 0.0f };
+	}
+	else {
+		return GetBBox().GetCenter();
+	}
+}
+
+void Captain::Render() const
+{
+	VisibleObject::Render();
+	DebugDraw::DrawSolidRect(GetHitBox(), Colors::MyChineseBrown);
+	shield->Render();
+}
+
+RectF Captain::GetBBox() const
+{
+	return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 3, 0, (float)GetWidth() / 2 - 3, 0);
+}
+
+RectF Captain::GetHitBox() const
+{
+	switch (curState)
+	{
+		case State::Captain_Kicking:
+			if (nx > 0) return VisibleObject::GetBBox().Trim(28, 10, 0, 8);
+			else        return VisibleObject::GetBBox().Trim(0, 10, 28, 8);
+
+		case State::Captain_Punching:
+			if (nx > 0) return VisibleObject::GetBBox().Trim(28, 6, 0, 29);
+			else        return VisibleObject::GetBBox().Trim(0, 6, 28, 29);
+
+		case State::Captain_SitPunching:
+			if (nx > 0) return VisibleObject::GetBBox().Trim(27, 5, 0, 16);
+			else        return VisibleObject::GetBBox().Trim(0, 5, 27, 16);
+
+		default:
+			return {};
+	}
+}
+
 void Captain::OnKeyDown(BYTE keyCode)
 {
 	currentState->OnKeyDown(*this, keyCode);
@@ -51,18 +95,6 @@ void Captain::OnKeyUp(BYTE keyCode)
 	{
 		lastKeyUp = setting.GetKControl(keyCode);
 		timeLastKeyUp = std::chrono::steady_clock::now();
-	}
-}
-
-void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
-{
-	if (e.nx != 0.0f)
-	{
-		pos.x += min(e.pCoObj->GetBBox().GetWidth(), (1.0f - e.t) * vel.x * dt);
-	}
-	if (e.ny != 0.0f)
-	{
-		pos.y += min(e.pCoObj->GetBBox().GetHeight(), (1.0f - e.t) * vel.y * dt);
 	}
 }
 
@@ -171,60 +203,82 @@ void Captain::SetState(State state)
 	}
 }
 
+bool Captain::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
+{
+	if (isFlashing) return false;
+	const auto capBbox = GetBBox();
+
+	for (auto& obj : coObjects)
+	if (capBbox.IsIntersect(obj->GetBBox())) 
+	{
+		if (auto enemy = dynamic_cast<Enemy*>(obj))
+		{
+			enemy->TakeDamage(1);
+			this->health.Subtract(1);
+			SetState(State::Captain_Injured);
+			return true;
+		}
+		else if (auto bullet = dynamic_cast<Bullet*>(obj))
+		{
+			this->health.Subtract(bullet->GetDamage());
+			SetState(State::Captain_Injured);
+			return true;
+		}
+	}
+	return false;
+}
+
+void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
+{
+	if (e.nx != 0.0f)
+	{
+		pos.x += min(e.pCoObj->GetBBox().GetWidth(), (1.0f - e.t) * vel.x * dt);
+	}
+	if (e.ny != 0.0f)
+	{
+		pos.y += min(e.pCoObj->GetBBox().GetHeight(), (1.0f - e.t) * vel.y * dt);
+	}
+}
+
+void Captain::HandleHitBox(float dt, const std::vector<GameObject*>& coObjects)
+{
+	if (GetHitBox().IsNone()) return;
+
+	for (auto& obj : coObjects)
+	if (GetHitBox().IsIntersect(obj->GetBBox()))
+	{
+		if (auto capsule = dynamic_cast<Capsule*>(obj))
+		{
+			capsule->BeingHit();
+		}
+		else if (auto enemy = dynamic_cast<Enemy*>(obj))
+		{
+			enemy->TakeDamage(1);
+		}
+		else if (auto block = dynamic_cast<Block*>(obj))
+		{
+			if (block->GetType() == ClassId::Switch)
+			{
+				SceneManager::Instance().GetCurScene().isDark = 
+					!SceneManager::Instance().GetCurScene().isDark;
+			}
+		}
+		// else if oil barrel in Red Alert ...
+	}
+	
+}
+
 void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	animations.at(curState).Update(dt);
-	currentState->Update(*this, dt, coObjects);
+
+	if (!PrecheckAABB(dt, coObjects))
+	{
+		currentState->Update(*this, dt, coObjects);
+		HandleHitBox(dt, coObjects);
+	}
 
 	OnFlashing();
 
 	shield->Update(dt, coObjects);
-}
-
-Vector2 Captain::GetCenter() const
-{
-	if (curState == State::Captain_SitPunching) {
-		if (nx > 0) return GetBBox().GetCenter() - Vector2{ 7.0f, 0.0f };
-		else        return GetBBox().GetCenter() + Vector2{ 7.0f, 0.0f };
-	}
-	else {
-		return GetBBox().GetCenter();
-	}
-}
-
-void Captain::Render() const
-{
-	VisibleObject::Render();
-	DebugDraw::DrawSolidRect(GetHitBox(), Colors::MyChineseBrown);
-	shield->Render();
-}
-
-RectF Captain::GetBBox() const
-{
-	return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 3, 0, (float)GetWidth() / 2 - 3, 0);
-}
-
-RectF Captain::GetHitBox() const
-{
-	switch (curState)
-	{
-	case State::Captain_Kicking:
-		if (nx > 0) return VisibleObject::GetBBox().Trim(28, 10, 0, 8);
-		else        return VisibleObject::GetBBox().Trim(0, 10, 28, 8);
-
-	case State::Captain_Punching:
-		if (nx > 0) return VisibleObject::GetBBox().Trim(28, 6, 0, 29);
-		else        return VisibleObject::GetBBox().Trim(0, 6, 28, 29);
-
-	case State::Captain_SitPunching:
-		if (nx > 0) return VisibleObject::GetBBox().Trim(27, 5, 0, 16);
-		else        return VisibleObject::GetBBox().Trim(0, 5, 27, 16);
-
-	case State::Captain_Tackle:
-		if (nx > 0) return VisibleObject::GetBBox().Trim(5, 5, 0, 11);
-		else        return VisibleObject::GetBBox().Trim(0, 5, 5, 11);
-
-	default:
-		return {};
-	}
 }

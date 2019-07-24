@@ -10,7 +10,7 @@ AmbushTrigger* AmbushTrigger::instance = nullptr;
 AmbushTrigger::AmbushTrigger(Vector2 pos, UINT w, UINT h, const RectF& lockRegion, Grid* grid) :
 	InvisibleObject(pos, w, h),
 	lockCamera(lockRegion),
-	lockCaptain(lockRegion.GetTrim(5, 0, 5, 0)),
+	lockCaptain(lockRegion.GetTrim(5, 0, 20, 0)),
 	enemyGunSpawnPos(lockRegion.GetTopLeft() + Vector2{ -22.0f, 165.0f }),
 	enemyRocketSpawnPos(lockRegion.GetTopLeft() + Vector2{ 222.0f, 157.0f }),
 	grid(grid)

@@ -24,11 +24,7 @@ Data CaptainWalking::Exit(Captain& cap, State toState)
 
 void CaptainWalking::OnKeyUp(Captain& cap, BYTE keyCode)
 {
-	auto kControlDir = cap.nx > 0 ? KeyControls::Right : KeyControls::Left;
-	if (keyCode == setting.Get(kControlDir))
-	{
-		cap.SetState(State::Captain_Standing);
-	}
+
 }
 
 void CaptainWalking::OnKeyDown(Captain& cap, BYTE keyCode)
@@ -71,6 +67,12 @@ void CaptainWalking::Update(Captain& cap, float dt, const std::vector<GameObject
 {
 	cap.vel.x = cap.nx * WALKING_SPEED;
 	cap.vel.y = 100.0f;
+
+	auto kControlDir = cap.nx > 0 ? KeyControls::Right : KeyControls::Left;
+	if (!wnd.IsKeyPressed(setting.Get(kControlDir)))
+	{
+		cap.SetState(State::Captain_Standing);
+	}
 	HandleCollisions(cap, dt, coObjects);
 }
 

@@ -22,7 +22,7 @@ void Enemy::UpdateAnimation(float dt)
 	{
 		SetState(Explode);
 	}
-	else if (animations.at(Explode).IsDoneCycle())
+	if (animations.at(Explode).IsDoneCycle())
 	{
 		SetState(State::Destroyed);
 	}
