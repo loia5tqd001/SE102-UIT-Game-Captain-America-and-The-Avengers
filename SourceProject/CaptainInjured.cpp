@@ -72,6 +72,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 				if (block->GetType() == ClassId::PassableLedge)
 				{
 					cap.SetState(State::Captain_Dead);
+					pendingSwitchState = State::NotExist;
 					return;
 				}
 			}

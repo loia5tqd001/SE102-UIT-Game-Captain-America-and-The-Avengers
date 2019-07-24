@@ -4,6 +4,8 @@
 
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
+	ignoreUpdate = false;
+
 	assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
 		|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
 		|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
@@ -102,6 +104,11 @@ void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
 void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	HandleCollisions(cap, dt, coObjects);
+
+	if (ignoreUpdate)
+		return;
+
+
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.vel.x = -MOVING_HOR;
@@ -274,8 +281,10 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 		else if (dynamic_cast<Bullet*>(e.pCoObj)) {
 			if (!cap.isFlashing)
 			{
-				cap.SetState(State::Captain_Injured);
 				cap.health.Subtract(1);
+				cap.SetState(State::Captain_Injured);
+				ignoreUpdate = true;
+				return;
 			}
 		}
 	}
