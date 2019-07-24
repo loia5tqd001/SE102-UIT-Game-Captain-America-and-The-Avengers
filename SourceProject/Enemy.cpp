@@ -42,7 +42,8 @@ void Enemy::TakeDamage(int damage)
 	assert(damage > 0);
 
 	health -= damage;
-	if (health <= 0) {
+	if (health <= 0) 
+	{
 		SetState(beforeExplode);
 	}
 	else {

@@ -10,7 +10,7 @@ private:
 	int beginnx = 1;
 	float counterTimeFlip = 0;
 
-	bool SetAnotherState = false;
+	bool SetAnotherState = false; //To ignore Stop current update function after set to another state
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

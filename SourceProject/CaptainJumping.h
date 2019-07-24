@@ -9,7 +9,7 @@ private:
 	float JumpHeightNeedCounter = MIN_JUMP_HEIGHT;
 	bool isKicked = false;
 
-	bool ignoreUpdate = false;
+	bool setAnotherState = false;
 
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;

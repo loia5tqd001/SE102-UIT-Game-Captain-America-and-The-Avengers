@@ -12,7 +12,7 @@ private:
 	float timeDown = 0;
 	bool isKicked = true;
 
-	bool SetAnotherState = false;
+	bool SetAnotherState = false; //To end Update after Handle collision
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

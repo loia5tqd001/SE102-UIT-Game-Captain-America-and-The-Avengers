@@ -6,7 +6,6 @@
 void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 {
 	SetAnotherState = false;
-
 	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Spinning 
 		|| fromState == State::Captain_Falling || fromState == State::Captain_CoverLow);
 	lastState = fromState;
@@ -206,6 +205,7 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 			else
 			{
 				cap.SetState(State::Captain_Injured);
+				SetAnotherState = true;
 				enemy->TakeDamage(1);
 			}
 		}
@@ -239,6 +239,7 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 				{
 					cap.health.Subtract(1);
 					cap.SetState(State::Captain_Injured);
+					SetAnotherState = true;
 				}
 				break;
 
@@ -272,6 +273,7 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 			if (!cap.isFlashing)
 			{
 				cap.SetState(State::Captain_Injured);
+				SetAnotherState = true;
 				cap.health.Subtract(1);
 			}
 		}

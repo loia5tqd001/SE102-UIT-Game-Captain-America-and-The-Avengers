@@ -4,7 +4,7 @@
 
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
-	ignoreUpdate = false;
+	setAnotherState = false;
 
 	//assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
 	//	|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
@@ -115,7 +115,7 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 {
 	HandleCollisions(cap, dt, coObjects);
 
-	if (ignoreUpdate)
+	if (setAnotherState)
 		return;
 
 
@@ -230,6 +230,7 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 			}
 			else {
 				cap.SetState(State::Captain_Injured);
+				setAnotherState = true;
 				enemy->TakeDamage(1);
 			}
 		}
@@ -262,6 +263,7 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 					{
 						cap.health.Subtract(1);
 						cap.SetState(State::Captain_Injured);
+						setAnotherState = true;
 					}
 					break;
 
@@ -296,7 +298,7 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 			{
 				cap.health.Subtract(1);
 				cap.SetState(State::Captain_Injured);
-				ignoreUpdate = true;
+				setAnotherState = true;
 				return;
 			}
 		}

@@ -340,6 +340,7 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 			if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 			{
 				enemy->TakeDamage(1);
+				Debug::out("Take damage enemy\n");
 			}
 		}
 	}

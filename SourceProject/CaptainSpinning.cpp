@@ -140,6 +140,7 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 				if (auto bullet = dynamic_cast<BulletEnemyRocket*>(e.pCoObj));
 				cap.health.Subtract(bullet->GetDamage());
 				cap.SetState(State::Captain_Injured);
+				SetAnotherState = true;
 				//TODO: case BulletEnemyFlying
 			}
 		}
@@ -160,6 +161,7 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 			}
 			else {
 				cap.SetState(State::Captain_Injured);
+				SetAnotherState = true;
 				enemy->TakeDamage(1);
 			}
 		}

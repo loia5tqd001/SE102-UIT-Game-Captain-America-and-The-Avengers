@@ -49,18 +49,23 @@ void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject
 void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
-	if (coEvents.size() == 0) { HandleNoCollisions(cap, dt); return; }
+	if (coEvents.size() == 0) 
+	{ 
+		HandleNoCollisions(cap, dt); 
+		return; 
+	}
 
 	float min_tx, min_ty, nx, ny;
 	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 
 	//Todo: Handle other Ledge
-	
+
 	if (coEvents.size() == 0) return;
 
 	cap.pos.x += min_tx * cap.vel.x * dt;
 	cap.pos.y += min_ty * cap.vel.y * dt;
 
+	//Handle CaptainDead State
 	if (pendingSwitchState == State::Captain_Dead)
 	{
 		for (auto& e : coEvents)
@@ -81,6 +86,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 	}
 
 	//Fall down Distance of Cap
+
 	if (cap.nx > 0)
 	{
 		if (posxWhenGotInjure - cap.pos.x >= INJURE_DISTANCE)
@@ -98,7 +104,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 	}
 
-	
+
 
 	for (auto& e : coEvents)
 	{
