@@ -11,7 +11,8 @@ EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Gri
 	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.09f));
 	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.75f));
 	animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.75f));
-	nx = - cap->GetNx();
+	if (behavior == Behaviors::EnemyRocket_Ambush) nx = -1;
+	else nx = - cap->GetNx();
 	SetState(State::EnemyRocket_Walking);
 	switch (behavior)
 	{

@@ -27,8 +27,8 @@ void CharlestonScene::LoadResources()
 
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
-	//cap = std::make_unique<Captain>( Vector2{ 173.0f, 391.0f } ) ;
-	cap = std::make_unique<Captain>(Vector2{ 53.0f, 20.0f });
+	cap = std::make_unique<Captain>( Vector2{ 173.0f, 391.0f } ) ;
+	//cap = std::make_unique<Captain>(Vector2{ 53.0f, 20.0f });
 }
 
 void CharlestonScene::Update(float dt)
@@ -40,16 +40,30 @@ void CharlestonScene::Update(float dt)
 
 	cap->Update(dt, grid->GetObjectsInViewPort()); // update Captain
 
-	// clamping
-	if (ambush->GetState() == State::Ambush_Being) {
+	// clamping 
+	// clamping cap
+	// clamping camera
+
+	if (ambush->GetState() == State::Ambush_Being) 
 		cap->ClampWithin(ambush->GetLockCaptain());
+	else 
+		cap->ClampWithin( map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f) ); 
+
+	static bool shouldCenterCap = true;
+	if (ambush->GetState() == State::Ambush_Being) {
 		cam.ClampWithin(ambush->GetLockCamera());
+		shouldCenterCap = false;
 	}
 	else {
-		cap->ClampWithin( map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f) ); 
+		if (std::abs(cam.GetBBox().GetCenter().x - cap->GetCenter().x) <= 14.0f) {
+			cam.SetRadius(14.0f);
+		}
+		
 		cam.CenterAround( cap->GetCenter() );
 		cam.ClampWithin( map->GetWorldBoundary() );
 	}
+
+
 
 	if (wnd.IsKeyPressed(VK_NUMPAD5))
 	{
@@ -76,21 +90,20 @@ void CharlestonScene::Draw()
 {	
 	map->Render(); // layer0
 
-	std::vector<GameObject*> layer1; // capsule, item
-	std::vector<GameObject*> layer2; // bullet, enemy, ledge (other visible objects)
+	// layer1: capsules
+	std::vector<GameObject*> layer2; // item, bullet, enemy, ledge (other visible objects)
 	// layer3: captain
 	std::vector<GameObject*> layer4; // invisible object
 
 	for (auto& obj : grid->GetObjectsInViewPort()) {
-		if (dynamic_cast<Capsule*>(obj) || dynamic_cast<Item*>(obj)) 
-			layer1.emplace_back(obj);
+		if (dynamic_cast<Capsule*>(obj)) 
+			obj->Render();
 		else if (dynamic_cast<VisibleObject*>(obj)) 
 			layer2.emplace_back(obj);
 		else 
 			layer4.emplace_back(obj);
 	}
 
-	for (auto& obj : layer1) obj->Render();
 	for (auto& obj : layer2) obj->Render();
 	cap->Render();
 	for (auto& obj : layer4) obj->Render();

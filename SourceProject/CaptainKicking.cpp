@@ -18,11 +18,11 @@ void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 		timeUp = data.Get<float>(SPIN_TIME_UP);
 		timeDown = data.Get<float>(SPIN_TIME_DOWN);
 	}
-	Sounds::PlayAt(SoundId::Punch);
 }
 
 Data CaptainKicking::Exit(Captain& cap, State toState)
 {
+	Sounds::PlayAt(SoundId::Punch);
 	Data data;
 	isKicked = true;
 	switch (toState)

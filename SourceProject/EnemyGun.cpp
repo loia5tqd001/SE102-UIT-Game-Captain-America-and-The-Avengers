@@ -11,7 +11,8 @@ EnemyGun::EnemyGun(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* gri
 	animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.3f));
 	animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.4f));
 	animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 1.5f));
-	nx = -cap->GetNx(); // always first toward Captain
+	if (behavior == Behaviors::EnemyGun_Ambush) nx = 1;
+	else nx = -cap->GetNx(); 
 
 	switch (behavior)
 	{
@@ -172,6 +173,6 @@ void EnemyGun::SpawnBullet()
 	{
 		const auto bulletPos = pos + Vector2{ 19.0f, 3.0f };
 		grid->SpawnObject(std::make_unique<BulletEnemyGun>(nx, this, bulletPos));
-		Sounds::PlayAt(SoundId::Explosion);
+		Sounds::PlayAt(SoundId::BulletNormal);
 	}
 }

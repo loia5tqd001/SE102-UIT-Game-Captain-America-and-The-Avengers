@@ -9,7 +9,6 @@ void CaptainSitPunching::Enter(Captain& cap, State fromState, Data&& data)
 	assert(fromState == State::Captain_Sitting || fromState == State::Captain_CoverLow);
 	cap.vel.y = 0;
 	cap.vel.x = 0;
-	Sounds::PlayAt(SoundId::Punch);
 	if (fromState == State::Captain_Sitting)
 	{
 		// adjust position due to difference between sitting witdh and sitpunching width
@@ -27,6 +26,7 @@ void CaptainSitPunching::Enter(Captain& cap, State fromState, Data&& data)
 
 Data CaptainSitPunching::Exit(Captain& cap, State toState)
 {
+	Sounds::PlayAt(SoundId::Punch);
 	if (toState == State::Captain_Sitting)
 	{
 		if (cap.nx < 0) {

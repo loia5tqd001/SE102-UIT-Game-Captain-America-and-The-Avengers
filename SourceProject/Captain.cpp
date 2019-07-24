@@ -203,9 +203,9 @@ void Captain::SetState(State state)
 	}
 }
 
-bool Captain::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
+void Captain::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (isFlashing) return false;
+	if (isFlashing) return;
 	const auto capBbox = GetBBox();
 
 	for (auto& obj : coObjects)
@@ -216,16 +216,17 @@ bool Captain::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
 			enemy->TakeDamage(1);
 			this->health.Subtract(1);
 			SetState(State::Captain_Injured);
-			return true;
 		}
 		else if (auto bullet = dynamic_cast<Bullet*>(obj))
 		{
 			this->health.Subtract(bullet->GetDamage());
 			SetState(State::Captain_Injured);
-			return true;
+		}
+		else if (auto item = dynamic_cast<Item*>(obj))
+		{
+			item->BeingCollected();
 		}
 	}
-	return false;
 }
 
 void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
@@ -272,11 +273,10 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	animations.at(curState).Update(dt);
 
-	if (!PrecheckAABB(dt, coObjects))
-	{
-		currentState->Update(*this, dt, coObjects);
-		HandleHitBox(dt, coObjects);
-	}
+	PrecheckAABB(dt, coObjects);	
+	currentState->Update(*this, dt, coObjects);
+	HandleHitBox(dt, coObjects);
+	
 
 	OnFlashing();
 

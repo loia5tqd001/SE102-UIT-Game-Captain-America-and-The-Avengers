@@ -23,7 +23,7 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 		timeUp = 0;
 		timeDown = 0;
 	}
-	Sounds::PlayAt(SoundId::Tackle);
+	Sounds::PlayAt(SoundId::Spinning);
 }
 
 Data CaptainSpinning::Exit(Captain& cap, State toState)

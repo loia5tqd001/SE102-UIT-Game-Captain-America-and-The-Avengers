@@ -171,13 +171,13 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		}
 		else if (capState == State::Captain_Falling)
 		{
-			pos.x = capPos.x - 1;
+			pos.x = capPos.x + 1;
 			pos.y = capPos.y + 3;
 			SetState(State::Shield_Side);
 		}
 		else if (capState == State::Captain_Jumping)
 		{
-			pos.x = capPos.x - 1;
+			pos.x = capPos.x + 1;
 			pos.y = capPos.y + 3;
 			SetState(State::Shield_Side);
 		}

@@ -85,10 +85,10 @@
 
 	[         100,            10,      357,      11,              22,               45,         1,            0], //Captain_Standing,
 	[         101,            10,      228,      13,              24,               43,         4,            8], //Captain_Walking,
-	[         102,            10,      134,      15,              22,               38,         1,            0], //Captain_Jump
 	[         103,            10,      196,      13,              24,               43,         1,            0], //Captain_LookUp
 	[         105,            10,      217,      71,              38,               41,         2,            2], //Captain_Punching
 	[         106,            10,      298,      73,              43,               39,         2,           13], //Captain_Throw
+	[         102,            10,      134,      15,              22,               38,         1,            0], //Captain_Jump
 	[         107,            10,      134,      15,              22,               38,         1,            0], //Captain_Falling
 	[         108,            10,       20,      23,              40,               25,         1,            0], //Captain_JumpKick
 	[         104,            10,      164,      28,              24,               28,         1,            0], //Captain_Sitting
@@ -125,7 +125,8 @@
 	[16, "Resources\\Sounds\\16.. Tackle.wav"],
 	[17, "Resources\\Sounds\\17.. HighJump.wav"],
 	[18, "Resources\\Sounds\\18.. Grounding.wav"],
-	[19, "Resources\\Sounds\\19.. Water.wav"]
+	[19, "Resources\\Sounds\\19.. Water.wav"],
+	[20, "Resources\\Sounds\\20.. Spinning.wav"]
   ],
 
    "keycodefonts": [ // keyCode[0] - left[1] - top[2] - right[3] - bottom[4]

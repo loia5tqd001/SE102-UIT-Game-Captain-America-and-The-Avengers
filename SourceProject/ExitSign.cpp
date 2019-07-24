@@ -20,7 +20,7 @@ void ExitSign::Draw()
 
 	if ((timePassedAfterKrystalCollected += GameTimer::Dt()) <= 0.96f)
 	{
-		auto exitPos = krystalPos - Vector2{ 9.0f, 25.0f };
+		auto exitPos = krystalPos + Vector2{ -12.0f, -65.0f };
 		auto drawablePos = Camera::Instance().GetPositionInViewPort(exitPos);
 		sprite.Draw(drawablePos);
 	}

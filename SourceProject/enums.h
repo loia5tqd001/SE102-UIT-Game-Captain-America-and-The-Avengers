@@ -125,6 +125,7 @@ enum class SoundId
 	HighJump         = 17,
 	Grounding        = 18,
 	Water            = 19,
+	Spinning         = 20,
 };
 
 enum class ClassId

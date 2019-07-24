@@ -17,7 +17,6 @@ void CaptainFalling::Enter(Captain & cap, State fromState, Data && data)
 
 Data CaptainFalling::Exit(Captain & cap, State toState)
 {
-	
 	isKicked = false;
 	data.Add(IS_KICKED, isKicked);
 	return std::move(data);
@@ -182,7 +181,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 			case ClassId::PassableLedge:
 				if (e.ny < 0) {
 					cap.SetState(State::Captain_Sitting);
-					Sounds::PlayAt(SoundId::Grounding);
+					//Sounds::PlayAt(SoundId::Grounding); // sound's bad now
 				}
 				else {
 					cap.CollideWithPassableObjects(dt, e);
@@ -192,7 +191,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 			case ClassId::RigidBlock:
 				if (e.ny > 0) {
 					cap.SetState(State::Captain_Sitting);
-					Sounds::PlayAt(SoundId::Grounding);
+					//Sounds::PlayAt(SoundId::Grounding);
 				}
 				break;
 
