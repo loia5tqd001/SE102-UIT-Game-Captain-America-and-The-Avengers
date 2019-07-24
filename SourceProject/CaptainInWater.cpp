@@ -7,12 +7,12 @@ void CaptainInWater::Enter(Captain& cap, State fromState, Data&& data)
 {
 	cap.vel.x = WATER_FLOW_SPEED;
 	cap.vel.y = 0.0f;
-	cap.pos.y += 4.0f; // for more reasonal diving
+	cap.pos.y += 3.0f; // for more reasonal diving
 }
 
 Data CaptainInWater::Exit(Captain& cap, State toState)
 {
-	cap.pos.y -= 4.0f;
+	cap.pos.y -= 3.0f;
 	return Data{};
 }
 

@@ -6,15 +6,18 @@
 void CaptainFallToWater::Enter(Captain& cap, State fromState, Data&& data)
 {
 	//Todo: posx.y = .... Cap's positon must be underwater
+
 	switch (fromState)
 	{
 	case State::Captain_Falling:
 	case State::Captain_Kicking:
+	case State::Captain_Injured:
 		break;
 	default:
 		AssertUnreachable();
 	}
 	cap.pos.y = WATER_LEVEL - cap.GetBBox().GetHeight();
+
 	cap.vel.y = 0.0f;
 	cap.shield->SetState(State::Invisible);
 }

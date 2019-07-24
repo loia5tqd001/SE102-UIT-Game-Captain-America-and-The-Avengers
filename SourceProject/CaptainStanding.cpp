@@ -5,7 +5,8 @@
 
 void CaptainStanding::Enter(Captain& cap, State fromState, Data&& data)
 {
-	cap.vel.x = cap.vel.y = 0;
+	cap.vel.x;
+	cap.vel.y = 10.0f;
 	isToSittingTackle = false;
 }
 
@@ -56,6 +57,10 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 	{
 		cap.SetState(State::Captain_CoverTop);
 	}
+	else if (keyCode == setting.Get(KeyControls::Down))
+	{
+		cap.SetState(State::Captain_Sitting);
+	}
 	else if (keyCode == setting.Get(KeyControls::Jump))
 	{
 		cap.SetState(State::Captain_Jumping);
@@ -73,12 +78,6 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
-	{
-		cap.SetState(State::Captain_Sitting);
-		return;
-	}
-
 	int dir = 0;
 	if (wnd.IsKeyPressed( setting.Get(KeyControls::Left) ))
 	{

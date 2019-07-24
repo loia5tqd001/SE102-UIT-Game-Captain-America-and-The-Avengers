@@ -45,7 +45,7 @@ void CaptainWalking::OnKeyDown(Captain& cap, BYTE keyCode)
 			return;
 		}
 	}
-	
+
 
 	auto kControlDir = cap.nx > 0 ? KeyControls::Right : KeyControls::Left;
 
@@ -74,16 +74,20 @@ void CaptainWalking::Update(Captain& cap, float dt, const std::vector<GameObject
 		cap.SetState(State::Captain_Standing);
 	}
 	HandleCollisions(cap, dt, coObjects);
+	if (!isOnGround) {
+		cap.SetState(State::Captain_Falling);
+	}
 }
 
 void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	isOnGround = false;
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
 	{
 		cap.pos.x += cap.vel.x * dt;
 		cap.pos.y += cap.vel.y * dt;
-		//cap.SetState(State::Captain_Jumping);
+		isOnGround = false;
 		return;
 	}
 
@@ -128,7 +132,7 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 			switch (block->GetType())
 			{
 				case ClassId::Water:
-					return;
+					// return;
 					if (e.ny < 0) cap.SetState(State::Captain_FallToWater);
 					break;
 
@@ -144,8 +148,8 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 					break;
 
 				case ClassId::DamageBlock:
-					if (!cap.isFlashing)
-					{
+					isOnGround = true;
+					if (!cap.isFlashing) {
 						cap.health.Subtract(1);
 						cap.SetState(State::Captain_Injured);
 					}
@@ -153,6 +157,7 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 
 				case ClassId::PassableLedge:
 				case ClassId::RigidBlock:
+					isOnGround = true;
 					break;
 
 				default:

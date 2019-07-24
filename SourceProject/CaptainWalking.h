@@ -6,6 +6,7 @@ class CaptainWalking : public CaptainState
 	static constexpr auto WALKING_SPEED = 65.0f;
 private:
 	bool isToSittingTackle = false;
+	bool isOnGround;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;
