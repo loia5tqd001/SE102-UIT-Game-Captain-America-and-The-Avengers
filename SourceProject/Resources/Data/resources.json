@@ -99,7 +99,7 @@
 	[         113,            10,      169,     192,              29,               38,         1,            0], //Captain_Injure
 	[         114,            10,       88,     209,              26,               23,         1,            0], //Captain_Die
 	[         115,            10,       89,     244,              18,               12,         2,           13], //Captain_Swimming
-	[         116,            10,      151,     238,              32,               25,         4,            1], //Captain_FallToWater
+	[         116,            10,      202,     251,              16,               12,         3,            7], //Captain_FallToWater
 	[         117,            10,      330,     248,              16,                7,         3,            4], //Captain_InWater
 	[         118,            10,        9,      83,              21,               27,         1,            0]  //Captain_CoverLow
   ],

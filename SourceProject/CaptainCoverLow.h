@@ -15,4 +15,3 @@ public:
 	void Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects) override;
 	void HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects) override;
 };
-

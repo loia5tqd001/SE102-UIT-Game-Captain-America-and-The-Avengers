@@ -6,7 +6,6 @@ class EnemyGun : public Enemy
 {
 private:
 	static constexpr float JUMP_SPEED    = 50.0f;
-	static constexpr float FALL_BACK	 = 50.0f;
 
 	float WALKING_SPEED = 40.0f;
 	bool justShoot = false;

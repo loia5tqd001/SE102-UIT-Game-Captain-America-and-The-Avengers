@@ -14,6 +14,7 @@ void CaptainFallToWater::Enter(Captain& cap, State fromState, Data&& data)
 
 Data CaptainFallToWater::Exit(Captain& cap, State toState)
 {
+	Sounds::PlayAt(SoundId::Water);
 	return Data{};
 }
 

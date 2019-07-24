@@ -10,7 +10,13 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 		|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
 		|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
 		|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
-	    || fromState == State::Captain_Kicking);
+	    || fromState == State::Captain_Kicking  || fromState == State::Captain_FallToWater);
+	if (fromState == State::Captain_Swimming ||
+		fromState == State::Captain_InWater ||
+		fromState == State::Captain_FallToWater)
+	{
+		Sounds::PlayAt(SoundId::Water);
+	}
 	if (fromState == State::Captain_Kicking)
 	{
 		JumpHeightRealCounter = data.Get<float>(JUMP_HEIGHT_RealCounter);

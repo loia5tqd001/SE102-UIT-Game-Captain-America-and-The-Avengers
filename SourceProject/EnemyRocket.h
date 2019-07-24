@@ -8,7 +8,6 @@ private:
 	static constexpr float WALKING_SPEED = 50.0f;
 	static constexpr float JUMP_SPEED = 50.0f;
 	static constexpr float GRAVITY = 50.0f;
-	static constexpr float FALL_BACK = 50.0f;
 
 	void OnBehaviorShoot();
 	void OnBehaviorBackAndForth();

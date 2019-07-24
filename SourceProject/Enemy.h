@@ -3,7 +3,7 @@
 class Enemy : public VisibleObject
 {
 protected:
-	static constexpr float FALL_BACK = 50.0f;
+	static constexpr float FALL_BACK = 100.0f;
 
 	int health;
 	Grid* grid;

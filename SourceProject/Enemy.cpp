@@ -18,16 +18,18 @@ void Enemy::UpdateAnimation(float dt)
 	if (isFlashing)
 		OnFlashing();
 
+	animations.at(curState).Update(dt);
+
 	if (animations.at(beforeExplode).IsDoneCycle())
 	{
 		SetState(Explode);
+		Sounds::PlayAt(SoundId::Explosion);
 	}
-	if (animations.at(Explode).IsDoneCycle())
+	else if (animations.at(Explode).IsDoneCycle())
 	{
 		SetState(State::Destroyed);
 	}
 
-	animations.at(curState).Update(dt);
 }
 
 RectF Enemy::GetBBox() const

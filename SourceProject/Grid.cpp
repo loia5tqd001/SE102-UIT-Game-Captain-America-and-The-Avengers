@@ -87,6 +87,7 @@ GameObject* Grid::SpawnObject(std::shared_ptr<GameObject> obj, IsMoving isMoving
 
 Area Grid::GetCells(const RectF& bbox, int broadX, int broadY) const
 {
+	if (bbox.IsNone()) return {};
 	return 	{
 		UINT(max(0         ,      bbox.left   / cellSize      - broadX)),
 		UINT(min(width  - 1, ceil(bbox.right  / cellSize) - 1 + broadX)),

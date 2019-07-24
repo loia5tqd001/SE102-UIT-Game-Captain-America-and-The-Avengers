@@ -12,7 +12,7 @@ void CaptainFalling::Enter(Captain & cap, State fromState, Data && data)
 	//Todo: Check if Cap is already on the ground or brick or something, switch to another state immediately
 	cap.vel.y = FALL_SPEED_VER;
 
-	if (fromState != State::Captain_CoverLow) {
+	if (data.Count(IS_KICKED)) {
 		isKicked = data.Get<bool>(IS_KICKED);
 	}
 }

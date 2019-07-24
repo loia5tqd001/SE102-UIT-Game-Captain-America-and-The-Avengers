@@ -22,7 +22,7 @@ struct RectF
 	Vector2  GetCenter () const { return { (left + right) / 2, (top + bottom) / 2} ; }
 	float    GetWidth  () const { return right - left                              ; }
 	float    GetHeight () const { return bottom - top                              ; }
-	bool     IsNone    () const { return left == right                             ; }
+	bool     IsNone    () const { return left == right || top == bottom            ; }
 	RectF    Clone     () const { return *this                                     ; }
 
 	RectF GetOriginRect() const
