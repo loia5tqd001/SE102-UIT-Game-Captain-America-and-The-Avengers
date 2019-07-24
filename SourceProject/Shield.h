@@ -8,7 +8,6 @@ private:
 	bool isOnCaptain = true;
 	float distance = 0;
 	class Captain& cap;
-	void UpdateByCapState(State capState, Vector2 capPos);
 	void flipPosx();
 	float timeToThrow = 0.0f;
 	bool isMoved = false;
@@ -20,6 +19,7 @@ private:
 	void HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects); //with cap
 public:
 	Shield(Captain& cap);
+	void UpdateByCapState(State capState, Vector2 capPos);
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {});
 	void ThrowAway();
 };
