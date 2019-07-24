@@ -198,7 +198,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		else if (capState == State::Captain_Throwing)
 		{
 			pos.x = capPos.x - 5;
-			pos.y = capPos.y + 7;
+			pos.y = capPos.y - 7;
 			SetState(State::Shield_Up);
 		}
 		else if (capState == State::Captain_Tackle)
@@ -247,11 +247,12 @@ void Shield::flipPosx()
 
 void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (nx < 0 && pos.x < cap.GetPos().x + cap.GetWidth())
+	//if (nx < 0 && pos.x < cap.GetPos().x + cap.GetWidth())
 	{
-		cap.setShieldOn(true);
 		if (nx < 0 && pos.x < cap.GetPos().x + cap.GetWidth() / 4)
 		{
+			cap.setShieldOn(true);
+
 			UpdateByCapState(cap.GetState(), cap.GetPos());
 			isOnCaptain = true;
 			distance = 0;
@@ -259,10 +260,12 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 			isMoved = false;
 		}
 	}
-	else if (nx > 0 && pos.x > cap.GetPos().x) {
-		cap.setShieldOn(true);
+	//else if (nx > 0 && pos.x > cap.GetPos().x) 
+	{
 		if (nx > 0 && pos.x > cap.GetPos().x + cap.GetWidth() / 4)
 		{
+			cap.setShieldOn(true);
+
 			UpdateByCapState(cap.GetState(), cap.GetPos());
 			isOnCaptain = true;
 			distance = 0;
