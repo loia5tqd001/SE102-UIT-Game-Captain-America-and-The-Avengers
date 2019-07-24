@@ -6,7 +6,7 @@ private:
 	Vector2 pos; 
 	const UINT width  = Window::Instance().GetWidth (); 
 	const UINT height = Window::Instance().GetHeight();
-	float radius = 14.0f;
+	float radius = 34.0f;
 
 public:
 	void  MoveTo(const Vector2& newPos);

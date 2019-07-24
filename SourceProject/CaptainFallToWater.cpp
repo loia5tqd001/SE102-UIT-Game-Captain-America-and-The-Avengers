@@ -28,8 +28,8 @@ void CaptainFallToWater::OnKeyDown(Captain& cap, BYTE keyCode)
 	//Jump out the water
 	if (keyCode==setting.Get(KeyControls::Jump))
 	{
-		//cap.SetState(State::Captain_Jumping);
-		//NOTE:this seems not right according to physics :)) 
+		cap.SetState(State::Captain_Jumping);
+		//NOTE:this seems not right according to physics :))  // anyway ~
 	}
 }
 

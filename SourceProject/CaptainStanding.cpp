@@ -43,29 +43,23 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 			return;
 		}
 	}
-	else if (keyCode == setting.Get(KeyControls::Left))
-	{
-		cap.nx = - 1;
-		cap.SetState(State::Captain_Walking);
-	}
-	else if (keyCode == setting.Get(KeyControls::Right))
-	{
-		cap.nx = 1;
-		cap.SetState(State::Captain_Walking);
-	}
-	else if (keyCode == setting.Get(KeyControls::Up))
-	{
-		cap.SetState(State::Captain_CoverTop);
-	}
-	else if (keyCode == setting.Get(KeyControls::Down))
+}
+
+void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
+{
+	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
 	{
 		cap.SetState(State::Captain_Sitting);
 	}
-	else if (keyCode == setting.Get(KeyControls::Jump))
+	else if (wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
+	{
+		cap.SetState(State::Captain_CoverTop);
+	}
+	else if (wnd.IsKeyPressed(setting.Get(KeyControls::Jump)))
 	{
 		cap.SetState(State::Captain_Jumping);
 	}
-	else if (keyCode == setting.Get(KeyControls::Attack))
+	else if (wnd.IsKeyPressed(setting.Get(KeyControls::Attack)))
 	{
 		if (cap.shieldOn) {
 			cap.SetState(State::Captain_Throwing);
@@ -74,28 +68,25 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 			cap.SetState(State::Captain_Punching);
 		}
 	}
-}
-
-void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
-{
-	int dir = 0;
-	if (wnd.IsKeyPressed( setting.Get(KeyControls::Left) ))
+	else
 	{
-		dir --;
-	}
-	if (wnd.IsKeyPressed( setting.Get(KeyControls::Right) ))
-	{
-		dir ++;
-		cap.nx = 1;
-	}
-	if (dir != 0)
-	{
-		cap.nx = dir;
-		cap.SetState(State::Captain_Walking);
+		int dir = 0;
+		if (wnd.IsKeyPressed( setting.Get(KeyControls::Left) ))
+		{
+			dir --;
+		}
+		if (wnd.IsKeyPressed( setting.Get(KeyControls::Right) ))
+		{
+			dir ++;
+			cap.nx = 1;
+		}
+		if (dir != 0)
+		{
+			cap.nx = dir;
+			cap.SetState(State::Captain_Walking);
+		}
 	}
 
-
-	// when standing, almost do nothin, only respond to collisions
 	HandleCollisions(cap, dt, coObjects);
 }
 

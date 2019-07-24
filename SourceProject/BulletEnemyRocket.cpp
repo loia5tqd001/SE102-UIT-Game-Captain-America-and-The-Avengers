@@ -2,12 +2,20 @@
 #include "BulletEnemyRocket.h"
 
 BulletEnemyRocket::BulletEnemyRocket(int nx, int type, Enemy *enemy, const Vector2 & spawnPos, Vector2 vel) :
-	Bullet(type ? State::BulletEnemyRocket_Cross : State::BulletEnemyRocket_Horizontal, 
+	Bullet((type == 1) ? State::BulletEnemyRocket_Cross : State::BulletEnemyRocket_Horizontal, 
 		   1, spawnPos, { nx * BULLET_MOVING, 0.0f }, nx, enemy),
 	type(type)
 {
-	animations.emplace(State::BulletEnemyRocket_Cross, Animation(SpriteId::BulletEnemyRocket_Cross, 0.1f));
-	animations.emplace(State::BulletEnemyRocket_Horizontal, Animation(SpriteId::BulletEnemyRocket_Horizontal, 0.1f));
+	if (type == 2) // EnemyRocket-BackAndForth
+	{
+		this->type = 0, this->vel.x *= 2;
+		animations.emplace(State::BulletEnemyRocket_Horizontal, Animation(SpriteId::BulletEnemyRocket_Horizontal, 0.05f));
+	}
+	else
+	{
+		animations.emplace(State::BulletEnemyRocket_Horizontal, Animation(SpriteId::BulletEnemyRocket_Horizontal, 0.1f));
+		animations.emplace(State::BulletEnemyRocket_Cross, Animation(SpriteId::BulletEnemyRocket_Cross, 0.1f));
+	}
 
 	if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth()); // this code is critical
 }

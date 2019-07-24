@@ -9,8 +9,16 @@ EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Gri
 {
 	animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode, 0.2f));
 	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.09f));
-	animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.75f));
-	animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.75f));
+	if (behavior == Behaviors::EnemyRocket_BackAndForth)
+	{
+		animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.6f));
+		animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.6f));
+	}
+	else
+	{
+		animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.75f));
+		animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.75f));
+	}
 	if (behavior == Behaviors::EnemyRocket_Ambush) nx = -1;
 	else nx = - cap->GetNx();
 	SetState(State::EnemyRocket_Walking);
@@ -22,6 +30,8 @@ EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Gri
 			rocketType = 1;
 			break;
 		case Behaviors::EnemyRocket_BackAndForth:
+			SetState(State::EnemyRocket_Sitting);
+			rocketType = 2;
 			break;
 		case Behaviors::EnemyRocket_Ambush:
 			break;
@@ -76,19 +86,53 @@ void EnemyRocket::OnBehaviorShoot()
 	}
 }
 
+void EnemyRocket::BackAndForthJump()
+{
+	static constexpr float JUMP_HOR = 45.0f;
+	static constexpr float GRAVITY = 100.0f;
+	static float accelerator = 0.0f;
+	static int dirY = -1;
+
+	pos.x -= JUMP_HOR * GameTimer::Dt();
+	if (dirY == -1)
+	{
+		accelerator += 0.01f * GameTimer::Dt();
+		pos.y -= GRAVITY * GameTimer::Dt() - accelerator;
+		if (pos.y < 270.0f) { // 265 is the highest position of jump
+			dirY = 1;
+		}
+	}
+	else
+	{
+		pos.y += GRAVITY * GameTimer::Dt();
+		if (pos.y + GetHeight() >= 437.0f) // 437 is the ground
+		{
+			pos.y = 437.0f - GetHeight(); 
+			isLastForth = !isLastForth;
+			SetState(State::EnemyRocket_Stand);
+		}
+	}
+}
+
 void EnemyRocket::OnBehaviorBackAndForth()
 {
 	assert(behavior == Behaviors::EnemyRocket_BackAndForth);
-	assert(rocketType == 0); // straight rocket only
+	assert(rocketType == 2); // straight rocket only
 
 	// if y == tren buc && nx == -1 -> nhay xuong
 	// if y == tren buc && nc == 1 -> nhay len
+	if (pos.y + GetHeight() < 437.0f) {
+		BackAndForthJump();
+		return;
+	}
+
 
 	if (animations.at(curState).IsDoneCycle())
 	switch (curState)
 	{
 		case State::EnemyRocket_Walking:
 			if (++countWalkStep >= 4) {
+				lastState = State::EnemyRocket_Walking;
 				SetState(State::EnemyRocket_Stand);
 				countWalkStep = 0;
 				isLastForth = !isLastForth;
@@ -96,12 +140,22 @@ void EnemyRocket::OnBehaviorBackAndForth()
 			break;
 
 		case State::EnemyRocket_Stand:
-			SetState(State::EnemyRocket_Sitting);
+			if (lastState == State::EnemyRocket_Sitting) 
+				SetState(State::EnemyRocket_Walking);
+			else
+				SetState(State::EnemyRocket_Sitting);
 			break;
 
 		case State::EnemyRocket_Sitting:
-			SpawnRocket();
-			SetState(State::EnemyRocket_Walking);
+			if (!justShoot) {
+				SpawnRocket();
+				justShoot = true;
+			}
+			else {
+				lastState = State::EnemyRocket_Sitting;
+				SetState(State::EnemyRocket_Stand);
+				justShoot = false;
+			}
 			break;
 
 		case State::EnemyRocket_BeforeExplode:

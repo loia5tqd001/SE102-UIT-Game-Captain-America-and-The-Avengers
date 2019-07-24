@@ -6,10 +6,9 @@ class EnemyRocket : public Enemy
 {
 private:
 	static constexpr float WALKING_SPEED = 55.0f;
-	static constexpr float JUMP_SPEED = 50.0f;
-	static constexpr float GRAVITY = 50.0f;
 
 	void OnBehaviorShoot();
+	void BackAndForthJump();
 	void OnBehaviorBackAndForth();
 	void OnBehaviorAmbush();
 
@@ -17,6 +16,7 @@ private:
 	int countWalkStep = 0;
 	bool justShoot = false;
 	bool isLastForth = false; 
+	State lastState = State::EnemyRocket_Walking;
 	Captain* cap;
 
 public:
