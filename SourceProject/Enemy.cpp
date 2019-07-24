@@ -23,7 +23,6 @@ void Enemy::UpdateAnimation(float dt)
 	if (animations.at(beforeExplode).IsDoneCycle())
 	{
 		SetState(Explode);
-		Sounds::PlayAt(SoundId::Explosion);
 	}
 	else if (animations.at(Explode).IsDoneCycle())
 	{

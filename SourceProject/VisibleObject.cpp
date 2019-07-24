@@ -28,7 +28,7 @@ void VisibleObject::OnFlashing(std::optional<bool> setFlashing)
 	if (isFlashing == false) { // currently not in flashing
 		shouldDrawImage = true;
 	}
-	else if ((timePassed += GameTimer::Dt()) <= 1.0f) { // if in flashing, accumulate timePassed, check if still in flashing
+	else if ((timePassed += GameTimer::Dt()) <= timeFlashing) { // if in flashing, accumulate timePassed, check if still in flashing
 
 		// my flashing rule: render each 1 frame per 10:
 		if (++nFrameUnrendered >= 2) {
@@ -91,4 +91,5 @@ void VisibleObject::SetState(State state)
 	curState = state;
 	pos.x += (oldWidth - GetWidth()) / 2;
 	pos.y += oldHeight - GetHeight();
+	if (state == State::Explode) Sounds::PlayAt(SoundId::Explosion);
 }

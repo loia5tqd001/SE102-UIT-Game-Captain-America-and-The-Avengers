@@ -6,11 +6,15 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
 	ignoreUpdate = false;
 
-	assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
-		|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
-		|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
-		|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
-	    || fromState == State::Captain_Kicking  || fromState == State::Captain_FallToWater);
+	//assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
+	//	|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
+	//	|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
+	//	|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
+	//    || fromState == State::Captain_Kicking  || fromState == State::Captain_FallToWater
+	//    || fromState == State::Captain_Injured);
+	// it's almost all of Captain states, why do we need those above anyway?
+
+	cap.vel.x = 0.0f; // avoid wind blowing phenomenon when jump from water
 	if (fromState == State::Captain_Swimming ||
 		fromState == State::Captain_InWater ||
 		fromState == State::Captain_FallToWater)

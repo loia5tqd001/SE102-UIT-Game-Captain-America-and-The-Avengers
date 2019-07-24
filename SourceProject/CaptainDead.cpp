@@ -5,6 +5,7 @@
 
 void CaptainDead::Enter(Captain& cap, State fromState, Data&& data)
 {
+	Sounds::PlayAt(SoundId::Death);
 	cap.shield->SetState(State::Invisible);
 }
 

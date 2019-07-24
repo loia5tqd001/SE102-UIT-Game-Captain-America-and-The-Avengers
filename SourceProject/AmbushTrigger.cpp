@@ -69,7 +69,9 @@ void AmbushTrigger::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (state == State::Ambush_NotYet || state == State::Ambush_HasDone) return;
 
-	if (countEnemyGun <= 0 && countEnemyRocket <= 0) // done ambush
+	if (countEnemyGun <= 0 && countEnemyRocket <= 0 &&
+		enemyGun->GetState() == State::Destroyed &&
+		enemyRocket->GetState() == State::Destroyed) // done ambush
 	{
 		state = State::Ambush_HasDone;
 		for (auto spawner : spawners) spawner->SetActive(true);
@@ -80,10 +82,9 @@ void AmbushTrigger::Update(float dt, const std::vector<GameObject*>& coObjects)
 		return;
 	}
 
-	if (enemyGun->GetState() == State::Destroyed && countEnemyGun > 0)
-	{
-		SpawnEnemyGun();
+	if (enemyGun->GetState() == State::Destroyed) {
 		countEnemyGun--;
+		if (countEnemyGun > 0 || countEnemyRocket > 0) SpawnEnemyGun();
 	}
 	else if (!enemyGun->VisibleObject::GetBBox().IsIntersect(lockCamera)) // going too far
 	{ 
@@ -91,10 +92,10 @@ void AmbushTrigger::Update(float dt, const std::vector<GameObject*>& coObjects)
 		countEnemyGun++;
 	}
 
-	if (enemyRocket->GetState() == State::Destroyed && countEnemyRocket > 0)
+	if (enemyRocket->GetState() == State::Destroyed)
 	{
-		SpawnEnemyRocket();
 		countEnemyRocket--;
+		if (countEnemyGun > 0 || countEnemyRocket > 0) SpawnEnemyRocket();
 	}
 	else if (!enemyRocket->VisibleObject::GetBBox().IsIntersect(lockCamera)) // going too far
 	{

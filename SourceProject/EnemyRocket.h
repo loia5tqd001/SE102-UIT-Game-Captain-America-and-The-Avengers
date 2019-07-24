@@ -5,7 +5,7 @@
 class EnemyRocket : public Enemy
 {
 private:
-	static constexpr float WALKING_SPEED = 50.0f;
+	static constexpr float WALKING_SPEED = 55.0f;
 	static constexpr float JUMP_SPEED = 50.0f;
 	static constexpr float GRAVITY = 50.0f;
 

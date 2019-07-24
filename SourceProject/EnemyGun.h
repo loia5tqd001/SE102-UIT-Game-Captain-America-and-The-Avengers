@@ -7,7 +7,7 @@ class EnemyGun : public Enemy
 private:
 	static constexpr float JUMP_SPEED    = 50.0f;
 
-	float WALKING_SPEED = 40.0f;
+	float WALKING_SPEED = 55.0f;
 	bool justShoot = false;
 	Captain* cap;
 

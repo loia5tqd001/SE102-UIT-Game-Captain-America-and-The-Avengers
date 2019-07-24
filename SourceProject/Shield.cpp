@@ -291,6 +291,7 @@ void Shield::HandleSideCollison(float dt, const std::vector<GameObject*>& coObje
 				if (e.nx > 0.0f && this->nx > 0 || e.nx < 0.0f && this->nx < 0)
 				{
 					bullet->Reflect();
+					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
 			}
 		}
@@ -312,6 +313,7 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 				if (e.ny < 0.0f)
 				{
 					bullet->Reflect();
+					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
 			}
 		}
@@ -345,6 +347,14 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 				if (e.ny > 0.0f)
 				{
 					enemy->TakeDamage(3);
+				}
+			}
+			else if (auto block = dynamic_cast<Block*>(e.pCoObj))
+			{
+				if (block->GetType() == ClassId::PassableLedge ||
+					block->GetType() == ClassId::RigidBlock)
+				{
+					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
 			}
 		}

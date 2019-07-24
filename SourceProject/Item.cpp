@@ -12,6 +12,7 @@ Item::Item(Vector2 pos, float maxY, SpriteId itemType, Capsule* parent) :
 	parent(parent)
 {
 	shouldDrawImage = false;
+	timeFlashing = 1.5f;
 
 	animations.emplace(State::Item_Hide			, Animation(itemType, 0.1f));
 	animations.emplace(State::Item_Bouncing		, Animation(itemType, 0.1f));

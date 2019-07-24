@@ -13,6 +13,7 @@ void CaptainPunching::Enter(Captain& cap, State fromState, Data&& data)
 
 Data CaptainPunching::Exit(Captain& cap, State toState)
 {
+	Sounds::PlayAt(SoundId::Punch);
 	return Data{};
 }
 
