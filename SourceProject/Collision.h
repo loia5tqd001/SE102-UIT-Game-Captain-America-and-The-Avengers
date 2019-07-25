@@ -16,4 +16,5 @@ struct CollisionDetector
 	static CollisionEvent SweptAABBEx(const GameObject& obj1, const GameObject& obj2, float dt);
 	static std::vector<CollisionEvent> CalcPotentialCollisions(const GameObject& obj, const std::vector<GameObject*>& coObjs, float dt);
 	static void FilterCollisionEvents(std::vector<CollisionEvent>& preFilter, float& min_tx, float& min_ty, float& nx, float&ny);
+	static std::vector<GameObject*> PhasingDetect(const GameObject & mainObj, const std::vector<GameObject*>& coObjs);
 };

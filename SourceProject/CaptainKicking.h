@@ -13,6 +13,8 @@ private:
 	bool isKicked = true;
 
 	bool SetAnotherState = false; //To end Update after Handle collision
+	
+	bool firstTimeUpdate = true;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

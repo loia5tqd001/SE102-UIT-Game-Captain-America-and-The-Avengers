@@ -124,3 +124,17 @@ void CollisionDetector::FilterCollisionEvents(std::vector<CollisionEvent>& coEve
 
 	coEvents = std::move(afterFilter);
 }
+
+std::vector<GameObject*> CollisionDetector::PhasingDetect(const GameObject & mainObj, const std::vector<GameObject*>& coObjs)
+{
+	RectF mainBox = mainObj.GetBBox();
+	std::vector<GameObject*> intersectObjects;
+	for (int i = 0;i < coObjs.size();i++)
+	{
+		if (mainBox.IsIntersect(coObjs.at(i)->GetBBox()))
+		{
+			intersectObjects.emplace_back(std::move(coObjs.at(i)));
+		}
+	}
+	return std::move(intersectObjects);
+}
