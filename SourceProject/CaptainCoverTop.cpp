@@ -98,6 +98,7 @@ void CaptainCoverTop::HandleCollisions(Captain& cap, float dt, const std::vector
 				cap.CollideWithPassableObjects(dt, e);
 			}
 			else {
+				cap.health.Subtract(1);
 				cap.SetState(State::Captain_Injured);
 				enemy->TakeDamage(1);
 			}

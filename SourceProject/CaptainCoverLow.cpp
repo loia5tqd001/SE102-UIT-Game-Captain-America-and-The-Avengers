@@ -115,7 +115,8 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 			}
 			else {
 				if (isOnGround)
-				{					
+				{				
+					cap.health.Subtract(1);
 					cap.SetState(State::Captain_Injured);
 					enemy->TakeDamage(1);
 				}
@@ -126,6 +127,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 					}
 					else
 					{
+						cap.health.Subtract(1);
 						cap.SetState(State::Captain_Injured);
 						enemy->TakeDamage(1);
 					}
@@ -159,6 +161,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::DamageBlock:
+				cap.health.Subtract(1);
 				cap.SetState(State::Captain_Injured);
 				break;
 

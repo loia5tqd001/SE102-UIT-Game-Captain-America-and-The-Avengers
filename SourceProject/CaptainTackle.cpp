@@ -79,6 +79,8 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 			switch (block->GetType())
 			{
 				case ClassId::RigidBlock:
+					if (e.nx != 0)
+						cap.SetState(State::Captain_Standing);
 				case ClassId::PassableLedge:
 					isStillOnGround = true;
 					if (e.ny > 0) AssertUnreachable();
@@ -138,8 +140,8 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj)) {
 			if (!dynamic_cast<BulletEnemyGun*>(e.pCoObj) && !cap.isFlashing)
 			{
-				cap.SetState(State::Captain_Injured);
 				cap.health.Subtract(bullet->GetDamage());
+				cap.SetState(State::Captain_Injured);
 			}
 			else {
 				cap.CollideWithPassableObjects(dt, e);

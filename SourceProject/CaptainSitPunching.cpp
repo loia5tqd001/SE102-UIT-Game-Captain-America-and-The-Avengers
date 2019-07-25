@@ -90,6 +90,7 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 				}
 				else
 				{
+					cap.health.Subtract(1);
 					cap.SetState(State::Captain_Injured);
 					enemy->TakeDamage(1);
 				}

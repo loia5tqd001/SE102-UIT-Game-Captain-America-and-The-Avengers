@@ -49,9 +49,9 @@ void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject
 	//the correct time is 40/60 = 0.666s right, if captain got injured more than this time means BUG, so i set this at 0.7
 	if (maxTimeHold > 0.7f)
 	{
-		maxTimeHold += GameTimer::Dt();
 		cap.SetState(State::Captain_Falling);
 	}
+	else { maxTimeHold += GameTimer::Dt(); }
 }
 
 void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -147,7 +147,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 				}
 				break;
 			case ClassId::Water:
-				if (e.ny < 0)
+				if (e.ny != 0)
 				{
 					cap.SetState(State::Captain_FallToWater);
 				}

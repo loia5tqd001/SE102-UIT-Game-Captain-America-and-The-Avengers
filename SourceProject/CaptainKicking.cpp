@@ -204,6 +204,7 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 			}
 			else
 			{
+				cap.health.Subtract(1);
 				cap.SetState(State::Captain_Injured);
 				SetAnotherState = true;
 				enemy->TakeDamage(1);
@@ -273,9 +274,9 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 			if (!cap.isFlashing)
 			{
 				bullet->HitCaptain();
+				cap.health.Subtract(bullet->GetDamage());
 				cap.SetState(State::Captain_Injured);
 				SetAnotherState = true;
-				cap.health.Subtract(1);
 			}
 		}
 	}

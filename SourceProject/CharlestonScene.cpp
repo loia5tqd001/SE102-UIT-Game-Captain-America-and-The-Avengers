@@ -32,7 +32,7 @@ void CharlestonScene::LoadResources()
 	//cap = std::make_unique<Captain>( Vector2{ 0.0f, 391.0f } ) ;
 	//cap = std::make_unique<Captain>(Vector2{ 53.0f, 20.0f });
 	//cap = std::make_unique<Captain>( Vector2{ 1673.0f, 391.0f } ) ;
-	cap = std::make_unique<Captain>( Vector2{ 73.0f, 91.0f } ) ;
+	cap = std::make_unique<Captain>( Vector2{ 1273.0f, 91.0f } ) ;
 	cam.SetMainCharacter(cap.get());
 }
 
