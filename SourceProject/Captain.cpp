@@ -79,6 +79,30 @@ RectF Captain::GetHitBox() const
 	}
 }
 
+void Captain::HanldePhasing(const std::vector<GameObject*>& psOjects)
+{
+	for (auto&o : psOjects)
+	{
+		if (auto block = dynamic_cast<Block*>(o))
+		{
+			if (block->GetType()==ClassId::Water)
+			{
+				switch (curState)
+				{
+				case State::Captain_Swimming:
+				case State::Captain_InWater:
+				case State::Captain_FallToWater:
+					break;
+				case State::Captain_Dead:
+					break;
+				default:
+					SetState(State::Captain_FallToWater);
+				}
+			}
+		}
+	}
+}
+
 void Captain::OnKeyDown(BYTE keyCode)
 {
 	currentState->OnKeyDown(*this, keyCode);

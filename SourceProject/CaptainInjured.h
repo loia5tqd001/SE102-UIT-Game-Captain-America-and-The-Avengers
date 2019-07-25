@@ -4,7 +4,6 @@
 class CaptainInjured : public CaptainState
 {
 	State pendingSwitchState;
-	Data data;
 	float posxWhenGotInjure;
 	float DistanceLeftToClimb;
 	void HandleNoCollisions(Captain &cap, float dt);

@@ -26,7 +26,6 @@ void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 Data CaptainKicking::Exit(Captain& cap, State toState)
 {
 	Sounds::PlayAt(SoundId::Punch);
-	Data data;
 	isKicked = true;
 	switch (toState)
 	{
@@ -60,16 +59,6 @@ void CaptainKicking::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (firstTimeUpdate)
-	{
-		auto list = CollisionDetector::PhasingDetect(cap, coObjects);
-		if (list.size()>0)
-		{
-			Debug::out("Phasing through something...\n");
-		}
-		firstTimeUpdate = false;
-	}
-
 	HandleCollisions(cap, dt, coObjects);
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{

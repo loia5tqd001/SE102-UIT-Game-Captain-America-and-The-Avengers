@@ -5,6 +5,7 @@ class CaptainState
 {
 protected:
 	// reference for more convenient reference in subclasses
+	Data data;
 	Window& wnd = Window::Instance();
 	Settings& setting = Settings::Instance();
 	SceneManager& sceneManager = SceneManager::Instance();
@@ -52,5 +53,7 @@ protected:
 	static constexpr auto TIME_KEEP_SPIN = 0.21f;
 
 	static constexpr auto WATER_LEVEL = 454.0f;
+
+	static constexpr auto COLLISION_OBJECT = "COLLISION_OBJECT";
 };
 

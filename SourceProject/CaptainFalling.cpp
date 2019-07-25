@@ -9,7 +9,6 @@ void CaptainFalling::HandleNoCollisions(Captain & cap, float dt)
 
 void CaptainFalling::Enter(Captain & cap, State fromState, Data && data)
 {
-	firstTimeUpdate = true;
 	//Todo: Check if Cap is already on the ground or brick or something, switch to another state immediately
 	cap.vel.y = FALL_SPEED_VER;
 
@@ -84,27 +83,6 @@ void CaptainFalling::OnKeyDown(Captain & cap, BYTE keyCode)
 
 void CaptainFalling::Update(Captain & cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (firstTimeUpdate)
-	{
-		auto list = CollisionDetector::PhasingDetect(cap, coObjects);
-		if (list.size() > 0)
-		{
-			Debug::out("Phasing through something...\n");
-			for (auto&o : list)
-			{
-				if (auto block = dynamic_cast<Block*>(o))
-				{
-					if (block->GetType() == ClassId::Water)
-					{
-						cap.SetState(State::Captain_FallToWater);
-						return;
-					}
-				}
-			}
-		}
-		firstTimeUpdate = false;
-	}
-
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.vel.x = -MOVING_HOR;
@@ -215,7 +193,8 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 				if (e.ny < 0) {
 					cap.SetState(State::Captain_Sitting);
 					//Sounds::PlayAt(SoundId::Grounding);
-				} else {
+				}
+				else {
 					cap.vel.y = +JUMP_SPEED_VER;
 				}
 				break;

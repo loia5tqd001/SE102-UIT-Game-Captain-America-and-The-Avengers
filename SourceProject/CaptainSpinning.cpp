@@ -31,7 +31,6 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 Data CaptainSpinning::Exit(Captain& cap, State toState)
 {
 	cap.nx = beginnx;
-	Data data;
 	data.Add(IS_KICKED, isKicked);
 	data.Add(SPIN_TIME_DOWN, timeDown);
 	data.Add(SPIN_TIME_UP, timeUp);

@@ -42,6 +42,12 @@ void CharlestonScene::Update(float dt)
 
 	for (auto& obj : grid->GetObjectsInViewPort()) // update objects
 		obj->Update(dt);
+	
+	auto lsPhasingObj =	CollisionDetector::PhasingDetect(*cap, grid->GetObjectsInViewPort());
+	if (lsPhasingObj.size()!=0)
+	{
+		cap->HanldePhasing(lsPhasingObj);
+	}
 
 	cap->Update(dt, grid->GetObjectsInViewPort()); // update Captain
 

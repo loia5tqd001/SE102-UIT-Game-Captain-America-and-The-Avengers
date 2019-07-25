@@ -65,7 +65,6 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 
 Data CaptainJumping::Exit(Captain& cap, State toState)
 {
-	Data data;
 	data.Add(IS_JUMP_RELEASED, isJumpReleased);
 	data.Add(JUMP_HEIGHT_RealCounter, JumpHeightRealCounter);
 	data.Add(JUMP_HEIGHT_NeedCounter, JumpHeightNeedCounter);

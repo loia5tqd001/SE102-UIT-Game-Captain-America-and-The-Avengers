@@ -10,7 +10,6 @@ void CaptainWalking::Enter(Captain& cap, State fromState, Data&& data)
 
 Data CaptainWalking::Exit(Captain& cap, State toState)
 {
-	Data data;
 	switch (toState)
 	{
 		case State::Captain_Sitting:
