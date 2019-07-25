@@ -3,6 +3,7 @@
 /// Resource: https://www.gamedev.net/articles/programming/general-and-gameplay-programming/swept-aabb-collision-detection-and-response-r3084/
 CollisionEvent CollisionDetector::SweptAABBEx(const GameObject & obj1, const GameObject & obj2, float dt)
 {
+	auto state = obj1.GetState();
 	const auto v1 = obj1.GetVelocity();
 	const auto v2 = obj2.GetVelocity();	
 	if (v1 == v2) return {}; // if two objects'r moving along together, obviously no collisions

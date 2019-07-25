@@ -280,6 +280,6 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	
 
 	OnFlashing();
-
+	Debug::Out("outsizeworld size: ", coObjects.size());
 	shield->Update(dt, coObjects);
 }

@@ -23,6 +23,7 @@ public:
 	void UpdateByCapState(State capState, Vector2 capPos);
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {});
 	void ThrowAway();
+	RectF GetBBox() const override;
 };
 
 

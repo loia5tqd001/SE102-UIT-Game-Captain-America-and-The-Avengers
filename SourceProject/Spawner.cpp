@@ -38,7 +38,6 @@ void Spawner::Update(float dt, const std::vector<GameObject*>& coObjects)
 void Spawner::OnCollideWithCap(Captain* cap)
 {
 	if (!readyToSpawn) return;
-	if (enemy) return; // if object's still alive
 	if (cap->GetNx() != expectCapNx) return;
 	else {
 		switch (objectBehavior)
@@ -57,6 +56,7 @@ void Spawner::OnCollideWithCap(Captain* cap)
 				enemy = std::make_shared<EnemyRocket>(objectBehavior, objSpawnPos, cap, grid);
 				grid->SpawnObject(enemy);
 				readyToSpawn = false;
+				if (objectBehavior == Behaviors::EnemyRocket_ShootStraight) enemy->is_debugging = true;
 				break;
 
 			default:

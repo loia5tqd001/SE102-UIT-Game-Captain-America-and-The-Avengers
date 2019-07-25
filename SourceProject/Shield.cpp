@@ -14,6 +14,7 @@ Shield::Shield(Captain& cap) :
 	animations.emplace(State::Shield_Side, Animation(SpriteId::Shield_Side, 0.1f));
 	UpdateByCapState(State::Captain_Standing, cap.GetPos());
 	bboxColor = Colors::MyPoisonGreen;
+	is_debugging = true;
 }
 
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
@@ -311,10 +312,13 @@ void Shield::HandleSideCollison(float dt, const std::vector<GameObject*>& coObje
 		}
 	}
 }
-
+#include "EnemyGun.h"
+#include "EnemyRocket.h"
 void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
+	//Debug::Out("inhere size:" ,coObjects.size());
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	//Debug::Out("after size:" ,coEvents.size());
 	if (coEvents.size() == 0) return;
 	if (isOnCaptain) //deflect bullet, this is use for bulletenemyboss
 	{   //TODO: change this to bulletenemyboss
@@ -338,10 +342,15 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 		{
 			const CollisionEvent& e = coEvents[i];
 
-			if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
+			if (auto enemy = dynamic_cast<EnemyGun*>(e.pCoObj))
 			{
 				enemy->TakeDamage(1);
-				Debug::out("Take damage enemy\n");
+				//Debug::out("Take damage enemygun\n");
+			}
+			else if (auto enemy = dynamic_cast<EnemyRocket*>(e.pCoObj))
+			{
+				enemy->TakeDamage(1);
+				//Debug::out("Take damage enemyrocket\n");
 			}
 		}
 	}
@@ -396,4 +405,9 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 			}
 		}
 	}
+}
+
+RectF Shield::GetBBox() const
+{
+	return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 0.05f, 0, (float)GetWidth() / 2 - 0.05f, 0);
 }
