@@ -201,7 +201,8 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::PassableLedge:
-				cap.CollideWithPassableObjects(dt, e);
+				// can go from floor to the ledge
+				//cap.CollideWithPassableObjects(dt, e);
 			case ClassId::RigidBlock:
 				break;
 

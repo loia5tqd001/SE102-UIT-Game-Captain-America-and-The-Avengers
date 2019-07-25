@@ -88,7 +88,7 @@ void VisibleObject::SetState(State state)
 	const auto oldHeight = GetHeight();
 	const auto oldWidth = GetWidth();
 	curState = state;
-	pos.x += (oldWidth - GetWidth()) / 2;
-	pos.y += oldHeight - GetHeight();
+	pos.x += float(oldWidth - GetWidth()) / 2.0f;
+	pos.y += float(oldHeight - GetHeight());
 	if (state == State::Explode) Sounds::PlayAt(SoundId::Explosion);
 }

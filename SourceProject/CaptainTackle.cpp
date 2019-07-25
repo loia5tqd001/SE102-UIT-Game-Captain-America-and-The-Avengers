@@ -120,7 +120,7 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 			ambush->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e);
 		}
-		else if (dynamic_cast<MovingLedge*>(e.pCoObj) || dynamic_cast<MovingLedge*>(e.pCoObj))
+		else if (dynamic_cast<MovingLedge*>(e.pCoObj) || dynamic_cast<BreakableLedge*>(e.pCoObj))
 		{
 			AssertUnreachable();
 		}
@@ -138,7 +138,7 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj)) {
-			if (!dynamic_cast<BulletEnemyGun*>(e.pCoObj) && !cap.isFlashing)
+			if (!cap.isFlashing)
 			{
 				cap.health.Subtract(bullet->GetDamage());
 				cap.SetState(State::Captain_Injured);
