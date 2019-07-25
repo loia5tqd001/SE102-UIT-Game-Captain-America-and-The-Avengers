@@ -3,15 +3,7 @@
 #include "Enemy.h"
 #include "BulletEnemyGun.h"
 
-// Psedocode: Collison handler for shield
-// Caculate next frame position normally
-// Caculate real vellocity to get next frame position
-// Call SweptAABB
-// If there is collision, hit phase through it, take damage
-// else 
-
-
-Shield::Shield(Captain& cap):
+Shield::Shield(Captain& cap) : 
 	VisibleObject(State::Shield_Straight, cap.GetPos()),
 	cap(cap)
 {
@@ -27,14 +19,11 @@ Shield::Shield(Captain& cap):
 
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	Debug::out("Shield position: (%f , %f)\n", pos.x, pos.y);
-
 	if (isOnCaptain)
 		nx = cap.GetNx();// get nx to flip posx
 
 	switch (curState)
 	{
-#pragma region --NotShieldUp--
 	case State::Invisible:
 		UpdateByCapState(cap.GetState(), cap.GetPos());
 		break;
@@ -58,28 +47,30 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 		HandleStraightCollison(dt, coObjects);
 		break;
 	}
-#pragma endregion
-
 	case State::Shield_Up:
 	{
 		if (isOnCaptain) //Don't handle collison
 			UpdateByCapState(cap.GetState(), cap.GetPos()); //Don't handle collison
 		else
 		{
+
 			timeToThrow += GameTimer::Dt();
-			if (timeToThrow < 0.1f) //Todo: Upgrade this one
+			if (timeToThrow < 0.1f)
 			{
-				if (cap.GetState() == State::Captain_Throwing)
+				if (cap.GetState() == State::Captain_Throwing) {
 					UpdateByCapState(cap.GetState(), cap.GetPos());
+				}
 				else
 				{
-					if (!isMoved)
-					{
+					if (!isMoved) {
 						isMoved = true;
-						if (cap.GetNx() == 1)
+						if (cap.GetNx() == 1) {
 							pos.x += 20;
+						}
 						else
+						{
 							pos.x -= 20;
+						}
 						pos.y += 8;
 					}
 				}
@@ -87,15 +78,17 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 			}
 			if (!isMoved)
 			{
+				/*pos.x = capPos.x - 5;
+				pos.y = capPos.y - 7;*/
 				isMoved = true;
 				if (cap.GetNx() == 1) {
-					unHandleColPosition.x += 10;
-					unHandleColPosition.y += 8;
+					pos.x += 10;
+					pos.y += 8;
 				}
 				else
 				{
-					unHandleColPosition.x -= 10;
-					unHandleColPosition.y += 8;
+					pos.x -= 10;
+					pos.y += 8;
 				}
 			}
 			//to the max_distance
@@ -122,7 +115,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				Vector2 shieldCenter = this->GetBBox().GetCenter();
 				Vector2 capCenter = cap.GetBBox().GetCenter();
 				Vector2 trans = capCenter - shieldCenter;
-				float ratio = (SPEED * dt) / std::abs(capCenter.x - shieldCenter.x);
+				float ratio = (SPEED * dt) / std::abs(capCenter.x-shieldCenter.x);
 				trans.x *= ratio;
 				trans.y *= ratio;
 
@@ -130,11 +123,8 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				vel.x = nx * SPEED;
 				vel.y = trans.y;
 				pos.y += trans.y;
+
 				HandleCaptainCollison(dt, coObjects); //distance = 0
-				if (isOnCaptain) //Stop Collision Handler
-				{
-					return;
-				}
 			}
 		}
 
@@ -169,7 +159,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		else if (capState == State::Captain_Walking)
 		{
 			pos.x = capPos.x + 18;
-			pos.y = capPos.y + 6;
+			pos.y = capPos.y + 7;
 			SetState(State::Shield_Straight);
 		}
 		else if (capState == State::Captain_Sitting)
@@ -234,7 +224,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		{
 			SetState(State::Invisible);
 		}
-		else if (capState == State::Captain_CoverTop)
+		else if (capState==State::Captain_CoverTop)
 		{
 			pos.x = capPos.x + 3;
 			pos.y = capPos.y - 4;
@@ -283,7 +273,7 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 {
 	//if (nx < 0 && pos.x < cap.GetPos().x + cap.GetWidth())
 	{
-		if (nx < 0 && unHandleColPosition.x < cap.GetPos().x + cap.GetWidth() / 4)
+		if (nx < 0 && pos.x < cap.GetPos().x + cap.GetWidth() / 4)
 		{
 cap.setShieldOn(true);
 
@@ -296,7 +286,7 @@ isMoved = false;
 	}
 	//else if (nx > 0 && pos.x > cap.GetPos().x) 
 	{
-		if (nx > 0 && unHandleColPosition.x > cap.GetPos().x + cap.GetWidth() / 4)
+		if (nx > 0 && pos.x > cap.GetPos().x + cap.GetWidth() / 4)
 		{
 			cap.setShieldOn(true);
 
@@ -334,11 +324,10 @@ void Shield::HandleSideCollison(float dt, const std::vector<GameObject*>& coObje
 
 #include "EnemyGun.h"
 #include "EnemyRocket.h"
-
 void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
+	//Debug::Out("inhere size:" ,coObjects.size());
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
-
 	if (coEvents.size() == 0) return;
 
 	if (isOnCaptain) //deflect bullet, this is use for bulletenemyboss
@@ -357,10 +346,6 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 			}
 		}
 	}
-	//Check above
-
-
-
 	else //cause damage to enemy
 	{
 		for (UINT i = 0; i < coEvents.size(); i++)
@@ -382,7 +367,6 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 				capsule->BeingHit();
 			}
 		}
-		HandleNoCollision(dt);
 	}
 }
 
@@ -391,14 +375,14 @@ void Shield::HandleStraightCollison(float dt, const std::vector<GameObject*>& co
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
 	if (coEvents.size() == 0) return;
 	if (isOnCaptain)
-	{
+	{  
 		for (UINT i = 0; i < coEvents.size(); i++)
 		{
 			const CollisionEvent& e = coEvents[i];
 
 			if (auto bullet = dynamic_cast<BulletEnemyGun*>(e.pCoObj)) //
 			{
-				if (nx > 0 && e.nx < 0.0f || nx <0 && e.nx > 0.0f)
+				if (nx >0 && e.nx < 0.0f || nx <0 && e.nx > 0.0f)
 				{
 					bullet->Reflect();
 					Sounds::PlayAt(SoundId::ShieldCollide);
