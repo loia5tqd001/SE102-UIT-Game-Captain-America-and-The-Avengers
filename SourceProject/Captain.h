@@ -25,6 +25,7 @@ private:
 	CaptainState* currentState;
 
 	bool canPhaseThroughFloor;
+	State prePhasingState;
 	State phasingState;
 	bool shieldOn = true;
 	std::unique_ptr<Shield> shield;

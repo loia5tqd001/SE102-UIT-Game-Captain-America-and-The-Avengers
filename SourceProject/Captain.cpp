@@ -7,7 +7,8 @@ Captain::Captain(const Vector2& pos) :
 	VisibleObject(State::Captain_Standing, pos),
 	currentState(&stateStanding),
 	canPhaseThroughFloor(false),
-	phasingState(State::NotExist)
+	phasingState(State::NotExist),
+	prePhasingState(State::NotExist)
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
 	animations.emplace(State::Captain_Walking, Animation(SpriteId::Captain_Walking, 0.15f));
@@ -64,20 +65,20 @@ RectF Captain::GetHitBox() const
 {
 	switch (curState)
 	{
-		case State::Captain_Kicking:
-			if (nx > 0) return VisibleObject::GetBBox().Trim(28, 10, 0, 8);
-			else        return VisibleObject::GetBBox().Trim(0, 10, 28, 8);
+	case State::Captain_Kicking:
+		if (nx > 0) return VisibleObject::GetBBox().Trim(28, 10, 0, 8);
+		else        return VisibleObject::GetBBox().Trim(0, 10, 28, 8);
 
-		case State::Captain_Punching:
-			if (nx > 0) return VisibleObject::GetBBox().Trim(28, 6, 0, 29);
-			else        return VisibleObject::GetBBox().Trim(0, 6, 28, 29);
+	case State::Captain_Punching:
+		if (nx > 0) return VisibleObject::GetBBox().Trim(28, 6, 0, 29);
+		else        return VisibleObject::GetBBox().Trim(0, 6, 28, 29);
 
-		case State::Captain_SitPunching:
-			if (nx > 0) return VisibleObject::GetBBox().Trim(27, 5, 0, 16);
-			else        return VisibleObject::GetBBox().Trim(0, 5, 27, 16);
+	case State::Captain_SitPunching:
+		if (nx > 0) return VisibleObject::GetBBox().Trim(27, 5, 0, 16);
+		else        return VisibleObject::GetBBox().Trim(0, 5, 27, 16);
 
-		default:
-			return {};
+	default:
+		return {};
 	}
 }
 
@@ -87,7 +88,7 @@ void Captain::HanldePhasing(const std::vector<GameObject*>& psOjects)
 	{
 		if (auto block = dynamic_cast<Block*>(o))
 		{
-			if (block->GetType()==ClassId::Water)
+			if (block->GetType() == ClassId::Water)
 			{
 				switch (curState)
 				{
@@ -101,11 +102,11 @@ void Captain::HanldePhasing(const std::vector<GameObject*>& psOjects)
 					SetState(State::Captain_FallToWater);
 				}
 			}
-			else if (block->GetType()==ClassId::PassableLedge)
+			else if (block->GetType() == ClassId::PassableLedge)
 			{
 				if (canPhaseThroughFloor)
 				{
-					if (curState==phasingState)
+					if (curState == phasingState)
 					{
 						return;
 					}
@@ -122,6 +123,21 @@ void Captain::HanldePhasing(const std::vector<GameObject*>& psOjects)
 				{
 					SetState(State::Captain_Sitting);
 					pos.y = block->GetPos().y - GetHeight();
+				}
+			}
+			else if (block->GetType() == ClassId::RigidBlock)
+			{
+				if (prePhasingState == State::Captain_Sitting)
+				{
+					if (nx == 1)
+					{
+						pos.x = block->GetPos().x - this->GetWidth();
+					}
+					else if (nx == -1)
+					{
+						pos.x = block->GetPos().x + block->GetBBox().GetWidth();
+					}
+					SetState(State::Captain_Sitting);
 				}
 			}
 		}
@@ -150,6 +166,7 @@ void Captain::OnKeyUp(BYTE keyCode)
 
 void Captain::SetState(State state)
 {
+	prePhasingState = curState;
 	auto exitData = currentState->Exit(*this, state);
 	switch (state)
 	{
@@ -183,7 +200,7 @@ void Captain::SetState(State state)
 	{
 		switch (state)
 		{
-		case State::Invisible:  
+		case State::Invisible:
 			Debug::out("Cap.SetState(State::Invisible)\n");
 			break;
 		case State::Destroyed:
@@ -259,24 +276,24 @@ void Captain::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
 	const auto capBbox = GetBBox();
 
 	for (auto& obj : coObjects)
-	if (capBbox.IsIntersect(obj->GetBBox())) 
-	{
-		if (auto enemy = dynamic_cast<Enemy*>(obj))
+		if (capBbox.IsIntersect(obj->GetBBox()))
 		{
-			enemy->TakeDamage(1);
-			this->health.Subtract(1);
-			SetState(State::Captain_Injured);
+			if (auto enemy = dynamic_cast<Enemy*>(obj))
+			{
+				enemy->TakeDamage(1);
+				this->health.Subtract(1);
+				SetState(State::Captain_Injured);
+			}
+			else if (auto bullet = dynamic_cast<Bullet*>(obj))
+			{
+				this->health.Subtract(bullet->GetDamage());
+				SetState(State::Captain_Injured);
+			}
+			else if (auto item = dynamic_cast<Item*>(obj))
+			{
+				item->BeingCollected();
+			}
 		}
-		else if (auto bullet = dynamic_cast<Bullet*>(obj))
-		{
-			this->health.Subtract(bullet->GetDamage());
-			SetState(State::Captain_Injured);
-		}
-		else if (auto item = dynamic_cast<Item*>(obj))
-		{
-			item->BeingCollected();
-		}
-	}
 }
 
 void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
@@ -296,37 +313,37 @@ void Captain::HandleHitBox(float dt, const std::vector<GameObject*>& coObjects)
 	if (GetHitBox().IsNone()) return;
 
 	for (auto& obj : coObjects)
-	if (GetHitBox().IsIntersect(obj->GetBBox()))
-	{
-		if (auto capsule = dynamic_cast<Capsule*>(obj))
+		if (GetHitBox().IsIntersect(obj->GetBBox()))
 		{
-			capsule->BeingHit();
-		}
-		else if (auto enemy = dynamic_cast<Enemy*>(obj))
-		{
-			enemy->TakeDamage(1);
-		}
-		else if (auto block = dynamic_cast<Block*>(obj))
-		{
-			if (block->GetType() == ClassId::Switch)
+			if (auto capsule = dynamic_cast<Capsule*>(obj))
 			{
-				SceneManager::Instance().GetCurScene().isDark = 
-					!SceneManager::Instance().GetCurScene().isDark;
+				capsule->BeingHit();
 			}
+			else if (auto enemy = dynamic_cast<Enemy*>(obj))
+			{
+				enemy->TakeDamage(1);
+			}
+			else if (auto block = dynamic_cast<Block*>(obj))
+			{
+				if (block->GetType() == ClassId::Switch)
+				{
+					SceneManager::Instance().GetCurScene().isDark =
+						!SceneManager::Instance().GetCurScene().isDark;
+				}
+			}
+			// else if oil barrel in Red Alert ...
 		}
-		// else if oil barrel in Red Alert ...
-	}
-	
+
 }
 
 void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	animations.at(curState).Update(dt);
 
-	PrecheckAABB(dt, coObjects);	
+	PrecheckAABB(dt, coObjects);
 	currentState->Update(*this, dt, coObjects);
 	HandleHitBox(dt, coObjects);
-	
+
 
 	OnFlashing();
 	shield->Update(dt, coObjects);
