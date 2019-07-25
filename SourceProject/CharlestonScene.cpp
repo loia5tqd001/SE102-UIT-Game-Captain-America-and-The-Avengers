@@ -29,10 +29,11 @@ void CharlestonScene::LoadResources()
 	grid = std::make_unique<Grid>( root );
 
 	//cap = std::make_unique<Captain>( Vector2{ 173.0f, 391.0f } ) ;
-	cap = std::make_unique<Captain>( Vector2{ 0.0f, 391.0f } ) ;
+	//cap = std::make_unique<Captain>( Vector2{ 0.0f, 391.0f } ) ;
 	//cap = std::make_unique<Captain>(Vector2{ 53.0f, 20.0f });
 	//cap = std::make_unique<Captain>( Vector2{ 1673.0f, 391.0f } ) ;
-	cap = std::make_unique<Captain>( Vector2{ 173.0f, 391.0f } ) ;
+	cap = std::make_unique<Captain>( Vector2{ 1673.0f, 391.0f } ) ;
+	cam.SetMainCharacter(cap.get());
 }
 
 void CharlestonScene::Update(float dt)
@@ -44,50 +45,11 @@ void CharlestonScene::Update(float dt)
 
 	cap->Update(dt, grid->GetObjectsInViewPort()); // update Captain
 
-	// clamping 
-	// clamping cap
-	// clamping camera
+	// clamp captain and camera
+	cap->ClampWithin(map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f));
+	cam.FollowMainCharacter();
+	cam.ClampWithin(map->GetWorldBoundary());
 
-	if (ambush->GetState() == State::Ambush_Being) 
-		cap->ClampWithin(ambush->GetLockCaptain());
-	else 
-		cap->ClampWithin( map->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f) ); 
-
-	static bool shouldCenterCap = true;
-	if (ambush->GetState() == State::Ambush_Being) {
-		cam.ClampWithin(ambush->GetLockCamera());
-		shouldCenterCap = false;
-	}
-	else {
-		if (std::abs(cam.GetBBox().GetCenter().x - cap->GetCenter().x) <= 14.0f) {
-			cam.SetRadius(14.0f);
-		}
-		
-		cam.CenterAround( cap->GetCenter() );
-		cam.ClampWithin( map->GetWorldBoundary() );
-	}
-
-
-
-	if (wnd.IsKeyPressed(VK_NUMPAD5))
-	{
-		cap->SetState(State::Captain_FallToWater);
-	}
-
-	if (wnd.IsKeyPressed(VK_NUMPAD6))
-	{
-		cap->SetState(State::Captain_Climbing);
-	}
-
-	if (wnd.IsKeyPressed(VK_NUMPAD7))
-	{
-		cap->SetState(State::Captain_Falling);
-	}
-
-	if (wnd.IsKeyPressed(VK_NUMPAD8))
-	{
-		cap->SetState(State::Captain_Injured);
-	}
 }
 
 void CharlestonScene::Draw()

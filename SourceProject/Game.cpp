@@ -103,7 +103,7 @@ void Game::InitDirectDevice()
 void Game::Render()
 {
 	d3ddv->BeginScene();
-	d3ddv->ColorFill(backBuffer, NULL, D3DCOLOR_XRGB(255, 255, 255));
+	d3ddv->ColorFill(backBuffer, NULL, Colors::Black);
 	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
 	sceneManager.Draw();

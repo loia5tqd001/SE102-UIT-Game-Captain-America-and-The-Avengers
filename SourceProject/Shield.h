@@ -3,8 +3,8 @@
 class Shield : public VisibleObject
 {
 private:
-	static constexpr float MAX_DISTANCE = 150.0f;
-	static constexpr float SPEED = 400.0f;
+	static constexpr float MAX_DISTANCE = 130.0f;
+	static constexpr float SPEED = 350.0f;
 	bool isOnCaptain = true;
 	float distance = 0;
 	class Captain& cap;

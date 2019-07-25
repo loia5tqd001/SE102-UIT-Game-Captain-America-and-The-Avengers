@@ -294,27 +294,27 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 	{
 		if (nx < 0 && unHandleColPosition.x < cap.GetPos().x + cap.GetWidth() / 4)
 		{
-			cap.setShieldOn(true);
+cap.setShieldOn(true);
 
-			UpdateByCapState(cap.GetState(), cap.GetPos());
-			isOnCaptain = true;
-			distance = 0;
-			timeToThrow = 0;
-			isMoved = false;
+UpdateByCapState(cap.GetState(), cap.GetPos());
+isOnCaptain = true;
+distance = 0;
+timeToThrow = 0;
+isMoved = false;
 		}
 	}
 	//else if (nx > 0 && pos.x > cap.GetPos().x) 
 	{
-		if (nx > 0 && unHandleColPosition.x > cap.GetPos().x + cap.GetWidth() / 4)
-		{
-			cap.setShieldOn(true);
+	if (nx > 0 && unHandleColPosition.x > cap.GetPos().x + cap.GetWidth() / 4)
+	{
+		cap.setShieldOn(true);
 
-			UpdateByCapState(cap.GetState(), cap.GetPos());
-			isOnCaptain = true;
-			distance = 0;
-			timeToThrow = 0;
-			isMoved = false;
-		}
+		UpdateByCapState(cap.GetState(), cap.GetPos());
+		isOnCaptain = true;
+		distance = 0;
+		timeToThrow = 0;
+		isMoved = false;
+	}
 	}
 }
 
@@ -350,14 +350,11 @@ void Shield::HandleNoCollision(float dt)
 void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
-	if (coEvents.size() == 0)  
+	if (coEvents.size() == 0)
 	{
-		HandleNoCollision(dt); 
+		HandleNoCollision(dt);
 		return;
 	}
-
-	Debug::out("I did it, yoooo\n");
-
 
 	//Todo: Dung_Check this one later
 	if (isOnCaptain) //deflect bullet, this is use for bulletenemyboss
@@ -395,6 +392,10 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 			{
 				enemy->TakeDamage(1);
 				//Debug::out("Take damage enemyrocket\n");
+			}
+			else if (auto capsule = dynamic_cast<Capsule*>(e.pCoObj))
+			{
+				capsule->BeingHit();
 			}
 		}
 		HandleNoCollision(dt);

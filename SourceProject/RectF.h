@@ -36,6 +36,10 @@ struct RectF
 		left += dl, top += dt, right -= dr, bottom -= db;
 		return *this;
 	}
+	RectF& Append(float dl, float dt, float dr, float db)
+	{
+		return Trim(-dt, -dt, -dr, -db);
+	}
 	RectF GetTrim(float dl, float dt, float dr, float db) const
 	{
 		auto copy = *this;

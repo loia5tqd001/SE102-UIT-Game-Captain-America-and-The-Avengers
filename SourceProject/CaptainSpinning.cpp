@@ -7,7 +7,8 @@
 void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 {
 	SetAnotherState = false;
-	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Kicking || fromState == State::Captain_Injured);
+	// bug from falling change to
+	//assert(fromState == State::Captain_Jumping || fromState == State::Captain_Kicking || fromState == State::Captain_Injured);
 	cap.vel.y = -SPIN_SPEED_VER;
 	beginnx = cap.nx;
 

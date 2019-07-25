@@ -155,6 +155,10 @@ enum class State
 	Invisible,
 	Destroyed,
 
+	Camera_Normal,
+	Camera_InAmbush,
+	Camera_Recover,
+
 	EnemyGun_Walking,
 	EnemyGun_Stand,
 	EnemyGun_Sitting,
