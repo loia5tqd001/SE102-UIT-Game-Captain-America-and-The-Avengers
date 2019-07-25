@@ -9,7 +9,7 @@ Capsule::Capsule(Vector2 pos, SpriteId itemType, float maxY, Grid* grid) :
 	grid(grid)
 {
 	animations.emplace(State::Capsule_Idle, Animation(SpriteId::CapsuleIdle));
-	animations.emplace(State::Capsule_Openning, Animation(SpriteId::CapsuleOpenning, 0.15f));
+	animations.emplace(State::Capsule_Openning, Animation(SpriteId::CapsuleOpenning, 0.4f));
 	if (itemType == SpriteId::ItemKeyKrystal) bboxColor = Colors::DimRed;
 }
 

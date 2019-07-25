@@ -12,7 +12,7 @@ Captain::Captain(const Vector2& pos) :
 	animations.emplace(State::Captain_Jumping, Animation(SpriteId::Captain_Jump, 0.3f));
 	animations.emplace(State::Captain_Falling, Animation(SpriteId::Captain_Falling, 0.3f));
 	animations.emplace(State::Captain_CoverTop, Animation(SpriteId::Captain_LookUp, 0.2f));
-	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.08f));
+	animations.emplace(State::Captain_Sitting, Animation(SpriteId::Captain_Sitting, 0.04f));
 	animations.emplace(State::Captain_Punching, Animation(SpriteId::Captain_Punching, 0.1f));
 	animations.emplace(State::Captain_Throwing, Animation(SpriteId::Captain_Throw, 0.15f));
 	animations.emplace(State::Captain_Kicking, Animation(SpriteId::Captain_JumpKick, 0.15f));
@@ -32,7 +32,7 @@ Captain::Captain(const Vector2& pos) :
 	shield = std::make_unique<Shield>(*this);
 
 	bboxColor = Colors::MyPoisonGreen;
-	timeFlashing = 2.0f;
+	timeFlashing = 1.8f;
 }
 
 Vector2 Captain::GetCenter() const
@@ -280,6 +280,5 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	
 
 	OnFlashing();
-	//Debug::Out("outsizeworld size: ", coObjects.size());
 	shield->Update(dt, coObjects);
 }

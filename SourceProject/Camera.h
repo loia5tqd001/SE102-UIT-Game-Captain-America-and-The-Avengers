@@ -6,16 +6,21 @@ private:
 	Vector2 pos; 
 	const UINT width  = Window::Instance().GetWidth (); 
 	const UINT height = Window::Instance().GetHeight();
-	float radius = 34.0f;
+	float leftAppend, rightAppend;
+	class Captain* cap;
+	State state = State::Camera_Normal;
 
+	void CenterTo(const Vector2& center);
+	void CenterAround(const Vector2& center);
+	void OnRecover();
 public:
-	void  MoveTo(const Vector2& newPos);
-	void  MoveBy(const Vector2& dist);
-	void  CenterTo(const Vector2& center);
-	void  CenterAround(const Vector2& center);
-	void  ClampWithin(const RectF& theBox);
+	void SetMainCharacter(Captain* cap);
+	void FollowMainCharacter();
+	void MoveTo(const Vector2& newPos);
+	void MoveBy(const Vector2& dist);
+	void ClampWithin(const RectF& theBox);
+	void SetState(State state);
 	const RectF GetBBox() const;
-	void SetRadius(float rad) { radius = rad; }
 
 	Vector2 GetPositionInViewPort(const Vector2& objPos) const;
 
