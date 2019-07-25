@@ -79,6 +79,8 @@ void CaptainSitting::Update(Captain& cap, float dt, const std::vector<GameObject
 	{
 		cap.SetState(State::Captain_Falling);
 		cap.pos.y += 1.0f;
+		cap.canPhaseThroughFloor = true;
+		cap.phasingState = State::Captain_Falling;
 	}
 }
 

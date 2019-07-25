@@ -24,6 +24,8 @@ private:
 	friend class CaptainDead        ; CaptainDead        stateDead        ;      
 	CaptainState* currentState;
 
+	bool canPhaseThroughFloor;
+	State phasingState;
 	bool shieldOn = true;
 	std::unique_ptr<Shield> shield;
 	CaptainHealth& health = CaptainHealth::Instance();

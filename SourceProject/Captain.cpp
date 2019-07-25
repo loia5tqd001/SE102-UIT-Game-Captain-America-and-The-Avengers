@@ -5,7 +5,9 @@ static auto& setting = Settings::Instance();
 
 Captain::Captain(const Vector2& pos) :
 	VisibleObject(State::Captain_Standing, pos),
-	currentState(&stateStanding)
+	currentState(&stateStanding),
+	canPhaseThroughFloor(false),
+	phasingState(State::NotExist)
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
 	animations.emplace(State::Captain_Walking, Animation(SpriteId::Captain_Walking, 0.15f));
@@ -97,6 +99,29 @@ void Captain::HanldePhasing(const std::vector<GameObject*>& psOjects)
 					break;
 				default:
 					SetState(State::Captain_FallToWater);
+				}
+			}
+			else if (block->GetType()==ClassId::PassableLedge)
+			{
+				if (canPhaseThroughFloor)
+				{
+					if (curState==phasingState)
+					{
+						return;
+					}
+					else
+					{
+						phasingState = State::NotExist;
+						canPhaseThroughFloor = false;
+						return;
+					}
+				}
+				if (vel.y <= 0)
+					return;
+				else
+				{
+					SetState(State::Captain_Sitting);
+					pos.y = block->GetPos().y - GetHeight();
 				}
 			}
 		}
