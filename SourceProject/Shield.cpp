@@ -27,6 +27,8 @@ Shield::Shield(Captain& cap):
 
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	Debug::out("Shield position: (%f , %f)\n", pos.x, pos.y);
+
 	if (isOnCaptain)
 		nx = cap.GetNx();// get nx to flip posx
 
@@ -83,18 +85,17 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				}
 				return;
 			}
-
 			if (!isMoved)
 			{
 				isMoved = true;
 				if (cap.GetNx() == 1) {
-					pos.x += 10;
-					pos.y += 8;
+					unHandleColPosition.x += 10;
+					unHandleColPosition.y += 8;
 				}
 				else
 				{
-					pos.x -= 10;
-					pos.y += 8;
+					unHandleColPosition.x -= 10;
+					unHandleColPosition.y += 8;
 				}
 			}
 			//to the max_distance
@@ -107,7 +108,6 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				distance += SPEED * dt;
 				vel.x = nx * SPEED;
 				pos.x += nx * SPEED*dt;
-
 			}
 			else
 			{
@@ -130,7 +130,6 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				vel.x = nx * SPEED;
 				vel.y = trans.y;
 				pos.y += trans.y;
-
 				HandleCaptainCollison(dt, coObjects); //distance = 0
 				if (isOnCaptain) //Stop Collision Handler
 				{
@@ -297,7 +296,7 @@ isMoved = false;
 	}
 	//else if (nx > 0 && pos.x > cap.GetPos().x) 
 	{
-		if (nx > 0 && pos.x > cap.GetPos().x + cap.GetWidth() / 4)
+		if (nx > 0 && unHandleColPosition.x > cap.GetPos().x + cap.GetWidth() / 4)
 		{
 			cap.setShieldOn(true);
 
