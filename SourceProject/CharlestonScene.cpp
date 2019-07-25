@@ -32,7 +32,7 @@ void CharlestonScene::LoadResources()
 	//cap = std::make_unique<Captain>( Vector2{ 0.0f, 391.0f } ) ;
 	//cap = std::make_unique<Captain>(Vector2{ 53.0f, 20.0f });
 	//cap = std::make_unique<Captain>( Vector2{ 1673.0f, 391.0f } ) ;
-	cap = std::make_unique<Captain>( Vector2{ 53.0f, 391.0f } ) ;
+	cap = std::make_unique<Captain>( Vector2{ 173.0f, 391.0f } ) ;
 	cam.SetMainCharacter(cap.get());
 }
 
@@ -98,7 +98,7 @@ void CharlestonScene::Draw()
 
 		enemyWizard.Render();
 	}
-	if (0) // test EnemyFly
+	if (1) // test EnemyFly
 	{
 		Data data;
 		data.Add("water-velocity", 16.9f);

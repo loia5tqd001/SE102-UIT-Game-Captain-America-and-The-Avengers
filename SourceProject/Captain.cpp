@@ -286,6 +286,7 @@ void Captain::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
 			}
 			else if (auto bullet = dynamic_cast<Bullet*>(obj))
 			{
+				bullet->HitCaptain();
 				this->health.Subtract(bullet->GetDamage());
 				SetState(State::Captain_Injured);
 			}

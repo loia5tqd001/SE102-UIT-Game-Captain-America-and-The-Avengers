@@ -109,9 +109,11 @@ void EnemyFly::SpawnBullet()
 	counterSpawnBullet += GameTimer::Dt();
 	if (counterSpawnBullet >= 4.0f) {
 		const auto bulletPos = pos + Vector2{ 24.0f, 10.0f };
-		grid->SpawnObject(std::make_unique<BulletEnemyFly>(nx, this, bulletPos, cap));
-		Sounds::PlayAt(SoundId::BulletLazer);
-		counterSpawnBullet = 0;
+		if (cap->GetPos().y > pos.y) {
+			grid->SpawnObject(std::make_unique<BulletEnemyFly>(nx, this, bulletPos, cap));
+			Sounds::PlayAt(SoundId::BulletLazer);
+			counterSpawnBullet = 0;
+		}
 	}
 }
 
