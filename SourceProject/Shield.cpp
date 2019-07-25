@@ -99,6 +99,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				turnBack = true;
 				flagDistance += SPEED * dt;
 				distance += SPEED * dt;
+				vel.x = nx * SPEED;
 				pos.x += nx * SPEED*dt;
 			}
 			else
@@ -119,6 +120,8 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				trans.y *= ratio;
 
 				pos.x += nx * SPEED*dt;
+				vel.x = nx * SPEED;
+				vel.y = trans.y;
 				pos.y += trans.y;
 
 				HandleCaptainCollison(dt, coObjects); //distance = 0
