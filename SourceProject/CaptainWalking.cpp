@@ -167,11 +167,12 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
 			cap.CollideWithPassableObjects(dt, e);
 		}
-		else if (dynamic_cast<Bullet*>(e.pCoObj)) {
+		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj)) {
 			if (!cap.isFlashing)
 			{
+				bullet->HitCaptain();
+				cap.health.Subtract(bullet->GetDamage());
 				cap.SetState(State::Captain_Injured);
-				cap.health.Subtract(1);
 			}
 		}
 	}

@@ -16,11 +16,17 @@ BulletEnemyRocket::BulletEnemyRocket(int nx, int type, Enemy *enemy, const Vecto
 		animations.emplace(State::BulletEnemyRocket_Horizontal, Animation(SpriteId::BulletEnemyRocket_Horizontal, 0.1f));
 		animations.emplace(State::BulletEnemyRocket_Cross, Animation(SpriteId::BulletEnemyRocket_Cross, 0.1f));
 	}
+	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.2f));
 
 	if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth()); // this code is critical
 }
 void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	if (animations.at(State::Explode).IsDoneCycle())
+	{
+		this->SetState(State::Destroyed);
+		return;
+	}
 	animations.at(curState).Update(dt);
 	pos.x += vel.x * dt;
 	pos.y += vel.y * dt;
@@ -55,3 +61,11 @@ void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjec
 		}
 	}
 }
+
+void BulletEnemyRocket::HitCaptain()
+{
+	Sounds::PlayAt(SoundId::Explosion);
+	this->SetState(State::Explode);
+	vel = { 0.0f,0.0f };
+}
+

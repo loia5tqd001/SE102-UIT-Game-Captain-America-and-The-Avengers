@@ -11,5 +11,6 @@ public:
 	BulletEnemyRocket(int nx, int type , Enemy *enemy, const Vector2& spawnPos, Vector2 vel = { BULLET_MOVING, 0.0f });
 
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
+	void HitCaptain() override;
 };
 

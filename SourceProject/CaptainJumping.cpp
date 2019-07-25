@@ -277,6 +277,7 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 					}
 					else {
 						cap.SetState(State::Captain_Falling);
+						break;
 					}
 					break;
 
@@ -287,10 +288,11 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
 			cap.CollideWithPassableObjects(dt, e);
 		}
-		else if (dynamic_cast<Bullet*>(e.pCoObj)) {
+		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj)) {
 			if (!cap.isFlashing)
 			{
 				cap.health.Subtract(1);
+				bullet->HitCaptain();
 				cap.SetState(State::Captain_Injured);
 				setAnotherState = true;
 				return;

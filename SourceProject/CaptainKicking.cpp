@@ -59,6 +59,7 @@ void CaptainKicking::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	HandleCollisions(cap, dt, coObjects);
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.vel.x = -MOVING_HOR;
@@ -67,7 +68,6 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 	{
 		cap.vel.x = MOVING_HOR;
 	}
-	HandleCollisions(cap, dt, coObjects);
 
 	if (SetAnotherState)
 	{
@@ -272,6 +272,7 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 		{
 			if (!cap.isFlashing)
 			{
+				bullet->HitCaptain();
 				cap.SetState(State::Captain_Injured);
 				SetAnotherState = true;
 				cap.health.Subtract(1);

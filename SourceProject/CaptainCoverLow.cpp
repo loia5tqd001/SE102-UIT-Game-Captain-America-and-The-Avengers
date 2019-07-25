@@ -8,6 +8,7 @@ void CaptainCoverLow::Enter(Captain& cap, State fromState, Data&& data)
 	assert(fromState == State::Captain_Spinning);
 	cap.vel.y = GRAVITY;
 	cap.vel.x = 0;
+	isOnGround = false;
 }
 
 Data CaptainCoverLow::Exit(Captain& cap, State toState)
@@ -91,11 +92,9 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 		{
 			if (!cap.isFlashing)
 			{
-				if (auto bullet = dynamic_cast<BulletEnemyRocket*>(e.pCoObj));// TODO: why semicolin's here?
 				cap.health.Subtract(bullet->GetDamage());
+				bullet->HitCaptain();
 				cap.SetState(State::Captain_Injured);
-				//TODO: case BulletEnemyFlying
-				//TODO: deflect some of the bullets from below
 			}
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
@@ -115,14 +114,21 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 				cap.CollideWithPassableObjects(dt, e);
 			}
 			else {
-				if (e.ny < 0)
-				{
-					enemy->TakeDamage(3);
-				}
-				else
-				{
+				if (isOnGround)
+				{					
 					cap.SetState(State::Captain_Injured);
 					enemy->TakeDamage(1);
+				}
+				else {
+					if (e.ny < 0 || e.nx != 0)
+					{
+						enemy->TakeDamage(3);
+					}
+					else
+					{
+						cap.SetState(State::Captain_Injured);
+						enemy->TakeDamage(1);
+					}
 				}
 			}
 		}
@@ -157,6 +163,10 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::PassableLedge:
+				if (e.ny < 0) {
+					cap.vel.x = 0;
+					isOnGround = true;
+				}
 				break;
 			case ClassId::RigidBlock:
 				if (e.ny < 0) {

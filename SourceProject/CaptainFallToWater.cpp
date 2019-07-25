@@ -10,7 +10,6 @@ void CaptainFallToWater::Enter(Captain& cap, State fromState, Data&& data)
 	cap.pos.y = WATER_LEVEL - cap.GetBBox().GetHeight();
 
 	cap.vel.y = 0.0f;
-	cap.shield->SetState(State::Invisible);
 }
 
 Data CaptainFallToWater::Exit(Captain& cap, State toState)

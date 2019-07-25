@@ -72,8 +72,8 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 		{
 			if (!cap.isFlashing)
 			{
-				if (auto bullet = dynamic_cast<BulletEnemyRocket*>(e.pCoObj));
 				cap.health.Subtract(bullet->GetDamage());
+				bullet->HitCaptain();
 				cap.SetState(State::Captain_Injured);
 				//TODO: case BulletEnemyFlying
 			}

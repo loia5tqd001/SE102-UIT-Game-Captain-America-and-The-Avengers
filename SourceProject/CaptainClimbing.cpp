@@ -167,6 +167,7 @@ void CaptainClimbing::HandleCollisions(Captain& cap, float dt, const std::vector
 			if (!cap.isFlashing)
 			{
 				cap.health.Subtract(1);
+				bullet->HitCaptain();
 				cap.SetState(State::Captain_Injured);
 			}
 		}

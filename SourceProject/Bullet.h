@@ -16,5 +16,6 @@ public:
 	}
 
 	inline int GetDamage() const { return damage; }
+	virtual void HitCaptain() {}; //override this if explode
 };
 

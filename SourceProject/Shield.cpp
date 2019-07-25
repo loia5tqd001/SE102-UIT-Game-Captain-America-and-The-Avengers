@@ -244,6 +244,10 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		{
 			SetState(State::Invisible);
 		}
+		else if (capState == State::Captain_FallToWater)
+		{
+			SetState(State::Invisible);
+		}
 		else if (capState == State::Captain_Dead)
 		{
 			SetState(State::Invisible);
