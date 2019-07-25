@@ -16,6 +16,8 @@ void RedAlertScene::LoadResources()
 	const auto root = GetRootJson("Resources\\Data\\scene-red-alert.json");
 
 	map = std::make_unique<Map>( root );
+	grid = std::make_unique<Grid>( root );
+	cap = std::make_unique<Captain>( Vector2{ 32.0f, 196.0f - 45.0f } ) ;
 }
 
 
@@ -23,23 +25,20 @@ void RedAlertScene::LoadResources()
 void RedAlertScene::Update(float dt)
 {
 	map->UpdateAnimatedTiles(dt);
+	grid->UpdateCells();
+	for (auto& obj : grid->GetObjectsInViewPort())
+		obj->Update(dt);
+	cap->Update(dt, grid->GetObjectsInViewPort());
 	cam.ClampWithin( map->GetWorldBoundary() );
 }
 
 void RedAlertScene::Draw()
 {
 	map->Render();
-
-	const auto& wnd = Window::Instance();
-	if (wnd.IsKeyPressed(VK_LEFT))
-		cam.MoveBy( { -5.0f, 0.0f });
-	if (wnd.IsKeyPressed(VK_UP))
-		cam.MoveBy( { 0.0f, -5.0f });
-	if (wnd.IsKeyPressed(VK_RIGHT))
-		cam.MoveBy( { 5.0f, 0.0f });
-	if (wnd.IsKeyPressed(VK_DOWN))
-		cam.MoveBy( { 0.0f, 5.0f });
-
+	for (auto& obj: grid->GetObjectsInViewPort())
+		obj->Render();
+	cap->Render();
+	grid->RenderCells();
 }
 
 void RedAlertScene::OnKeyDown(BYTE keyCode)
@@ -50,5 +49,11 @@ void RedAlertScene::OnKeyDown(BYTE keyCode)
 			DoTransitionScene(Scene::Charleston);
 			break;
 	}
+	cap->OnKeyDown(keyCode);
+}
+
+void RedAlertScene::OnKeyUp(BYTE keyCode)
+{
+	cap->OnKeyUp(keyCode);
 }
 

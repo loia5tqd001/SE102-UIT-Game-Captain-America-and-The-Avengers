@@ -17,28 +17,32 @@ void BossCharlestonScene::LoadResources()
 
 	mapDark = std::make_unique<Map>( root["dark"] );
 	mapLight = std::make_unique<Map>( root["light"] );
-	curMap = mapLight.get();
+	grid = std::make_unique<Grid>( root );
+	cap = std::make_unique<Captain>( Vector2{ 32.0f, 197.0f - 45.0f } ) ;
 }
 
 void BossCharlestonScene::Update(float dt)
 {
-	cam.ClampWithin( curMap->GetWorldBoundary() );
+	grid->UpdateCells();
+	for (auto& obj : grid->GetObjectsInViewPort())
+		obj->Update(dt);
+	cap->Update(dt, grid->GetObjectsInViewPort());
+	cam.ClampWithin( mapDark->GetWorldBoundary() );
 }
 
 void BossCharlestonScene::Draw()
 {
-	curMap->Render();
+	if (isDark) mapDark->Render();
+	else mapLight->Render();
+	for (auto& obj: grid->GetObjectsInViewPort())
+		obj->Render();
+	cap->Render();
+	grid->RenderCells();
+}
 
-	const auto& wnd = Window::Instance();
-	if (wnd.IsKeyPressed(VK_LEFT))
-		cam.MoveBy( { -5.0f, 0.0f });
-	if (wnd.IsKeyPressed(VK_UP))
-		cam.MoveBy( { 0.0f, -5.0f });
-	if (wnd.IsKeyPressed(VK_RIGHT))
-		cam.MoveBy( { 5.0f, 0.0f });
-	if (wnd.IsKeyPressed(VK_DOWN))
-		cam.MoveBy( { 0.0f, 5.0f });
-
+void BossCharlestonScene::OnKeyUp(BYTE keyCode)
+{
+	cap->OnKeyUp(keyCode);
 }
 
 void BossCharlestonScene::OnKeyDown(BYTE keyCode)
@@ -46,11 +50,12 @@ void BossCharlestonScene::OnKeyDown(BYTE keyCode)
 	switch (keyCode)
 	{
 		case VK_SPACE:
-			curMap = curMap == mapDark.get() ? mapLight.get() : mapDark.get();
+			isDark = !isDark;
 			break;
 
 		case VK_RETURN:
 			DoTransitionScene(Scene::Pittsburgh);
 			break;
 	}
+	cap->OnKeyDown(keyCode);
 }

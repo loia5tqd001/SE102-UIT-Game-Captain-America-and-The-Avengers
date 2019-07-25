@@ -1,12 +1,13 @@
 {
   "grid": { 
-		"cellsize": 120,
-		"width": 30,
+		"cellsize": 128,
+		"width": 2,
 		"height": 2,  
 		"objects": [
-		0
-			// classId[0], isStatic[1], x[2], y[3], width[4], height[5], vx[6], vy[7], nx[8] 
-			//[ 2, 0,  200, 194,   -1, -1,  -50,  0,  1],	// -1 indicates unused value
+			// Blocks: classId[0], x[1], y[2], width[3], height[4]
+			[                   1,    0,  196,      256,       44 ], // rigid blocks
+			[                   1,    0,    0,       16,      196 ], 
+			[                   1,  240,    0,       16,      196 ]
 		]
   },
   

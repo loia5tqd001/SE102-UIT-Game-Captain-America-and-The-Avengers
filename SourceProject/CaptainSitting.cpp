@@ -129,8 +129,10 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 					}
 					break;
 
-				case ClassId::NextMap:
 				case ClassId::Switch:
+					cap.CollideWithPassableObjects(dt, e);
+					break;
+				case ClassId::NextMap:
 				case ClassId::Door:
 				case ClassId::ClimbableBar:
 				case ClassId::Water:
