@@ -6,7 +6,7 @@
 void CaptainPunching::Enter(Captain& cap, State fromState, Data&& data)
 {
 	assert(!cap.shieldOn);
-	assert(fromState == State::Captain_Standing || fromState == State::Captain_Walking);
+	assert(fromState == State::Captain_Standing || fromState == State::Captain_Walking || fromState == State::Captain_CoverTop);
 	cap.vel.y = 0;
 	cap.vel.x = 0;
 }
