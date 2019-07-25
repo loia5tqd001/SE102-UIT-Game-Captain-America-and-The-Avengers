@@ -42,16 +42,7 @@ void CharlestonScene::Update(float dt)
 
 	for (auto& obj : grid->GetObjectsInViewPort()) // update objects
 		obj->Update(dt);
-	
-	//Test
-	auto list = CollisionDetector::PhasingDetect(*cap, grid->GetObjectsInViewPort());
-	if (list.size() > 0)
-	{
-		Debug::out("Phasing through something...\n");
-		cap->PhasingHandle(list);
-	}
 
-	//Test
 	cap->Update(dt, grid->GetObjectsInViewPort()); // update Captain
 
 	// clamp captain and camera
