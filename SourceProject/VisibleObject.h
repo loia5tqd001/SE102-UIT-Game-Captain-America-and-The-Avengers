@@ -8,7 +8,7 @@ protected:
 	std::unordered_map<State, Animation> animations;
 	bool shouldDrawImage = true;
 
-	float timeFlashing = 0.3f;
+	float timeFlashing = 0.4f;
 	bool  isFlashing = false;
 	float timePassed = 0.0f;
 	UINT  nFrameRendered = 0u;

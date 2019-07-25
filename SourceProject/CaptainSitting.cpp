@@ -46,7 +46,7 @@ void CaptainSitting::OnKeyDown(Captain& cap, BYTE keyCode)
 	{
 		dir ++;
 	}
-	else if (keyCode == setting.Get(KeyControls::Attack))
+	else if (keyCode == setting.Get(KeyControls::Attack) && wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
 	{
 		cap.SetState(State::Captain_SitPunching);
 	}

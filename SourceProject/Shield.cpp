@@ -2,6 +2,8 @@
 #include "Shield.h"
 #include "Enemy.h"
 #include "BulletEnemyGun.h"
+#include "EnemyGun.h"
+#include "EnemyRocket.h"
 
 Shield::Shield(Captain& cap) : 
 	VisibleObject(State::Shield_Straight, cap.GetPos()),
@@ -275,13 +277,13 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 	{
 		if (nx < 0 && pos.x < cap.GetPos().x + cap.GetWidth() / 4)
 		{
-cap.setShieldOn(true);
-
-UpdateByCapState(cap.GetState(), cap.GetPos());
-isOnCaptain = true;
-distance = 0;
-timeToThrow = 0;
-isMoved = false;
+			cap.setShieldOn(true);
+			
+			UpdateByCapState(cap.GetState(), cap.GetPos());
+			isOnCaptain = true;
+			distance = 0;
+			timeToThrow = 0;
+			isMoved = false;
 		}
 	}
 	//else if (nx > 0 && pos.x > cap.GetPos().x) 
@@ -322,8 +324,6 @@ void Shield::HandleSideCollison(float dt, const std::vector<GameObject*>& coObje
 	}
 }
 
-#include "EnemyGun.h"
-#include "EnemyRocket.h"
 void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
 	//Debug::Out("inhere size:" ,coObjects.size());
@@ -423,5 +423,6 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 
 RectF Shield::GetBBox() const
 {
+	if (curState != State::Shield_Side) return VisibleObject::GetBBox();
 	return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 0.05f, 0, (float)GetWidth() / 2 - 0.05f, 0);
 }

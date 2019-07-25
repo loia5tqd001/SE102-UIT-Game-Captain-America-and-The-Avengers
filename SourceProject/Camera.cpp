@@ -89,12 +89,12 @@ void Camera::OnRecover()
 	if (leftAppend > LEFT_APPEND) // case move over left
 	{
 		if (camCenter.x - capCenter.x < leftAppend)
-			leftAppend = floor(camCenter.x - capCenter.x);
+			leftAppend = camCenter.x - capCenter.x;
 	}
 	else if (rightAppend > RIGHT_APPEND) // case move over right
 	{
 		if (capCenter.x - camCenter.x < rightAppend)
-			rightAppend = floor(capCenter.x - camCenter.x);
+			rightAppend = capCenter.x - camCenter.x;
 	}
 	else
 	{
