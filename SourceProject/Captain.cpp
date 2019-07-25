@@ -79,6 +79,17 @@ RectF Captain::GetHitBox() const
 	}
 }
 
+void Captain::PhasingHandle(std::vector<GameObject*> phsOjects)
+{
+	for (auto &e : phsOjects)
+	{
+		if (auto water = dynamic_cast<Block*>(e))
+		{
+			SetState(State::Captain_FallToWater);
+		}
+	}
+}
+
 void Captain::OnKeyDown(BYTE keyCode)
 {
 	currentState->OnKeyDown(*this, keyCode);

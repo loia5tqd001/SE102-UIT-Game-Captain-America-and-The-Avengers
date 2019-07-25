@@ -45,5 +45,7 @@ public:
 	void Render() const override;
 	RectF GetBBox() const override;
 	RectF GetHitBox() const override;
+
+	void PhasingHandle(std::vector<GameObject*> phsOjects);
 };
 

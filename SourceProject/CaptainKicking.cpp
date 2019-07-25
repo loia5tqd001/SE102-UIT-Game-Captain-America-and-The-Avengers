@@ -60,7 +60,7 @@ void CaptainKicking::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (firstTimeUpdate)
+	/*if (firstTimeUpdate)
 	{
 		auto list = CollisionDetector::PhasingDetect(cap, coObjects);
 		if (list.size()>0)
@@ -68,7 +68,7 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 			Debug::out("Phasing through something...\n");
 		}
 		firstTimeUpdate = false;
-	}
+	}*/
 
 	HandleCollisions(cap, dt, coObjects);
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
