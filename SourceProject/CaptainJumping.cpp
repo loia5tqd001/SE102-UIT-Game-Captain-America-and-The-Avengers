@@ -153,31 +153,6 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 			return;
 		}
 	}
-
-	//if (cap.animations.at(cap.curState).IsDoneCycle())
-	//{
-	//	static int count = 0;
-	//	if (isJumpReleased) {
-	//		// falling
-	//		cap.vel.y = JUMP_SPEED_VER;
-	//		isJumpReleased = false;
-	//	}
-	//	else // still holding jump
-	//	{
-	//		if (canHigher) {
-	//			// automatic do one more cycle
-	//			canHigher = false;
-	//		}
-	//		else // jump too high
-	//		{
-	//			cap.SetState(State::Captain_Spinning);
-	//		}
-	//	}
-
-	//}
-	//Debug::Out(cap.vel.y, 0.0001 * signed(cap.vel.y) * dt);
-	//cap.vel.y += 0.0003 * signed(cap.vel.y) * dt;
-	//Debug::Out(cap.vel.y, 0.0001 * signed(cap.vel.y) * dt);
 }
 
 
@@ -274,7 +249,7 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 						cap.SetState(State::Captain_Sitting);
 						Sounds::PlayAt(SoundId::Grounding);
 					}
-					else {
+					else if (e.ny > 0) {
 						cap.SetState(State::Captain_Falling);
 						break;
 					}

@@ -165,12 +165,14 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 			case ClassId::PassableLedge:
 				if (e.ny < 0) {
 					cap.vel.x = 0;
+					if (!isOnGround) Sounds::PlayAt(SoundId::ShieldCollide);
 					isOnGround = true;
 				}
 				break;
 			case ClassId::RigidBlock:
 				if (e.ny < 0) {
 					cap.vel.x = 0;
+					if (!isOnGround) Sounds::PlayAt(SoundId::ShieldCollide);
 					isOnGround = true;
 				}
 				break;

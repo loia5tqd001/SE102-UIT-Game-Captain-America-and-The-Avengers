@@ -6,6 +6,7 @@ class CaptainInjured : public CaptainState
 	State pendingSwitchState;
 	float posxWhenGotInjure;
 	float DistanceLeftToClimb;
+	float maxTimeHold = 0;
 	void HandleNoCollisions(Captain &cap, float dt);
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;

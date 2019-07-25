@@ -9,6 +9,7 @@ void CaptainInjured::HandleNoCollisions(Captain & cap, float dt)
 
 void CaptainInjured::Enter(Captain& cap, State fromState, Data&& data)
 {
+	maxTimeHold = 0;
 	pendingSwitchState = State::NotExist;
 	DistanceLeftToClimb = 0.0f;
 	cap.isFlashing = true;
@@ -44,6 +45,13 @@ void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject
 	}
 	//Collision objects left
 	HandleCollisions(cap, dt, coObjects);
+	//NOTE:HACK the code below is to hide the bug when got hit by bullet at cover low, and another bug that very hard to detect
+	//the correct time is 40/60 = 0.666s right, if captain got injured more than this time means BUG, so i set this at 0.7
+	if (maxTimeHold > 0.7f)
+	{
+		maxTimeHold += GameTimer::Dt();
+		cap.SetState(State::Captain_Falling);
+	}
 }
 
 void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
