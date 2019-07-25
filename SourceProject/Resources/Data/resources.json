@@ -73,7 +73,7 @@
 	
 	[          67,            11,      278,     192,               5,                8,         1,            0], //BulletEnemyFly_Up,
 	[          68,            11,      214,     192,               5,                8,         1,            0], //BulletEnemyFly_Down,
-	[          69,            11,      214,     193,               8,                5,         1,            0], //BulletEnemyFly_Hor,
+	[          69,            11,      244,     193,               8,                5,         1,            0], //BulletEnemyFly_Hor,
 	[          70,            11,      260,     192,               8,                8,         1,            0], //BulletEnemyFly_CrossUp,
 	[          71,            11,      228,     192,               8,                8,         1,            0], //BulletEnemyFly_CrossDown,
 	

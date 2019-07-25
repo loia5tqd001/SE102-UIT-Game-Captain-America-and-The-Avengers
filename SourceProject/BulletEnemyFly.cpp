@@ -18,13 +18,11 @@ BulletEnemyFly::BulletEnemyFly(int nx, Enemy * enemy, const Vector2 & spawnPos, 
 
 void BulletEnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	SetAnimationByVel();
 	CalculateVelByCapPos(cap->GetPos().x, cap->GetPos().y);
 
 	pos.x += vel.x * dt;
 	pos.y += vel.y * dt;
-	
-	CalculateVelByCapPos(cap->GetPos().x, cap->GetPos().y);
-	SetAnimationByVel();
 
 	animations.at(curState).Update(dt);
 }
@@ -101,9 +99,9 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 	float dy = y - pos.y;
 
 	if (dx < 0 && dy < 0) {
-		if (x < 0 && y < 0)
+		if (vel.x < 0 && vel.y < 0)
 		{
-			if (abs(dx)/abs(dy) < abs(x) / abs(y))
+			if (abs(dx)/abs(dy) < abs(vel.x) / abs(vel.y))
 			{
 				vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 			}
@@ -112,23 +110,23 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 				vel.x += MIN_CHANGE_VELX_PER_FRAME;
 			}
 		}
-		else if (x >= 0 && y < 0) {
+		else if (vel.x >= 0 && vel.y < 0) {
 			vel.x += MIN_CHANGE_VELX_PER_FRAME;
 		}
-		else if (x < 0 && y >= 0) {
+		else if (vel.x < 0 && vel.y >= 0) {
 			vel.x += MIN_CHANGE_VELX_PER_FRAME;
 		}
-		else if (x >= 0 && y >= 0) {
+		else if (vel.x >= 0 && vel.y >= 0) {
 			//curState = State::Explode;
 		}
 	}
 	else if (dx >= 0 && dy < 0) {
-		if (x < 0 && y < 0)
+		if (vel.x < 0 && vel.y < 0)
 		{
 			vel.x += MIN_CHANGE_VELX_PER_FRAME;
 		}
-		else if (x >= 0 && y < 0) {
-			if (abs(dx) / abs(dy) < abs(x) / abs(y))
+		else if (vel.x >= 0 && vel.y < 0) {
+			if (abs(dx) / abs(dy) < abs(vel.x) / abs(vel.y))
 			{
 				vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 			}
@@ -137,31 +135,31 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 				vel.x += MIN_CHANGE_VELX_PER_FRAME;
 			}
 		}
-		else if (x < 0 && y >= 0) {
+		else if (vel.x < 0 && vel.y >= 0) {
 			//curState = State::Explode;
 		}
-		else if (x >= 0 && y >= 0) {
+		else if (vel.x >= 0 && vel.y >= 0) {
 			vel.x += MIN_CHANGE_VELX_PER_FRAME;
 		}
 	}
 	else if (dx < 0 && dy >= 0) {
-		if (x < 0 && y < 0)
+		if (vel.x < 0 && vel.y < 0)
 		{
 			vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 		}
-		else if (x >= 0 && y < 0) {
+		else if (vel.x >= 0 && vel.y < 0) {
 			//curState = State::Explode;
 		}
-		else if (x < 0 && y >= 0) {
-			if (dy == 0 && y == 0) { return; }
-			else if (dy == 0 && y != 0) {
+		else if (vel.x < 0 && vel.y >= 0) {
+			if (dy == 0 && vel.y == 0) { return; }
+			else if (dy == 0 && vel.y != 0) {
 				vel.x += MIN_CHANGE_VELX_PER_FRAME;
 			}
-			else if (dy != 0 && y == 0)
+			else if (dy != 0 && vel.y == 0)
 			{
 				vel.x += MIN_CHANGE_VELX_PER_FRAME;
 			}
-			else if (abs(dx) / abs(dy) < abs(x) / abs(y))
+			else if (abs(dx) / abs(dy) < abs(vel.x) / abs(vel.y))
 			{
 				vel.x += MIN_CHANGE_VELX_PER_FRAME;
 			}
@@ -170,31 +168,31 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 				vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 			}
 		}
-		else if (x >= 0 && y >= 0) {
+		else if (vel.x >= 0 && vel.y >= 0) {
 			vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 		}
 	}
 	else if (dx >= 0 && dy >= 0) {
-		if (x < 0 && y < 0)
+		if (vel.x < 0 && vel.y < 0)
 		{
 			//curState = State::Explode;
 		}
-		else if (x >= 0 && y < 0) {
+		else if (vel.x >= 0 && vel.y < 0) {
 			vel.x += MIN_CHANGE_VELX_PER_FRAME;
 		}
-		else if (x < 0 && y >= 0) {
+		else if (vel.x < 0 && vel.y >= 0) {
 			vel.x += MIN_CHANGE_VELX_PER_FRAME;
 		}
-		else if (x >= 0 && y >= 0) {
-			if (dy == 0 && y == 0) { return; }
-			else if (dy == 0 && y != 0) {
+		else if (vel.x >= 0 && vel.y >= 0) {
+			if (dy == 0 && vel.y == 0) { return; }
+			else if (dy == 0 && vel.y != 0) {
 				vel.x += MIN_CHANGE_VELX_PER_FRAME;
 			}
-			else if (dy != 0 && y == 0)
+			else if (dy != 0 && vel.y == 0)
 			{
 				vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 			}
-			else if (abs(dx) / abs(dy) < abs(x) / abs(y))
+			else if (abs(dx) / abs(dy) < abs(vel.x) / abs(vel.y))
 			{
 				vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 			}
