@@ -39,6 +39,7 @@ void CharlestonScene::LoadResources()
 void CharlestonScene::Update(float dt)
 {
 	grid->UpdateCells(); 
+	map->UpdateAnimatedTiles(dt);
 
 	for (auto& obj : grid->GetObjectsInViewPort()) // update objects
 		obj->Update(dt);

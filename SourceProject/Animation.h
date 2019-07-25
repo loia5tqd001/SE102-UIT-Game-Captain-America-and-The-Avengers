@@ -5,11 +5,11 @@ class Animation
 private:
 	const Sprite& sprite;
 	const float   holdTime;
-	float   holdingTime = 0.0f;
+	      float   holdingTime = 0.0f;
 	const UINT    nFrames = sprite.GetNumberOfFrames();
-	UINT    curFrame = 0u;
-	bool    doneCycle = false;
-	std::unordered_map<UINT, float> cusHoldTimeMap;
+	      UINT    curFrame = 0u;
+	      bool    doneCycle = false;
+	      std::unordered_map<UINT, float> cusHoldTimeMap;
 
 	float GetFrameHoldTime(UINT frameNumber)
 	{

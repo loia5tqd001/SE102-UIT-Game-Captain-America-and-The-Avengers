@@ -22,6 +22,7 @@ void RedAlertScene::LoadResources()
 
 void RedAlertScene::Update(float dt)
 {
+	map->UpdateAnimatedTiles(dt);
 	cam.ClampWithin( map->GetWorldBoundary() );
 }
 

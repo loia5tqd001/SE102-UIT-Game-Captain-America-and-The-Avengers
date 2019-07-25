@@ -1,8 +1,33 @@
 #include "pch.h"
 
-Map::Map(const Json::Value & root) 
+void Tile::Update(float dt)
+{
+	if (frames.size() == 1) return;
+
+	holdingTime += dt;
+
+	while (holdingTime >= holdTime)
+	{
+		holdingTime -= holdTime;
+		curFrame++;
+		if (curFrame >= frames.size()) curFrame = 0;
+	}
+}
+
+Map::Map(const Json::Value & root)
 {
 	LoadResources(root);
+}
+
+Rect Map::GetPortionFromTileNumber(int number, int columns) const
+{
+	if (number == 0) return {};
+	long left   = ((number - 1) % columns) * tileSize;
+	long top    = ((number - 1) / columns) * tileSize;
+	long right  = left + tileSize;
+	long bottom = top  + tileSize;
+
+	return { left, top, right, bottom };	
 }
 
 void Map::LoadResources(const Json::Value& root)
@@ -16,26 +41,42 @@ void Map::LoadResources(const Json::Value& root)
 
 	texture = Textures::Get( (TextureId)textureId );
 	worldBoundary = { 0.0f, 0.0f, width * tileSize, height * tileSize };
-	tiles.reserve(height * width);
+	tiles.resize(height * width);
 
 	const Json::Value& data = tileMap["data"];
 	for (UINT y = 0; y < height; y++)
 	for (UINT x = 0; x < width ; x++)
 	{
-		Tile tile; tile.position = { x * tileSize, y * tileSize };
-		const UINT num = data[y * width + x].asUInt();
-		if (num != 0)
+		// construct position ..
+		auto& tile = tiles[y * width + x];
+		tile.position = { x * tileSize, y * tileSize };
+
+		// construct frames ..
+		const auto jsonTile = data[y * width + x];
+
+		if (jsonTile.isNumeric()) // static tile
 		{
-			tile.portion.left   = ((num - 1) % columns) * tileSize;
-			tile.portion.top    = ((num - 1) / columns) * tileSize;
-			tile.portion.right  = tile.portion.left + tileSize;
-			tile.portion.bottom = tile.portion.top  + tileSize;
+			tile.frames = { GetPortionFromTileNumber(jsonTile.asInt(), columns) };
 		}
-		tiles.emplace_back(tile);
+		else // dynamic tile
+		{
+			for (auto& json : jsonTile)
+			{
+				tile.frames.emplace_back( GetPortionFromTileNumber(json.asInt(), columns) );
+			}
+		}
 	}
 }
 
-void Map::Render() const
+void Map::UpdateAnimatedTiles(float dt)
+{
+	for (auto& tile : tiles)
+	{
+		tile.Update(dt);
+	}
+}
+
+void Map::Render()
 {
 	if (DebugDraw::IsInDeepDebug()) return;
 
@@ -50,11 +91,8 @@ void Map::Render() const
 	for (UINT y = ys; y <= ye; y++)
 	for (UINT x = xs; x <= xe; x++)
 	{
-		const auto& tile = tiles[y * width + x];
-
-		if (tile.IsInvisible()) continue;
-		
-		const auto drawablePos = cam.GetPositionInViewPort(tile.position);
-		Game::Instance().Draw(drawablePos, texture, tile.portion);
+		auto& tile = tiles[y * width + x];
+		auto drawablePos = cam.GetPositionInViewPort(tile.position);
+		Game::Instance().Draw(drawablePos, texture, tile.GetCurFrame());
 	}
 }

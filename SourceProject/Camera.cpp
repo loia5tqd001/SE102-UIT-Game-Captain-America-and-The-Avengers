@@ -2,9 +2,9 @@
 
 // append area from center of captain. if center of captain goes out of that append, the camera will move
 static constexpr auto LEFT_APPEND   =  32.0f;
-static constexpr auto TOP_APPEND    =  60.0f; 
+static constexpr auto TOP_APPEND    =  55.0f; 
 static constexpr auto RIGHT_APPEND  =  14.0f;
-static constexpr auto BOTTOM_APPEND =  68.0f;
+static constexpr auto BOTTOM_APPEND =  63.0f;
 // 50-68: top ok, bottom sucks
 
 void Camera::SetMainCharacter(Captain* cap)
