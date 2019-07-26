@@ -32,7 +32,7 @@ void CharlestonScene::LoadResources()
 	//cap = std::make_unique<Captain>( Vector2{ 0.0f, 391.0f } ) ;
 	//cap = std::make_unique<Captain>(Vector2{ 53.0f, 20.0f });
 	//cap = std::make_unique<Captain>( Vector2{ 1673.0f, 391.0f } ) ;
-	cap = std::make_unique<Captain>( Vector2{ 573.0f, 391.0f } ) ;
+	cap = std::make_unique<Captain>( Vector2{ 573.0f, 391.0f }, grid.get() ) ;
 	cam.SetMainCharacter(cap.get());
 }
 
@@ -62,8 +62,8 @@ void CharlestonScene::Update(float dt)
 void CharlestonScene::Draw()
 {	
 	map->Render(); // layer0
-
-	// layer1: capsules
+	ExitSign::Instance().Draw();
+	// layer1: capsulesd
 	std::vector<GameObject*> layer2; // item, bullet, enemy, ledge (other visible objects)
 	// layer3: captain
 	std::vector<GameObject*> layer4; // invisible object

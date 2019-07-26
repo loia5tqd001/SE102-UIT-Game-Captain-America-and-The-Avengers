@@ -16,7 +16,6 @@ Shield::Shield(Captain& cap) :
 	animations.emplace(State::Shield_Side, Animation(SpriteId::Shield_Side, 0.1f));
 	UpdateByCapState(State::Captain_Standing, cap.GetPos());
 	bboxColor = Colors::MyPoisonGreen;
-	is_debugging = true;
 }
 
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
@@ -423,6 +422,6 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 
 RectF Shield::GetBBox() const
 {
-	if (curState != State::Shield_Side) return VisibleObject::GetBBox();
+	//if (curState != State::Shield_Side) return VisibleObject::GetBBox();
 	return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 0.05f, 0, (float)GetWidth() / 2 - 0.05f, 0);
 }

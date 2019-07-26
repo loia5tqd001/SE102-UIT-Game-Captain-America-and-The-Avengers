@@ -100,7 +100,6 @@ void SceneManager::Draw()
 	}
 	else {
 		curScene->Draw();
-		ExitSign::Instance().Draw();
 		CaptainHealth::Instance().Draw();
 		DebugDraw::DrawCrt();
 	}

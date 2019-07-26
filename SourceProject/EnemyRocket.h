@@ -16,6 +16,7 @@ private:
 	int countWalkStep = 0;
 	bool justShoot = false;
 	bool isLastForth = false; 
+	bool isInJumpBackNForth = true;
 	State lastState = State::EnemyRocket_Walking;
 	Captain* cap;
 

@@ -8,7 +8,7 @@ BulletEnemyRocket::BulletEnemyRocket(int nx, int type, Enemy *enemy, const Vecto
 {
 	if (type == 2) // EnemyRocket-BackAndForth
 	{
-		this->type = 0, this->vel.x *= 2;
+		this->type = 0, this->vel.x *= 1.8f;
 		animations.emplace(State::BulletEnemyRocket_Horizontal, Animation(SpriteId::BulletEnemyRocket_Horizontal, 0.05f));
 	}
 	else

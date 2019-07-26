@@ -38,7 +38,7 @@ Captain::Captain(const Vector2& pos, Grid* ogrid) :
 	bboxColor = Colors::MyPoisonGreen;
 	timeFlashing = 2.5f;
 	//nFrameToRender = 2; // 2 - 2 is already default
-	//nFrameToUnrender = 2;
+	nFrameToUnrender = 1;
 }
 
 Vector2 Captain::GetCenter() const
