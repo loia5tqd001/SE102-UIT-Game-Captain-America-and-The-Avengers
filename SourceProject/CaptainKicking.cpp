@@ -166,12 +166,13 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 
 void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	// collision with captain kick
-	cap.pos.x += cap.vel.x*dt;
-	cap.pos.y += cap.vel.y*dt;
-	
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
-	if (coEvents.size() == 0) { return; }
+	if (coEvents.size() == 0)
+	{ 
+		cap.pos.x += cap.vel.x*dt;
+		cap.pos.y += cap.vel.y*dt;
+		return; 
+	}
 
 	float min_tx, min_ty, nx, ny;
 	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
