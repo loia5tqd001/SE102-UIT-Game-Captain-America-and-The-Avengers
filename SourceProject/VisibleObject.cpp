@@ -29,13 +29,17 @@ void VisibleObject::OnFlashing(std::optional<bool> setFlashing)
 		shouldDrawImage = true;
 	}
 	else if ((timePassed += GameTimer::Dt()) <= timeFlashing) { // if in flashing, accumulate timePassed, check if still in flashing
-
-		if (++nFrameRendered > 2) {
-			shouldDrawImage = false;
-			nFrameRendered = 0;
+		if (shouldDrawImage) { // is in rendering mode
+			if (++nFrameRendered > nFrameToRender) {
+				nFrameRendered = 0;
+				shouldDrawImage = !shouldDrawImage;
+			}
 		}
-		else {
-			shouldDrawImage = true;
+		else { // is in unrendering mode
+			if (++nFrameUnrendered > nFrameToUnrender) {
+				nFrameUnrendered = 0;
+				shouldDrawImage = !shouldDrawImage;
+			}
 		}
 	}
 	else { // after calculating timePassed, realise time to done flashing

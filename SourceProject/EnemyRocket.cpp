@@ -89,10 +89,10 @@ void EnemyRocket::OnBehaviorShoot()
 void EnemyRocket::BackAndForthJump()
 {
 	static constexpr float JUMP_HOR = 45.0f;
-	static constexpr float GRAVITY = 100.0f;
-	static float accelerator = 0.0f;
+	static constexpr float GRAVITY = 130.0f;
+	static float accelerator = 0.2f;
 	static int dirY = -1;
-
+	
 	pos.x -= JUMP_HOR * GameTimer::Dt();
 	if (dirY == -1)
 	{
@@ -121,7 +121,7 @@ void EnemyRocket::OnBehaviorBackAndForth()
 
 	// if y == tren buc && nx == -1 -> nhay xuong
 	// if y == tren buc && nc == 1 -> nhay len
-	if (pos.y + GetHeight() < 437.0f) {
+	if (pos.y + GetHeight() < 437.0f && pos.y > 200.0f) {
 		BackAndForthJump();
 		return;
 	}

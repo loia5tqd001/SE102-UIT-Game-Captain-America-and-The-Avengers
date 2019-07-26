@@ -186,6 +186,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 					//Sounds::PlayAt(SoundId::Grounding); // sound's bad now
 				}
 				else {
+					//AssertUnreachable();
 					cap.CollideWithPassableObjects(dt, e);
 				}
 				break;

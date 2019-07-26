@@ -21,8 +21,8 @@ EnemyGun::EnemyGun(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* gri
 	}
 	if (behavior == Behaviors::EnemyGun_RunOnly) 
 	{
-		WALKING_SPEED *= 2;
-		animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.1f));
+		WALKING_SPEED *= 1.8f;
+		animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.09f));
 	}
 	else 
 	{

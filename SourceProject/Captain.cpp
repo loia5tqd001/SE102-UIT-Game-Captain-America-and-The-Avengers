@@ -36,7 +36,9 @@ Captain::Captain(const Vector2& pos, Grid* ogrid) :
 	shield = std::make_unique<Shield>(*this);
 
 	bboxColor = Colors::MyPoisonGreen;
-	timeFlashing = 1.8f;
+	timeFlashing = 2.5f;
+	//nFrameToRender = 2; // 2 - 2 is already default
+	//nFrameToUnrender = 2;
 }
 
 Vector2 Captain::GetCenter() const

@@ -6,14 +6,6 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
 	setAnotherState = false;
 
-	//assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
-	//	|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
-	//	|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
-	//	|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
-	//    || fromState == State::Captain_Kicking  || fromState == State::Captain_FallToWater
-	//    || fromState == State::Captain_Injured);
-	// it's almost all of Captain states, why do we need those above anyway?
-
 	cap.vel.x = 0.0f; // avoid wind blowing phenomenon when jump from water
 	cap.vel.y = 0.0f;
 	if (fromState == State::Captain_Swimming ||
@@ -237,12 +229,15 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 					break;
 
 				case ClassId::PassableLedge:
-					if (e.ny < 0) {
-						cap.SetState(State::Captain_Sitting);
-						Sounds::PlayAt(SoundId::Grounding);
-					} else {
-						cap.CollideWithPassableObjects(dt, e);
-					}
+					cap.CollideWithPassableObjects(dt, e);
+					// jumping means only going up, so always go through passable ledge
+					//if (e.ny < 0) {
+					//	//cap.SetState(State::Captain_Sitting);
+					//	//Sounds::PlayAt(SoundId::Grounding);
+					//	AssertUnreachable();
+					//} else {
+					//}
+					// try pressing left+down+jump, will slide to the sky while sitting 
 					break;
 
 				case ClassId::RigidBlock:

@@ -42,6 +42,10 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 			return;
 		}
 	}
+	else if (keyCode == setting.Get(KeyControls::Jump))
+	{
+		cap.SetState(State::Captain_Jumping);
+	}
 }
 
 void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -53,10 +57,6 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 	else if (wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
 	{
 		cap.SetState(State::Captain_CoverTop);
-	}
-	else if (wnd.IsKeyPressed(setting.Get(KeyControls::Jump)))
-	{
-		cap.SetState(State::Captain_Jumping);
 	}
 	else if (wnd.IsKeyPressed(setting.Get(KeyControls::Attack)))
 	{
