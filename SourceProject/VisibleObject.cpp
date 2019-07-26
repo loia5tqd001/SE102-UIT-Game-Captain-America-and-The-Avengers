@@ -92,7 +92,11 @@ void VisibleObject::SetState(State state)
 	const auto oldHeight = GetHeight();
 	const auto oldWidth = GetWidth();
 	curState = state;
+	if (state == State::Explode) Sounds::PlayAt(SoundId::Explosion);
+	if (dynamic_cast<Shield*>(this))
+	{
+		return;
+	}
 	pos.x += float(oldWidth - GetWidth()) / 2.0f;
 	pos.y += float(oldHeight - GetHeight());
-	if (state == State::Explode) Sounds::PlayAt(SoundId::Explosion);
 }
