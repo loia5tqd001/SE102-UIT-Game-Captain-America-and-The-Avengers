@@ -10,7 +10,7 @@ void CaptainFalling::HandleNoCollisions(Captain & cap, float dt)
 void CaptainFalling::Enter(Captain & cap, State fromState, Data && data)
 {
 	//Todo: Check if Cap is already on the ground or brick or something, switch to another state immediately
-	cap.vel.y = FALL_SPEED_VER;
+	cap.vel.y = FALL_SPEED_VER_MIN;
 
 	if (fromState == State::Captain_Spinning || fromState == State::Captain_Jumping || fromState == State::Captain_Kicking) {
 		isKicked = data.Get<bool>(IS_KICKED);
@@ -92,6 +92,10 @@ void CaptainFalling::Update(Captain & cap, float dt, const std::vector<GameObjec
 	{
 		cap.vel.x = +MOVING_HOR;
 		cap.nx = 1;
+	}
+	if (cap.vel.y < FALL_SPEED_VER_MAX)
+	{
+		cap.vel.y += GRAVITY * dt;
 	}
 	//Testing
 	HandleCollisions(cap, dt, coObjects);
@@ -197,7 +201,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 					//Sounds::PlayAt(SoundId::Grounding);
 				}
 				else {
-					cap.vel.y = +JUMP_SPEED_VER;
+					cap.vel.y = +FALL_SPEED_VER;
 				}
 				break;
 

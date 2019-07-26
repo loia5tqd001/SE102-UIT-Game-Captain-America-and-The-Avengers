@@ -5,6 +5,14 @@
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
 	setAnotherState = false;
+	if (fromState != State::Captain_Kicking && fromState != State::Captain_FallToWater) { JumpSpeed = JUMP_SPEED_VER_MAX; }
+	//assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
+	//	|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
+	//	|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
+	//	|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
+	//    || fromState == State::Captain_Kicking  || fromState == State::Captain_FallToWater
+	//    || fromState == State::Captain_Injured);
+	// it's almost all of Captain states, why do we need those above anyway?
 
 	cap.vel.x = 0.0f; // avoid wind blowing phenomenon when jump from water
 	cap.vel.y = 0.0f;
@@ -116,15 +124,15 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 	}
 	if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
 		if (!isJumpReleased) {
-			JumpHeightNeedCounter += (JUMP_SPEED-50) * dt;
-			cap.vel.y = -JUMP_SPEED;
-			JumpHeightRealCounter += JUMP_SPEED *dt;
+			JumpHeightNeedCounter += (JumpSpeed -30) * dt;
+			cap.vel.y = -JumpSpeed;
+			JumpHeightRealCounter += JumpSpeed *dt;
 		}
 		else {
 			if (JumpHeightRealCounter < JumpHeightNeedCounter)
 			{
-				cap.vel.y = -JUMP_SPEED;
-				JumpHeightRealCounter += JUMP_SPEED*dt;
+				cap.vel.y = -JumpSpeed;
+				JumpHeightRealCounter += JumpSpeed * dt;
 			}
 			else
 			{
@@ -136,14 +144,18 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 	else {
 		if (JumpHeightRealCounter < JumpHeightNeedCounter)
 		{
-			cap.vel.y = -JUMP_SPEED;
-			JumpHeightRealCounter += JUMP_SPEED*dt;
+			cap.vel.y = -JumpSpeed;
+			JumpHeightRealCounter += JumpSpeed *dt;
 		}
 		else
 		{
 			cap.SetState(State::Captain_Spinning);
 			return;
 		}
+	}
+	if (JumpSpeed >= JUMP_SPEED_VER_MIN)
+	{
+		JumpSpeed -= GRAVITY * dt;
 	}
 }
 

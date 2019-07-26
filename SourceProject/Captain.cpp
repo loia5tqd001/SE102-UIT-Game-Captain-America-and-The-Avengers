@@ -3,8 +3,8 @@
 
 static auto& setting = Settings::Instance();
 
-Captain::Captain(const Vector2& pos, Grid* ogrid) :
-	VisibleObject(State::Captain_Standing, pos),
+Captain::Captain(const Vector2& pos, Grid* ogrid)
+	: VisibleObject(State::Captain_Standing, pos),
 	currentState(&stateStanding),
 	canPhaseThroughFloor(false),
 	phasingState(State::NotExist),
@@ -270,7 +270,6 @@ void Captain::SetState(State state)
 		default:
 			break;
 		}
-
 	}
 }
 

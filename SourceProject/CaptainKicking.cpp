@@ -77,15 +77,15 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 	if (lastState == State::Captain_Jumping) {
 		if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
 			if (!isJumpReleased) {
-				JumpHeightNeedCounter += JUMP_SPEED * dt;
-				cap.vel.y = -JUMP_SPEED;
-				JumpHeightRealCounter += JUMP_SPEED * dt;
+				JumpHeightNeedCounter += JUMP_SPEED_VER * dt;
+				cap.vel.y = -JUMP_SPEED_VER;
+				JumpHeightRealCounter += JUMP_SPEED_VER * dt;
 			}
 			else {
 				if (JumpHeightRealCounter < JumpHeightNeedCounter)
 				{
-					cap.vel.y = -JUMP_SPEED;
-					JumpHeightRealCounter += JUMP_SPEED * dt;
+					cap.vel.y = -JUMP_SPEED_VER;
+					JumpHeightRealCounter += JUMP_SPEED_VER * dt;
 				}
 				else
 				{
@@ -96,8 +96,8 @@ void CaptainKicking::Update(Captain& cap, float dt, const std::vector<GameObject
 		else {
 			if (JumpHeightRealCounter < JumpHeightNeedCounter)
 			{
-				cap.vel.y = -JUMP_SPEED;
-				JumpHeightRealCounter += JUMP_SPEED * dt;
+				cap.vel.y = -JUMP_SPEED_VER;
+				JumpHeightRealCounter += JUMP_SPEED_VER * dt;
 			}
 			else
 			{
