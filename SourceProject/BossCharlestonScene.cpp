@@ -18,7 +18,7 @@ void BossCharlestonScene::LoadResources()
 	mapDark = std::make_unique<Map>( root["dark"] );
 	mapLight = std::make_unique<Map>( root["light"] );
 	grid = std::make_unique<Grid>( root );
-	cap = std::make_unique<Captain>( Vector2{ 32.0f, 197.0f - 45.0f } ) ;
+	cap = std::make_unique<Captain>( Vector2{ 32.0f, 197.0f - 45.0f },grid.get()) ;
 }
 
 void BossCharlestonScene::Update(float dt)

@@ -3,12 +3,13 @@
 
 static auto& setting = Settings::Instance();
 
-Captain::Captain(const Vector2& pos) :
+Captain::Captain(const Vector2& pos, Grid* ogrid) :
 	VisibleObject(State::Captain_Standing, pos),
 	currentState(&stateStanding),
 	canPhaseThroughFloor(false),
 	phasingState(State::NotExist),
-	prePhasingState(State::NotExist)
+	prePhasingState(State::NotExist),
+	grid(ogrid)
 {
 	animations.emplace(State::Captain_Standing, Animation(SpriteId::Captain_Standing));
 	animations.emplace(State::Captain_Walking, Animation(SpriteId::Captain_Walking, 0.15f));
@@ -102,29 +103,6 @@ void Captain::HanldePhasing(const std::vector<GameObject*>& psOjects)
 					SetState(State::Captain_FallToWater);
 				}
 			}
-			else if (block->GetType() == ClassId::PassableLedge)
-			{
-				if (canPhaseThroughFloor)
-				{
-					if (curState == phasingState)
-					{
-						return;
-					}
-					else
-					{
-						phasingState = State::NotExist;
-						canPhaseThroughFloor = false;
-						return;
-					}
-				}
-				if (vel.y <= 0)
-					return;
-				else
-				{
-					SetState(State::Captain_Sitting);
-					pos.y = block->GetPos().y - GetHeight();
-				}
-			}
 			else if (block->GetType() == ClassId::RigidBlock)
 			{
 				if (prePhasingState == State::Captain_Sitting)
@@ -140,6 +118,29 @@ void Captain::HanldePhasing(const std::vector<GameObject*>& psOjects)
 					SetState(State::Captain_Sitting);
 				}
 			}
+			//else if (block->GetType() == ClassId::PassableLedge)
+			//{
+			//	if (canPhaseThroughFloor)
+			//	{
+			//		if (curState == phasingState)
+			//		{
+			//			return;
+			//		}
+			//		else
+			//		{
+			//			phasingState = State::NotExist;
+			//			canPhaseThroughFloor = false;
+			//			return;
+			//		}
+			//	}
+			//	if (vel.y <= 0)
+			//		return;
+			//	else
+			//	{
+			//		SetState(State::Captain_Sitting);
+			//		pos.y = block->GetPos().y - GetHeight();
+			//	}
+			//}
 		}
 	}
 }
@@ -167,6 +168,7 @@ void Captain::OnKeyUp(BYTE keyCode)
 void Captain::SetState(State state)
 {
 	prePhasingState = curState;
+
 	auto exitData = currentState->Exit(*this, state);
 	switch (state)
 	{
@@ -174,7 +176,7 @@ void Captain::SetState(State state)
 	case State::Captain_Walking: currentState = &stateWalking; break;
 	case State::Captain_Jumping: currentState = &stateJumping; break;
 	case State::Captain_Falling: currentState = &stateFalling; break;
-	case State::Captain_Kicking: currentState = &stateKicking; break;
+	case State::Captain_Kicking: currentState = &stateKicking; PrecheckAABB(grid->GetObjectsInViewPort()); break;
 	case State::Captain_Spinning: currentState = &stateSpinning; break;
 	case State::Captain_Throwing: currentState = &stateThrowing; break;
 	case State::Captain_Tackle: currentState = &stateTackle; break;
@@ -270,7 +272,7 @@ void Captain::SetState(State state)
 	}
 }
 
-void Captain::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
+void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 {
 	if (isFlashing) return;
 	const auto capBbox = GetBBox();
@@ -294,7 +296,16 @@ void Captain::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
 			{
 				item->BeingCollected();
 			}
+			else if (auto block = dynamic_cast<Block*>(obj))
+			{
+				if (block->GetType() == ClassId::RigidBlock&&vel.y > 0)
+				{
+					SetState(State::Captain_Sitting);
+					pos.y = block->GetPos().y - GetHeight();
+				}
+			}
 		}
+
 }
 
 void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
@@ -345,7 +356,7 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	animations.at(curState).Update(dt);
 
-	PrecheckAABB(dt, coObjects);
+	PrecheckAABB(coObjects);
 	currentState->Update(*this, dt, coObjects);
 	HandleHitBox(dt, coObjects);
 
