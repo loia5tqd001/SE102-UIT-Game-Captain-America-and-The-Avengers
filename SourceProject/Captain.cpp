@@ -301,5 +301,6 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 
 	OnFlashing();
+	shield->UpdateByCapState(curState, pos);
 	shield->Update(dt, coObjects);
 }

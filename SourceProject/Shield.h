@@ -1,7 +1,7 @@
 #pragma once
 
 class Shield : public VisibleObject
-{
+{ 
 private:
 	static constexpr float MAX_DISTANCE = 130.0f;
 	static constexpr float SPEED = 350.0f;
