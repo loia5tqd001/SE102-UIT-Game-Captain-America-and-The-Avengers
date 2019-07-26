@@ -211,8 +211,55 @@ void EnemyRocket::OnBehaviorAmbush()
 	assert(curState == State::EnemyRocket_Walking ||
 		   curState == State::EnemyRocket_BeforeExplode ||
 		   curState == State::Explode ||
+		   curState == State::EnemyRocket_Sitting ||
 		   curState == State::Destroyed);
-
+	vel.x = 30 * nx;
+	if (cap->IsShieldOn() == false) {
+		DogdeShield = true;
+	}
+	if (DogdeShield) {
+		static const float posy = pos.y;
+		Jump(posy, 60.0f);
+	}
+	else
+	{
+		pos.x += vel.x * GameTimer::Dt(); //HACK: to slow, need another buff speed
+	}
+}
+void EnemyRocket::Jump(float posy, float height) //use this function in any height, just give it the ground pos and the height to jump
+{
+	if (health <= 0) return;
+	static constexpr float JUMP_HOR = 20.0f;
+	static constexpr float GRAVITY = 140.0f;
+	static float accelerator = 0.2f;
+	VisibleObject::SetState(State::EnemyRocket_Sitting);
+	vel.x = -JUMP_HOR;
+	if (dirYJump == -1) // jump up
+	{
+		pos.y -= GRAVITY * GameTimer::Dt();// - accelerator;
+		if (pos.y < posy - height) {
+			dirYJump = 0;
+		}
+	}
+	else if (dirYJump == 0) // kinda holding in the air
+	{
+		accelerator += 0.01f * GameTimer::Dt();
+		pos.y += GRAVITY * GameTimer::Dt();
+		if (pos.y > posy - height + 5) {
+			dirYJump = 1; // falling
+		}
+	}
+	else // falling
+	{
+		pos.y += GRAVITY * GameTimer::Dt() + accelerator;
+		if (pos.y >= posy + 16) //why 16? it is the different in 2 sprite
+		{
+			pos.y = posy + 16;
+			VisibleObject::SetState(State::EnemyRocket_Walking);
+			DogdeShield = false;
+		}
+	}
+	pos.x += vel.x * 2 * GameTimer::Dt();
 }
 
 void EnemyRocket::SetState(State state)

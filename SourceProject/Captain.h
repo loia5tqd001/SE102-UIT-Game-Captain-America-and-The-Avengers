@@ -50,6 +50,7 @@ public:
 	void SetState(State state) override;
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	void setShieldOn(bool b) { this->shieldOn = b; } //shield let captain know
+	bool IsShieldOn() { return shieldOn; }
 	Vector2 GetCenter() const;
 	void Render() const override;
 	RectF GetBBox() const override;

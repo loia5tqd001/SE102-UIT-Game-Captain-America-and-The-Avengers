@@ -11,12 +11,15 @@ private:
 	void BackAndForthJump();
 	void OnBehaviorBackAndForth();
 	void OnBehaviorAmbush();
+	void Jump(float posy ,float height);
 
 	int rocketType = 0;
 	int countWalkStep = 0;
 	bool justShoot = false;
 	bool isLastForth = false; 
 	bool isInJumpBackNForth = true;
+	bool DogdeShield = false;
+    int dirYJump = -1;
 	State lastState = State::EnemyRocket_Walking;
 	Captain* cap;
 
@@ -25,7 +28,6 @@ public:
 
 	void SetState(State state) override;
 	void SpawnRocket();
-
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 };
 

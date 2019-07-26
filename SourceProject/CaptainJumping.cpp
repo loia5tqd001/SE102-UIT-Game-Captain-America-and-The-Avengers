@@ -170,7 +170,7 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 	acceleration += GRAVITY * dt;
 	if (JumpSpeed >= JUMP_SPEED_VER_MIN)
 	{
-		JumpSpeed -= acceleration * dt;
+		//JumpSpeed -= acceleration * dt;
 	}
 }
 
@@ -257,14 +257,6 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 
 				case ClassId::PassableLedge:
 					cap.CollideWithPassableObjects(dt, e);
-					// jumping means only going up, so always go through passable ledge
-					//if (e.ny < 0) {
-					//	//cap.SetState(State::Captain_Sitting);
-					//	//Sounds::PlayAt(SoundId::Grounding);
-					//	AssertUnreachable();
-					//} else {
-					//}
-					// try pressing left+down+jump, will slide to the sky while sitting 
 					break;
 
 				case ClassId::RigidBlock:
