@@ -46,8 +46,8 @@ void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject
 	//Collision objects left
 	HandleCollisions(cap, dt, coObjects);
 	//NOTE:HACK the code below is to hide the bug when got hit by bullet at cover low, and another bug that very hard to detect
-	//the correct time is 10/40 = 0.25s right, if captain got injured more than this time means BUG, so i set this at 0.27
-	if (maxTimeHold > 0.27f)
+	//the correct time is 40/60 = 0.666s right, if captain got injured more than this time means BUG, so i set this at 0.7
+	if (maxTimeHold > 0.7f)
 	{
 		cap.SetState(State::Captain_Falling);
 	}
