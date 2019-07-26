@@ -85,68 +85,6 @@ RectF Captain::GetHitBox() const
 	}
 }
 
-void Captain::HanldePhasing(const std::vector<GameObject*>& psOjects)
-{
-	for (auto&o : psOjects)
-	{
-		if (auto block = dynamic_cast<Block*>(o))
-		{
-			if (block->GetType() == ClassId::Water)
-			{
-				switch (curState)
-				{
-				case State::Captain_Swimming:
-				case State::Captain_InWater:
-				case State::Captain_FallToWater:
-					break;
-				case State::Captain_Dead:
-					break;
-				default:
-					SetState(State::Captain_FallToWater);
-				}
-			}
-			else if (block->GetType() == ClassId::RigidBlock)
-			{
-				if (prePhasingState == State::Captain_Sitting)
-				{
-					if (nx == 1)
-					{
-						pos.x = block->GetPos().x - this->GetWidth();
-					}
-					else if (nx == -1)
-					{
-						pos.x = block->GetPos().x + block->GetBBox().GetWidth();
-					}
-					SetState(State::Captain_Sitting);
-				}
-			}
-			//else if (block->GetType() == ClassId::PassableLedge)
-			//{
-			//	if (canPhaseThroughFloor)
-			//	{
-			//		if (curState == phasingState)
-			//		{
-			//			return;
-			//		}
-			//		else
-			//		{
-			//			phasingState = State::NotExist;
-			//			canPhaseThroughFloor = false;
-			//			return;
-			//		}
-			//	}
-			//	if (vel.y <= 0)
-			//		return;
-			//	else
-			//	{
-			//		SetState(State::Captain_Sitting);
-			//		pos.y = block->GetPos().y - GetHeight();
-			//	}
-			//}
-		}
-	}
-}
-
 void Captain::OnKeyDown(BYTE keyCode)
 {
 	currentState->OnKeyDown(*this, keyCode);
@@ -169,6 +107,9 @@ void Captain::OnKeyUp(BYTE keyCode)
 
 void Captain::SetState(State state)
 {
+	if (setStateMutex == 0)
+		return;
+	setStateMutex = 0;
 	prePhasingState = curState;
 
 	auto exitData = currentState->Exit(*this, state);
@@ -271,6 +212,7 @@ void Captain::SetState(State state)
 			break;
 		}
 	}
+	setStateMutex = 1;
 }
 
 void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
@@ -296,14 +238,6 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 			else if (auto item = dynamic_cast<Item*>(obj))
 			{
 				item->BeingCollected();
-			}
-			else if (auto block = dynamic_cast<Block*>(obj))
-			{
-				if (block->GetType() == ClassId::RigidBlock&&vel.y > 0)
-				{
-					SetState(State::Captain_Sitting);
-					pos.y = block->GetPos().y - GetHeight();
-				}
 			}
 		}
 
@@ -358,7 +292,11 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	animations.at(curState).Update(dt);
 
 	PrecheckAABB(coObjects);
-	currentState->Update(*this, dt, coObjects);
+	if (!ignoreUpdate)
+	{
+		currentState->Update(*this, dt, coObjects);
+	}
+	ignoreUpdate = false;
 	HandleHitBox(dt, coObjects);
 
 

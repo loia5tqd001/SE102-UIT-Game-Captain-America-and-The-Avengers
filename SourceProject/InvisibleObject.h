@@ -10,7 +10,7 @@ public:
 
 	State GetState() const override;
 	RectF GetBBox () const override;
-
+	UINT GetHeight() { return height; }
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {}) override {}
 	void Render() const override;
 };

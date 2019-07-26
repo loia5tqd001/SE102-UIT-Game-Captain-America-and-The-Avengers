@@ -24,16 +24,9 @@ CharlestonScene::CharlestonScene()
 void CharlestonScene::LoadResources()
 {
 	const auto root = GetRootJson("Resources\\Data\\scene-charleston.json");
-
 	map = std::make_unique<Map>( root );
 	grid = std::make_unique<Grid>( root );
-
-	//cap = std::make_unique<Captain>( Vector2{ 173.0f, 391.0f } ) ;
-	//cap = std::make_unique<Captain>( Vector2{ 0.0f, 391.0f } ) ;
-	//cap = std::make_unique<Captain>(Vector2{ 53.0f, 20.0f });
-	//cap = std::make_unique<Captain>( Vector2{ 1673.0f, 391.0f } ) ;
-	cap = std::make_unique<Captain>( Vector2{ 573.0f, 391.0f }, grid.get() ) ;
-
+	cap = std::make_unique<Captain>( Vector2{ 0.0f, 391.0f }, grid.get() ) ;
 	cam.SetMainCharacter(cap.get());
 }
 
@@ -45,12 +38,6 @@ void CharlestonScene::Update(float dt)
 	for (auto& obj : grid->GetObjectsInViewPort()) // update objects
 		obj->Update(dt);
 	
-	auto lsPhasingObj =	CollisionDetector::PhasingDetect(*cap, grid->GetObjectsInViewPort());
-	if (lsPhasingObj.size()!=0)
-	{
-		cap->HanldePhasing(lsPhasingObj);
-	}
-
 	cap->Update(dt, grid->GetObjectsInViewPort()); // update Captain
 
 	// clamp captain and camera

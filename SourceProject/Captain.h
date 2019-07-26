@@ -21,14 +21,19 @@ private:
 	friend class CaptainSwimming    ; CaptainSwimming    stateSwimming    ;      
 	friend class CaptainClimbing    ; CaptainClimbing    stateClimbing    ;      
 	friend class CaptainInjured     ; CaptainInjured     stateInjured     ;      
-	friend class CaptainDead        ; CaptainDead        stateDead        ;      
+	friend class CaptainDead        ; CaptainDead        stateDead        ;     
+
+
 	CaptainState* currentState;
 	Grid* grid;
+
+	bool setStateMutex = true;
 
 	bool canPhaseThroughFloor;
 	State prePhasingState;
 	State phasingState;
 	bool shieldOn = true;
+	bool ignoreUpdate = false;
 	std::unique_ptr<Shield> shield;
 	CaptainHealth& health = CaptainHealth::Instance();
 	KeyControls lastKeyDown, lastKeyUp;
@@ -49,6 +54,5 @@ public:
 	void Render() const override;
 	RectF GetBBox() const override;
 	RectF GetHitBox() const override;
-	void HanldePhasing(const std::vector<GameObject*>& psOjects);
 };
 
