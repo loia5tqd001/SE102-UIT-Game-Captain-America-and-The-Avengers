@@ -39,8 +39,9 @@ protected:
 	static constexpr auto JUMP_SPEED_VER = 180.0f;
 	static constexpr auto JUMP_SPEED_VER_MAX = 210.0f;
 	static constexpr auto JUMP_SPEED_VER_MIN = 120.0f;
+
 	static constexpr auto JUMP_SPEED_HOR = MOVING_HOR;
-	static constexpr auto GRAVITY = 600.0f;
+	static constexpr auto GRAVITY = 500.0f;
 
 	static constexpr auto MAX_JUMP_HEIGHT = 83.0f;
 	static constexpr auto MIN_JUMP_HEIGHT = 35.0f;

@@ -141,6 +141,8 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 			case ClassId::Water:
 				if (e.ny < 0) {
 					cap.vel.x = 0;
+					isOnGround = true;
+					Sounds::PlayAt(SoundId::Water);
 				};
 				break;
 

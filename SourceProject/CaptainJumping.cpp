@@ -5,7 +5,7 @@
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
 	setAnotherState = false;
-	if (fromState != State::Captain_Kicking && fromState != State::Captain_FallToWater) { JumpSpeed = JUMP_SPEED_VER_MAX; }
+	if (fromState != State::Captain_Kicking && fromState != State::Captain_FallToWater) { JumpSpeed = JUMP_SPEED_VER_MAX; acceleration = GRAVITY;}
 	//assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
 	//	|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
 	//	|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
@@ -167,9 +167,10 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 			return;
 		}
 	}
+	acceleration += GRAVITY * dt;
 	if (JumpSpeed >= JUMP_SPEED_VER_MIN)
 	{
-		//JumpSpeed -= GRAVITY * dt;
+		JumpSpeed -= acceleration * dt;
 	}
 }
 

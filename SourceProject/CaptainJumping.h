@@ -12,6 +12,7 @@ private:
 	bool setAnotherState = false;
 	bool ignoreUpdate = false;
 	float JumpSpeed = JUMP_SPEED_VER_MAX;
+	float acceleration = GRAVITY;
 
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;

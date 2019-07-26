@@ -212,6 +212,7 @@ void EnemyRocket::OnBehaviorAmbush()
 		   curState == State::EnemyRocket_BeforeExplode ||
 		   curState == State::Explode ||
 		   curState == State::Destroyed);
+
 }
 
 void EnemyRocket::SetState(State state)
@@ -243,13 +244,13 @@ void EnemyRocket::SpawnRocket()
 	if (isFlashing) return;
 	if (curState == State::EnemyRocket_Sitting)
 	{
-		const auto bulletPos = pos + Vector2{ 20.0f, 3.0f };
+		auto bulletPos = pos + Vector2{ 20.0f, 2.0f };
 		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, bulletPos));
 		Sounds::PlayAt(SoundId::BulletNormal);
 	}
 	else if (curState == State::EnemyRocket_Stand)
 	{
-		const auto bulletPos = pos + Vector2{ 19.0f, 3.0f };
+		auto bulletPos = pos + Vector2{ 19.0f, 2.0f };
 		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, bulletPos));
 		Sounds::PlayAt(SoundId::BulletNormal);
 	}

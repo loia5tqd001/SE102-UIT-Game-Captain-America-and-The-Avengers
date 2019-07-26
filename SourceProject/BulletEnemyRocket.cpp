@@ -28,8 +28,7 @@ void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjec
 		return;
 	}
 	animations.at(curState).Update(dt);
-	pos.x += vel.x * dt;
-	pos.y += vel.y * dt;
+	
 	if (type != 0)
 	{
 		if (abs(vel.y) <= abs(vel.x) / 2) this->SetState(State::BulletEnemyRocket_Horizontal);
@@ -41,6 +40,8 @@ void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjec
 			vel.y = -abs(vel.x);
 		}
 	}
+	pos.x += vel.x * dt;
+	pos.y += vel.y * dt;
 }
 
 void BulletEnemyRocket::HitCaptain()
