@@ -35,24 +35,22 @@ protected:
 	static constexpr auto TACKLE_SPEED = 200.0f;
 
 
-	static constexpr auto MOVING_HOR = 50.0f;
+	static constexpr auto MOVING_HOR = 60.0f;
 	static constexpr auto JUMP_SPEED_VER = 190.0f;
-	static constexpr auto JUMP_SPEED_HOR = 50.0f;
+	static constexpr auto JUMP_SPEED_HOR = MOVING_HOR;
 	static constexpr auto MAX_JUMP_HEIGHT = 80.0f;
-	//static constexpr auto MIN_JUMP_HEIGHT = 40.0f;
-	//static constexpr auto JUMP_SPEED_HOR = 60.0f;
-	//static constexpr auto MAX_JUMP_HEIGHT = 85.0f;
 	static constexpr auto MIN_JUMP_HEIGHT = 37.0f;
+
 	static constexpr auto JUMP_SPEED = JUMP_SPEED_VER;
 
 	static constexpr auto FALL_SPEED_VER = JUMP_SPEED_VER;
-	static constexpr auto FALL_SPEED_HOR = JUMP_SPEED_HOR;
+	static constexpr auto FALL_SPEED_HOR = MOVING_HOR;
 
 	static constexpr auto INJURE_FALL_SPEED =40.0f;
 	static constexpr auto INJURE_DISTANCE = 10.0f;
 
 	static constexpr auto SPIN_SPEED_VER = 110.0f;
-	static constexpr auto SPIN_SPEED_HOR = JUMP_SPEED_HOR;
+	static constexpr auto SPIN_SPEED_HOR = MOVING_HOR;
 	static constexpr auto TIME_KEEP_SPIN = 0.18f;
 
 	static constexpr auto WATER_LEVEL = 454.0f;
