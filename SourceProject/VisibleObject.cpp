@@ -58,8 +58,14 @@ State VisibleObject::GetState() const
 RectF VisibleObject::GetBBox() const
 {
 	assert(animations.count(curState) == 1);
+	//if (curState == State::Explode || curState == State::Destroyed) return {}; // Don't fuckin do this :((
 	const auto animationFrame = animations.at(curState).GetFrameSize();
 	return { pos, animationFrame.GetWidth(), animationFrame.GetHeight() };
+}
+
+void VisibleObject::OnOutOfViewPort()
+{
+	curState = State::Destroyed;
 }
 
 int VisibleObject::GetWidth() const

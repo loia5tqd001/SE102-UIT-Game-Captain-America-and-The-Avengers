@@ -32,7 +32,7 @@ void CaptainThrowing::OnKeyDown(Captain& cap, BYTE keyCode)
 	{
 		if (!cap.animations.at(cap.curState).IsDoneCycle())
 		{
-			return;
+			//cap.shield->UpdateByCapState(cap.GetState(), cap.GetPos());
 		}
 		cap.SetState(State::Captain_Jumping);
 		return;

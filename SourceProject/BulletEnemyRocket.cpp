@@ -16,7 +16,7 @@ BulletEnemyRocket::BulletEnemyRocket(int nx, int type, Enemy *enemy, const Vecto
 		animations.emplace(State::BulletEnemyRocket_Horizontal, Animation(SpriteId::BulletEnemyRocket_Horizontal, 0.1f));
 		animations.emplace(State::BulletEnemyRocket_Cross, Animation(SpriteId::BulletEnemyRocket_Cross, 0.1f));
 	}
-	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.2f));
+	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.15f));
 
 	if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth()); // this code is critical
 }

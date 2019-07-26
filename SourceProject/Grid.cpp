@@ -129,7 +129,7 @@ void Grid::UpdateCells()
 			}
 			if (!moBBox.IsIntersect(cam.GetBBox()))
 			{
-				dynamic_cast<VisibleObject*>(mo.get())->SetState(State::Destroyed);
+				mo->OnOutOfViewPort();
 			}
 
 			objsInViewPort.emplace(mo.get()); // to go to this line mean objects should be to handle collision.

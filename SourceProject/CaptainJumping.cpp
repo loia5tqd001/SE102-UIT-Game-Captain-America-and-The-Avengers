@@ -129,7 +129,7 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 			JumpHeightRealCounter += JumpSpeed *dt;
 		}
 		else {
-		    if (JumpHeightRealCounter < JumpHeightNeedCounter*9/10)
+		    if (JumpHeightRealCounter < JumpHeightNeedCounter*8.5f/10.0f)
 			{
 				cap.vel.y = -JumpSpeed;
 				JumpHeightRealCounter += JumpSpeed * dt;
@@ -169,7 +169,7 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 	}
 	if (JumpSpeed >= JUMP_SPEED_VER_MIN)
 	{
-		JumpSpeed -= GRAVITY * dt;
+		//JumpSpeed -= GRAVITY * dt;
 	}
 }
 

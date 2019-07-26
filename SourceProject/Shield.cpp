@@ -57,7 +57,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 		{
 
 			timeToThrow += GameTimer::Dt();
-			if (timeToThrow < 0.15f)
+			if (timeToThrow < 0.05f)
 			{
 				if (cap.GetState() == State::Captain_Throwing) {
 					UpdateByCapState(cap.GetState(), cap.GetPos());
@@ -423,6 +423,6 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 
 RectF Shield::GetBBox() const
 {
-	if (curState != State::Shield_Side) return VisibleObject::GetBBox();
+	//if (curState != State::Shield_Side) return VisibleObject::GetBBox();
 	return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 0.05f, 0, (float)GetWidth() / 2 - 0.05f, 0);
 }

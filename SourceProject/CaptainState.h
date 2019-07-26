@@ -36,9 +36,9 @@ protected:
 
 
 	static constexpr auto MOVING_HOR = 57.0f;
-	static constexpr auto JUMP_SPEED_VER = 190.0f;
-	static constexpr auto JUMP_SPEED_VER_MAX = 330.0f;
-	static constexpr auto JUMP_SPEED_VER_MIN = 170.0f;
+	static constexpr auto JUMP_SPEED_VER = 180.0f;
+	static constexpr auto JUMP_SPEED_VER_MAX = 210.0f;
+	static constexpr auto JUMP_SPEED_VER_MIN = 120.0f;
 	static constexpr auto JUMP_SPEED_HOR = MOVING_HOR;
 	static constexpr auto GRAVITY = 600.0f;
 
@@ -53,9 +53,9 @@ protected:
 	static constexpr auto INJURE_FALL_SPEED =40.0f;
 	static constexpr auto INJURE_DISTANCE = 10.0f;
 
-	static constexpr auto SPIN_SPEED_VER = 100.0f;
+	static constexpr auto SPIN_SPEED_VER = 150.0f;
 	static constexpr auto SPIN_SPEED_HOR = JUMP_SPEED_HOR;
-	static constexpr auto TIME_KEEP_SPIN = 0.18f;
+	static constexpr auto TIME_KEEP_SPIN = 0.13f;
 
 	static constexpr auto WATER_LEVEL = 454.0f;
 

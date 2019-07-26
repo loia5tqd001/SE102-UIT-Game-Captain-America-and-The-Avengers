@@ -23,6 +23,10 @@ void CaptainPunching::OnKeyUp(Captain& cap, BYTE keyCode)
 
 void CaptainPunching::OnKeyDown(Captain& cap, BYTE keyCode)
 {
+	if (keyCode == setting.Get(KeyControls::Jump))
+	{
+		cap.SetState(State::Captain_Jumping);
+	}
 }
 
 void CaptainPunching::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

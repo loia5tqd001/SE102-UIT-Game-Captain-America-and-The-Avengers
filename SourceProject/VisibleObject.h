@@ -24,6 +24,7 @@ public:
 	inline int GetNx() const { return nx;}
 	State GetState() const override;
 	RectF GetBBox () const override;
+	void OnOutOfViewPort() override;
 	virtual int GetWidth () const;
 	virtual int GetHeight() const;
 
