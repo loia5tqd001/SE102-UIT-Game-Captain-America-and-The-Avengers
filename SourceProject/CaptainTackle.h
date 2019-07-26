@@ -11,5 +11,4 @@ public:
 	void OnKeyDown(Captain& cap, BYTE keyCode) override;
 	void Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects) override;
 	void HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects) override;
-	void HandleDeadlingDamage(Captain& cap, float dt, const std::vector<GameObject*>& coObjects);
 };

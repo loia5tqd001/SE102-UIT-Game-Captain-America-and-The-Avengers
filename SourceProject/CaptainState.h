@@ -42,7 +42,7 @@ protected:
 	static constexpr auto JUMP_SPEED_HOR = MOVING_HOR;
 	static constexpr auto GRAVITY = 600.0f;
 
-	static constexpr auto MAX_JUMP_HEIGHT = 85.0f;
+	static constexpr auto MAX_JUMP_HEIGHT = 83.0f;
 	static constexpr auto MIN_JUMP_HEIGHT = 35.0f;
 
 	static constexpr auto FALL_SPEED_VER = 190.0f;
@@ -55,7 +55,7 @@ protected:
 
 	static constexpr auto SPIN_SPEED_VER = 150.0f;
 	static constexpr auto SPIN_SPEED_HOR = JUMP_SPEED_HOR;
-	static constexpr auto TIME_KEEP_SPIN = 0.13f;
+	static constexpr auto TIME_KEEP_SPIN = 0.16f;
 
 	static constexpr auto WATER_LEVEL = 454.0f;
 

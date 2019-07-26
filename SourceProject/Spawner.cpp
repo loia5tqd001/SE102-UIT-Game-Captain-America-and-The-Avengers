@@ -11,6 +11,8 @@ Spawner::Spawner(Vector2 pos, UINT w, UINT h, Behaviors behav, Vector2 objSpawnP
 	//behaviorData(data),
 	grid(grid)
 {
+	if (expectCapNx < 0)
+		bboxColor = Colors::OneWayTunnel;
 }
 
 void Spawner::Update(float dt, const std::vector<GameObject*>& coObjects)
@@ -38,6 +40,7 @@ void Spawner::Update(float dt, const std::vector<GameObject*>& coObjects)
 void Spawner::OnCollideWithCap(Captain* cap)
 {
 	if (!readyToSpawn) return;
+	if (!isActive) return;
 	if (cap->GetNx() != expectCapNx) return;
 	else {
 		switch (objectBehavior)

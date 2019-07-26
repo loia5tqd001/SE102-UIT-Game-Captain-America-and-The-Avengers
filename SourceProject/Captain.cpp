@@ -292,10 +292,7 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	animations.at(curState).Update(dt);
 
 	PrecheckAABB(coObjects);
-	if (!ignoreUpdate)
-	{
-		currentState->Update(*this, dt, coObjects);
-	}
+	if (!ignoreUpdate) currentState->Update(*this, dt, coObjects);
 	ignoreUpdate = false;
 	HandleHitBox(dt, coObjects);
 

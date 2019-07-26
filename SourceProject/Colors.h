@@ -3,6 +3,7 @@
 struct Colors
 {
 	static constexpr auto MyChineseBrown       = D3DCOLOR_ARGB(123, 420, 69, 0);
+	static constexpr auto OneWayTunnel         = D3DCOLOR_ARGB(420, 69, 123, 0);
 	static constexpr auto MyPoisonGreen        = D3DCOLOR_ARGB(123, 69, 420, 0);
 	static constexpr auto DimGray              = D3DCOLOR_ARGB(200, 110, 110, 110);
 	static constexpr auto LightGray            = D3DCOLOR_ARGB(75 , 110, 110, 110);

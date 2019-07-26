@@ -57,7 +57,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 		{
 
 			timeToThrow += GameTimer::Dt();
-			if (timeToThrow < 0.15f)
+			if (timeToThrow < 0.1f)
 			{
 				if (cap.GetState() == State::Captain_Throwing) {
 					UpdateByCapState(cap.GetState(), cap.GetPos());

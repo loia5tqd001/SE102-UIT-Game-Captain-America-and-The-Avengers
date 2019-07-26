@@ -31,11 +31,13 @@ void CaptainTackle::Update(Captain& cap, float dt, const std::vector<GameObject*
 {
 	if (!isStillOnGround) {
 		cap.SetState(State::Captain_Falling);
+		return;
 		// TODO: Set falling
 	}
 	if (cap.animations.at(cap.curState).IsDoneCycle())
 	{
 		cap.SetState(State::Captain_Standing);
+		return;
 	}
 	else
 	{
@@ -61,6 +63,7 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 	{
 		cap.pos.x += cap.vel.x * dt;
 		cap.pos.y += cap.vel.y * dt;
+		isStillOnGround = false;
 		return;
 	}
 
@@ -79,10 +82,11 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 			switch (block->GetType())
 			{
 				case ClassId::RigidBlock:
-					if (e.nx != 0)
-						cap.SetState(State::Captain_Standing);
+					if (e.ny < 0) isStillOnGround = true;
+					if (e.nx != 0) cap.SetState(State::Captain_Standing);
+					break;
 				case ClassId::PassableLedge:
-					isStillOnGround = true;
+					if (e.ny < 0) isStillOnGround = true;
 					if (e.ny > 0) AssertUnreachable();
 					break;
 
