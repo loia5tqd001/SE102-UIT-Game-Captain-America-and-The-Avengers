@@ -95,7 +95,7 @@ void CaptainFalling::Update(Captain & cap, float dt, const std::vector<GameObjec
 	}
 	if (cap.vel.y < FALL_SPEED_VER_MAX)
 	{
-		cap.vel.y += GRAVITY * dt;
+		cap.vel.y += GRAVITY * 2.5 * dt;
 	}
 	//Testing
 	HandleCollisions(cap, dt, coObjects);

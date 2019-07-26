@@ -47,7 +47,7 @@ protected:
 
 	static constexpr auto FALL_SPEED_VER = 190.0f;
 	static constexpr auto FALL_SPEED_VER_MAX = 210.0f;
-	static constexpr auto FALL_SPEED_VER_MIN = 100.0f;
+	static constexpr auto FALL_SPEED_VER_MIN = 20.0f;
 	static constexpr auto FALL_SPEED_HOR = MOVING_HOR;
 
 	static constexpr auto INJURE_FALL_SPEED =40.0f;
