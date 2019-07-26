@@ -32,32 +32,13 @@ void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjec
 	pos.y += vel.y * dt;
 	if (type != 0)
 	{
-		if (abs(vel.y) < abs(vel.x) / 2) this->SetState(State::BulletEnemyRocket_Horizontal);
+		if (abs(vel.y) <= abs(vel.x) / 2) this->SetState(State::BulletEnemyRocket_Horizontal);
 		else this->SetState(State::BulletEnemyRocket_Cross);
-		if (abs(vel.y) < BULLET_MOVING / 5)
+		durationUp += GameTimer::Dt();
+		if (durationUp >= 0.25)
 		{
-			vel.y -= 0.5;
-			vel.x = nx * std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
-		}
-		else if (abs(vel.y) < BULLET_MOVING / 4)
-		{
-			vel.y -= 0.6f;
-			vel.x = nx * std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
-		}
-		else if (abs(vel.y) < BULLET_MOVING / 3)
-		{
-			vel.y -= 0.7f;
-			vel.x = nx * std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
-		}
-		else if (abs(vel.y) < BULLET_MOVING / 2)
-		{
-			vel.y -= 0.8f;
-			vel.x = nx * std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
-		}
-		else if (abs(vel.y) < BULLET_MOVING)
-		{
-			vel.y -= 0.9f;
-			vel.x = nx * std::sqrt(BULLET_MOVING*BULLET_MOVING - vel.y*vel.y);
+			vel.x = nx * BULLET_MOVING/sqrt(2);
+			vel.y = -abs(vel.x);
 		}
 	}
 }

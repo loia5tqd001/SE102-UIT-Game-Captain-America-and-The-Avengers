@@ -29,6 +29,10 @@ void CaptainPunching::Update(Captain& cap, float dt, const std::vector<GameObjec
 {
 	HandleCollisions(cap, dt, coObjects);
 	if (cap.animations.at(cap.curState).IsDoneCycle()) {
+		if (wnd.IsKeyPressed(setting.Get(KeyControls::Jump)))
+		{
+			cap.SetState(State::Captain_Jumping);
+		}
 
 		cap.SetState(State::Captain_Standing); //move to Captain_Walking, Captain_Walking should handle nx, KeyControls press, up and down
 	}
