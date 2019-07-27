@@ -19,7 +19,10 @@ private:
 	bool isLastForth = false; 
 	bool isInJumpBackNForth = true;
 	bool DogdeShield = false;
+
     int dirYJump = -1;
+	float accelerator = 0.2f;
+	float groundPosY = 0;
 	State lastState = State::EnemyRocket_Walking;
 	Captain* cap;
 

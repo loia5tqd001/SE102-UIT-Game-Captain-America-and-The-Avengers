@@ -78,6 +78,8 @@ void EnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 	//update animations
 	UpdateAnimation(dt);
+	//
+	HandleCollisions(dt, coObjects);
 }
 
 void EnemyWizard::SetState(State state)
@@ -124,6 +126,49 @@ void EnemyWizard::SetState(State state)
 		vel.x = WALKING_SPEED*nx;
 		vel.y = 0;
 		break;
+	}
+}
+
+void EnemyWizard::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
+{
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
+	if (coEvents.size() == 0)
+	{
+		pos.x += vel.x*dt;
+		pos.y += vel.y*dt;
+		return;
+	}
+
+	float min_tx, min_ty, nx, ny;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
+
+	if (coEvents.size() == 0) return;
+
+
+	for (auto&e : coEvents)
+	{
+		if (auto block = dynamic_cast<Block*>(e.pCoObj))
+		{
+			switch (block->GetType())
+			{
+			case ClassId::Switch:
+				pos.x += (1.0f - e.t) * vel.x;
+				pos.y += (1.0f - e.t) * vel.y;
+				break;
+			case ClassId::PassableLedge:
+				if (e.ny != 0) {
+					vel.y = 0;
+				}
+				break;
+			case ClassId::RigidBlock:
+				if (e.ny != 0) {
+					vel.y = 0;
+				}
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }
 static float groundPosY = 390.0f; // testing ground pos.y

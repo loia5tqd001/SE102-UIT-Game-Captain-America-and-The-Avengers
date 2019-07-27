@@ -222,7 +222,6 @@
     <ClCompile Include="EnemyFly.cpp">
       <Filter>Development\Objects\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="BulletEnemyFly.cpp" />
     <ClCompile Include="CaptainClimbing.cpp">
       <Filter>Development\Objects\Captain\D</Filter>
     </ClCompile>
@@ -283,6 +282,9 @@
     <ClCompile Include="BulletEnemyFly.cpp" />
     <ClCompile Include="CaptainFalling.cpp">
       <Filter>Development\Objects\Captain</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletEnemyFly.cpp">
+      <Filter>Development\Objects\Bullets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,7 +474,6 @@
     <ClInclude Include="EnemyFly.h">
       <Filter>Development\Objects\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="BulletEnemyFly.h" />
     <ClInclude Include="CaptainClimbing.h">
       <Filter>Development\Objects\Captain\D</Filter>
     </ClInclude>
@@ -531,9 +532,11 @@
       <Filter>Development\Objects\Captain\H</Filter>
     </ClInclude>
     <ClInclude Include="BulletEnemyFly.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="CaptainFalling.h">
       <Filter>Development\Objects\Captain</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletEnemyFly.h">
+      <Filter>Development\Objects\Bullets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

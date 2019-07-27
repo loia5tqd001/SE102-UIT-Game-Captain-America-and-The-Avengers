@@ -16,5 +16,6 @@ public:
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	void SpawnBulletFire();
 	void testing(Window &win); //only use for testing
+	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 };
 

@@ -4,7 +4,7 @@
 #include "BulletEnemyRocket.h"
 
 EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
-	Enemy(behavior, Data{}, State::EnemyRocket_BeforeExplode, 3, spawnPos, grid),
+	Enemy(behavior, Data{}, State::EnemyRocket_BeforeExplode, 1, spawnPos, grid),
 	cap(cap)
 {
 	animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode, 0.2f));
@@ -21,6 +21,7 @@ EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Gri
 	}
 	if (behavior == Behaviors::EnemyRocket_Ambush) nx = -1;
 	else nx = - cap->GetNx();
+	groundPosY = spawnPos.y;
 	SetState(State::EnemyRocket_Walking);
 	switch (behavior)
 	{
@@ -218,8 +219,7 @@ void EnemyRocket::OnBehaviorAmbush()
 		DogdeShield = true;
 	}
 	if (DogdeShield) {
-		static const float posy = pos.y;
-		Jump(posy, 60.0f);
+		Jump(groundPosY, 60.0f);
 	}
 	else
 	{
@@ -231,7 +231,7 @@ void EnemyRocket::Jump(float posy, float height) //use this function in any heig
 	if (health <= 0) return;
 	static constexpr float JUMP_HOR = 20.0f;
 	static constexpr float GRAVITY = 140.0f;
-	static float accelerator = 0.2f;
+
 	VisibleObject::SetState(State::EnemyRocket_Sitting);
 	vel.x = -JUMP_HOR;
 	if (dirYJump == -1) // jump up
@@ -252,9 +252,9 @@ void EnemyRocket::Jump(float posy, float height) //use this function in any heig
 	else // falling
 	{
 		pos.y += GRAVITY * GameTimer::Dt() + accelerator;
-		if (pos.y >= posy + 16) //why 16? it is the different in 2 sprite
+		if (pos.y >= posy + 9) //why 9? it is the different in 2 sprite
 		{
-			pos.y = posy + 16;
+			pos.y = posy + 9;
 			VisibleObject::SetState(State::EnemyRocket_Walking);
 			DogdeShield = false;
 		}
