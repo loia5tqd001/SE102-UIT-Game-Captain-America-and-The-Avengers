@@ -217,6 +217,7 @@
     <ClCompile Include="CaptainWalking.cpp" />
     <ClCompile Include="CharlestonScene.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="DynamiteNapalm.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyFly.cpp" />
     <ClCompile Include="EnemyGun.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="Counter.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="DynamiteNapalm.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFly.h" />
     <ClInclude Include="EnemyGun.h" />

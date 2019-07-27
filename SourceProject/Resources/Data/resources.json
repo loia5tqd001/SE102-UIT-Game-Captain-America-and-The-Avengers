@@ -101,7 +101,14 @@
 	[         115,            10,       89,     244,              18,               12,         2,           13], //Captain_Swimming
 	[         116,            10,      202,     251,              16,               12,         3,            7], //Captain_FallToWater
 	[         117,            10,      330,     248,              16,                7,         3,            4], //Captain_InWater
-	[         118,            10,        9,      83,              21,               27,         1,            0]  //Captain_CoverLow
+	[         118,            10,        9,      83,              21,               27,         1,            0],  //Captain_CoverLow
+
+	[         200,            13,      314,      24,              28,               46,         1,            0], //DynamiteNapalm_FallFromTheSky
+	[         201,            13,      202,      29,              30,               43,         1,            0], //DynamiteNapalm_Standing
+	[         202,            13,      355,      33,              28,               39,         2,           14], //DynamiteNapalm_Intact_Running
+	[         203,            13,      166,      24,              32,               48,         2,          -78],//DynamiteNapalm_ThrowDynamite
+	[         204,            13,      266,      29,              38,               43,         1,            0], //DynamiteNapalm_Intact_Shooting
+	[         205,            13,       54,      85,              30,               43,         4,           10]//DynamiteNapalm_Intact_Injure
   ],
 
   "sounds": [

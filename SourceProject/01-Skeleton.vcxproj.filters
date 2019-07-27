@@ -286,6 +286,9 @@
     <ClCompile Include="BulletEnemyFly.cpp">
       <Filter>Development\Objects\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="DynamiteNapalm.cpp">
+      <Filter>Development\Objects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -537,6 +540,9 @@
     </ClInclude>
     <ClInclude Include="BulletEnemyFly.h">
       <Filter>Development\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamiteNapalm.h">
+      <Filter>Development\Objects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

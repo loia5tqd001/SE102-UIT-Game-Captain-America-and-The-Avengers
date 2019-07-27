@@ -239,6 +239,18 @@ enum class State
 	BulletEnemyFly_CrossUp,
 	BulletEnemyFly_CrossDown,
 
+	DynamiteNapalm_FallFromTheSky,
+	DynamiteNapalm_Standing,
+	DynamiteNapalm_Intact_Running,
+	DynamiteNapalm_ThrowDynamite,
+	DynamiteNapalm_Intact_Shooting,
+	DynamiteNapalm_Intact_Injure,
+
+	DynamiteNapalm_Headless_Injure,
+	DynamiteNapalm_Headless_Running_Shooting,
+	DynamiteNapalm_BeforeExplode,
+
+
 	NotExist //Use to initialize
 };
 
