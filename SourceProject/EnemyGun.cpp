@@ -129,6 +129,9 @@ void EnemyGun::OnBehaviorAmbush()
 
 void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	UpdateAnimation(dt);
+	if (curState == State::Explode) return;
+
 	switch (behavior)
 	{
 		case Behaviors::EnemyGun_Shoot:
@@ -147,8 +150,6 @@ void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 	pos.x += vel.x*dt;
 	pos.y += vel.y*dt;
-
-	UpdateAnimation(dt);
 }
 
 void EnemyGun::SetState(State state)

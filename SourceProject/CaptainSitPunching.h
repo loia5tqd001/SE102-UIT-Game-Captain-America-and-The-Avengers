@@ -4,7 +4,7 @@
 class CaptainSitPunching : public CaptainState
 {
 private:
-	float dentaX;
+	float dentaX = 0.0f;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

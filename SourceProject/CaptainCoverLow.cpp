@@ -65,6 +65,7 @@ void CaptainCoverLow::Update(Captain& cap, float dt, const std::vector<GameObjec
 
 void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	//isOnGround = false; We should do this, but it'll cause wrong sound, why?
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
 	{
@@ -141,7 +142,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 			case ClassId::Water:
 				if (e.ny < 0) {
 					cap.vel.x = 0;
-					isOnGround = true;
+					//isOnGround = true; // will cause stand on the water
 					Sounds::PlayAt(SoundId::Water);
 				};
 				break;
@@ -163,6 +164,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::DamageBlock:
+				if (e.ny < 0) isOnGround = true;
 				cap.health.Subtract(1);
 				cap.SetState(State::Captain_Injured);
 				break;

@@ -9,18 +9,16 @@ void CaptainSitPunching::Enter(Captain& cap, State fromState, Data&& data)
 	assert(fromState == State::Captain_Sitting || fromState == State::Captain_CoverLow);
 	cap.vel.y = 0;
 	cap.vel.x = 0;
-	if (fromState == State::Captain_Sitting)
-	{
-		// adjust position due to difference between sitting witdh and sitpunching width
-		auto sittingWidth = cap.animations.at(State::Captain_Sitting).GetFrameSize().GetWidth();
-		auto sitpunchingWidth = cap.animations.at(State::Captain_SitPunching).GetFrameSize().GetWidth();
-		dentaX = (float(sittingWidth) - float(sitpunchingWidth)) / 2;
-		if (cap.nx < 0) {
-			cap.pos.x += dentaX;
-		}
-		else {
-			cap.pos.x -= dentaX;
-		}
+
+	// adjust position due to difference between sitting witdh and sitpunching width
+	auto fromStateWidth = cap.animations.at(fromState).GetFrameSize().GetWidth();
+	auto sitpunchingWidth = cap.animations.at(State::Captain_SitPunching).GetFrameSize().GetWidth();
+	dentaX = (float(fromStateWidth) - float(sitpunchingWidth)) / 2.0f;
+	if (cap.nx < 0) {
+		cap.pos.x += dentaX;
+	}
+	else {
+		cap.pos.x -= dentaX;
 	}
 }
 
@@ -50,11 +48,11 @@ void CaptainSitPunching::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainSitPunching::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	HandleCollisions(cap, dt, coObjects);
 	if (cap.animations.at(cap.curState).IsDoneCycle()) {
 
 		cap.SetState(State::Captain_Sitting); //move to Captain_Sitting, Captain_Walking should handle nx, KeyControls press, up and down
 	}
-	HandleCollisions(cap, dt, coObjects);
 }
 
 void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -65,6 +63,7 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 
 	if (coEvents.size() == 0) return;
 	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
+	if (coEvents.size() == 0) return;
 
 	for (auto& e : coEvents)
 	{

@@ -29,7 +29,17 @@ void CaptainHealth::Draw() const
 
 	if (health > 0)
 	{
-		sprite.Draw( { 15.0f, 20.0f } );
+		if (health <= 2) {
+			static int nRenderFrame = 0;
+			if (++nRenderFrame % 4)
+			{
+				sprite.Draw( { 15.0f, 20.0f } );
+			}
+		}
+		else
+		{
+			sprite.Draw( { 15.0f, 20.0f } );
+		}
 	}
 	if (health > 4)
 	{

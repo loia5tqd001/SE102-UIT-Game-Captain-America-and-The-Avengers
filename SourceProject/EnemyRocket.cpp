@@ -213,7 +213,7 @@ void EnemyRocket::OnBehaviorAmbush()
 		   curState == State::Explode ||
 		   curState == State::EnemyRocket_Sitting ||
 		   curState == State::Destroyed);
-	vel.x = 30 * nx;
+	vel.x = 30.0f * nx;
 	if (cap->IsShieldOn() == false) {
 		DogdeShield = true;
 	}
@@ -307,6 +307,7 @@ void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	UpdateAnimation(dt);
 
+	if (curState == State::Explode) return;
 	switch (behavior)
 	{
 		case Behaviors::EnemyRocket_ShootStraight:

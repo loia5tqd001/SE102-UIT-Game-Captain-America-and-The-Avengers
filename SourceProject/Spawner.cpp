@@ -12,7 +12,10 @@ Spawner::Spawner(Vector2 pos, UINT w, UINT h, Behaviors behav, Vector2 objSpawnP
 	grid(grid)
 {
 	if (expectCapNx < 0)
+	{
+		readyToSpawn = false;
 		bboxColor = Colors::OneWayTunnel;
+	}
 }
 
 void Spawner::Update(float dt, const std::vector<GameObject*>& coObjects)

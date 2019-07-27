@@ -23,6 +23,12 @@ void CaptainDead::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainDead::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	if (cap.animations.at(cap.curState).IsDoneCycle())
+	{
+		sceneManager.GetCurScene().DoTransitionScene();
+		cap.health.Set(12);
+		cap.SetState(State::Captain_Standing);
+	}
 }
 
 void CaptainDead::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

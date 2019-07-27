@@ -24,7 +24,7 @@ Captain::Captain(const Vector2& pos, Grid* ogrid)
 	animations.emplace(State::Captain_Tackle, Animation(SpriteId::Captain_Smash, 0.35f));
 	animations.emplace(State::Captain_Climbing, Animation(SpriteId::Captain_Climb, 0.2f));
 	animations.emplace(State::Captain_Injured, Animation(SpriteId::Captain_Injure, 0.3f));
-	animations.emplace(State::Captain_Dead, Animation(SpriteId::Captain_Dead));
+	animations.emplace(State::Captain_Dead, Animation(SpriteId::Captain_Dead, 2.5f));
 	animations.emplace(State::Captain_Swimming, Animation(SpriteId::Captain_Swimming, 0.1f));
 	animations.emplace(State::Captain_FallToWater, Animation(SpriteId::Captain_FallToWater, 0.07f));
 	animations.emplace(State::Captain_InWater, Animation(SpriteId::Captain_InWater, 0.2f));

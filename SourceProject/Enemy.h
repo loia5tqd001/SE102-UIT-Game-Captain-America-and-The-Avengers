@@ -18,6 +18,7 @@ public:
 	//enemy fly dont need data, just put pos to it and it will be fine
 	//also not every enemy will explode
 
+	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 	RectF GetBBox() const override;
 	virtual void TakeDamage(int damage);
 	float GetPosX() { return pos.x; }
