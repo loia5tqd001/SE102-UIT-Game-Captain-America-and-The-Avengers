@@ -19,7 +19,7 @@ protected:
 
 public:
 	VisibleObject(State initState, Vector2 pos, Vector2 vel = { 0.0f, 0.0f }, int nx = 1);
-
+	
 	void FlipHorizontally();
 	inline int GetNx() const { return nx;}
 	State GetState() const override;

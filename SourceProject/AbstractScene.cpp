@@ -70,3 +70,14 @@ std::optional<Scene> AbstractScene::GetNextScene() const
 	if (isDoingTransitionScene) return {};
 	else return nextScene; 
 }
+
+void AbstractScene::ToggleLight()
+{
+	static std::chrono::steady_clock::time_point lastToggle;
+	std::chrono::duration<float> duration = std::chrono::steady_clock::now() - lastToggle;
+	if (duration.count() > 0.169f)
+	{
+		lastToggle = std::chrono::steady_clock::now();
+		isDark = !isDark;
+	}
+}

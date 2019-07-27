@@ -29,6 +29,7 @@ void RedAlertScene::Update(float dt)
 	for (auto& obj : grid->GetObjectsInViewPort())
 		obj->Update(dt);
 	cap->Update(dt, grid->GetObjectsInViewPort());
+	cap->ClampWithin( map->GetWorldBoundary().Trim(8.0f, 0.0f, 8.0f, 0.0f) );
 	cam.ClampWithin( map->GetWorldBoundary() );
 }
 

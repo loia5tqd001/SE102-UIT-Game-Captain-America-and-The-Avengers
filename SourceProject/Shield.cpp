@@ -365,6 +365,14 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 			{
 				capsule->BeingHit();
 			}
+			else if (auto block = dynamic_cast<Block*>(e.pCoObj))
+			{
+				if (block->GetType() == ClassId::Switch)
+				{
+					SceneManager::Instance().GetCurScene().ToggleLight();
+				}
+			}
+			// TODO: barrel oil RedAlert
 		}
 	}
 }

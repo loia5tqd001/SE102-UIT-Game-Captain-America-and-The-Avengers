@@ -51,7 +51,7 @@ void CharlestonScene::Draw()
 {	
 	map->Render(); // layer0
 	ExitSign::Instance().Draw();
-	// layer1: capsulesd
+	// layer1: capsules
 	std::vector<GameObject*> layer2; // item, bullet, enemy, ledge (other visible objects)
 	// layer3: captain
 	std::vector<GameObject*> layer4; // invisible object

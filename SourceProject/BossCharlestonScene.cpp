@@ -27,6 +27,7 @@ void BossCharlestonScene::Update(float dt)
 	for (auto& obj : grid->GetObjectsInViewPort())
 		obj->Update(dt);
 	cap->Update(dt, grid->GetObjectsInViewPort());
+	cap->ClampWithin( mapDark->GetWorldBoundary().Trim(8.0f, 0.0f, 8.0f, 0.0f) );
 	cam.ClampWithin( mapDark->GetWorldBoundary() );
 }
 
@@ -50,7 +51,7 @@ void BossCharlestonScene::OnKeyDown(BYTE keyCode)
 	switch (keyCode)
 	{
 		case VK_SPACE:
-			isDark = !isDark;
+			ToggleLight();
 			break;
 
 		case VK_RETURN:

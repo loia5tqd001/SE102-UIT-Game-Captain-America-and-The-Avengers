@@ -1,7 +1,7 @@
 {
   "grid": { 
-		"cellsize": 120,
-		"width": 30,
+		"cellsize": 128,
+		"width": 2,
 		"height": 2,  
 		"objects": [
 			// Blocks: classId[0], x[1], y[2], width[3], height[4]

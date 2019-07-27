@@ -1,8 +1,8 @@
 {
   "grid": { 
 		"cellsize": 120,
-		"width": 30,
-		"height": 2,  
+		"width": 9,
+		"height": 11,  
 		"objects": [
 		0
 			// classId[0], isStatic[1], x[2], y[3], width[4], height[5], vx[6], vy[7], nx[8] 

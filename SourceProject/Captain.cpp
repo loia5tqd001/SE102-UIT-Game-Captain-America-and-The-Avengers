@@ -271,17 +271,13 @@ void Captain::HandleHitBox(float dt, const std::vector<GameObject*>& coObjects)
 				enemy->TakeDamage(1);
 			}
 			// NOTE: I think we should handle keydown for switch
-			//else if (auto block = dynamic_cast<Block*>(obj))
-			//{
-			//	if (block->GetType() == ClassId::Switch && lastKeyDown == KeyControls::Attack)
-			//	{
-			//		auto duration = timeLastKeyDown - std::chrono::steady_clock::now();
-			//		if (duration.count() < 0.2f)
-			//		{
-			//			SceneManager::Instance().GetCurScene().isDark = !SceneManager::Instance().GetCurScene().isDark;
-			//		}
-			//	}
-			//}
+			else if (auto block = dynamic_cast<Block*>(obj))
+			{
+				if (block->GetType() == ClassId::Switch)
+				{
+					SceneManager::Instance().GetCurScene().ToggleLight();
+				}
+			}
 			// else if oil barrel in Red Alert ...
 		}
 

@@ -4,8 +4,9 @@
 class PittsburghScene : public AbstractScene
 {
 private:
-	std::unique_ptr<Map> mapDark, mapLight; // responsible for drawing map background
-	Map* curMap = nullptr;
+	std::unique_ptr<Captain> cap;
+	std::unique_ptr<Grid> grid;
+	std::unique_ptr<Map> mapDark, mapLight; 
 
 public:
 	PittsburghScene();

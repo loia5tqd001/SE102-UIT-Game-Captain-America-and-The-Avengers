@@ -27,6 +27,7 @@ public:
 
 	bool canGoNextMap = false;
 	bool isDark; // bad practice but who cares // toggle when captain hit the switch
+	void ToggleLight();
 
 	virtual void LoadResources () = 0;
 	virtual void Update(float dt) = 0;

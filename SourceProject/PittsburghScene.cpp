@@ -2,6 +2,7 @@
 #include "PittsburghScene.h"
 
 static auto& cam = Camera::Instance();
+static auto& wnd = Window::Instance();
 
 PittsburghScene::PittsburghScene()
 {
@@ -17,19 +18,55 @@ void PittsburghScene::LoadResources()
 
 	mapDark = std::make_unique<Map>( root["dark"] );
 	mapLight = std::make_unique<Map>( root["light"] );
-	curMap = mapDark.get();
+
+	//grid = std::make_unique<Grid>( root );
+	//cap = std::make_unique<Captain>( Vector2{ 32.0f, 197.0f - 45.0f },grid.get()) ;
+	//cam.SetMainCharacter(cap.get());
 }
 
 void PittsburghScene::Update(float dt)
 {
-	cam.ClampWithin( curMap->GetWorldBoundary() );
+	grid->UpdateCells(); 
+
+	for (auto& obj : grid->GetObjectsInViewPort()) // update objects
+		obj->Update(dt);
+
+	cap->Update(dt, grid->GetObjectsInViewPort()); // update Captain
+
+	// clamp captain and camera
+	cap->ClampWithin(mapDark->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f));
+	cam.FollowMainCharacter();
+	cam.ClampWithin(mapDark->GetWorldBoundary());
 }
 
 void PittsburghScene::Draw()
 {
-	curMap->Render();
+	if (isDark) mapDark->Render();
+	else mapLight->Render();
 
-	const auto& wnd = Window::Instance();
+	ExitSign::Instance().Draw();
+
+	// layer1: capsules
+	std::vector<GameObject*> layer2; // item, bullet, enemy, ledge (other visible objects)
+									 // layer3: captain
+	std::vector<GameObject*> layer4; // invisible object
+
+	for (auto& obj : grid->GetObjectsInViewPort()) {
+		if (dynamic_cast<Capsule*>(obj)) 
+			obj->Render();
+		else if (dynamic_cast<VisibleObject*>(obj)) 
+			layer2.emplace_back(obj);
+		else 
+			layer4.emplace_back(obj);
+	}
+
+	for (auto& obj : layer2) obj->Render();
+	cap->Render();
+	for (auto& obj : layer4) obj->Render();
+
+	grid->RenderCells();
+
+
 	if (wnd.IsKeyPressed(VK_LEFT))
 		cam.MoveBy( { -5.0f, 0.0f });
 	if (wnd.IsKeyPressed(VK_UP))
@@ -45,8 +82,7 @@ void PittsburghScene::OnKeyDown(BYTE keyCode)
 	switch (keyCode)
 	{
 		case VK_SPACE:
-			DoTransitionScene();
-			curMap = curMap == mapDark.get() ? mapLight.get() : mapDark.get();
+			ToggleLight();
 			break;
 
 		case VK_RETURN:
