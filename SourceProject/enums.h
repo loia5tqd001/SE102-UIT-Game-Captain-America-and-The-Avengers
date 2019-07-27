@@ -246,10 +246,9 @@ enum class State
 	DynamiteNapalm_Intact_Shooting,
 	DynamiteNapalm_Intact_Injure,
 
-	DynamiteNapalm_Headless_Injure,
+	DynamiteNapalm_Headless_Standing,
 	DynamiteNapalm_Headless_Running_Shooting,
 	DynamiteNapalm_BeforeExplode,
-
 
 	NotExist //Use to initialize
 };
