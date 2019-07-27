@@ -95,6 +95,13 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 				}
 			}
 		}	
+		else if (auto block = dynamic_cast<Block*>(e.pCoObj))
+		{
+			if (block->GetType() == ClassId::DamageBlock)
+			{
+				cap.CollideWithPassableObjects(dt, e);
+			}
+		}
 	}
 }
 

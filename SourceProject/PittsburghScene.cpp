@@ -7,7 +7,7 @@ static auto& wnd = Window::Instance();
 PittsburghScene::PittsburghScene()
 {
 	LoadResources();
-
+	isDark = true;
 	if (!IsPause()) 
 		Sounds::PlayLoop( GetBgMusic() );
 }
@@ -19,9 +19,10 @@ void PittsburghScene::LoadResources()
 	mapDark = std::make_unique<Map>( root["dark"] );
 	mapLight = std::make_unique<Map>( root["light"] );
 
-	//grid = std::make_unique<Grid>( root );
+	grid = std::make_unique<Grid>( root );
 	//cap = std::make_unique<Captain>( Vector2{ 32.0f, 197.0f - 45.0f },grid.get()) ;
-	//cam.SetMainCharacter(cap.get());
+	cap = std::make_unique<Captain>( Vector2{ 792.0f, 390.0f },grid.get()) ;
+	cam.SetMainCharacter(cap.get());
 }
 
 void PittsburghScene::Update(float dt)
@@ -66,15 +67,14 @@ void PittsburghScene::Draw()
 
 	grid->RenderCells();
 
-
-	if (wnd.IsKeyPressed(VK_LEFT))
-		cam.MoveBy( { -5.0f, 0.0f });
-	if (wnd.IsKeyPressed(VK_UP))
-		cam.MoveBy( { 0.0f, -5.0f });
-	if (wnd.IsKeyPressed(VK_RIGHT))
-		cam.MoveBy( { 5.0f, 0.0f });
-	if (wnd.IsKeyPressed(VK_DOWN))
-		cam.MoveBy( { 0.0f, 5.0f });
+	//if (wnd.IsKeyPressed(VK_LEFT))
+	//	cam.MoveBy( { -5.0f, 0.0f });
+	//if (wnd.IsKeyPressed(VK_UP))
+	//	cam.MoveBy( { 0.0f, -5.0f });
+	//if (wnd.IsKeyPressed(VK_RIGHT))
+	//	cam.MoveBy( { 5.0f, 0.0f });
+	//if (wnd.IsKeyPressed(VK_DOWN))
+	//	cam.MoveBy( { 0.0f, 5.0f });
 }
 
 void PittsburghScene::OnKeyDown(BYTE keyCode)
@@ -89,4 +89,10 @@ void PittsburghScene::OnKeyDown(BYTE keyCode)
 			DoTransitionScene(Scene::RedAlert);
 			break;
 	}
+	cap->OnKeyDown(keyCode);
+}
+
+void PittsburghScene::OnKeyUp(BYTE keyCode)
+{
+	cap->OnKeyUp(keyCode);
 }

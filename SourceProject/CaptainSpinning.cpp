@@ -192,12 +192,6 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::DamageBlock: //case that DamageBlock is at the roof
-				if (!cap.isFlashing)
-				{
-					SetAnotherState = true;
-					cap.health.Subtract(1);
-					cap.SetState(State::Captain_Injured);
-				}
 				break;
 
 			case ClassId::PassableLedge:

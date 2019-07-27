@@ -237,6 +237,7 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 				break;
 
 			case ClassId::DamageBlock:
+				cap.CollideWithPassableObjects(dt, e);
 				if (!cap.isFlashing)
 				{
 					cap.health.Subtract(1);

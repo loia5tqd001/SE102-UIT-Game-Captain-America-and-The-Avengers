@@ -61,7 +61,16 @@ void Captain::Render() const
 
 RectF Captain::GetBBox() const
 {
-	return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 3, 0, (float)GetWidth() / 2 - 3, 0);
+	auto verticalRect = VisibleObject::GetBBox().Trim(GetWidth() / 2.0f - 3, 0, GetWidth() / 2.0f - 3, 0);
+	switch (curState)
+	{
+		case State::Captain_Jumping:
+		case State::Captain_Falling:
+		case State::Captain_Spinning:
+			//return verticalRect.Trim(0, 0, 0, GetHeight() / 2.0f);
+		default:
+			return verticalRect;
+	}
 }
 
 RectF Captain::GetHitBox() const
@@ -238,6 +247,16 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 			else if (auto item = dynamic_cast<Item*>(obj))
 			{
 				item->BeingCollected();
+			}
+			else if (auto block = dynamic_cast<Block*>(obj))
+			{
+				if (block->GetType() == ClassId::DamageBlock)
+				{
+					if (!isFlashing) {
+						health.Subtract(1);
+						SetState(State::Captain_Injured);
+					}
+				}
 			}
 		}
 

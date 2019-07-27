@@ -8,7 +8,7 @@ private:
 	std::optional<Scene> nextScene;
 
 public:
-	AbstractScene() noexcept;
+	AbstractScene() = default;
 	AbstractScene(const AbstractScene&) = delete;
 	virtual ~AbstractScene() = default;
 
@@ -26,7 +26,7 @@ public:
 	std::optional<Scene> GetNextScene() const;
 
 	bool canGoNextMap = false;
-	bool isDark; // bad practice but who cares // toggle when captain hit the switch
+	bool isDark = false; 
 	void ToggleLight();
 
 	virtual void LoadResources () = 0;

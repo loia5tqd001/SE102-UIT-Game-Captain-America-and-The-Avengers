@@ -164,9 +164,8 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::DamageBlock:
-				if (e.ny < 0) isOnGround = true;
-				cap.health.Subtract(1);
-				cap.SetState(State::Captain_Injured);
+				isOnGround = true;
+				cap.CollideWithPassableObjects(dt, e);
 				break;
 
 			case ClassId::PassableLedge:

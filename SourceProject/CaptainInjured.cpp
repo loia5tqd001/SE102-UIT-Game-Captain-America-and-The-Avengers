@@ -173,11 +173,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 
 				//Todo: check this 
 			case ClassId::DamageBlock:
-				if (!cap.isFlashing)
-				{
-					cap.health.Subtract(1);
-					cap.SetState(State::Captain_Injured);
-				}
+				cap.CollideWithPassableObjects(dt, e);
 				break;
 			case ClassId::RigidBlock:
 				break;

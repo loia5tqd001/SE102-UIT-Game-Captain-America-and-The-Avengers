@@ -29,9 +29,39 @@ void CaptainDead::Update(Captain& cap, float dt, const std::vector<GameObject*>&
 		cap.health.Set(12);
 		cap.SetState(State::Captain_Standing);
 	}
+	HandleCollisions(cap, dt, coObjects);
 }
 
 void CaptainDead::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
+
+	float min_tx, min_ty, nx, ny;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
+
+	if (coEvents.size() == 0) return;
+
+	cap.pos.x += min_tx * cap.vel.x * dt;
+	cap.pos.y += min_ty * cap.vel.y * dt;
+
+	for (auto&e : coEvents)
+	{
+		if (auto block = dynamic_cast<Block*>(e.pCoObj))
+		{
+			switch (block->GetType())
+			{
+
+				case ClassId::DamageBlock:
+					cap.CollideWithPassableObjects(dt, e);
+					break;
+
+				case ClassId::PassableLedge:
+					break;
+
+				default:
+					AssertUnreachable();
+			}
+		}
+	}
 }
 

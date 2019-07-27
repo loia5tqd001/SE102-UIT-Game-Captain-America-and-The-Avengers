@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="4. TileMapCharleston.png" tilewidth="16" tileheight="16" tilecount="88" columns="11">
   <image source="4. TileMapCharleston.png" width="176" height="128"/>
  </tileset>
- <layer id="1" name="ShoeBox Tile Grab" width="128" height="30">
+ <layer id="1" name="ShoeBox Tile Grab" width="128" height="30" locked="1">
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -37,16 +37,16 @@
 77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,77,78,79,78,79,78,79,78,79,78,79,78,79,78,79,79,78
 </data>
  </layer>
- <objectgroup color="#aa00ff" id="2" name="RigidBlocks(classid=1)">
+ <objectgroup color="#aa00ff" id="2" name="RigidBlocks(classid=1)" locked="1">
   <object id="2" name="RigidBlock" x="1792" y="421" width="63" height="59"/>
   <object id="3" name="RigidBlock" x="1855" y="437" width="161" height="43"/>
   <object id="4" name="RigidBlock" x="2016" y="309" width="32" height="171"/>
   <object id="6" name="RigidBlock" x="1792" y="309" width="224" height="43"/>
  </objectgroup>
- <objectgroup color="#ffaa00" id="8" name="NextMap(classid=7)">
+ <objectgroup color="#ffaa00" id="8" name="NextMap(classid=7)" locked="1">
   <object id="37" name="NextMap" x="1968" y="352" width="48" height="85"/>
  </objectgroup>
- <objectgroup color="#00ff00" id="5" name="Spawners(classid=9)">
+ <objectgroup color="#00ff00" id="5" name="Spawners(classid=9)" locked="1">
   <object id="47" name="1.gun-shoot(0)" x="190" y="0" width="16" height="480"/>
   <object id="48" name="1.enemyGun" x="73" y="405" width="24" height="32"/>
   <object id="65" name="2.rocket-shootstr(10)" x="254" y="0" width="16" height="480"/>
@@ -68,10 +68,10 @@
   <object id="63" name="10.rocket-bnf(12)" x="1488" y="0" width="16" height="480"/>
   <object id="75" name="10.enemyRocket" x="1588" y="397" width="24" height="40"/>
  </objectgroup>
- <objectgroup color="#ffffff" id="6" name="AmbushTrigger(classid=10)">
+ <objectgroup color="#ffffff" id="6" name="AmbushTrigger(classid=10)" locked="1">
   <object id="24" name="[256,240,512,480]" x="401" y="0" width="16" height="480"/>
  </objectgroup>
- <objectgroup color="#ffff00" id="7" name="Capsules(classid=11)">
+ <objectgroup color="#ffff00" id="7" name="Capsules(classid=11)" locked="1">
   <object id="25" name="SmallPowerStone(13),maxy=308" x="64" y="272" width="16" height="16"/>
   <object id="27" name="SmallPowerStone(13),maxy=454" x="128" y="368" width="16" height="16"/>
   <object id="28" name="SmallPowerStone(13),maxy=437" x="320" y="383" width="16" height="16"/>
@@ -85,10 +85,10 @@
   <object id="45" name="BigEnergy(18),maxy=437" x="1600" y="384" width="16" height="16"/>
   <object id="46" name="BigEnergy(18),maxy=437" x="1696" y="289" width="16" height="16"/>
  </objectgroup>
- <objectgroup color="#ff00ff" id="3" name="Water(classid=2)">
+ <objectgroup color="#ff00ff" id="3" name="Water(classid=2)" locked="1">
   <object id="9" name="Water" x="0" y="454" width="1792" height="26"/>
  </objectgroup>
- <objectgroup color="#0000ff" id="4" name="PassableLedges(classid=3)">
+ <objectgroup color="#0000ff" id="4" name="PassableLedges(classid=3)" locked="1">
   <object id="12" name="PassableLedge" x="0" y="437" width="92" height="12"/>
   <object id="13" name="PassableLedge" x="164" y="437" width="1208" height="12"/>
   <object id="14" name="PassableLedge" x="1444" y="437" width="348" height="12"/>

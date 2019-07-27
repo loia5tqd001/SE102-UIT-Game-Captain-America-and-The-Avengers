@@ -131,11 +131,7 @@ void CaptainClimbing::HandleCollisions(Captain& cap, float dt, const std::vector
 				break;
 
 			case ClassId::DamageBlock:
-				if (!cap.isFlashing)
-				{
-					cap.health.Subtract(1);
-					cap.SetState(State::Captain_Injured);
-				}
+				cap.CollideWithPassableObjects(dt, e);
 				break;
 
 			case ClassId::PassableLedge:

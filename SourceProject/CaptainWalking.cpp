@@ -147,11 +147,8 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 					break;
 
 				case ClassId::DamageBlock:
+					cap.CollideWithPassableObjects(dt, e);
 					isOnGround = true;
-					if (!cap.isFlashing) {
-						cap.health.Subtract(1);
-						cap.SetState(State::Captain_Injured);
-					}
 					break;
 
 				case ClassId::PassableLedge:

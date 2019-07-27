@@ -50,6 +50,7 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	cap.vel.x = 0.0f;
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
 	{
 		cap.SetState(State::Captain_Sitting);
@@ -87,8 +88,99 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 	}
 
 	HandleCollisions(cap, dt, coObjects);
+	if (!isOnGround)
+		cap.SetState(State::Captain_Falling);
 }
 
 void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	isOnGround = false;
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
+	if (coEvents.size() == 0)
+	{
+		cap.pos.x += cap.vel.x * dt;
+		cap.pos.y += cap.vel.y * dt;
+		return;
+	}
+
+	float min_tx, min_ty, nx, ny;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
+
+	if (coEvents.size() == 0) return;
+
+	cap.pos.x += min_tx * cap.vel.x * dt;
+	cap.pos.y += min_ty * cap.vel.y * dt;
+
+	for (auto& e : coEvents)
+	{
+		if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
+
+			switch (block->GetType())
+			{
+				case ClassId::RigidBlock:
+				case ClassId::PassableLedge:
+					isOnGround = true;
+					break;
+
+				case ClassId::DamageBlock:
+					isOnGround = true;
+					cap.CollideWithPassableObjects(dt, e);
+					break;
+
+				case ClassId::NextMap:
+				case ClassId::Switch:
+				case ClassId::Door:
+				case ClassId::ClimbableBar:
+				case ClassId::Water:
+				default:
+					AssertUnreachable();
+			}
+		}
+		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
+		{
+		}
+		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
+		{
+			ambush->OnCollideWithCap(&cap);
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
+		{
+			// Moving along with it
+		}
+		else if (auto breakableLedge = dynamic_cast<BreakableLedge*>(e.pCoObj))
+		{
+			// Split the ledge into 2 parts
+		}
+		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
+			AssertUnreachable();
+		}
+		else if (auto item = dynamic_cast<Item*>(e.pCoObj))
+		{
+			item->BeingCollected();
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
+		{
+			if (!cap.isFlashing)
+			{
+				cap.health.Subtract(1);
+				enemy->TakeDamage(1);
+				cap.SetState(State::Captain_Injured);
+			}
+			else {
+				cap.CollideWithPassableObjects(dt, e);
+			}
+		}
+		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj)) {
+			if (!cap.isFlashing)
+			{
+				cap.health.Subtract(bullet->GetDamage());
+				cap.SetState(State::Captain_Injured);
+			}
+			else {
+				cap.CollideWithPassableObjects(dt, e);
+			}
+		}
+	}
 }
