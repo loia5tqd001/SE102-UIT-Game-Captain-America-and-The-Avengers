@@ -6,6 +6,7 @@ private:
 	void HandleNoCollisions(Captain& cap, float dt);
 
 	bool isKicked = false;
+	bool FallingToClimbar = false;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data = {}) override; // handle when change to this state
 	Data Exit(Captain& cap, State toState) override; // handle when change to other state

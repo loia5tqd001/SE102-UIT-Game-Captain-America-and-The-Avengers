@@ -9,7 +9,6 @@ protected:
 	Window& wnd = Window::Instance();
 	Settings& setting = Settings::Instance();
 	SceneManager& sceneManager = SceneManager::Instance();
-
 public:
 	virtual void Enter(Captain& cap, State fromState, Data&& data = {}) = 0; // handle when change to this state
 	virtual Data Exit(Captain& cap, State toState) = 0; // handle when change to other state
@@ -61,5 +60,6 @@ protected:
 	static constexpr auto WATER_LEVEL = 454.0f;
 
 	static constexpr auto COLLISION_OBJECT = "COLLISION_OBJECT";
+	static constexpr auto CLIMBBAR = "CLIMBBAR";
 };
 

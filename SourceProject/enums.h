@@ -101,7 +101,16 @@ enum class SpriteId
 	Captain_Swimming = 115,
 	Captain_FallToWater = 116,
 	Captain_InWater = 117,
-	Captain_CoverLow = 118
+	Captain_CoverLow = 118,
+
+	DynamiteNapalm_FallFromTheSky = 200,
+	DynamiteNapalm_Standing = 201,
+	DynamiteNapalm_Intact_Running = 202,
+	DynamiteNapalm_ThrowDynamite = 203,
+	DynamiteNapalm_Intact_Shooting = 204,
+	DynamiteNapalm_Intact_Injure = 205,
+	DynamiteNapalm_Headless_Standing = 206,
+	DynamiteNapalm_Headless_Running_Shooting = 207
 };
 
 enum class SoundId

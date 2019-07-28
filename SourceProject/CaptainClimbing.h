@@ -3,6 +3,10 @@
 
 class CaptainClimbing : public CaptainState
 {
+	int ClimbingLevel = std::numeric_limits<int>::infinity();
+	std::vector<BYTE> KeyBuffer;
+	int bufferSize;
+	void ProcessInput(Captain& cap);
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

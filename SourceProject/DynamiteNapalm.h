@@ -7,13 +7,14 @@ private:
 	static constexpr float HEADLESS_RUNNING_SPEED = 120.0f;
 	static constexpr int DYNAMITENAPALM_HEALTH = 100;
 
-	Captain& cap;
+	Captain* cap;
 public:
-	DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& refcap);
+	DynamiteNapalm(Vector2 spawnPos, int nx, Grid * grid, Captain* ptrcap);
 	void SetState(State state) override;
 	void SpawnDynamite();
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	void SpawnBullet();
+	void TakeDamage(int damage);
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 };
 

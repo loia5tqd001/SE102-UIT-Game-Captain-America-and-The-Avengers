@@ -64,12 +64,12 @@ RectF Captain::GetBBox() const
 	auto verticalRect = VisibleObject::GetBBox().Trim(GetWidth() / 2.0f - 3, 0, GetWidth() / 2.0f - 3, 0);
 	switch (curState)
 	{
-		case State::Captain_Jumping:
-		case State::Captain_Falling:
-		case State::Captain_Spinning:
-			//return verticalRect.Trim(0, 0, 0, GetHeight() / 2.0f);
-		default:
-			return verticalRect;
+	case State::Captain_Jumping:
+	case State::Captain_Falling:
+	case State::Captain_Spinning:
+		//return verticalRect.Trim(0, 0, 0, GetHeight() / 2.0f);
+	default:
+		return verticalRect;
 	}
 }
 
@@ -255,6 +255,27 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 					if (!isFlashing) {
 						health.Subtract(1);
 						SetState(State::Captain_Injured);
+					}
+				}
+				else if (block->GetType() == ClassId::ClimbableBar)
+				{
+					if (curState != State::Captain_Falling)
+					{
+						continue;
+					}
+					else
+					{
+						SetState(State::Captain_Climbing);
+						pos.y = block->GetPos().y;
+						if (nx == -1 && pos.x < block->GetPos().x)
+						{
+							pos.x = block->GetPos().x;
+						}
+						else if (nx == 1 && pos.x + GetWidth() > block->GetPos().x + block->GetBBox().GetWidth())
+						{
+							pos.x = block->GetPos().x + block->GetBBox().GetWidth() - GetWidth();
+						}
+						shield->UpdateByCapState(curState, pos);
 					}
 				}
 			}

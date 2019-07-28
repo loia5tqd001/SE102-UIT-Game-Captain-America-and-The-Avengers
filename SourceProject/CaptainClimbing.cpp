@@ -3,11 +3,62 @@
 
 
 
+void CaptainClimbing::ProcessInput(Captain& cap)
+{
+	//Left-Right Arrow Press Handler
+	if (KeyBuffer.size() == 0)
+		return;
+	int left = -1, right = -1;
+	for (int i = 0;i < KeyBuffer.size();i++)
+	{
+		if (KeyBuffer.at(i) == setting.Get(KeyControls::Left))
+			left = i;
+		if (KeyBuffer.at(i) == setting.Get(KeyControls::Right))
+			right = i;
+	}
+
+	if (left > right)
+	{
+		if (cap.nx == -1)
+		{
+			return;
+		}
+		else
+		{
+			cap.nx = -1;
+			cap.pos.x = cap.pos.x + cap.GetBBox().GetWidth() / 2;
+		}
+	}
+
+	if (left < right)
+	{
+		if (cap.nx == 1)
+		{
+			return;
+		}
+		else
+		{
+			cap.pos.x = cap.pos.x - cap.GetBBox().GetWidth() / 2;
+			cap.nx = 1;
+		}
+	}
+
+	KeyBuffer.clear();
+}
+
 void CaptainClimbing::Enter(Captain& cap, State fromState, Data&& data)
 {
 	//Todo: set position base on Jump Exit data
 	cap.vel.x = 0.0f;
 	cap.vel.y = 0.0f;
+	switch (fromState)
+	{
+	case State::Captain_Falling:
+	case State::Captain_Spinning:
+		break;
+	default:
+		AssertUnreachable();
+	}
 }
 
 Data CaptainClimbing::Exit(Captain& cap, State toState)
@@ -21,44 +72,26 @@ void CaptainClimbing::OnKeyUp(Captain& cap, BYTE keyCode)
 
 void CaptainClimbing::OnKeyDown(Captain& cap, BYTE keyCode)
 {
-	if (keyCode == setting.Get(KeyControls::Left))
+	if (KeyBuffer.size() >= bufferSize)
 	{
-		if (cap.nx == -1)
-		{
-			return;
-		}
-		else
-		{
-			cap.nx = -1;
-			cap.pos.x = cap.pos.x + cap.GetBBox().GetWidth() / 2;
-		}
+		KeyBuffer.erase(KeyBuffer.begin());
 	}
-	else if (keyCode == setting.Get(KeyControls::Right))
-	{
-		if (cap.nx == 1)
-		{
-			return;
-		}
-		else
-		{
-			cap.pos.x = cap.pos.x - cap.GetBBox().GetWidth() / 2;
-			cap.nx = 1;
-		}
-	}
-	else if (keyCode == setting.Get(KeyControls::Down))
-	{
-		//Todo: upgrade this
-		cap.SetState(State::Captain_Jumping);
-		cap.vel.y = std::abs(cap.vel.y);
-	}
-	else if (keyCode == setting.Get(KeyControls::Jump))
+	KeyBuffer.push_back(keyCode);
+	if (keyCode==setting.Get(KeyControls::Jump))
 	{
 		cap.SetState(State::Captain_Jumping);
+		KeyBuffer.clear();
+	}
+	if (keyCode==setting.Get(KeyControls::Down))
+	{
+		cap.SetState(State::Captain_Falling);
+		cap.pos.y += 16;
 	}
 }
 
 void CaptainClimbing::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	ProcessInput(cap);
 }
 
 void CaptainClimbing::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -113,13 +146,13 @@ void CaptainClimbing::HandleCollisions(Captain& cap, float dt, const std::vector
 			case ClassId::NextMap:
 				if (sceneManager.GetCurScene().canGoNextMap)
 					sceneManager.GoNextScene();
-				else 
+				else
 					cap.CollideWithPassableObjects(dt, e);
 				break;
 
 
 
-			case ClassId::Switch: 
+			case ClassId::Switch:
 				break;
 			case ClassId::Door:
 				cap.CollideWithPassableObjects(dt, e);

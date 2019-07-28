@@ -242,9 +242,6 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 					break;
 
 				case ClassId::ClimbableBar:
-					if (e.ny < 0)
-						cap.SetState(State::Captain_Climbing);
-					else
 						cap.CollideWithPassableObjects(dt, e);
 					break;
 

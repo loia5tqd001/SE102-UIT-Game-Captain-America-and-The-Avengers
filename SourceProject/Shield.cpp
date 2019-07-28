@@ -218,7 +218,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		{
 			//we dont have sprite to calculate this correctly
 			pos.x = capPos.x - 2;
-			pos.y = capPos.y + 90;
+			pos.y = capPos.y + 23;
 			SetState(State::Shield_Side);
 		}
 		else if (capState == State::Captain_Spinning)

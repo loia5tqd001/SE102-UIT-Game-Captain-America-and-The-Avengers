@@ -169,11 +169,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 				break;
 
 			case ClassId::ClimbableBar:
-				if (e.ny < 0)
-				{
-					data.Add("ClimbableBarRectF", block->GetBBox());
-					cap.SetState(State::Captain_Climbing);
-				}
+				cap.CollideWithPassableObjects(dt, e);
 				break;
 
 			case ClassId::DamageBlock:
