@@ -49,11 +49,13 @@ enum class SpriteId
 	CaptainHealth                   = 21,
 	CapsuleIdle                     = 22,
 	CapsuleOpenning                 = 23,
+	CapsuleIdle_NoBg                = 24,
+	CapsuleOpenning_NoBg            = 25,
 
-	Shield_Side                     = 24,
-	Shield_Straight                 = 25,
-	Shield_Down                     = 26,
-	Shield_Up                       = 27,
+	Shield_Side                     = 30,
+	Shield_Straight                 = 31,
+	Shield_Down                     = 32,
+	Shield_Up                       = 33,
 
 	EnemyWizard_Walking     = 50,
 	EnemyWizard_Stand       = 51,

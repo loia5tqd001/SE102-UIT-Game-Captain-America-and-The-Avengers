@@ -314,6 +314,7 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="PittsburghScene.h" />
     <ClInclude Include="RedAlertScene.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="DebugDraw.h" />
     <ClInclude Include="DebugOut.h" />
@@ -343,6 +344,12 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="enums.h" />
     <ClInclude Include="Vector2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameProject.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Textures\uit.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

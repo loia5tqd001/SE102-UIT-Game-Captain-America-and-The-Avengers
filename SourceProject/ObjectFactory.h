@@ -31,7 +31,8 @@ struct ObjectFactory
 		const auto itemType = (SpriteId)objJson[1].asInt();
 		const auto maxY = objJson[2].asFloat();
 		const auto pos = Vector2{ objJson[3].asFloat(), objJson[4].asFloat() };
-		return std::make_unique<Capsule>(pos, itemType, maxY, grid);
+		const auto noBg = objJson[5].asBool();
+		return std::make_unique<Capsule>(pos, itemType, maxY, grid, noBg);
 	}
 
 	template<>

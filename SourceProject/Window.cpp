@@ -45,7 +45,7 @@ void Window::InitWindow()
 	wc.cbClsExtra    = 0;
 	wc.cbWndExtra    = 0;
 	wc.hbrBackground = NULL;
-	wc.hIcon         = NULL;
+	wc.hIcon         = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
 	wc.hIconSm       = NULL;
 	wc.lpszMenuName	 = NULL;

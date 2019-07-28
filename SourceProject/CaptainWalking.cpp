@@ -71,6 +71,7 @@ void CaptainWalking::Update(Captain& cap, float dt, const std::vector<GameObject
 	if (!wnd.IsKeyPressed(setting.Get(kControlDir)))
 	{
 		cap.SetState(State::Captain_Standing);
+		return;
 	}
 	HandleCollisions(cap, dt, coObjects);
 	if (!isOnGround) {
@@ -154,6 +155,11 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 				case ClassId::PassableLedge:
 				case ClassId::RigidBlock:
 					isOnGround = true;
+					if (e.nx != 0)
+					{
+						cap.SetState(State::Captain_Falling);
+						return;
+					}
 					break;
 
 				default:

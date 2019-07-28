@@ -54,18 +54,22 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
 	{
 		cap.SetState(State::Captain_Sitting);
+		return;
 	}
 	else if (wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
 	{
 		cap.SetState(State::Captain_CoverTop);
+		return;
 	}
 	else if (wnd.IsKeyPressed(setting.Get(KeyControls::Attack)))
 	{
 		if (cap.shieldOn) {
 			cap.SetState(State::Captain_Throwing);
+			return;
 		}
 		else {
 			cap.SetState(State::Captain_Punching);
+			return;
 		}
 	}
 	else
@@ -84,6 +88,7 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 		{
 			cap.nx = dir;
 			cap.SetState(State::Captain_Walking);
+			return;
 		}
 	}
 
@@ -130,6 +135,9 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 				case ClassId::NextMap:
 				case ClassId::Switch:
 				case ClassId::Door:
+					cap.CollideWithPassableObjects(dt, e);
+					break;
+
 				case ClassId::ClimbableBar:
 				case ClassId::Water:
 				default:
@@ -153,7 +161,7 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 			// Split the ledge into 2 parts
 		}
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
-			AssertUnreachable();
+			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto item = dynamic_cast<Item*>(e.pCoObj))
 		{

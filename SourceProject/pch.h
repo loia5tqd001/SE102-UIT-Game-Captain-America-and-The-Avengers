@@ -1,5 +1,8 @@
 #pragma once
 
+// === icon ===
+#include "resource.h"
+
 // === Winapi, directx ===
 #include <d3dx9.h>
 

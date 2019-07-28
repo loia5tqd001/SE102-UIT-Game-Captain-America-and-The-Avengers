@@ -67,6 +67,9 @@
     <Filter Include="Development\Objects\Captain\L">
       <UniqueIdentifier>{52790d83-62af-4029-ae69-98b0eb44c3a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\Resource Files">
+      <UniqueIdentifier>{84b6430e-d159-43e3-b293-8c45a3b28555}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -548,5 +551,18 @@
     <ClInclude Include="BulletEnemyFly.h">
       <Filter>Development\Objects\Bullets</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Main\Resource Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameProject.rc">
+      <Filter>Main\Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Textures\uit.ico">
+      <Filter>Main\Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

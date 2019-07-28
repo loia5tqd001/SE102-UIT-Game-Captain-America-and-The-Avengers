@@ -2,14 +2,22 @@
 #include "Capsule.h"
 #include "Item.h"
 
-Capsule::Capsule(Vector2 pos, SpriteId itemType, float maxY, Grid* grid) :
+Capsule::Capsule(Vector2 pos, SpriteId itemType, float maxY, Grid* grid, bool isNoBackground) :
 	VisibleObject(State::Capsule_Idle, pos),
 	realItemType(itemType),
 	maxY(maxY),
 	grid(grid)
 {
-	animations.emplace(State::Capsule_Idle, Animation(SpriteId::CapsuleIdle));
-	animations.emplace(State::Capsule_Openning, Animation(SpriteId::CapsuleOpenning, 0.4f));
+	if (isNoBackground)
+	{
+		animations.emplace(State::Capsule_Idle, Animation(SpriteId::CapsuleIdle_NoBg));
+		animations.emplace(State::Capsule_Openning, Animation(SpriteId::CapsuleOpenning_NoBg, 0.4f));
+	}
+	else
+	{
+		animations.emplace(State::Capsule_Idle, Animation(SpriteId::CapsuleIdle));
+		animations.emplace(State::Capsule_Openning, Animation(SpriteId::CapsuleOpenning, 0.4f));
+	}
 	if (itemType == SpriteId::ItemKeyKrystal) bboxColor = Colors::DimRed;
 }
 
