@@ -35,7 +35,7 @@ void EnemyWizard::SpawnBullet()
 		//caculate vel.y
 		Vector2 bulletVel;
 		bulletVel.x = nx * BulletEnemyWizard::GetXSpeed();
-		bulletVel.y = std::abs(bulletPos.y - (cap.GetPos().y + 10.0f)) / std::abs(bulletPos.x - cap.GetPos().x) * bulletVel.x;
+		bulletVel.y = - std::abs(bulletPos.y - (cap.GetPos().y + 10.0f)) / std::abs(bulletPos.x - cap.GetPos().x) * abs(bulletVel.x);
 
 		grid->SpawnObject(std::make_unique<BulletEnemyWizard>(nx, bulletPos, bulletVel, this));
 		Sounds::PlayAt(SoundId::BulletNormal);
@@ -80,18 +80,18 @@ void EnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
 		}
 	}
 	//
-	if (animations.at(State::EnemyWizard_ShootBullet).IsDoneCycle())
-	{
-		SetState(State::EnemyWizard_Stand);
-	}
-	else if (animations.at(State::EnemyWizard_ShootBulletFire).IsDoneCycle())
-	{
-		SetState(State::EnemyWizard_Stand);
-	}
-	else if (animations.at(State::EnemyWizard_ShootWhenFly).IsDoneCycle())
-	{
-		SetState(State::EnemyWizard_Flying);
-	}
+	//if (animations.at(State::EnemyWizard_ShootBullet).IsDoneCycle())
+	//{
+	//	SetState(State::EnemyWizard_Stand);
+	//}
+	//else if (animations.at(State::EnemyWizard_ShootBulletFire).IsDoneCycle())
+	//{
+	//	SetState(State::EnemyWizard_Stand);
+	//}
+	//else if (animations.at(State::EnemyWizard_ShootWhenFly).IsDoneCycle())
+	//{
+	//	SetState(State::EnemyWizard_Flying);
+	//}
 
 	//update animations
 	UpdateAnimation(dt);
@@ -151,6 +151,7 @@ void EnemyWizard::SetState(State state)
 
 bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current behavior is done
 {
+	assert(pos.x <= MIN_POS_X - 5 || pos.x >= MAX_POS_X + 4); //warning!!!
 	static bool checkShotOnce = false;
 	static int counterFly = 0;
 	if (behavior == Behaviors::EnemyWizard_FlyingShoot)
@@ -188,7 +189,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			else if (pos.y <= ROOF) {
 				if (curState == State::EnemyWizard_FlyUp) {
 					if (pos.x > MAX_POS_X)
-						pos.x -= 3;
+						pos.x -= 5;
 				}
 				else {
 					SetState(State::EnemyWizard_FlyDown);
@@ -207,14 +208,14 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			else if (pos.y <= ROOF) {
 				if (curState == State::EnemyWizard_FlyUp) {
 					if (pos.x < MIN_POS_X)
-						pos.x += 3;
+						pos.x += 5;
 				}
 				else {
 					SetState(State::EnemyWizard_FlyDown);
 				}
 			}
 		}
-		if (counterFly > 1) {
+		if (counterFly > 2) {
 			counterFly = 0;
 			return true;
 		}

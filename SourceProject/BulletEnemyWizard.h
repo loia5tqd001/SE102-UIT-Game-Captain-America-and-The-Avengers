@@ -5,7 +5,7 @@ class BulletEnemyWizard :
 	public Bullet
 {
 private:
-	static constexpr float BULLET_MOVING = 160.0f;
+	static constexpr float BULLET_MOVING = 150.0f;
 
 public:
 	BulletEnemyWizard(int nx, const Vector2& spawnPos, Vector2& vel, Enemy *enemy);
