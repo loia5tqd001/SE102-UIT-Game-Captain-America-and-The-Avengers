@@ -1,20 +1,25 @@
 #pragma once
 #include "Enemy.h"
+
 class DynamiteNapalm : public Enemy
 {
 private:
-	static constexpr float NORMAL_RUNNING_SPEED = 80.0f;
-	static constexpr float HEADLESS_RUNNING_SPEED = 120.0f;
-	static constexpr int DYNAMITENAPALM_HEALTH = 100;
+	static constexpr float FALLING_SPEED = 100.0f;
+	static constexpr float RUNNING_SPEED = 80.0f;
+	static constexpr float RUNNING_BEFORE_DEAD_SPEED = 1.5f*RUNNING_SPEED;
 
-	Captain* cap;
+	bool dynamiteThrown = false;
+	Captain& cap;
+	float posXDesination;
+	bool OnBehavior(Behaviors behavior);
+	bool onTheGround = false;
 public:
-	DynamiteNapalm(Vector2 spawnPos, int nx, Grid * grid, Captain* ptrcap);
+	DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap);
 	void SetState(State state) override;
-	void SpawnDynamite();
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
-	void SpawnBullet();
-	void TakeDamage(int damage);
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
+	void SpawnDynamite();
+	void SpawnFireBullet();
+
 };
 

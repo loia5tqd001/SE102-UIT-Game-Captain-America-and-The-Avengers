@@ -8,6 +8,7 @@ class CaptainInjured : public CaptainState
 	float DistanceLeftToClimb;
 	float maxTimeHold = 0;
 	void HandleNoCollisions(Captain &cap, float dt);
+	Vector2 prevPos = Vector2{ 0,0 };
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

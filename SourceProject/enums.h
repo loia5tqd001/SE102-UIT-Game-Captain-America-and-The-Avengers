@@ -301,7 +301,13 @@ enum class Behaviors // for enemy, moving ledges
 
 	EnemyWizard_FlyingShoot = 20,
 	EnemyWizard_GroundShoot = 21,
-	EnemyWizard_Jump = 22
+	EnemyWizard_Jump = 22,
+
+	DynamiteNapalm_Fall,
+	DynamiteNapalm_Throw,
+	DynamiteNapalm_Shoot,
+	DynamiteNapalm_Run
+	
 };
 
 enum class Scene

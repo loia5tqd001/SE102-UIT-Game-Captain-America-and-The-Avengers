@@ -18,7 +18,7 @@ void RedAlertScene::LoadResources()
 	map = std::make_unique<Map>(root);
 	grid = std::make_unique<Grid>(root);
 	cap = std::make_unique<Captain>(Vector2{ 32.0f, 196.0f - 45.0f }, grid.get());
-	miniboss = std::make_unique<DynamiteNapalm>(Vector2{ 32.0f, 196.0f - 45.0f }, -1, grid.get(), cap.get());
+	miniboss = std::make_unique<DynamiteNapalm>(Behaviors::DynamiteNapalm_Fall, Data{}, Vector2{ 180,0 }, Vector2{ 0,0 }, -1, grid.get(), *cap.get());
 }
 
 

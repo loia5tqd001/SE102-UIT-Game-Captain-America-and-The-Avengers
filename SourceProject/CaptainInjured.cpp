@@ -33,16 +33,12 @@ void CaptainInjured::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	//Health < 0 --->Die
+	//Health < 0 =>Die
 	if (cap.health.Get() <= 0 && cap.curState != State::Captain_Dead)
 	{
 		pendingSwitchState = State::Captain_Dead;
 	}
 
-	if (pendingSwitchState == State::Captain_Climbing)
-	{
-		//Todo: Complete this later
-	}
 	//Collision objects left
 	HandleCollisions(cap, dt, coObjects);
 	//NOTE:HACK
