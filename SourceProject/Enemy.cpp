@@ -35,7 +35,7 @@ void Enemy::UpdateAnimation(float dt)
 
 RectF Enemy::GetBBox() const
 {
-	if (curState == beforeExplode || curState == State::Explode) return{};
+	if (curState == State::Explode) return{};
 	return VisibleObject::GetBBox();
 }
 

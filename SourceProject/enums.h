@@ -57,6 +57,17 @@ enum class SpriteId
 	Shield_Down                     = 32,
 	Shield_Up                       = 33,
 
+	Bunker_Idle_0                   = 40,
+	Bunker_Idle_1                   = 41,
+	Bunker_Idle_2                   = 42,
+	Bunker_Idle_3                   = 43,
+	Bunker_Idle_4                   = 44,
+	Bunker_Idle_5                   = 45,
+	Bunker_Idle_6                   = 46,
+	Bunker_Idle_7                   = 47,
+	Bunker_Spin                     = 48,
+	Bullet_Bunker                   = 49,
+
 	EnemyWizard_Walking     = 50,
 	EnemyWizard_Stand       = 51,
 	EnemyWizard_BeforeDefeated = 52,
@@ -155,6 +166,7 @@ enum class ClassId
 	Spawner              =   9,
 	AmbushTrigger        =  10,
 	Capsule              =  11,
+	Bunker               =  12,
 
 	// moving objects: being spawned
 	EnemyGun             =  100,
@@ -201,6 +213,17 @@ enum class State
 	Shield_Straight,
 	Shield_Down,
 	Shield_Up,
+
+	Bunker_Idle_0,
+	Bunker_Idle_1,
+	Bunker_Idle_2,
+	Bunker_Idle_3,
+	Bunker_Idle_4,
+	Bunker_Idle_5,
+	Bunker_Idle_6,
+	Bunker_Idle_7,
+	Bunker_Spin  ,
+	Bullet_Bunker,
 
 	Captain_Standing,
 	Captain_Walking,

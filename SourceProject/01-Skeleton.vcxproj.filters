@@ -294,6 +294,12 @@
     <ClCompile Include="BulletEnemyFly.cpp">
       <Filter>Development\Objects\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="Bunker.cpp">
+      <Filter>Development\Objects\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletBunker.cpp">
+      <Filter>Development\Objects\Bullets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -553,6 +559,12 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Main\Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bunker.h">
+      <Filter>Development\Objects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletBunker.h">
+      <Filter>Development\Objects\Bullets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

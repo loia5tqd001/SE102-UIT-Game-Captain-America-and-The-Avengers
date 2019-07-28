@@ -154,12 +154,7 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 
 				case ClassId::PassableLedge:
 				case ClassId::RigidBlock:
-					isOnGround = true;
-					if (e.nx != 0)
-					{
-						cap.SetState(State::Captain_Falling);
-						return;
-					}
+					if (e.ny < 0) isOnGround = true;
 					break;
 
 				default:

@@ -3,6 +3,7 @@
 #include "Spawner.h"
 #include "AmbushTrigger.h"
 #include "Capsule.h"
+#include "Bunker.h"
 
 struct ObjectFactory
 {
@@ -22,6 +23,15 @@ struct ObjectFactory
 		const auto width = objJson[3].asUInt();
 		const auto height = objJson[4].asUInt();
 		return std::make_unique<Block>(blockType, pos, width, height);
+	}
+
+	template<>
+	static std::unique_ptr<Bunker> Create(const Json::Value& objJson, Grid* grid)
+	{
+		assert(objJson[0].asInt() == (int)ClassId::Bunker);
+		const auto initState = objJson[1].asInt() + (int)State::Bunker_Idle_0;
+		const auto pos = Vector2{ objJson[2].asFloat(), objJson[3].asFloat() };
+		return std::make_unique<Bunker>((State)initState, pos, grid);
 	}
 
 	template<>

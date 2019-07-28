@@ -59,6 +59,10 @@ void Grid::LoadObjects(const Json::Value& grid)
 				AmbushTrigger::SetInstance(dynamic_cast<AmbushTrigger*>( object.get() ));
 				break;
 
+			case ClassId::Bunker:
+				object = ObjectFactory::Create<Bunker>(jsonObj, this);
+				break;
+
 			default:
 				ThrowMyException("Can't find class id:", classId);
 		}

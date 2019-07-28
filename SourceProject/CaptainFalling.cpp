@@ -188,15 +188,12 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 				break;
 
 			case ClassId::RigidBlock:
-				if (e.nx == 0)
-				{
-					if (e.ny < 0) {
-						cap.SetState(State::Captain_Sitting);
-						//Sounds::PlayAt(SoundId::Grounding);
-					}
-					else {
-						cap.vel.y = +FALL_SPEED_VER;
-					}
+				if (e.ny < 0) {
+					cap.SetState(State::Captain_Sitting);
+					return;
+				}
+				else {
+					cap.vel.y = +FALL_SPEED_VER;
 				}
 				break;
 

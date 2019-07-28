@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="47">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="53">
  <tileset firstgid="1" name="map_pittsburgh-light_bank.png" tilewidth="16" tileheight="16" tilecount="110" columns="11">
   <image source="8. TileMapPittsburghLight.png" width="176" height="160"/>
  </tileset>
@@ -83,6 +83,13 @@
 103,104,104,104,104,104,104,104,104,104,104,104,104,104,104,105,78,103,104,104,104,104,104,104,104,104,104,104,104,104,104,104,105,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,78
 </data>
  </layer>
+ <objectgroup color="#000000" id="8" name="Bunkers(classid=12)">
+  <object id="47" name="2" x="240" y="536" width="16" height="16"/>
+  <object id="48" name="6" x="32" y="632" width="16" height="16"/>
+  <object id="50" name="2" x="368" y="888" width="16" height="16"/>
+  <object id="51" name="0" x="560" y="760" width="16" height="16"/>
+  <object id="52" name="2" x="368" y="872" width="16" height="16"/>
+ </objectgroup>
  <objectgroup color="#aaff7f" id="2" name="RigidBlocks(classid=1)">
   <object id="1" x="0" y="197" width="64" height="43"/>
   <object id="2" x="80" y="85" width="48" height="27"/>
