@@ -23,7 +23,6 @@ private:
 	friend class CaptainInjured     ; CaptainInjured     stateInjured     ;      
 	friend class CaptainDead        ; CaptainDead        stateDead        ;     
 
-
 	CaptainState* currentState;
 	Grid* grid;
 

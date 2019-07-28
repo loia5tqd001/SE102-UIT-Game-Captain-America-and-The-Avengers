@@ -134,7 +134,8 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 				case ClassId::ClimbableBar:
 				case ClassId::Water:
 				default:
-					AssertUnreachable(); // sitting is don't move
+					break;
+					//AssertUnreachable(); // sitting is don't move
 			}
 		}
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))

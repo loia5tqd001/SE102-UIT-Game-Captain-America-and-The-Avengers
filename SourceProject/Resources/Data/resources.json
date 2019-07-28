@@ -11,8 +11,8 @@
 	[ 7, "Resources\\Textures\\7. TileMapPittsburghDark.png"          , 0             ],
 	[ 8, "Resources\\Textures\\8. TileMapPittsburghLight.png"         , 0             ],
 	[ 9, "Resources\\Textures\\9. TileMapRedAlert.png"                , 0             ],
-	[10, "Resources\\Textures\\10. Captain.png"                       , [  0,166, 81] ],
-	[11, "Resources\\Textures\\11. Enemies.png"                       , [  0, 91,127] ],
+	[10, "Resources\\Textures\\10. Captain.png"                       , [  0,183,107] ],
+	[11, "Resources\\Textures\\11. Enemies.png"                       , [  0,116,145] ],
 	[12, "Resources\\Textures\\12. Wizard.png"                        , [  0,166, 81] ],
 	[13, "Resources\\Textures\\13. Dynamite.png"                      , [  0, 91,127] ]
 ],

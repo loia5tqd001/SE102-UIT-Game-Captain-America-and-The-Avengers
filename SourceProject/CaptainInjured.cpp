@@ -70,9 +70,6 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 
 	if (coEvents.size() == 0) return;
 
-	cap.pos.x += min_tx * cap.vel.x * dt;
-	cap.pos.y += min_ty * cap.vel.y * dt;
-
 	//Handle CaptainDead State
 	if (pendingSwitchState == State::Captain_Dead)
 	{
@@ -93,6 +90,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		return;
 	}
 
+
 	//Fall down Distance of Cap
 
 	if (cap.nx > 0)
@@ -112,6 +110,8 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 	}
 
+	cap.pos.x += min_tx * cap.vel.x * dt;
+	cap.pos.y += min_ty * cap.vel.y * dt;
 
 
 	for (auto& e : coEvents)
@@ -120,20 +120,24 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		{
 			//spawner->OnCollideWithCap();
 			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
+			return;
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
 			//ambush->OnCollideWithCap();
 			cap.CollideWithPassableObjects(dt, e);
+			return;
 		}
 		else if (auto item = dynamic_cast<Item*>(e.pCoObj))
 		{
 			//item->BeingCollected();
 			cap.CollideWithPassableObjects(dt, e);
+			return;
 		}
 		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 		{
 			cap.CollideWithPassableObjects(dt, e); //Cap is flashing, immortal
+			return;
 		}
 		else if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
 
@@ -154,11 +158,11 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 				break;
 				//Todo: Upgrade this
 			case ClassId::ClimbableBar:
-				if (e.ny < 0)
-				{
-					pendingSwitchState = State::Captain_Climbing;
-					cap.CollideWithPassableObjects(dt, e);
-				}
+				cap.CollideWithPassableObjects(dt, e);
+				//if (e.ny < 0)
+				//{
+				//	pendingSwitchState = State::Captain_Climbing;
+				//}
 				break;
 			case ClassId::NextMap:
 				if (sceneManager.GetCurScene().canGoNextMap)
@@ -185,10 +189,12 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		else if (dynamic_cast<Capsule*>(e.pCoObj))
 		{
 			cap.CollideWithPassableObjects(dt, e);
+			return;
 		}
 		else if (dynamic_cast<Bullet*>(e.pCoObj))
 		{
 			cap.CollideWithPassableObjects(dt, e);
+			return;
 		}
 	}
 

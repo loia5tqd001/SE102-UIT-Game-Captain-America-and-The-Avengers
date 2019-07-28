@@ -158,7 +158,8 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 					break;
 
 				default:
-					AssertUnreachable();
+					//AssertUnreachable();
+					break;
 			}
 		}
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {

@@ -284,11 +284,13 @@ void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
 {
 	if (e.nx != 0.0f)
 	{
-		pos.x += min(e.pCoObj->GetBBox().GetWidth(), (1.0f - e.t) * vel.x * dt);
+		//int a = e.pCoObj->GetBBox().GetWidth() * (-e.nx);
+		//int b = (1.0f - e.t) * vel.x * dt;
+		pos.x += (0.9f - e.t) * vel.x * dt;
 	}
 	if (e.ny != 0.0f)
 	{
-		pos.y += min(e.pCoObj->GetBBox().GetHeight(), (1.0f - e.t) * vel.y * dt);
+		pos.y += (0.9f - e.t) * vel.y * dt;
 	}
 }
 
@@ -328,7 +330,6 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	if (!ignoreUpdate) currentState->Update(*this, dt, coObjects);
 	ignoreUpdate = false;
 	HandleHitBox(dt, coObjects);
-
 
 	OnFlashing();
 	shield->UpdateByCapState(curState, pos);

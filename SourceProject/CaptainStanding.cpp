@@ -139,6 +139,8 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 					break;
 
 				case ClassId::ClimbableBar:
+					cap.CollideWithPassableObjects(dt, e);
+					break;
 				case ClassId::Water:
 				default:
 					AssertUnreachable();

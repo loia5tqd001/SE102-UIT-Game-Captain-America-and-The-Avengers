@@ -121,7 +121,7 @@ void CollisionDetector::FilterCollisionEvents(std::vector<CollisionEvent>& coEve
 		// if min time collisions in two axis are both collected, move on
 		if (nx != 0.0f && ny != 0.0f) break; 
 	}
-
+	//assert(afterFilter.size() <= 2);
 	coEvents = std::move(afterFilter);
 }
 

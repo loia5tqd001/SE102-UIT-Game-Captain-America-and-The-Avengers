@@ -181,15 +181,12 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 				else cap.CollideWithPassableObjects(dt, e);
 				break;
 
+			case ClassId::ClimbableBar:
 			case ClassId::Switch:
 			case ClassId::Door:
 				cap.CollideWithPassableObjects(dt, e);
 				break;
 
-			case ClassId::ClimbableBar:
-				if (e.ny < 0)
-					cap.SetState(State::Captain_Climbing);
-				break;
 
 			case ClassId::DamageBlock: //case that DamageBlock is at the roof
 				break;
