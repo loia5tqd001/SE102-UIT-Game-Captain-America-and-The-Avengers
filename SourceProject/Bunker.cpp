@@ -13,14 +13,14 @@ Bunker::Bunker(State initState, Vector2 spawnPos, Grid* grid) :
 	animations.emplace(State::Bunker_Idle_5, Animation(SpriteId::Bunker_Idle_5, 1.0f));
 	animations.emplace(State::Bunker_Idle_6, Animation(SpriteId::Bunker_Idle_6, 1.0f));
 	animations.emplace(State::Bunker_Idle_7, Animation(SpriteId::Bunker_Idle_7, 1.0f));
-	animations.emplace(State::Bunker_Spin  , Animation(SpriteId::Bunker_Spin  , 0.1f));
+	animations.emplace(State::Bunker_Spin  , Animation(SpriteId::Bunker_Spin  , 0.02f));
 	lastIdleState = (int)initState - (int)State::Bunker_Idle_0;
 }
 
 void Bunker::SpawnBullet()
 {
 	static constexpr auto BULLET_SPEED = 100.0f;
-	static const auto SQRT_BULLET_SPEED = std::sqrtf(BULLET_SPEED);
+	static const auto SQRT_BULLET_SPEED = std::sqrtf(2.0f) * 50.0f;
 
 	auto posSpawn = pos + Vector2{ 5.0f, 5.0f }; // always spawn bullet at the center of bunker
 	Vector2 velSpawn;
@@ -46,6 +46,7 @@ void Bunker::TakeDamage(int damage)
 
 void Bunker::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	animations.at(curState).Update(dt);
 	if (curState == State::Explode) // call by ambush trigger
 	{
 		if (animations.at(curState).IsDoneCycle())
@@ -63,9 +64,8 @@ void Bunker::Update(float dt, const std::vector<GameObject*>& coObjects)
 			countSpin = 7;
 		}
 	}
-	else
+	else // idle
 	{
-		animations.at(curState).Update(dt);
 		if (animations.at(curState).IsDoneCycle())
 		{
 			SpawnBullet();

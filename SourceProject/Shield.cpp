@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "Shield.h"
-#include "Enemy.h"
+//#include "Enemy.h"
 #include "BulletEnemyGun.h"
-#include "EnemyGun.h"
-#include "EnemyRocket.h"
+//#include "EnemyGun.h"
+//#include "EnemyRocket.h"
 
 Shield::Shield(Captain& cap) : 
 	VisibleObject(State::Shield_Straight, cap.GetPos()),
@@ -351,15 +351,9 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 		{
 			const CollisionEvent& e = coEvents[i];
 
-			if (auto enemy = dynamic_cast<EnemyGun*>(e.pCoObj))
+			if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 			{
 				enemy->TakeDamage(1);
-				//Debug::out("Take damage enemygun\n");
-			}
-			else if (auto enemy = dynamic_cast<EnemyRocket*>(e.pCoObj))
-			{
-				enemy->TakeDamage(1);
-				//Debug::out("Take damage enemyrocket\n");
 			}
 			else if (auto capsule = dynamic_cast<Capsule*>(e.pCoObj))
 			{

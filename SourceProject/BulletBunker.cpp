@@ -5,7 +5,11 @@ BulletBunker::BulletBunker(Vector2 spawnPos, Vector2 vel)
 	: Bullet(State::Bullet_Bunker, 1, spawnPos, vel, 1, nullptr)
 {
 	animations.emplace(State::Bullet_Bunker, Animation(SpriteId::Bullet_Bunker));
-	Sounds::PlayAt(SoundId::BulletNormal);
+
+	if (GetBBox().IsIntersect(Camera::Instance().GetBBox()))
+	{
+		Sounds::PlayAt(SoundId::BulletNormal);
+	}
 }
 
 void BulletBunker::Update(float dt, const std::vector<GameObject*>& coObjects)
@@ -40,4 +44,9 @@ void BulletBunker::Update(float dt, const std::vector<GameObject*>& coObjects)
 			}
 		}
 	}
+}
+
+void BulletBunker::HitCaptain()
+{
+	SetState(State::Destroyed);
 }
