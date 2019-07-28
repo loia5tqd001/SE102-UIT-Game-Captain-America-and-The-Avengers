@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BossCharlestonScene.h"
+#include "EnemyWizard.h"
 
 static auto& cam = Camera::Instance();
 
@@ -39,6 +40,21 @@ void BossCharlestonScene::Draw()
 		obj->Render();
 	cap->Render();
 	grid->RenderCells();
+
+#pragma region testing
+	if (1) // test EnemyWizard
+	{
+		Data data;
+		data.Add("water-velocity", 16.9f);
+		data.Add("damage", 420);
+		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, std::move(data), { 31.0f, 9.0f }, {}, 1, grid.get(), *cap.get());
+		std::vector<GameObject*> co;
+		enemyWizard.Update(GameTimer::Dt(), co);
+
+		enemyWizard.Render();
+	}
+#pragma endregion
+
 }
 
 void BossCharlestonScene::OnKeyUp(BYTE keyCode)

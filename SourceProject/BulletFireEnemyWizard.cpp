@@ -19,7 +19,7 @@ void BulletFireEnemyWizard::Update(float dt, const std::vector<GameObject*>& coO
 {
 	if (curState == State::Destroyed) return;
 	pos.y += vel.y * dt;
-	pos.x += vel.x * dt;
+	pos.x += nx * vel.x * dt;
 	animations.at(curState).Update(dt); //do we really need this line?
 }
 

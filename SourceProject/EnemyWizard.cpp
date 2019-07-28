@@ -13,9 +13,9 @@ EnemyWizard::EnemyWizard(Behaviors behavior, Data&& behaviorData, Vector2 spawnP
 	animations.emplace(State::EnemyWizard_FlyDown, Animation(SpriteId::EnemyWizard_FlyDown, 0.6f));
 	animations.emplace(State::EnemyWizard_FlyUp, Animation(SpriteId::EnemyWizard_FlyUp, 0.6f));
 	animations.emplace(State::EnemyWizard_Flying, Animation(SpriteId::EnemyWizard_FlyDown, 0.6f));
-	animations.emplace(State::EnemyWizard_ShootBullet, Animation(SpriteId::EnemyWizard_ShootBullet, 0.1f));
-	animations.emplace(State::EnemyWizard_ShootBulletFire, Animation(SpriteId::EnemyWizard_ShootBulletFire, 2.0f));
-	animations.emplace(State::EnemyWizard_ShootWhenFly, Animation(SpriteId::EnemyWizard_ShootWhenFly, 0.15f));
+	animations.emplace(State::EnemyWizard_ShootBullet, Animation(SpriteId::EnemyWizard_ShootBullet, 0.07f));
+	animations.emplace(State::EnemyWizard_ShootBulletFire, Animation(SpriteId::EnemyWizard_ShootBulletFire, 0.07f));
+	animations.emplace(State::EnemyWizard_ShootWhenFly, Animation(SpriteId::EnemyWizard_ShootWhenFly, 0.1f));
 	animations.emplace(State::EnemyWizard_Stand, Animation(SpriteId::EnemyWizard_Stand, 0.3f));
 	animations.emplace(State::EnemyWizard_Walking, Animation(SpriteId::EnemyWizard_Walking, 0.3f));
 
@@ -26,13 +26,16 @@ EnemyWizard::EnemyWizard(Behaviors behavior, Data&& behaviorData, Vector2 spawnP
 void EnemyWizard::SpawnBullet()
 {
 	if (isFlashing) return;
+	/*static float shootCounter = 0.0f;
+	shootCounter += GameTimer::Dt();
+	if (shootCounter < 0.09f) return;*/
 	if (this->curState == State::EnemyWizard_ShootBullet) {
 		Vector2 bulletPos = pos + Vector2{ 34.0f, 11.0f };
 		//if (nx < 0) GameObject::FlipPosXToLeft(bulletPos.x, pos.x, GetWidth(), );
 		//caculate vel.y
 		Vector2 bulletVel;
 		bulletVel.x = nx * BulletEnemyWizard::GetXSpeed();
-		bulletVel.y = nx * std::abs(bulletPos.y - cap.GetPos().y) / std::abs(bulletPos.x - cap.GetPos().x) * bulletVel.x;
+		bulletVel.y = std::abs(bulletPos.y - (cap.GetPos().y + 10.0f)) / std::abs(bulletPos.x - cap.GetPos().x) * bulletVel.x;
 
 		grid->SpawnObject(std::make_unique<BulletEnemyWizard>(nx, bulletPos, bulletVel, this));
 		Sounds::PlayAt(SoundId::BulletNormal);
@@ -47,7 +50,7 @@ void EnemyWizard::SpawnBulletFire()
 		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(nx, bulletPos, true, this));
 		Sounds::PlayAt(SoundId::BulletLazer);
 	}
-	if (this->curState == State::EnemyWizard_ShootBulletFire) {
+	else if (this->curState == State::EnemyWizard_ShootBulletFire) {
 		const auto bulletPos = pos + Vector2{ 34.0f, 11.0f };
 		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(nx, bulletPos, false, this));
 		Sounds::PlayAt(SoundId::BulletLazer);
@@ -62,6 +65,20 @@ void EnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
 	//regular update
 	pos.x += vel.x*dt;
 	pos.y += vel.y*dt;
+
+	static Behaviors curBehavior = Behaviors::EnemyWizard_FlyingShoot;
+
+	if (Onbehaviors(curBehavior))
+	{
+		if (curBehavior == Behaviors::EnemyWizard_FlyingShoot) {
+			SetState(State::EnemyWizard_Stand);
+			curBehavior = Behaviors::EnemyWizard_GroundShoot;
+		}
+		else if (curBehavior == Behaviors::EnemyWizard_GroundShoot) {
+			SetState(State::EnemyWizard_Stand);
+			curBehavior = Behaviors::EnemyWizard_FlyingShoot;
+		}
+	}
 	//
 	if (animations.at(State::EnemyWizard_ShootBullet).IsDoneCycle())
 	{
@@ -111,12 +128,15 @@ void EnemyWizard::SetState(State state)
 	case State::EnemyWizard_ShootBullet:
 		vel.x = 0;
 		vel.y = 0;
+		SpawnBullet();
 		break;
 	case State::EnemyWizard_ShootBulletFire:
 		vel.x = 0;
 		vel.y = 0;
+		SpawnBulletFire();
 		break;
 	case State::EnemyWizard_ShootWhenFly:
+		SpawnBulletFire();
 		break;
 	case State::EnemyWizard_Stand:
 		vel.x = 0;
@@ -129,13 +149,133 @@ void EnemyWizard::SetState(State state)
 	}
 }
 
+bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current behavior is done
+{
+	static bool checkShotOnce = false;
+	static int counterFly = 0;
+	if (behavior == Behaviors::EnemyWizard_FlyingShoot)
+	{
+		if (pos.x <= MAX_POS_X && pos.x >= MIN_POS_X)
+		{
+			if (curState == State::EnemyWizard_ShootWhenFly && !animations.at(State::EnemyWizard_ShootWhenFly).IsDoneCycle()) {
+				return false;
+			}
+			else {
+				SetState(State::EnemyWizard_Flying);
+			}
+			if (nx <0 && cap.GetPos().x < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x > pos.x)
+			{
+				if (!checkShotOnce) {
+					SetState(State::EnemyWizard_ShootWhenFly);
+					checkShotOnce = true;
+				}
+			}
+			else
+			{
+				checkShotOnce = false;
+			}
+		}
+		else if (pos.x > MAX_POS_X)
+		{
+			nx = -1;
+			if (pos.y >= GROUND)
+			{
+				counterFly++;
+				if (curState != State::EnemyWizard_FlyUp) {
+					SetState(State::EnemyWizard_FlyUp);
+				}
+			}
+			else if (pos.y <= ROOF) {
+				if (curState == State::EnemyWizard_FlyUp) {
+					if (pos.x > MAX_POS_X)
+						pos.x -= 3;
+				}
+				else {
+					SetState(State::EnemyWizard_FlyDown);
+				}
+			}
+		}
+		else if (pos.x < MIN_POS_X)
+		{
+			nx = 1;
+			if (pos.y >= GROUND) {
+				counterFly++;
+				if (curState != State::EnemyWizard_FlyUp) {
+					SetState(State::EnemyWizard_FlyUp);
+				}
+			}
+			else if (pos.y <= ROOF) {
+				if (curState == State::EnemyWizard_FlyUp) {
+					if (pos.x < MIN_POS_X)
+						pos.x += 3;
+				}
+				else {
+					SetState(State::EnemyWizard_FlyDown);
+				}
+			}
+		}
+		if (counterFly > 1) {
+			counterFly = 0;
+			return true;
+		}
+	}
+	else if (behavior == Behaviors::EnemyWizard_GroundShoot)
+	{
+		static float counterState = 0.0f;
+		static int Bullets = 0;
+		counterState += GameTimer::Dt();
+		if (animations.at(curState).IsDoneCycle())
+		{
+			if (curState == State::EnemyWizard_ShootBullet)
+			{
+				SetState(State::EnemyWizard_Stand);
+				counterState = 0;
+			}
+			else if (curState == State::EnemyWizard_ShootBulletFire)
+			{
+				SetState(State::EnemyWizard_Stand);
+				counterState = 0;
+				return true;
+			}
+			else if (curState == State::EnemyWizard_Stand)
+			{
+				if (counterState > 0.1f)
+				{
+					if (Bullets < 2) {
+						if (!checkShotOnce) {
+							Bullets++;
+							SetState(State::EnemyWizard_ShootBullet);
+							checkShotOnce = true;
+							counterState = 0;
+						}
+					}
+					else {
+						if (!checkShotOnce) {
+							Bullets = 0;
+							SetState(State::EnemyWizard_ShootBulletFire);
+							checkShotOnce = true;
+							counterState = 0;
+						}
+					}
+				}
+			}
+		}
+		else {
+			checkShotOnce = false;
+		}
+	}
+	else if (behavior == Behaviors::EnemyWizard_GroundShoot)
+	{
+	//TODO:
+	}
+	return false;
+}
+
 void EnemyWizard::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
 	{
-		pos.x += vel.x*dt;
-		pos.y += vel.y*dt;
 		return;
 	}
 

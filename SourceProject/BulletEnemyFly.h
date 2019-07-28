@@ -3,7 +3,7 @@
 class BulletEnemyFly :
 	public Bullet
 {
-	static constexpr float BULLET_MOVING = 100.0f;
+	static constexpr float BULLET_MOVING = 110.0f;
 	static constexpr float MIN_CHANGE_VELX_PER_FRAME = 2.5f;
 	static constexpr float MAX_TIME_TILL_EXPLODE = 2.5f;
 	Captain *cap;

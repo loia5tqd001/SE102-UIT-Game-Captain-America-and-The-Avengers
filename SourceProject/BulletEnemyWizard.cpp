@@ -15,8 +15,8 @@ BulletEnemyWizard::BulletEnemyWizard(int nx, const Vector2& spawnPos, Vector2& v
 void BulletEnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	if (curState == State::Destroyed) return;
-	if (vel.y > vel.x/1.5) curState = State::BulletEnemyWizard_Cross;
-	else if (vel.y > vel.x/2.5) curState = State::BulletEnemyWizard_SemiCross;
+	if (abs(vel.y) > abs(vel.x)/1.5) curState = State::BulletEnemyWizard_Cross;
+	else if (abs(vel.y) > abs(vel.x)/2.5) curState = State::BulletEnemyWizard_SemiCross;
 	else curState = State::BulletEnemyWizard_Horizontal;
 	pos.y += vel.y * dt;
 	pos.x += vel.x * dt;
