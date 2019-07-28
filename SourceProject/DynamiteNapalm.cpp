@@ -3,7 +3,7 @@
 
 
 DynamiteNapalm::DynamiteNapalm(Vector2 spawnPos, int nx, Grid * grid, Captain *ptrcap) :
-	Enemy(behavior, behaviorData, State::DynamiteNapalm_Standing, DYNAMITENAPALM_HEALTH, pos, grid),
+	Enemy(behavior, behaviorData, State::DynamiteNapalm_Standing, DYNAMITENAPALM_HEALTH, pos, grid, State::DynamiteNapalm_FallFromTheSky),
 	cap(ptrcap)
 {
 	animations.emplace(State::DynamiteNapalm_FallFromTheSky, Animation(SpriteId::DynamiteNapalm_FallFromTheSky));

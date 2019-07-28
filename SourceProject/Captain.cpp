@@ -226,7 +226,6 @@ void Captain::SetState(State state)
 
 void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 {
-	if (isFlashing) return;
 	const auto capBbox = GetBBox();
 
 	for (auto& obj : coObjects)
@@ -237,16 +236,19 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 				enemy->TakeDamage(1);
 				this->health.Subtract(1);
 				SetState(State::Captain_Injured);
+				if (isFlashing) return;
 			}
 			else if (auto bullet = dynamic_cast<Bullet*>(obj))
 			{
 				bullet->HitCaptain();
 				this->health.Subtract(bullet->GetDamage());
 				SetState(State::Captain_Injured);
+				if (isFlashing) return;
 			}
 			else if (auto item = dynamic_cast<Item*>(obj))
 			{
 				item->BeingCollected();
+				if (isFlashing) return;
 			}
 			else if (auto block = dynamic_cast<Block*>(obj))
 			{
@@ -255,6 +257,7 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 					if (!isFlashing) {
 						health.Subtract(1);
 						SetState(State::Captain_Injured);
+						if (isFlashing) return;
 					}
 				}
 				else if (block->GetType() == ClassId::ClimbableBar)

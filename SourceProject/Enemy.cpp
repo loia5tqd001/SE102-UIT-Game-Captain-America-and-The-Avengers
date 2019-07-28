@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Enemy.h"
 
-Enemy::Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, int health, Vector2 spawnPos, Grid* grid) :
+Enemy::Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, int health, Vector2 spawnPos, Grid* grid, State initState) :
 	VisibleObject(beforeExplode, spawnPos),
 	beforeExplode(beforeExplode),
 	health(health),
@@ -10,6 +10,8 @@ Enemy::Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, 
 	behaviorData(behaviorData)
 {
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.2f));
+	if (initState!=State::NotExist)
+		curState = initState;
 	//we need handing set for each class to this, some dont explode
 }
 

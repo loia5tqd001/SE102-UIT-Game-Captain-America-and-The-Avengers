@@ -14,7 +14,7 @@ protected:
 
 	void UpdateAnimation(float dt);
 public:
-	Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, int health, Vector2 spawnPos, Grid* grid);
+	Enemy(Behaviors behavior, const Data& behaviorData, State beforeExplode, int health, Vector2 spawnPos, Grid* grid, State initState = State::NotExist);
 	//enemy fly dont need data, just put pos to it and it will be fine
 	//also not every enemy will explode
 
