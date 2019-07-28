@@ -6,7 +6,7 @@
 
 void CaptainTackle::Enter(Captain& cap, State fromState, Data&& data)
 {
-	assert(fromState == State::Captain_Sitting);
+	assert(fromState == State::Captain_Sitting || fromState == State::Captain_Injured);
 	cap.vel.x = cap.nx * TACKLE_SPEED;
 	cap.vel.y = JUMP_SPEED_VER;
 	isStillOnGround = true;

@@ -74,18 +74,6 @@ void CharlestonScene::Draw()
 
 	#pragma region _TESTING_
 
-	if (0) // test EnemyWizard
-	{
-	    Data data;
-		data.Add("water-velocity", 16.9f);
-		data.Add("damage", 420);
-		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, std::move(data),{ 150.0f, 250.0f }, {}, 1, grid.get(), *cap.get());
-		std::vector<GameObject*> co;
-		enemyWizard.Update(GameTimer::Dt(), co);
-		enemyWizard.testing(wnd);
-
-		enemyWizard.Render();
-	}
 	if (0) // test EnemyFly
 	{
 		Data data;

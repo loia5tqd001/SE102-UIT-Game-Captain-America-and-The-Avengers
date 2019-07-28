@@ -75,7 +75,15 @@ void EnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
 			curBehavior = Behaviors::EnemyWizard_GroundShoot;
 		}
 		else if (curBehavior == Behaviors::EnemyWizard_GroundShoot) {
-			SetState(State::EnemyWizard_Stand);
+			SetState(State::EnemyWizard_FlyUp);
+			curBehavior = Behaviors::EnemyWizard_Jump;
+		}
+		else if (curBehavior == Behaviors::EnemyWizard_Jump) {
+			SetState(State::EnemyWizard_FlyUp);
+			curBehavior = Behaviors::EnemyWizard_FlyBackCorner;
+		}
+		else if (curBehavior == Behaviors::EnemyWizard_FlyBackCorner) {
+			SetState(State::EnemyWizard_FlyUp);
 			curBehavior = Behaviors::EnemyWizard_FlyingShoot;
 		}
 	}
@@ -151,7 +159,7 @@ void EnemyWizard::SetState(State state)
 
 bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current behavior is done
 {
-	assert(pos.x <= MIN_POS_X - 5 || pos.x >= MAX_POS_X + 4); //warning!!!
+	//assert(pos.x >= MIN_POS_X - 5 && pos.x <= MAX_POS_X + 5); //warning!!!
 	static bool checkShotOnce = false;
 	static int counterFly = 0;
 	if (behavior == Behaviors::EnemyWizard_FlyingShoot)
@@ -195,6 +203,12 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 					SetState(State::EnemyWizard_FlyDown);
 				}
 			}
+			else
+			{
+				/*vel.x = -abs(vel.x);*/
+				//if (pos.y > ROOF)
+				//	SetState(State::EnemyWizard_FlyUp);
+			}
 		}
 		else if (pos.x < MIN_POS_X)
 		{
@@ -214,8 +228,13 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 					SetState(State::EnemyWizard_FlyDown);
 				}
 			}
+			else {
+				//vel.x = abs(vel.x);
+				//if (pos.y > ROOF)
+				//	SetState(State::EnemyWizard_FlyUp);
+			}
 		}
-		if (counterFly > 2) {
+		if (counterFly >1) {
 			counterFly = 0;
 			return true;
 		}
@@ -265,9 +284,105 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			checkShotOnce = false;
 		}
 	}
-	else if (behavior == Behaviors::EnemyWizard_GroundShoot)
+	else if (behavior == Behaviors::EnemyWizard_Jump)
 	{
-	//TODO:
+		//y=x^2-50
+		static float runVerX = pos.x + nx * std::sqrt(120);
+		static float runVerY = pos.y;
+		static bool isJumped = false;
+		static int counter = 0; counter++;
+		if (!isJumped)
+		{
+			runVerX = pos.x + nx * std::sqrt(120);
+		    runVerY = pos.y;
+			isJumped = true;
+			if (counter>1) {
+				int a = 0;
+			}
+		}
+		vel.x = nx * WALKING_SPEED/2;
+		float tempPosY = (pos.x - runVerX)*(pos.x - runVerX) - 120;
+		vel.y = (tempPosY - runVerY)/2;
+		Debug::Out(runVerX);
+		Debug::Out(pos.y);
+		if (counter == 10) {
+			int a = 0;
+		}
+		if (pos.y > runVerY) {
+			pos.y = runVerY;
+			isJumped = false;
+			return true; 
+		}
+	}
+	else if (behavior == Behaviors::EnemyWizard_FlyBackCorner)
+	{
+		static bool isFlyDown = false;
+		if (!isFlyDown) {
+			if (nx < 0) {
+				if (pos.y <= GROUND && pos.y >= ROOF && pos.x >= MIN_POS_X) {
+					SetState(State::EnemyWizard_FlyUp);
+				}
+				else if (pos.y < ROOF && pos.x >= MIN_POS_X)
+				{
+					if (curState == State::EnemyWizard_ShootWhenFly && !animations.at(State::EnemyWizard_ShootWhenFly).IsDoneCycle()) {
+						return false;
+					}
+					else {
+						SetState(State::EnemyWizard_Flying);
+					}
+					if (nx < 0 && cap.GetPos().x < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x > pos.x)
+					{
+						if (!checkShotOnce) {
+							SetState(State::EnemyWizard_ShootWhenFly);
+							checkShotOnce = true;
+						}
+					}
+					else
+					{
+						checkShotOnce = false;
+					}
+				}
+				else if (pos.x <= MIN_POS_X)
+				{
+					SetState(State::EnemyWizard_FlyDown);
+					if (pos.y > GROUND) return true;
+				}
+			}
+			else {
+				if (pos.y <= GROUND && pos.y >= ROOF && pos.x <= MAX_POS_X) {
+					SetState(State::EnemyWizard_FlyUp);
+				}
+				else if (pos.y < ROOF && pos.x <= MAX_POS_X)
+				{
+					if (curState == State::EnemyWizard_ShootWhenFly && !animations.at(State::EnemyWizard_ShootWhenFly).IsDoneCycle()) {
+						return false;
+					}
+					else {
+						SetState(State::EnemyWizard_Flying);
+					}
+					if (nx < 0 && cap.GetPos().x < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x > pos.x)
+					{
+						if (!checkShotOnce) {
+							SetState(State::EnemyWizard_ShootWhenFly);
+							checkShotOnce = true;
+						}
+					}
+					else
+					{
+						checkShotOnce = false;
+					}
+				}
+				else if (pos.x >= MAX_POS_X)
+				{
+					SetState(State::EnemyWizard_FlyDown);
+					if (pos.y > GROUND) return true;
+				}
+			}
+		}
+	}
+	else if (behavior == Behaviors::EnemyWizard_FlyBackCorner)
+	{	
+		//TODO
 	}
 	return false;
 }

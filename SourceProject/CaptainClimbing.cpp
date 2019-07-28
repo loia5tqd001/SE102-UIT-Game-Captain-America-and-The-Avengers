@@ -57,7 +57,8 @@ void CaptainClimbing::Enter(Captain& cap, State fromState, Data&& data)
 	case State::Captain_Spinning:
 		break;
 	default:
-		AssertUnreachable();
+		break;
+		//AssertUnreachable(); BUG?
 	}
 }
 
