@@ -316,6 +316,8 @@ enum class Behaviors // for enemy, moving ledges
 	EnemyWizard_Jump = 22,
 	EnemyWizard_FlyBackCorner = 23,
 	EnemyWizard_RunToCap = 24,
+	EnemyWizard_TurnOffLight = 25, 
+	EnemyWizard_Laught = 25,
 
 	DynamiteNapalm_Fall,
 	DynamiteNapalm_Throw,

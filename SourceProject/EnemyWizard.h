@@ -11,9 +11,20 @@ private:
 	static constexpr float ROOF = 10.0f;
 	static constexpr float MAX_POS_X = 210.0f;
 	static constexpr float MIN_POS_X = 20.0f;
+	static constexpr float LIGHT_POS_X = 50.0f;
+	static constexpr float LIGHT_POS_Y = 57.0f;
+	static constexpr Behaviors ACTIONS_LIST[15] = 
+	{ 
+	  Behaviors::EnemyWizard_FlyingShoot , Behaviors::EnemyWizard_GroundShoot  , Behaviors::EnemyWizard_GroundShoot,
+	  Behaviors::EnemyWizard_TurnOffLight, Behaviors::EnemyWizard_FlyBackCorner, Behaviors::EnemyWizard_RunToCap,
+	  Behaviors::EnemyWizard_GroundShoot , Behaviors::EnemyWizard_Jump         , Behaviors::EnemyWizard_FlyBackCorner,
+	  Behaviors::EnemyWizard_FlyingShoot , Behaviors::EnemyWizard_RunToCap     , Behaviors::EnemyWizard_Jump,
+	  Behaviors::EnemyWizard_FlyBackCorner, Behaviors::EnemyWizard_GroundShoot  , Behaviors::EnemyWizard_FlyBackCorner
+	};
 
 	Captain& cap;
 	bool Onbehaviors(Behaviors behavior);
+	void Action();
 public:
 	EnemyWizard(Behaviors behavior, Data&& behaviorData, Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap);
 	void SetState(State state) override;

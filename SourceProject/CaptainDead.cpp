@@ -59,7 +59,7 @@ void CaptainDead::HandleCollisions(Captain& cap, float dt, const std::vector<Gam
 					break;
 
 				default:
-					AssertUnreachable();
+					AssertUnreachable(); //BUG, DO WE NEED THIS
 			}
 		}
 	}

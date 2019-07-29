@@ -34,7 +34,7 @@ protected:
 	static constexpr auto TACKLE_SPEED = 200.0f;
 
 
-	static constexpr auto MOVING_HOR = 57.0f;
+	static constexpr auto MOVING_HOR = 60.0f;
 	static constexpr auto JUMP_SPEED_VER = 180.0f;
 	static constexpr auto JUMP_SPEED_VER_MAX = 210.0f;
 	static constexpr auto JUMP_SPEED_VER_MIN = 120.0f;
