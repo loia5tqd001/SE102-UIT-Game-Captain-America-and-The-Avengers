@@ -17,10 +17,10 @@ Data CaptainCoverTop::Exit(Captain& cap, State toState)
 
 void CaptainCoverTop::OnKeyUp(Captain& cap, BYTE keyCode)
 {
-	if (keyCode == setting.Get(KeyControls::Up))
-	{
-		cap.SetState(State::Captain_Standing);
-	}
+	//if (keyCode == setting.Get(KeyControls::Up))
+	//{
+	//	cap.SetState(State::Captain_Standing);
+	//}
 }
 
 void CaptainCoverTop::OnKeyDown(Captain& cap, BYTE keyCode)
@@ -71,6 +71,10 @@ void CaptainCoverTop::OnKeyDown(Captain& cap, BYTE keyCode)
 void CaptainCoverTop::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	HandleCollisions(cap, dt, coObjects);
+	if (!wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
+	{
+		cap.SetState(State::Captain_Standing);
+	}
 }
 
 void CaptainCoverTop::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

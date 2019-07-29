@@ -66,7 +66,7 @@ void BossCharlestonScene::OnKeyDown(BYTE keyCode)
 {
 	switch (keyCode)
 	{
-		case VK_SPACE:
+		case VK_TAB:
 			ToggleLight();
 			break;
 

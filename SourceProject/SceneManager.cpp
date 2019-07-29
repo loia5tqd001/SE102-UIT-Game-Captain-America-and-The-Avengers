@@ -47,8 +47,8 @@ void SceneManager::LoadResources()
 	checkpoints[1] = CheckPoint{ Scene::Charleston, Vector2{ 1700.0f, 391.0f }, true };
 	checkpoints[2] = CheckPoint{ Scene::BossCharleston };
 	checkpoints[3] = CheckPoint{ Scene::Pittsburgh };
-	checkpoints[4] = CheckPoint{ Scene::Pittsburgh, Vector2{ 816.0f, 628.0f } };
-	checkpoints[5] = CheckPoint{ Scene::Pittsburgh, Vector2{ 560.0f, 148.0f } };
+	checkpoints[4] = CheckPoint{ Scene::Pittsburgh, Vector2{ 560.0f, 148.0f } };
+	checkpoints[5] = CheckPoint{ Scene::Pittsburgh, Vector2{ 816.0f, 628.0f } };
 	checkpoints[6] = CheckPoint{ Scene::Pittsburgh, Vector2{ 720.0f, 852.0f }, true };
 	checkpoints[7] = CheckPoint{ Scene::RedAlert };
 }

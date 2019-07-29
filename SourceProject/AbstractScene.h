@@ -22,6 +22,7 @@ public:
 	inline bool IsPause() const { return isPause; }
 
 	virtual void SetCapPos(Vector2 pos) {}
+	virtual void Teleport() {} // in pittsburgh, between rooms and main scene.
 
 	void DoTransitionScene(std::optional<Scene> nextScene = {}, float transTime = 1.23f);
 	inline bool IsDoingTransitionSceneEffect() const { return isDoingTransitionScene; }

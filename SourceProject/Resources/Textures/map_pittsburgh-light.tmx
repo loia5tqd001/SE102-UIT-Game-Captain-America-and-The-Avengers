@@ -186,10 +186,10 @@
   <object id="19" x="944" y="736" width="48" height="181"/>
  </objectgroup>
  <objectgroup color="#0000ff" id="6" name="Door(classid=8)" locked="1">
-  <object id="20" x="560" y="144" width="32" height="48"/>
-  <object id="22" x="816" y="624" width="32" height="48"/>
-  <object id="23" x="48" y="1120" width="32" height="48"/>
-  <object id="24" x="320" y="1120" width="32" height="48"/>
+  <object id="20" x="568" y="144" width="16" height="48"/>
+  <object id="22" x="824" y="624" width="16" height="48"/>
+  <object id="23" x="56" y="1120" width="16" height="48"/>
+  <object id="24" x="328" y="1120" width="16" height="48"/>
  </objectgroup>
  <objectgroup color="#ff0000" id="7" name="Capsules(classid=11)">
   <object id="25" name="KeyKrystal(19),maxy=85" x="96" y="48" width="16" height="16"/>

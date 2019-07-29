@@ -2,6 +2,7 @@
 #include "Captain.h"
 
 static auto& setting = Settings::Instance();
+static auto& wnd = Window::Instance();
 
 Captain::Captain(const Vector2& pos, Grid* ogrid)
 	: VisibleObject(State::Captain_Standing, pos),
@@ -275,6 +276,13 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 						shield->UpdateByCapState(curState, pos);
 					}
 				}
+				else if (block->GetType() == ClassId::Door)
+				{
+					if (curState == State::Captain_Standing && wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
+					{
+						SceneManager::Instance().GetCurScene().Teleport();
+					}
+				}
 			}
 		}
 
@@ -330,6 +338,8 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	if (!ignoreUpdate) currentState->Update(*this, dt, coObjects);
 	ignoreUpdate = false;
 	HandleHitBox(dt, coObjects);
+
+	Debug::Out(pos.x, pos.y);
 
 	OnFlashing();
 	shield->UpdateByCapState(curState, pos);

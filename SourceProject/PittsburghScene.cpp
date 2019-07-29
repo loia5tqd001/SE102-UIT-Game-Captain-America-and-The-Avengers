@@ -35,10 +35,7 @@ void PittsburghScene::Update(float dt)
 
 	cap->Update(dt, grid->GetObjectsInViewPort()); // update Captain
 
-	// clamp captain and camera
-	cap->ClampWithin(mapDark->GetWorldBoundary().Trim(14.0f, 0.0f, 14.0f, 0.0f));
-	cam.FollowMainCharacter();
-	cam.ClampWithin(mapDark->GetWorldBoundary());
+	ClampCaptainAndCamera();
 }
 
 void PittsburghScene::Draw()
@@ -52,12 +49,6 @@ void PittsburghScene::Draw()
 	std::vector<GameObject*> layer2; // item, bullet, enemy, ledge (other visible objects)
 									 // layer3: captain
 	std::vector<GameObject*> layer4; // invisible object
-
-#if 0
-	static Bunker bun(State::Bunker_Idle_0, { 792.0f, 390.0f }, grid.get());
-	bun.Update(GameTimer::Dt());
-	bun.Render();
-#endif
 
 	for (auto& obj : grid->GetObjectsInViewPort()) {
 		if (dynamic_cast<Capsule*>(obj)) 
@@ -91,7 +82,7 @@ void PittsburghScene::OnKeyDown(BYTE keyCode)
 {
 	switch (keyCode)
 	{
-		case VK_SPACE:
+		case VK_TAB:
 			ToggleLight();
 			break;
 
@@ -110,4 +101,60 @@ void PittsburghScene::OnKeyUp(BYTE keyCode)
 void PittsburghScene::SetCapPos(Vector2 pos)
 {
 	cap->SetPos(pos);
+}
+
+void PittsburghScene::Teleport()
+{
+	static const auto Room_1 = Vector2{  53.0f, 1128.0f }; // position of captain in those regions
+	static const auto Room_2 = Vector2{ 325.0f, 1128.0f };
+	static const auto Main_Door1 = Vector2{ 565.0f,  149.0f };
+	static const auto Main_Door2 = Vector2{ 821.0f,  632.0f };
+
+	if (currentScenePart == PittsburghScenePart::MainMap)
+	{
+		if (cap->GetPos().y < 250.0f) // door 1 of main map
+		{
+			cap->SetPos(Room_1); // if current in door1, then teleport to room1
+			currentScenePart = PittsburghScenePart::Room1;
+		}
+		else // door 2 of main map
+		{
+			cap->SetPos(Room_2);
+			currentScenePart = PittsburghScenePart::Room2;
+		}
+	}
+	else if (currentScenePart == PittsburghScenePart::Room1)
+	{
+		cap->SetPos(Main_Door1);  // if current in room1, then teleport back to door1
+		cam.MoveTo( {} ); // to avoid camera abberance as teleporting
+		currentScenePart = PittsburghScenePart::MainMap;
+	}
+	else if (currentScenePart == PittsburghScenePart::Room2)
+	{
+		cap->SetPos(Main_Door2);
+		cam.MoveTo( {} );
+		currentScenePart = PittsburghScenePart::MainMap;
+	}
+	DoTransitionScene();
+}
+
+void PittsburghScene::ClampCaptainAndCamera()
+{
+	if (currentScenePart == PittsburghScenePart::MainMap)
+	{
+		cap->ClampWithin( { 16.0f, 16.0f, 1008.0f, 917.0f } ); // clamp region in main map
+		cam.FollowMainCharacter();
+		cam.ClampWithin( { 0.0f, 0.0f, 1024.0f, 960.0f } ); // world boundary in main map
+
+	}
+	else if (currentScenePart == PittsburghScenePart::Room1)
+	{
+		cap->ClampWithin( { 16.0f, 992.0f, 240.0f, 1173.0f } ); // clamp region in room1
+		cam.ClampWithin( { 0.0f, 976.0f, 256.0f, 1216.0f } ); // world boundary in room1
+	}
+	else if (currentScenePart == PittsburghScenePart::Room2)
+	{
+		cap->ClampWithin( { 288.0f, 992.0f, 512.0f, 1173.0f } ); // clamp region in room2
+		cam.ClampWithin( { 272.0f, 976.0f, 528.0f, 1216.0f } ); // world boundary in room2
+	}
 }
