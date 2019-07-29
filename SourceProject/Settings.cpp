@@ -83,8 +83,6 @@ void Settings::SetOpening(bool isOpening)
 
 bool Settings::IsValidKeyControl(BYTE keyCode)
 {
-	if (keyCode >= VK_NUMPAD0 && keyCode <= VK_NUMPAD9)     return true;
-	if (keyCode >= '0' && keyCode <= '9')                   return true;
 	if (keyCode >= 'A' && keyCode <= 'Z' && keyCode != 'M') return true;
 	if (keyCode >= VK_LEFT && keyCode <= VK_DOWN)           return true;
 	if (keyCode == VK_SPACE)                                return true;

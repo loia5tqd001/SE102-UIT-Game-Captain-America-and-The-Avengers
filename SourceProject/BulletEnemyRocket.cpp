@@ -36,7 +36,7 @@ void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjec
 		durationUp += GameTimer::Dt();
 		if (durationUp >= 0.25)
 		{
-			vel.x = nx * BULLET_MOVING/sqrt(2);
+			vel.x = nx * BULLET_MOVING/sqrtf(2.0f);
 			vel.y = -abs(vel.x);
 		}
 	}

@@ -16,5 +16,6 @@ public:
 	void OnKeyDown(BYTE keyCode) override;
 	void OnKeyUp(BYTE keyCode) override;
 	SoundId GetBgMusic() const override { return SoundId::CaptainTheme; }
+	void SetCapPos(Vector2 pos);
 };
 

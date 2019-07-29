@@ -1,15 +1,23 @@
 #pragma once
 
+struct CheckPoint
+{
+	Scene scene;
+	Vector2 captainPos = {};
+};
+
 class SceneManager
 {
 private:
 	std::unique_ptr<AbstractScene> curScene;
 	Settings& settingScene = Settings::Instance();
+	CheckPoint checkpoints[8];
 
 public:
 	void ToggleMuteMode() const;
 	void ToggleSettingScene() const;
 
+	void GoToCheckPoint(CheckPoint checkpoint);
 	void LoadResources();
 	void SetScene(Scene scene);
 	void GoNextScene();

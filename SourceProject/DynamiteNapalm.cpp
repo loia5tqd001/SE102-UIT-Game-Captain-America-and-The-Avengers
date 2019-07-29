@@ -169,6 +169,8 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior)
 	default:
 		break;
 	}
+	return unhandle;
+	AssertUnreachable();
 }
 
 void DynamiteNapalm::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)

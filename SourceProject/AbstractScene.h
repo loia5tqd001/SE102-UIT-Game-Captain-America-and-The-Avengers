@@ -21,6 +21,8 @@ public:
 	void TogglePause() { SetPause(!isPause); }
 	inline bool IsPause() const { return isPause; }
 
+	virtual void SetCapPos(Vector2 pos) {}
+
 	void DoTransitionScene(std::optional<Scene> nextScene = {}, float transTime = 1.23f);
 	inline bool IsDoingTransitionSceneEffect() const { return isDoingTransitionScene; }
 	std::optional<Scene> GetNextScene() const;

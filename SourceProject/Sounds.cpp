@@ -116,10 +116,10 @@ void Sounds::HandleInput()
 {
 	static auto& wnd = Window::Instance();
 
-	if (wnd.IsKeyPressed(VK_OEM_PLUS) || wnd.IsKeyPressed(VK_ADD)) {
+	if (wnd.IsKeyPressed(VK_OEM_PLUS)) {
 		Sounds::VolumeUp();
 	}
-	else if (wnd.IsKeyPressed(VK_OEM_MINUS) || wnd.IsKeyPressed(VK_SUBTRACT)) {
+	else if (wnd.IsKeyPressed(VK_OEM_MINUS)) {
 		Sounds::VolumeDown();
 	}
 }

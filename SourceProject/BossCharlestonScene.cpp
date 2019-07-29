@@ -28,7 +28,7 @@ void BossCharlestonScene::Update(float dt)
 	for (auto& obj : grid->GetObjectsInViewPort())
 		obj->Update(dt);
 	cap->Update(dt, grid->GetObjectsInViewPort());
-	cap->ClampWithin( mapDark->GetWorldBoundary().Trim(8.0f, 0.0f, 8.0f, 0.0f) );
+	cap->ClampWithin( mapDark->GetWorldBoundary().Trim(16.0f, 15.0f, 16.0f, 43.0f) );
 	cam.ClampWithin( mapDark->GetWorldBoundary() );
 }
 
@@ -76,3 +76,4 @@ void BossCharlestonScene::OnKeyDown(BYTE keyCode)
 	}
 	cap->OnKeyDown(keyCode);
 }
+

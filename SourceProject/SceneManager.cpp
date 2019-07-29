@@ -21,6 +21,13 @@ void SceneManager::ToggleSettingScene() const
 	settingScene.SetOpening( curScene->IsPause() );
 }
 
+void SceneManager::GoToCheckPoint(CheckPoint checkpoint)
+{
+	SetScene(checkpoint.scene);
+	if (checkpoint.captainPos != Vector2{}) 
+		curScene->SetCapPos(checkpoint.captainPos);
+}
+
 void SceneManager::LoadResources()
 {
 	const auto root = AbstractScene::GetRootJson("Resources\\Data\\resources.json");
@@ -30,6 +37,15 @@ void SceneManager::LoadResources()
 	Sounds       ::LoadResources(root);
 	KeyCodeFonts ::LoadResources(root);
 	DebugDraw    ::InitDefaultFont();
+
+	checkpoints[0] = CheckPoint{ Scene::Charleston };
+	checkpoints[1] = CheckPoint{ Scene::Charleston, Vector2{ 1700.0f, 391.0f } };
+	checkpoints[2] = CheckPoint{ Scene::BossCharleston };
+	checkpoints[3] = CheckPoint{ Scene::Pittsburgh };
+	checkpoints[4] = CheckPoint{ Scene::Pittsburgh, Vector2{ 816.0f, 628.0f } };
+	checkpoints[5] = CheckPoint{ Scene::Pittsburgh, Vector2{ 560.0f, 148.0f } };
+	checkpoints[6] = CheckPoint{ Scene::Pittsburgh, Vector2{ 720.0f, 852.0f } };
+	checkpoints[7] = CheckPoint{ Scene::RedAlert };
 }
 
 void SceneManager::SetScene(Scene scene)
@@ -128,6 +144,24 @@ void SceneManager::OnKeyDown(BYTE keyCode)
 		case VK_CONTROL:
 			DebugDraw::ToggleDebugMode();
 			break;
+
+		case VK_ADD:
+			CaptainHealth::Instance().Add(1);
+			break;
+
+		case VK_SUBTRACT:
+			if (CaptainHealth::Instance().Get() > 1)
+				CaptainHealth::Instance().Subtract(1);
+			break;
+
+		case VK_NUMPAD0: GoToCheckPoint(checkpoints[0]); break;
+		case VK_NUMPAD1: GoToCheckPoint(checkpoints[1]); break;
+		case VK_NUMPAD2: GoToCheckPoint(checkpoints[2]); break;
+		case VK_NUMPAD3: GoToCheckPoint(checkpoints[3]); break;
+		case VK_NUMPAD4: GoToCheckPoint(checkpoints[4]); break;
+		case VK_NUMPAD5: GoToCheckPoint(checkpoints[5]); break;
+		case VK_NUMPAD6: GoToCheckPoint(checkpoints[6]); break;
+		case VK_NUMPAD7: GoToCheckPoint(checkpoints[7]); break;
 
 		case 'M':
 			ToggleMuteMode();

@@ -109,3 +109,8 @@ void CharlestonScene::OnKeyUp(BYTE keyCode)
 	cap->OnKeyUp(keyCode);
 }
 
+void CharlestonScene::SetCapPos(Vector2 pos)
+{
+	cap->SetPos(pos);
+}
+

@@ -106,3 +106,8 @@ void PittsburghScene::OnKeyUp(BYTE keyCode)
 {
 	cap->OnKeyUp(keyCode);
 }
+
+void PittsburghScene::SetCapPos(Vector2 pos)
+{
+	cap->SetPos(pos);
+}
