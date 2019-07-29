@@ -250,6 +250,10 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 			{
 				item->BeingCollected();
 			}
+			else if (auto spawner = dynamic_cast<Spawner*>(obj))
+			{
+				spawner->OnCollideWithCap(this);
+			}
 			else if (auto block = dynamic_cast<Block*>(obj))
 			{
 				if (block->GetType() == ClassId::DamageBlock)

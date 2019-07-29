@@ -309,6 +309,8 @@ enum class Behaviors // for enemy, moving ledges
 	EnemyRocket_BackAndForth  = 12, 
 	EnemyRocket_Ambush        = 13,
 
+	EnemyFly_Stupid = 15,
+
 	EnemyWizard_FlyingShoot = 20,
 	EnemyWizard_GroundShoot = 21,
 	EnemyWizard_Jump = 22,
@@ -319,7 +321,11 @@ enum class Behaviors // for enemy, moving ledges
 	DynamiteNapalm_Throw,
 	DynamiteNapalm_Shoot,
 	DynamiteNapalm_Run,
-	DynamiteNapalm_AttackBeforeDead
+	DynamiteNapalm_AttackBeforeDead,
+
+	MovingLedge_Horizontal = 40,
+	MovingLedge_Diagonal = 41,
+	MovingLedge_Circle = 42
 };
 
 enum class Scene

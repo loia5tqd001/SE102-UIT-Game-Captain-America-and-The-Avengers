@@ -3,7 +3,7 @@
 class BulletDynamite : public Bullet
 {
 private:
-	static constexpr float pi = 3.1415926535898;
+	static constexpr float pi = 3.1415926535898f;
 	static constexpr float BULLET_MOVING = 0.0f;
 	static constexpr float TIME_TO_THROW = 1.0f;
 	static constexpr float Gravity = 900.0f;

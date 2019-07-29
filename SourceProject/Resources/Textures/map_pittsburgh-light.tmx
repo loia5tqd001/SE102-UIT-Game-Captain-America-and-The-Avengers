@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="57">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="68">
  <tileset firstgid="1" name="map_pittsburgh-light_bank.png" tilewidth="16" tileheight="16" tilecount="110" columns="11">
   <image source="8. TileMapPittsburghLight.png" width="176" height="160"/>
  </tileset>
@@ -143,6 +143,18 @@
   <object id="62" x="960" y="565" width="32" height="32"/>
   <object id="63" x="368" y="165" width="32" height="32"/>
   <object id="65" x="432" y="165" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup color="#0000ff" id="11" name="Spawners(classid=9)">
+  <object id="61" name="1.gun-shootfast(1)" x="461" y="16" width="16" height="181"/>
+  <object id="59" name="1.enemyGun" x="344" y="165" width="24" height="32"/>
+  <object id="62" name="2.gun-shootfast(1)" x="349" y="16" width="16" height="181"/>
+  <object id="60" name="2.enemyGun" x="232" y="165" width="24" height="32"/>
+  <object id="63" name="3.gun-shoot(0)" x="208" y="16" width="16" height="181"/>
+  <object id="58" name="3.enemyGun" x="92" y="53" width="24" height="32"/>
+  <object id="64" name="4.fly(15)" x="0" y="688" width="144" height="229"/>
+  <object id="65" name="4.enemyFly" x="32" y="736" width="28" height="37"/>
+  <object id="67" name="5.fly(15)" x="734" y="16" width="16" height="181"/>
+  <object id="66" name="5.enemyFly" x="613" y="32" width="28" height="37"/>
  </objectgroup>
  <objectgroup id="10" name="AmbushTrigger(classid=10)">
   <object id="54" name="[256,720,512,960]" x="256" y="720" width="256" height="240"/>

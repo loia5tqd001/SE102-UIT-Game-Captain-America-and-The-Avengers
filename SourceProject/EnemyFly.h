@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
-class EnemyFly :
-	public Enemy
+
+class EnemyFly : public Enemy
 {
 	static constexpr float MOVING_SPEED = 50.0f;
 	static constexpr float FALLING_SPEED = 100.0f;

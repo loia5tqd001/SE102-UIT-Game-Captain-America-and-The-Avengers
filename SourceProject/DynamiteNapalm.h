@@ -4,14 +4,14 @@
 class DynamiteNapalm : public Enemy
 {
 private:
-	static constexpr float FALLING_SPEED = 250.0f;
-	static constexpr float RUNNING_SPEED = 80.0f;
-	static constexpr float RUNNING_BEFORE_DEAD_SPEED = 1.2f*RUNNING_SPEED;
-	static constexpr int NUM_FIRE_BULLET = 2;
-	static constexpr int DEFAULT_HEALTH = 15;
-	static constexpr int maxHealthHeadless = 5;
-	static constexpr int TIME_TO_HEADLESS_SHOOT = 1.5f;
-	static constexpr int FAR_DISTANCE = 70.0f;
+	static constexpr auto FALLING_SPEED = 250.0f;
+	static constexpr auto RUNNING_SPEED = 80.0f;
+	static constexpr auto RUNNING_BEFORE_DEAD_SPEED = 1.2f*RUNNING_SPEED;
+	static constexpr auto NUM_FIRE_BULLET = 2;
+	static constexpr auto DEFAULT_HEALTH = 15;
+	static constexpr auto maxHealthHeadless = 5;
+	static constexpr auto TIME_TO_HEADLESS_SHOOT = 1.5f;
+	static constexpr auto FAR_DISTANCE = 70.0f;
 
 
 	bool dynamiteThrown = false;

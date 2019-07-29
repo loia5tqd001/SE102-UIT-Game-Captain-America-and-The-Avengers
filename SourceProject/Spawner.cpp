@@ -2,16 +2,17 @@
 #include "Spawner.h"
 #include "EnemyGun.h"
 #include "EnemyRocket.h"
+#include "EnemyFly.h"
 
 Spawner::Spawner(Vector2 pos, UINT w, UINT h, Behaviors behav, Vector2 objSpawnPos, int expectCapNx, Data&& data, Grid* grid) :
 	InvisibleObject(pos, w, h),
 	objectBehavior(behav),
 	objSpawnPos(objSpawnPos),
-	expectCapNx(expectCapNx),
+	expectCapNx(w > 40 ? 0 : expectCapNx), // w>40 is spawner of enemyfly in Pittburgh
 	//behaviorData(data),
 	grid(grid)
 {
-	if (expectCapNx < 0)
+	if (this->expectCapNx < 0)
 	{
 		readyToSpawn = false;
 		bboxColor = Colors::OneWayTunnel;
@@ -44,7 +45,7 @@ void Spawner::OnCollideWithCap(Captain* cap)
 {
 	if (!readyToSpawn) return;
 	if (!isActive) return;
-	if (cap->GetNx() != expectCapNx) return;
+	if (expectCapNx != 0 && cap->GetNx() != expectCapNx) return;
 	else {
 		switch (objectBehavior)
 		{
@@ -52,22 +53,23 @@ void Spawner::OnCollideWithCap(Captain* cap)
 			case Behaviors::EnemyGun_ShootFast: 
 			case Behaviors::EnemyGun_RunOnly  :
 				enemy = std::make_shared<EnemyGun>(objectBehavior, objSpawnPos, cap, grid);
-				grid->SpawnObject(enemy);
-				readyToSpawn = false;
 				break;
 
 			case Behaviors::EnemyRocket_ShootStraight :
 			case Behaviors::EnemyRocket_ShootCross    :
 			case Behaviors::EnemyRocket_BackAndForth  :
 				enemy = std::make_shared<EnemyRocket>(objectBehavior, objSpawnPos, cap, grid);
-				grid->SpawnObject(enemy);
-				readyToSpawn = false;
-				if (objectBehavior == Behaviors::EnemyRocket_ShootStraight) enemy->is_debugging = true;
+				break;
+
+			case Behaviors::EnemyFly_Stupid:
+				enemy = std::make_shared<EnemyFly>(objSpawnPos, grid, cap);
 				break;
 
 			default:
 				ThrowMyException("Can't spawn enemy of behavior: ", (int)objectBehavior);
 		}
+		grid->SpawnObject(enemy);
+		readyToSpawn = false;
 	}
 }
 
