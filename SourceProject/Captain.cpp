@@ -150,7 +150,7 @@ void Captain::SetState(State state)
 	currentState->Enter(*this, oldState, std::move(exitData));
 	shield->UpdateByCapState(this->curState, this->pos);
 	//For debuging
-	if (true)
+	if (false)
 	{
 		switch (state)
 		{

@@ -37,7 +37,7 @@ void RedAlertScene::Update(float dt)
 
 void RedAlertScene::Draw()
 {
-	map->Render();
+	//map->Render();
 	for (auto& obj : grid->GetObjectsInViewPort())
 		obj->Render();
 	cap->Render();
