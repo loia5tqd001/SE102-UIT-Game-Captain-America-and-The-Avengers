@@ -140,11 +140,11 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
 		{
-			AssertUnreachable();
+			//AssertUnreachable();
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
-			AssertUnreachable();
+			//AssertUnreachable();
 		}
 		else if (dynamic_cast<MovingLedge*>(e.pCoObj))
 		{

@@ -3,9 +3,9 @@
 #include "BulletEnemyFly.h"
 
 EnemyFly::EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap) :
-	Enemy(behavior, std::move(behaviorData), State::EnemyFly_Fly, 1, spawnPos, grid)
+	Enemy(behavior, std::move(behaviorData), State::EnemyFly_Fly, 2, spawnPos, grid)
 {
-	animations.emplace(State::EnemyFly_Fly, Animation(SpriteId::EnemyFly_Fly, 0.2f));
+	animations.emplace(State::EnemyFly_Fly, Animation(SpriteId::EnemyFly_Fly, 0.1f));
 	animations.emplace(State::EnemyFly_Falling, Animation(SpriteId::EnemyFly_Fly, 0.06f));
 
 	//EnemyFly_BeforeExplode need many cycle, we use time counter for this, not default BeforeExplode
@@ -18,8 +18,28 @@ EnemyFly::EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap) :
 
 void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	pos.x += vel.x*dt;
-	pos.y += vel.y*dt;
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	float _, __, ___, ____;
+
+	if (coEvents.size()) CollisionDetector::FilterCollisionEvents(coEvents, _, __, ___, ____);
+	pos.x += vel.x * dt;
+	pos.y += vel.y * dt;
+
+	for (auto& e : coEvents)
+	{
+		if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
+
+			switch (block->GetType())
+			{
+				case ClassId::RigidBlock:
+					if (e.ny < 0)
+					{
+						SetState(State::Explode);
+					}
+					return;
+			}
+		}
+	}
 
 	SpawnBullet();
 
@@ -32,8 +52,8 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 			if (pos.x > cap->GetPos().x) nx = -1;
 			else nx = 1;
 
-			static float countHorDistance = 0;
-			static float countVerDistance = 0;
+			//static float countHorDistance = 0;
+			//static float countVerDistance = 0;
 			if (std::abs(countHorDistance) < HOR_DISTANCE)
 			{
 				if (countHorDistance >= 0) {
@@ -101,6 +121,7 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 		}
 	}
 	animations.at(curState).Update(dt);
+	OnFlashing();
 }
 
 void EnemyFly::SpawnBullet()
@@ -122,6 +143,7 @@ void EnemyFly::TakeDamage(int damage)
 	assert(damage > 0);
 	if (isFlashing) return; // has just being damaged and is flashing, don't be too evil, give me time to recover please
 
+	OnFlashing(true);
 	health -= damage;
 	if (health <= 0) {
 		SetState(State::EnemyFly_Falling);

@@ -25,16 +25,40 @@ void BulletEnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 	}
 	counterExplode += GameTimer::Dt();
 	if (counterExplode >= MAX_TIME_TILL_EXPLODE) {
-		curState = State::Explode;
+		SetState(State::Explode);
 		vel = { 0.0f , 0.0f };
 	}
 
 	animations.at(curState).Update(dt);
+
+	if (curState == State::Explode) return;
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	float _, __, ___, ____;
+
+	if (coEvents.size()) CollisionDetector::FilterCollisionEvents(coEvents, _, __, ___, ____);
+	pos.x += vel.x * dt;
+	pos.y += vel.y * dt;
+
+	for (auto& e : coEvents)
+	{
+		if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
+
+			switch (block->GetType())
+			{
+				case ClassId::RigidBlock:
+				case ClassId::PassableLedge:
+				{
+					SetState(State::Explode);
+				}
+				return;
+			}
+		}
+	}
+
 	SetAnimationByVel();
 	CalculateVelByCapPos(cap->GetPos().x + cap->GetWidth()/2, cap->GetPos().y + cap->GetHeight()/2);
 
-	pos.x += vel.x * dt;
-	pos.y += vel.y * dt;
+
 }
 
 void BulletEnemyFly::SetAnimationByVel()
@@ -46,60 +70,60 @@ void BulletEnemyFly::SetAnimationByVel()
 		nx = 1;
 		if (std::abs(x) > std::abs(y) / 2 && std::abs(x) < std::abs(y) * 2)
 		{
-			curState = (State::BulletEnemyFly_CrossDown);
+			SetState (State::BulletEnemyFly_CrossDown);
 		}
 		else if (std::abs(x) > std::abs(y) * 2)
 		{
-			curState = (State::BulletEnemyFly_Hor);
+			SetState (State::BulletEnemyFly_Hor);
 		}
 		else
 		{
-			curState = (State::BulletEnemyFly_Down);
+			SetState (State::BulletEnemyFly_Down);
 		}
 	}
 	else if (x < 0 && y >= 0){
 		nx = -1;
 		if (std::abs(x) > std::abs(y) / 2 && std::abs(x) < std::abs(y) * 2)
 		{
-			curState = (State::BulletEnemyFly_CrossDown);
+			SetState (State::BulletEnemyFly_CrossDown);
 		}
 		else if (std::abs(x) > std::abs(y) * 2)
 		{
-			curState = (State::BulletEnemyFly_Hor);
+			SetState (State::BulletEnemyFly_Hor);
 		}
 		else
 		{
-			curState = (State::BulletEnemyFly_Down);
+			SetState (State::BulletEnemyFly_Down);
 		}
 	}
 	else if (x >= 0 && y < 0) {
 		nx = 1;
 		if (std::abs(x) > std::abs(y) / 2 && std::abs(x) < std::abs(y) * 2)
 		{
-			curState = (State::BulletEnemyFly_CrossUp);
+			SetState (State::BulletEnemyFly_CrossUp);
 		}
 		else if (std::abs(x) > std::abs(y) * 2)
 		{
-			curState = (State::BulletEnemyFly_Hor);
+			SetState (State::BulletEnemyFly_Hor);
 		}
 		else
 		{
-			curState = (State::BulletEnemyFly_Up);
+			SetState (State::BulletEnemyFly_Up);
 		}
 	}
 	else if (x < 0 && y < 0) {
 		nx = -1;
 		if (std::abs(x) > std::abs(y) / 2 && std::abs(x) < std::abs(y) * 2)
 		{
-			curState = (State::BulletEnemyFly_CrossUp);
+			SetState (State::BulletEnemyFly_CrossUp);
 		}
 		else if (std::abs(x) > std::abs(y) * 2)
 		{
-			curState = (State::BulletEnemyFly_Hor);
+			SetState (State::BulletEnemyFly_Hor);
 		}
 		else
 		{
-			curState = (State::BulletEnemyFly_Up);
+			SetState (State::BulletEnemyFly_Up);
 		}
 	}
 }
@@ -129,7 +153,7 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 			vel.x += MIN_CHANGE_VELX_PER_FRAME;
 		}
 		else if (vel.x >= 0 && vel.y >= 0) {
-			curState = State::Explode;
+			SetState( State::Explode );
 			vel = { 0.0f, 0.0f };
 			return;
 		}
@@ -150,7 +174,7 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 			}
 		}
 		else if (vel.x < 0 && vel.y >= 0) {
-			curState = State::Explode;
+			SetState(State::Explode);
 			vel = { 0.0f, 0.0f };
 			return;
 		}
@@ -164,7 +188,7 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 			vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 		}
 		else if (vel.x >= 0 && vel.y < 0) {
-			curState = State::Explode;
+			SetState(State::Explode);
 			vel = { 0.0f, 0.0f };
 			return;
 		}
@@ -193,7 +217,7 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 	else if (dx >= 0 && dy >= 0) {
 		if (vel.x < 0 && vel.y < 0)
 		{
-			curState = State::Explode;
+			SetState(State::Explode);
 			vel = { 0.0f, 0.0f };
 			return;
 		}
@@ -240,7 +264,6 @@ void BulletEnemyFly::UpdateVelYbyVelX(float velx)
 
 void BulletEnemyFly::HitCaptain()
 {
-	Sounds::PlayAt(SoundId::Explosion);
 	this->SetState(State::Explode);
 	vel = { 0.0f,0.0f };
 }

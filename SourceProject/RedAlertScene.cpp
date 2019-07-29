@@ -37,12 +37,12 @@ void RedAlertScene::Update(float dt)
 
 void RedAlertScene::Draw()
 {
-	//map->Render();
+	map->Render();
 	for (auto& obj : grid->GetObjectsInViewPort())
 		obj->Render();
+	miniboss->Render();
 	cap->Render();
 	grid->RenderCells();
-	miniboss->Render();
 }
 
 void RedAlertScene::OnKeyDown(BYTE keyCode)
