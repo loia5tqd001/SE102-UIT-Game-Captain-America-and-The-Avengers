@@ -127,6 +127,10 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 				enemy->TakeDamage(1);
 			}
 		}
+		else if (auto ledge = dynamic_cast<BreakableLedge*>(e.pCoObj))
+		{
+			isOnGround = true;
+		}
 		else if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
 
 			switch (block->GetType())

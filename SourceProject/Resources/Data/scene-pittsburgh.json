@@ -94,6 +94,9 @@
 		
 																	// spawners...
 																	
+		// Ambush triggers: classId[0],    lockregion[1], x[2], y[3], width[4], height[5],
+		[                           10,[256,720,512,960],  401,  768,        1,       192],
+
 		// Capsules: classId[0], itemSpriteId[1], maxY[2], x[3],  y[4], isNoBackground[5]
 		[                   11,               19,      85,   96,    48,                1],
 		[                   11,               14,     917,  144,   144,                1],
@@ -122,7 +125,10 @@
 		[                  12,            6,   32, 632],
 		[                  12,            2,  368, 888],
 		[                  12,            0,  560, 760],
-		[                  12,            2,  368, 872]
+		[                  12,            2,  368, 872],
+		
+		// BreakableLedge: classId[0], x[1], y[2]
+		[                          13,  120, 320]
 
 		]
   },

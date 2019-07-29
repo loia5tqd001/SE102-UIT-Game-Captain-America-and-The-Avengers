@@ -132,6 +132,11 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 			item->BeingCollected();
 			cap.CollideWithPassableObjects(dt, e);
 		}
+		else if (auto ledge = dynamic_cast<BreakableLedge*>(e.pCoObj))
+		{
+			ledge->OnCollideWithCap();
+			cap.SetState(State::Captain_Sitting);
+		}
 		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 		{
 			if (cap.isFlashing) //immortal

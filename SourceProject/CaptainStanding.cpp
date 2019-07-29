@@ -160,7 +160,7 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 		}
 		else if (auto breakableLedge = dynamic_cast<BreakableLedge*>(e.pCoObj))
 		{
-			// Split the ledge into 2 parts
+			isOnGround = true;
 		}
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
 			cap.CollideWithPassableObjects(dt, e);

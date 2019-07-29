@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="53">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="57">
  <tileset firstgid="1" name="map_pittsburgh-light_bank.png" tilewidth="16" tileheight="16" tilecount="110" columns="11">
   <image source="8. TileMapPittsburghLight.png" width="176" height="160"/>
  </tileset>
@@ -143,6 +143,13 @@
   <object id="62" x="960" y="565" width="32" height="32"/>
   <object id="63" x="368" y="165" width="32" height="32"/>
   <object id="65" x="432" y="165" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="10" name="AmbushTrigger(classid=10)">
+  <object id="54" name="[256,720,512,960]" x="256" y="720" width="256" height="240"/>
+  <object id="56" x="401" y="768" width="1" height="192"/>
+ </objectgroup>
+ <objectgroup color="#55aaff" id="9" name="BreakableLedge(classid=13)">
+  <object id="53" x="120" y="320" width="32" height="16"/>
  </objectgroup>
  <objectgroup color="#ff00ff" id="3" name="PassableLedges(classid=3)">
   <object id="68" x="64" y="213" width="32" height="11"/>

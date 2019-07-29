@@ -123,7 +123,7 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 		}
 		else if (dynamic_cast<MovingLedge*>(e.pCoObj) || dynamic_cast<BreakableLedge*>(e.pCoObj))
 		{
-			AssertUnreachable();
+			isStillOnGround = true;
 		}
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
 			cap.CollideWithPassableObjects(dt, e);

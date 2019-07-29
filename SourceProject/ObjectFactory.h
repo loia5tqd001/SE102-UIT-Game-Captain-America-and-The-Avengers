@@ -4,6 +4,7 @@
 #include "AmbushTrigger.h"
 #include "Capsule.h"
 #include "Bunker.h"
+#include "BreakableLedge.h"
 
 struct ObjectFactory
 {
@@ -23,6 +24,14 @@ struct ObjectFactory
 		const auto width = objJson[3].asUInt();
 		const auto height = objJson[4].asUInt();
 		return std::make_unique<Block>(blockType, pos, width, height);
+	}
+
+	template<>
+	static std::unique_ptr<BreakableLedge> Create(const Json::Value& objJson, Grid* grid)
+	{
+		assert(objJson[0].asInt() == (int)ClassId::BreakableLedge);
+		const auto pos = Vector2{ objJson[1].asFloat(), objJson[2].asFloat() };
+		return std::make_unique<BreakableLedge>(pos);
 	}
 
 	template<>

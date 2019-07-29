@@ -2,6 +2,7 @@
 #include "EnemyRocket.h"
 #include "Captain.h"
 #include "BulletEnemyRocket.h"
+#include "CharlestonScene.h"
 
 EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
 	Enemy(behavior, Data{}, State::EnemyRocket_BeforeExplode, 1, spawnPos, grid),
@@ -215,7 +216,7 @@ void EnemyRocket::OnBehaviorAmbush()
 		   curState == State::EnemyRocket_Sitting ||
 		   curState == State::Destroyed);
 	vel.x = 30.0f * nx;
-	if (cap->IsShieldOn() == false) {
+	if (cap->IsShieldOn() == false && dynamic_cast<CharlestonScene*>(&SceneManager::Instance().GetCurScene())) {
 		DogdeShield = true;
 	}
 	if (DogdeShield) {

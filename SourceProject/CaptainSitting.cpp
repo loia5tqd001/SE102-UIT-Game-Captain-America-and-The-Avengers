@@ -146,8 +146,13 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 		{
 			AssertUnreachable();
 		}
-		else if (dynamic_cast<MovingLedge*>(e.pCoObj) || dynamic_cast<BreakableLedge*>(e.pCoObj))
+		else if (dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
+
+		}
+		else if (dynamic_cast<BreakableLedge*>(e.pCoObj))
+		{
+			return;
 		}
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
 			cap.CollideWithPassableObjects(dt, e);

@@ -41,11 +41,22 @@ void Bunker::SpawnBullet()
 
 void Bunker::TakeDamage(int damage)
 {
+	if (AmbushTrigger::Instance()->GetState() == State::Ambush_Being) return;
 	SetState(State::Bunker_Spin);
 }
 
 void Bunker::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	// Bunkers should be respawned if ambush is done. But who cares.
+	//if (AmbushTrigger::Instance()->GetState() != State::Ambush_Being)
+	//{
+	//	if (curState == State::Destroyed)
+	//	{
+	//		if (std::abs(pos.x - Camera::Instance().GetPos().x) > 100.0f)
+	//			SetState(State((int)State::Bunker_Idle_0 + lastIdleState));
+	//	}
+	//}
+
 	animations.at(curState).Update(dt);
 	if (curState == State::Explode) // call by ambush trigger
 	{
@@ -71,4 +82,10 @@ void Bunker::Update(float dt, const std::vector<GameObject*>& coObjects)
 			SpawnBullet();
 		}
 	}
+}
+
+RectF Bunker::GetBBox() const
+{
+	if (curState == State::Destroyed || curState == State::Explode) return {};
+	else return Enemy::GetBBox();
 }

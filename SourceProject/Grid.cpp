@@ -63,6 +63,10 @@ void Grid::LoadObjects(const Json::Value& grid)
 				object = ObjectFactory::Create<Bunker>(jsonObj, this);
 				break;
 
+			case ClassId::BreakableLedge:
+				object = ObjectFactory::Create<BreakableLedge>(jsonObj, this);
+				break;
+
 			default:
 				ThrowMyException("Can't find class id:", classId);
 		}

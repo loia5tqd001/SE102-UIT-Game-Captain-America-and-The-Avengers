@@ -4,6 +4,7 @@ struct CheckPoint
 {
 	Scene scene;
 	Vector2 captainPos = {};
+	bool canGoNextMap = false;
 };
 
 class SceneManager

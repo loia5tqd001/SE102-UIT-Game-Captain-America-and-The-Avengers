@@ -21,6 +21,7 @@ public:
 	void ClampWithin(const RectF& theBox);
 	void SetState(State state);
 	const RectF GetBBox() const;
+	inline const auto& GetPos() const { return pos; }
 
 	Vector2 GetPositionInViewPort(const Vector2& objPos) const;
 

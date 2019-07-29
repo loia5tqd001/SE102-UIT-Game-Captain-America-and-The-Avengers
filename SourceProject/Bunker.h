@@ -12,5 +12,6 @@ public:
 	Bunker(State initState, Vector2 spawnPos, Grid* grid);
 	void TakeDamage(int damage) override; // call when captain hit bunker
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {}) override;
+	RectF GetBBox() const override;
 };
 

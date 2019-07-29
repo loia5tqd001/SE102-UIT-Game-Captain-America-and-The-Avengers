@@ -26,6 +26,11 @@ void SceneManager::GoToCheckPoint(CheckPoint checkpoint)
 	SetScene(checkpoint.scene);
 	if (checkpoint.captainPos != Vector2{}) 
 		curScene->SetCapPos(checkpoint.captainPos);
+	if (checkpoint.canGoNextMap)
+	{
+		curScene->canGoNextMap = true;
+		ExitSign::Instance().KrystalCollected( {} );
+	}
 }
 
 void SceneManager::LoadResources()
@@ -39,12 +44,12 @@ void SceneManager::LoadResources()
 	DebugDraw    ::InitDefaultFont();
 
 	checkpoints[0] = CheckPoint{ Scene::Charleston };
-	checkpoints[1] = CheckPoint{ Scene::Charleston, Vector2{ 1700.0f, 391.0f } };
+	checkpoints[1] = CheckPoint{ Scene::Charleston, Vector2{ 1700.0f, 391.0f }, true };
 	checkpoints[2] = CheckPoint{ Scene::BossCharleston };
 	checkpoints[3] = CheckPoint{ Scene::Pittsburgh };
 	checkpoints[4] = CheckPoint{ Scene::Pittsburgh, Vector2{ 816.0f, 628.0f } };
 	checkpoints[5] = CheckPoint{ Scene::Pittsburgh, Vector2{ 560.0f, 148.0f } };
-	checkpoints[6] = CheckPoint{ Scene::Pittsburgh, Vector2{ 720.0f, 852.0f } };
+	checkpoints[6] = CheckPoint{ Scene::Pittsburgh, Vector2{ 720.0f, 852.0f }, true };
 	checkpoints[7] = CheckPoint{ Scene::RedAlert };
 }
 
