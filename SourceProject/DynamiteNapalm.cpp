@@ -1,7 +1,5 @@
 #include "pch.h"
-#include "EnemyWizard.h"
-#include "BulletFireEnemyWizard.h"
-#include "BulletEnemyWizard.h"
+#include"BulletFireDynamiteNapalm.h"
 
 DynamiteNapalm::DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap) :
 	Enemy(behavior, behaviorData, State::DynamiteNapalm_FallFromTheSky, 2, spawnPos, grid),
@@ -71,7 +69,7 @@ void DynamiteNapalm::Update(float dt, const std::vector<GameObject*>& coObjects)
 			SetState(State::DynamiteNapalm_Standing);
 			curBehavior = Behaviors::DynamiteNapalm_Throw;
 		}
-		else if (curBehavior==Behaviors::DynamiteNapalm_AttackBeforeDead)
+		else if (curBehavior == Behaviors::DynamiteNapalm_AttackBeforeDead)
 		{
 			SetState(State::DynamiteNapalm_BeforeExplode);
 		}
@@ -351,10 +349,17 @@ void DynamiteNapalm::HandleCollisions(float dt, const std::vector<GameObject*>& 
 
 void DynamiteNapalm::SpawnDynamite()
 {
+
 }
 
 void DynamiteNapalm::SpawnFireBullet()
 {
+	if (isFlashing) return;
+	if (curState == State::DynamiteNapalm_Intact_Shooting)
+	{
+		const auto bulletPos = pos + Vector2{ 30, 5 };
+		grid->SpawnObject(std::make_unique<BulletFireDynamiteNapalm>(this->nx, this, bulletPos));
+	}
 }
 
 bool DynamiteNapalm::CanTakeDamage()

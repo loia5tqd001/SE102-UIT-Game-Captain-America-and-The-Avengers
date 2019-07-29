@@ -300,6 +300,9 @@
     <ClCompile Include="BulletBunker.cpp">
       <Filter>Development\Objects\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="BulletFireDynamiteNapalm.cpp">
+      <Filter>Development\Objects\Bullets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -564,6 +567,9 @@
       <Filter>Development\Objects\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="BulletBunker.h">
+      <Filter>Development\Objects\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFireDynamiteNapalm.h">
       <Filter>Development\Objects\Bullets</Filter>
     </ClInclude>
   </ItemGroup>

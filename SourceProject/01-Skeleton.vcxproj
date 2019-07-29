@@ -191,6 +191,7 @@
     <ClCompile Include="BulletEnemyGun.cpp" />
     <ClCompile Include="BulletEnemyRocket.cpp" />
     <ClCompile Include="BulletEnemyWizard.cpp" />
+    <ClCompile Include="BulletFireDynamiteNapalm.cpp" />
     <ClCompile Include="BulletFireEnemyWizard.cpp" />
     <ClCompile Include="Bunker.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -274,6 +275,7 @@
     <ClInclude Include="BulletEnemyGun.h" />
     <ClInclude Include="BulletEnemyRocket.h" />
     <ClInclude Include="BulletEnemyWizard.h" />
+    <ClInclude Include="BulletFireDynamiteNapalm.h" />
     <ClInclude Include="BulletFireEnemyWizard.h" />
     <ClInclude Include="Bunker.h" />
     <ClInclude Include="Camera.h" />

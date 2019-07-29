@@ -237,6 +237,7 @@ void BulletEnemyFly::UpdateVelYbyVelX(float velx)
 		vel.y =  sqrt(BULLET_MOVING*BULLET_MOVING - velx * velx);		
 	}
 }
+
 void BulletEnemyFly::HitCaptain()
 {
 	Sounds::PlayAt(SoundId::Explosion);
