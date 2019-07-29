@@ -308,7 +308,8 @@ enum class Behaviors // for enemy, moving ledges
 	DynamiteNapalm_Fall,
 	DynamiteNapalm_Throw,
 	DynamiteNapalm_Shoot,
-	DynamiteNapalm_Run
+	DynamiteNapalm_Run,
+	DynamiteNapalm_AttackBeforeDead
 };
 
 enum class Scene

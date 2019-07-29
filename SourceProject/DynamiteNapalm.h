@@ -4,10 +4,12 @@
 class DynamiteNapalm : public Enemy
 {
 private:
-	static constexpr float FALLING_SPEED = 100.0f;
+	static constexpr float FALLING_SPEED = 250.0f;
 	static constexpr float RUNNING_SPEED = 80.0f;
 	static constexpr float RUNNING_BEFORE_DEAD_SPEED = 1.5f*RUNNING_SPEED;
 	static constexpr int NUM_FIRE_BULLET = 2;
+	static constexpr int DEFAULT_HEALTH = 15;
+	static constexpr int maxHealthHeadless = 5;
 
 	bool dynamiteThrown = false;
 	Captain& cap;
@@ -25,6 +27,6 @@ public:
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 	void SpawnDynamite();
 	void SpawnFireBullet();
-
+	bool CanTakeDamage();
 };
 

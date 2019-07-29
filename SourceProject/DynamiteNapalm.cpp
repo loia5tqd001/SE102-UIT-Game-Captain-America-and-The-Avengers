@@ -8,15 +8,16 @@ DynamiteNapalm::DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 
 	cap(cap)
 {
 	animations.emplace(State::DynamiteNapalm_FallFromTheSky, Animation(SpriteId::DynamiteNapalm_FallFromTheSky));
-	animations.emplace(State::DynamiteNapalm_Standing, Animation(SpriteId::DynamiteNapalm_Standing, 0.5f));
+	animations.emplace(State::DynamiteNapalm_Standing, Animation(SpriteId::DynamiteNapalm_Standing, 1.0f));
 	animations.emplace(State::DynamiteNapalm_Intact_Running, Animation(SpriteId::DynamiteNapalm_Intact_Running, 0.2f));
 	animations.emplace(State::DynamiteNapalm_ThrowDynamite, Animation(SpriteId::DynamiteNapalm_ThrowDynamite, 0.5f));
 	animations.emplace(State::DynamiteNapalm_Intact_Shooting, Animation(SpriteId::DynamiteNapalm_Intact_Shooting, 0.2f));
 	animations.emplace(State::DynamiteNapalm_Intact_Injure, Animation(SpriteId::DynamiteNapalm_Intact_Injure, 0.1f));
-	animations.emplace(State::DynamiteNapalm_Headless_Standing, Animation(SpriteId::DynamiteNapalm_Headless_Standing));
-	animations.emplace(State::DynamiteNapalm_Headless_Running_Shooting, Animation(SpriteId::DynamiteNapalm_Headless_Running_Shooting));
-	animations.emplace(State::DynamiteNapalm_BeforeExplode, Animation(SpriteId::DynamiteNapalm_Headless_Standing));
+	animations.emplace(State::DynamiteNapalm_Headless_Standing, Animation(SpriteId::DynamiteNapalm_Headless_Standing, 1.0f));
+	animations.emplace(State::DynamiteNapalm_Headless_Running_Shooting, Animation(SpriteId::DynamiteNapalm_Headless_Running_Shooting, 0.1f));
+	animations.emplace(State::DynamiteNapalm_BeforeExplode, Animation(SpriteId::DynamiteNapalm_Headless_Standing, 1.0f));
 
+	health = DEFAULT_HEALTH;
 	this->nx = nx;
 	this->vel.x = 0;
 	this->vel.y = FALLING_SPEED;
@@ -25,6 +26,9 @@ DynamiteNapalm::DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 
 
 void DynamiteNapalm::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	if (curState == State::DynamiteNapalm_BeforeExplode)
+		nx = -nx;
+
 	static Behaviors curBehavior = Behaviors::DynamiteNapalm_Fall;
 
 	if (OnBehavior(curBehavior, dt))
@@ -39,6 +43,11 @@ void DynamiteNapalm::Update(float dt, const std::vector<GameObject*>& coObjects)
 			SetState(State::DynamiteNapalm_Standing);
 			curBehavior = Behaviors::DynamiteNapalm_Shoot;
 			numFireBulletFired = 0;
+			if (health <= maxHealthHeadless)
+			{
+				SetState(State::DynamiteNapalm_Headless_Standing);
+				curBehavior = Behaviors::DynamiteNapalm_AttackBeforeDead;
+			}
 		}
 		else if (curBehavior == Behaviors::DynamiteNapalm_Shoot)
 		{
@@ -51,18 +60,21 @@ void DynamiteNapalm::Update(float dt, const std::vector<GameObject*>& coObjects)
 				SetState(State::DynamiteNapalm_Standing);
 				curBehavior = Behaviors::DynamiteNapalm_Run;
 			}
+			if (health <= maxHealthHeadless)
+			{
+				SetState(State::DynamiteNapalm_Headless_Standing);
+				curBehavior = Behaviors::DynamiteNapalm_AttackBeforeDead;
+			}
 		}
 		else if (curBehavior == Behaviors::DynamiteNapalm_Run)
 		{
 			SetState(State::DynamiteNapalm_Standing);
 			curBehavior = Behaviors::DynamiteNapalm_Throw;
 		}
-
-		//else if (curBehavior == Behaviors::DynamiteNapalm_Throw)
-		//{
-		//	SetState(State::DynamiteNapalm_Intact_Shooting);
-		//	curBehavior = Behaviors::DynamiteNapalm_Shoot;
-		//}
+		else if (curBehavior==Behaviors::DynamiteNapalm_AttackBeforeDead)
+		{
+			SetState(State::DynamiteNapalm_BeforeExplode);
+		}
 	}
 
 	UpdateAnimation(dt);
@@ -96,7 +108,11 @@ void DynamiteNapalm::SetState(State state)
 		vel.y = 0.0f;
 		break;
 	case State::DynamiteNapalm_Headless_Running_Shooting:
-		vel.x = RUNNING_BEFORE_DEAD_SPEED;
+		if (cap.GetPos().x < this->pos.x)
+			this->nx = -1;
+		else
+			this->nx = 1;
+		vel.x = RUNNING_BEFORE_DEAD_SPEED * nx;
 		break;
 	case State::NotExist:
 	case State::Invisible:
@@ -165,6 +181,8 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 	case Behaviors::DynamiteNapalm_Fall:
 		return onTheGround;
 		break;
+
+
 	case Behaviors::DynamiteNapalm_Throw:
 		if (curState == State::DynamiteNapalm_Standing)
 		{
@@ -185,6 +203,12 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 		}
 		else if (curState == State::DynamiteNapalm_ThrowDynamite)
 		{
+			if (health <= maxHealthHeadless)
+			{
+				SetState(State::DynamiteNapalm_Headless_Standing);
+				return true;
+			}
+
 			if (!animations.at(curState).IsDoneCycle())
 				return false;
 			else
@@ -195,9 +219,17 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 			}
 		}
 		break;
+
+
 	case Behaviors::DynamiteNapalm_Shoot:
 		if (curState == State::DynamiteNapalm_Standing)
 		{
+			if (health <= maxHealthHeadless)
+			{
+				SetState(State::DynamiteNapalm_Headless_Standing);
+				return true;
+			}
+
 			if (!animations.at(curState).IsDoneCycle())
 				return false;
 			else
@@ -219,6 +251,7 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 			}
 		}
 		break;
+
 
 	case Behaviors::DynamiteNapalm_Run:
 		if (curState == State::DynamiteNapalm_Standing)
@@ -253,11 +286,29 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 			}
 		}
 		break;
+
+
+	case Behaviors::DynamiteNapalm_AttackBeforeDead:
+		if (curState == State::DynamiteNapalm_Headless_Standing)
+		{
+			if (animations.at(curState).IsDoneCycle())
+				SetState(State::DynamiteNapalm_Headless_Running_Shooting);
+			return false;
+		}
+		else if (curState == State::DynamiteNapalm_Headless_Running_Shooting)
+		{
+			if (health <= 0)
+			{
+				return true;
+			}
+			else
+				return false;
+		}
 	default:
 		break;
 	}
+	//AssertUnreachable();
 	return unhandle;
-	AssertUnreachable();
 }
 
 void DynamiteNapalm::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
@@ -304,4 +355,16 @@ void DynamiteNapalm::SpawnDynamite()
 
 void DynamiteNapalm::SpawnFireBullet()
 {
+}
+
+bool DynamiteNapalm::CanTakeDamage()
+{
+	switch (curState)
+	{
+	case State::DynamiteNapalm_Headless_Running_Shooting:
+	case State::DynamiteNapalm_Headless_Standing:
+		return true;
+	default:
+		return false;
+	}
 }
