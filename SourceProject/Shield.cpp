@@ -2,10 +2,11 @@
 #include "Shield.h"
 //#include "Enemy.h"
 #include "BulletEnemyGun.h"
+#include"BulletDynamite.h"
 //#include "EnemyGun.h"
 //#include "EnemyRocket.h"
 
-Shield::Shield(Captain& cap) : 
+Shield::Shield(Captain& cap) :
 	VisibleObject(State::Shield_Straight, cap.GetPos()),
 	cap(cap)
 {
@@ -116,7 +117,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				Vector2 shieldCenter = this->GetBBox().GetCenter();
 				Vector2 capCenter = cap.GetBBox().GetCenter();
 				Vector2 trans = capCenter - shieldCenter;
-				float ratio = (SPEED * dt) / std::abs(capCenter.x-shieldCenter.x);
+				float ratio = (SPEED * dt) / std::abs(capCenter.x - shieldCenter.x);
 				trans.x *= ratio;
 				trans.y *= ratio;
 
@@ -205,7 +206,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		else if (capState == State::Captain_Throwing)
 		{
 			pos.x = capPos.x - 12;
-			pos.y = capPos.y ;
+			pos.y = capPos.y;
 			SetState(State::Shield_Up);
 		}
 		else if (capState == State::Captain_Tackle)
@@ -225,7 +226,7 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		{
 			SetState(State::Invisible);
 		}
-		else if (capState==State::Captain_CoverTop)
+		else if (capState == State::Captain_CoverTop)
 		{
 			pos.x = capPos.x + 3;
 			pos.y = capPos.y - 4;
@@ -277,7 +278,7 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 		if (nx < 0 && pos.x < cap.GetPos().x + cap.GetWidth() / 4)
 		{
 			cap.setShieldOn(true);
-			
+
 			UpdateByCapState(cap.GetState(), cap.GetPos());
 			isOnCaptain = true;
 			distance = 0;
@@ -292,12 +293,12 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 			cap.setShieldOn(true);
 
 
-		UpdateByCapState(cap.GetState(), cap.GetPos());
-		isOnCaptain = true;
-		distance = 0;
-		timeToThrow = 0;
-		isMoved = false;
-	}
+			UpdateByCapState(cap.GetState(), cap.GetPos());
+			isOnCaptain = true;
+			distance = 0;
+			timeToThrow = 0;
+			isMoved = false;
+		}
 	}
 }
 
@@ -366,6 +367,10 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 					SceneManager::Instance().GetCurScene().ToggleLight();
 				}
 			}
+			else if (auto dynamite = dynamic_cast<BulletDynamite*>(e.pCoObj))
+			{
+				dynamite->Trigger();
+			}
 			// TODO: barrel oil RedAlert
 		}
 	}
@@ -376,14 +381,14 @@ void Shield::HandleStraightCollison(float dt, const std::vector<GameObject*>& co
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
 	if (coEvents.size() == 0) return;
 	if (isOnCaptain)
-	{  
+	{
 		for (UINT i = 0; i < coEvents.size(); i++)
 		{
 			const CollisionEvent& e = coEvents[i];
 
 			if (auto bullet = dynamic_cast<BulletEnemyGun*>(e.pCoObj)) //
 			{
-				if (nx >0 && e.nx < 0.0f || nx <0 && e.nx > 0.0f)
+				if (nx > 0 && e.nx < 0.0f || nx <0 && e.nx > 0.0f)
 				{
 					bullet->Reflect();
 					Sounds::PlayAt(SoundId::ShieldCollide);
@@ -426,9 +431,9 @@ RectF Shield::GetBBox() const
 {
 	//if (curState != State::Shield_Up) return VisibleObject::GetBBox();
 	if (nx < 0)
-	return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 0.05f, 0, 0, 0);
+		return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 0.05f, 0, 0, 0);
 	else
-	return VisibleObject::GetBBox().Trim(0, 0, (float)GetWidth() / 2 - 0.05f, 0);
+		return VisibleObject::GetBBox().Trim(0, 0, (float)GetWidth() / 2 - 0.05f, 0);
 
 	//return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 0.05f, 0, (float)GetWidth() / 2 - 0.05f, 0);
 }

@@ -187,6 +187,7 @@
     <ClCompile Include="BossCharlestonScene.cpp" />
     <ClCompile Include="BreakableLedge.cpp" />
     <ClCompile Include="BulletBunker.cpp" />
+    <ClCompile Include="BulletDynamite.cpp" />
     <ClCompile Include="BulletEnemyFly.cpp" />
     <ClCompile Include="BulletEnemyGun.cpp" />
     <ClCompile Include="BulletEnemyRocket.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="BreakableLedge.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletBunker.h" />
+    <ClInclude Include="BulletDynamite.h" />
     <ClInclude Include="BulletEnemyFly.h" />
     <ClInclude Include="BulletEnemyGun.h" />
     <ClInclude Include="BulletEnemyRocket.h" />

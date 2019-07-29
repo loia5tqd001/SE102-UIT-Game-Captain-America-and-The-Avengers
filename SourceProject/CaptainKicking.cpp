@@ -1,19 +1,19 @@
 #include "pch.h"
 #include "CaptainKicking.h"
-
+#include"BulletDynamite.h"
 
 
 void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 {
 	firstTimeUpdate = true;
 	SetAnotherState = false;
-	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Spinning 
+	assert(fromState == State::Captain_Jumping || fromState == State::Captain_Spinning
 		|| fromState == State::Captain_Falling || fromState == State::Captain_CoverLow);
 	lastState = fromState;
 	if (fromState == State::Captain_Jumping)
 	{
 		isJumpReleased = data.Get<bool>(IS_JUMP_RELEASED);
-	    JumpHeightRealCounter = data.Get<float>(JUMP_HEIGHT_RealCounter);
+		JumpHeightRealCounter = data.Get<float>(JUMP_HEIGHT_RealCounter);
 		JumpHeightNeedCounter = data.Get<float>(JUMP_HEIGHT_NeedCounter);
 	}
 	if (fromState == State::Captain_Spinning)
@@ -168,10 +168,10 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
-	{ 
+	{
 		cap.pos.x += cap.vel.x*dt;
 		cap.pos.y += cap.vel.y*dt;
-		return; 
+		return;
 	}
 
 	float min_tx, min_ty, nx, ny;
@@ -210,6 +210,10 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 				SetAnotherState = true;
 				enemy->TakeDamage(1);
 			}
+		}
+		else if (auto dynamite = dynamic_cast<BulletDynamite*>(e.pCoObj))
+		{
+			dynamite->Trigger();
 		}
 		else if (auto block = dynamic_cast<Block*>(e.pCoObj))
 		{

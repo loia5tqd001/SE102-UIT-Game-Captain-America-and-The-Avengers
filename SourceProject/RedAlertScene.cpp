@@ -28,7 +28,7 @@ void RedAlertScene::Update(float dt)
 	map->UpdateAnimatedTiles(dt);
 	grid->UpdateCells();
 	for (auto& obj : grid->GetObjectsInViewPort())
-		obj->Update(dt);
+		obj->Update(dt,grid->GetObjectsInViewPort());
 	miniboss->Update(dt, grid->GetObjectsInViewPort());
 	cap->Update(dt, grid->GetObjectsInViewPort());
 	cap->ClampWithin(map->GetWorldBoundary().Trim(16.0f, 0.0f, 16.0f, 44.0f));

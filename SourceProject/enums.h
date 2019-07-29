@@ -125,7 +125,8 @@ enum class SpriteId
 	DynamiteNapalm_Intact_Injure = 205,
 	DynamiteNapalm_Headless_Standing = 206,
 	DynamiteNapalm_Headless_Running_Shooting = 207,
-	DynamiteNapalm_FireBullet = 210
+	DynamiteNapalm_FireBullet = 210,
+	DynamiteNapalm_Dynamite = 211
 };
 
 enum class SoundId
@@ -292,6 +293,7 @@ enum class State
 	DynamiteNapalm_Headless_Running_Shooting,
 	DynamiteNapalm_BeforeExplode,
 	DynamiteNapalm_FireBullet,
+	DynamiteNapalm_Dynamite,
 	NotExist //Use to initialize
 };
 

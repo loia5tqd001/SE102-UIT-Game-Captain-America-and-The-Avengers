@@ -1,5 +1,6 @@
 #include "pch.h"
 #include"BulletFireDynamiteNapalm.h"
+#include"BulletDynamite.h"
 
 DynamiteNapalm::DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap) :
 	Enemy(behavior, behaviorData, State::DynamiteNapalm_FallFromTheSky, 2, spawnPos, grid),
@@ -8,7 +9,7 @@ DynamiteNapalm::DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 
 	animations.emplace(State::DynamiteNapalm_FallFromTheSky, Animation(SpriteId::DynamiteNapalm_FallFromTheSky));
 	animations.emplace(State::DynamiteNapalm_Standing, Animation(SpriteId::DynamiteNapalm_Standing, 1.0f));
 	animations.emplace(State::DynamiteNapalm_Intact_Running, Animation(SpriteId::DynamiteNapalm_Intact_Running, 0.2f));
-	animations.emplace(State::DynamiteNapalm_ThrowDynamite, Animation(SpriteId::DynamiteNapalm_ThrowDynamite, 0.5f));
+	animations.emplace(State::DynamiteNapalm_ThrowDynamite, Animation(SpriteId::DynamiteNapalm_ThrowDynamite, 1.0f));
 	animations.emplace(State::DynamiteNapalm_Intact_Shooting, Animation(SpriteId::DynamiteNapalm_Intact_Shooting, 0.2f));
 	animations.emplace(State::DynamiteNapalm_Intact_Injure, Animation(SpriteId::DynamiteNapalm_Intact_Injure, 0.1f));
 	animations.emplace(State::DynamiteNapalm_Headless_Standing, Animation(SpriteId::DynamiteNapalm_Headless_Standing, 1.0f));
@@ -207,12 +208,20 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 				return true;
 			}
 
-			if (!animations.at(curState).IsDoneCycle())
-				return false;
-			else
+			if (!dynamiteThrown)
 			{
 				SpawnDynamite();
+				dynamiteThrown = true;
+			}
+
+			if (!animations.at(curState).IsDoneCycle())
+			{
+				return false;
+			}
+			else
+			{
 				SetState(State::DynamiteNapalm_Standing);
+				dynamiteThrown = false;
 				return true;
 			}
 		}
@@ -295,6 +304,15 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 		}
 		else if (curState == State::DynamiteNapalm_Headless_Running_Shooting)
 		{
+			if (holdTime < TIME_TO_HEADLESS_SHOOT)
+			{
+				holdTime += dt;
+			}
+			else
+			{
+				SpawnFireBullet();
+				holdTime -= TIME_TO_HEADLESS_SHOOT;
+			}
 			if (health <= 0)
 			{
 				return true;
@@ -349,7 +367,17 @@ void DynamiteNapalm::HandleCollisions(float dt, const std::vector<GameObject*>& 
 
 void DynamiteNapalm::SpawnDynamite()
 {
-
+	if (isFlashing) return;
+	if (curState == State::DynamiteNapalm_ThrowDynamite)
+	{
+		const auto bulletPos = pos + Vector2{ 2, -14 };
+		if (std::abs(pos.x - cap.GetPos().x) < FAR_DISTANCE)
+		{
+			grid->SpawnObject(std::make_unique<BulletDynamite>(this->nx, this, bulletPos, Vector2{ 0,0 }, false));
+			return;
+		}
+		grid->SpawnObject(std::make_unique<BulletDynamite>(this->nx, this, bulletPos, Vector2{ 0,0 }, true));
+	}
 }
 
 void DynamiteNapalm::SpawnFireBullet()
@@ -357,8 +385,31 @@ void DynamiteNapalm::SpawnFireBullet()
 	if (isFlashing) return;
 	if (curState == State::DynamiteNapalm_Intact_Shooting)
 	{
-		const auto bulletPos = pos + Vector2{ 30, 5 };
-		grid->SpawnObject(std::make_unique<BulletFireDynamiteNapalm>(this->nx, this, bulletPos));
+		if (nx == 1)
+		{
+			const auto bulletPos = pos + Vector2{ 30, 5 };
+			grid->SpawnObject(std::make_unique<BulletFireDynamiteNapalm>(this->nx, this, bulletPos));
+		}
+		else
+		{
+			const auto bulletPos = pos + Vector2{ 0, 5 };
+			grid->SpawnObject(std::make_unique<BulletFireDynamiteNapalm>(this->nx, this, bulletPos));
+		}
+	}
+	else if (curState == State::DynamiteNapalm_Headless_Running_Shooting)
+	{
+		if (nx == 1)
+		{
+			int width = animations.at(curState).GetFrameSize().GetWidth();
+			const auto bulletPos = pos + Vector2{ width, 5 };
+			grid->SpawnObject(std::make_unique<BulletFireDynamiteNapalm>(this->nx, this, bulletPos));
+		}
+		else
+		{
+			int width = animations.at(curState).GetFrameSize().GetWidth();
+			const auto bulletPos = pos + Vector2{ width, 5 };
+			grid->SpawnObject(std::make_unique<BulletFireDynamiteNapalm>(this->nx, this, bulletPos));
+		}
 	}
 }
 
