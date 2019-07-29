@@ -16,6 +16,7 @@ void CaptainInjured::Enter(Captain& cap, State fromState, Data&& data)
 	cap.vel.x = INJURE_FALL_SPEED * cap.nx*-1.0f;
 	cap.vel.y = FALL_SPEED_VER;
 	posxWhenGotInjure = cap.pos.x;
+	holdingDistance = 0.0f;
 }
 
 Data CaptainInjured::Exit(Captain& cap, State toState)
@@ -43,11 +44,11 @@ void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject
 	HandleCollisions(cap, dt, coObjects);
 	//NOTE:HACK
 	//the correct time is 10/40 = 0.25s right, if captain got injured more than this time means BUG, so i set this at 0.27
-	if (maxTimeHold > 0.27f)
-	{
-		cap.SetState(State::Captain_Falling);
-	}
-	else { maxTimeHold += GameTimer::Dt(); }
+	//if (maxTimeHold > 0.27f)
+	//{
+	//	cap.SetState(State::Captain_Falling);
+	//}
+	//else { maxTimeHold += GameTimer::Dt(); }
 }
 
 void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -73,7 +74,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		{
 			if (auto block = dynamic_cast<Block*>(e.pCoObj))
 			{
-				if (block->GetType() == ClassId::PassableLedge)
+				if (block->GetType() == ClassId::PassableLedge||block->GetType()==ClassId::RigidBlock)
 				{
 					cap.SetState(State::Captain_Dead);
 					pendingSwitchState = State::NotExist;
@@ -81,29 +82,37 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 				}
 			}
 		}
-
 		HandleNoCollisions(cap, dt);
 		return;
 	}
 
 
 	//Fall down Distance of Cap
+	//if (cap.nx > 0)
+	//{
+	//	if (posxWhenGotInjure - cap.pos.x >= INJURE_DISTANCE)
+	//	{
+	//		cap.SetState(State::Captain_Standing);
+	//		return;
+	//	}
+	//}
+	//else if (cap.nx < 0)
+	//{
+	//	if (cap.pos.x - posxWhenGotInjure >= INJURE_DISTANCE)
+	//	{
+	//		cap.SetState(State::Captain_Standing);
+	//		return;
+	//	}
+	//}
 
-	if (cap.nx > 0)
+	if (holdingDistance<=INJURE_DISTANCE)
 	{
-		if (posxWhenGotInjure - cap.pos.x >= INJURE_DISTANCE)
-		{
-			cap.SetState(State::Captain_Standing);
-			return;
-		}
+		holdingDistance += std::abs(cap.vel.x*dt);
 	}
-	else if (cap.nx < 0)
+	else
 	{
-		if (cap.pos.x - posxWhenGotInjure >= INJURE_DISTANCE)
-		{
-			cap.SetState(State::Captain_Standing);
-			return;
-		}
+		cap.SetState(State::Captain_Standing);
+		return;
 	}
 
 	cap.pos.x += min_tx * cap.vel.x * dt;

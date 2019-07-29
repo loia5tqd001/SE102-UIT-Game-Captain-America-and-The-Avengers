@@ -86,7 +86,7 @@ void CaptainClimbing::OnKeyDown(Captain& cap, BYTE keyCode)
 	if (keyCode==setting.Get(KeyControls::Down))
 	{
 		cap.SetState(State::Captain_Falling);
-		cap.pos.y += 16;
+		cap.pos.y += 1;
 	}
 }
 

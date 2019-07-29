@@ -6,6 +6,8 @@
 void CaptainDead::Enter(Captain& cap, State fromState, Data&& data)
 {
 	Sounds::PlayAt(SoundId::Death);
+	cap.vel.x = 0.0f;
+	cap.vel.y = 50.0f;
 }
 
 Data CaptainDead::Exit(Captain& cap, State toState)
@@ -40,28 +42,7 @@ void CaptainDead::HandleCollisions(Captain& cap, float dt, const std::vector<Gam
 	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 
 	if (coEvents.size() == 0) return;
-
 	cap.pos.x += min_tx * cap.vel.x * dt;
 	cap.pos.y += min_ty * cap.vel.y * dt;
-
-	for (auto&e : coEvents)
-	{
-		if (auto block = dynamic_cast<Block*>(e.pCoObj))
-		{
-			switch (block->GetType())
-			{
-
-				case ClassId::DamageBlock:
-					cap.CollideWithPassableObjects(dt, e);
-					break;
-
-				case ClassId::PassableLedge:
-					break;
-
-				default:
-					AssertUnreachable(); //BUG, DO WE NEED THIS
-			}
-		}
-	}
 }
 
