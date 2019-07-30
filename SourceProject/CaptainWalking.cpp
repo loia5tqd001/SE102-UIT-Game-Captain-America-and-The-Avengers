@@ -131,6 +131,10 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 		{
 			isOnGround = true;
 		}
+		else if (auto ledge = dynamic_cast<MovingLedge*>(e.pCoObj))
+		{
+			if (e.ny != 0) isOnGround = true;
+		}
 		else if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
 
 			switch (block->GetType())
@@ -176,6 +180,10 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 				cap.health.Subtract(bullet->GetDamage());
 				cap.SetState(State::Captain_Injured);
 			}
+		}
+		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
 		}
 	}
 }

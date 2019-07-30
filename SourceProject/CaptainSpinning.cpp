@@ -204,6 +204,15 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
 			cap.CollideWithPassableObjects(dt, e);
 		}
+		else if (dynamic_cast<MovingLedge*>(e.pCoObj)) 
+		{
+			if (e.ny > 0)
+				cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
 	}
 }
 

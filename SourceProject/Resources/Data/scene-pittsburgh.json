@@ -133,7 +133,10 @@
 		[                  12,            2,  368, 872],
 		
 		// BreakableLedge: classId[0], x[1], y[2]
-		[                          13,  120, 320]
+		[                          13,  120, 320],
+		
+		// MovingLedgeUpdater: classId[0], x[1], y[2], width[3], width[4]
+		[                              14,  512, 240,       272,     549]
 
 		]
   },

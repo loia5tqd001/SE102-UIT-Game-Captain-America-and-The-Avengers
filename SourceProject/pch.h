@@ -75,7 +75,7 @@
 #include "Spawner.h"
 #include "AmbushTrigger.h"
 #include "BreakableLedge.h"
-#include "MovingLedge.h"
+#include "MovingLedgeUpdater.h"
 
 #include "Enemy.h"
 #include "Bullet.h"
@@ -102,6 +102,6 @@
 #include "CaptainDead.h"
 #include "CaptainFalling.h"
 #include "Captain.h"
-#include"DynamiteNapalm.h"
+#include "DynamiteNapalm.h"
 
 

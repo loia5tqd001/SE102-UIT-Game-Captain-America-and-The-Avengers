@@ -89,6 +89,10 @@ void CaptainPunching::HandleCollisions(Captain& cap, float dt, const std::vector
 				cap.CollideWithPassableObjects(dt, e);
 			}
 		}
+		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
 	}
 }
 

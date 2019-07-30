@@ -67,6 +67,10 @@ void Grid::LoadObjects(const Json::Value& grid)
 				object = ObjectFactory::Create<BreakableLedge>(jsonObj, this);
 				break;
 
+			case ClassId::MovingLedgeUpdater:
+				object = ObjectFactory::Create<MovingLedgeUpdater>(jsonObj, this);
+				break;
+
 			default:
 				ThrowMyException("Can't find class id:", classId);
 		}

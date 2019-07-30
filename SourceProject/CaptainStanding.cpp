@@ -156,7 +156,7 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 		}
 		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
 		{
-			// Moving along with it
+			isOnGround = true;
 		}
 		else if (auto breakableLedge = dynamic_cast<BreakableLedge*>(e.pCoObj))
 		{
@@ -191,6 +191,10 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 			else {
 				cap.CollideWithPassableObjects(dt, e);
 			}
+		}
+		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
 		}
 	}
 }

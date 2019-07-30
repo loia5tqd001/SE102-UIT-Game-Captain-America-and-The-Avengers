@@ -308,6 +308,8 @@
     </ClCompile>
     <ClCompile Include="ElectricBat.cpp">
       <Filter>Development\Objects\Enemies</Filter>
+    <ClCompile Include="MovingLedgeUpdater.cpp">
+      <Filter>Development\Objects\Blocks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -583,6 +585,8 @@
     </ClInclude>
     <ClInclude Include="ElectricBat.h">
       <Filter>Development\Objects\Enemies</Filter>
+    <ClInclude Include="MovingLedgeUpdater.h">
+      <Filter>Development\Objects\Blocks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

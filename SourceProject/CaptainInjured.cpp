@@ -144,6 +144,10 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 			cap.CollideWithPassableObjects(dt, e); //Cap is flashing, immortal
 			return;
 		}
+		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
 		else if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
 
 			switch (block->GetType())

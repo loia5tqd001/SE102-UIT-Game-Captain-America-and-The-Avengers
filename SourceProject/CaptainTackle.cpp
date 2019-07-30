@@ -148,5 +148,9 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 				cap.CollideWithPassableObjects(dt, e);
 			}
 		}
+		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
 	}
 }

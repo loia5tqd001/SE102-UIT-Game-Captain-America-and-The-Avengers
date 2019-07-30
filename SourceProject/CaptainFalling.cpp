@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CaptainFalling.h"
+#include "MovingLedgeUpdater.h"
 
 void CaptainFalling::HandleNoCollisions(Captain & cap, float dt)
 {
@@ -205,6 +206,14 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 			default:
 				AssertUnreachable();
 			}
+		}
+		else if (auto ledge = dynamic_cast<MovingLedge*>(e.pCoObj))
+		{
+			cap.SetState(State::Captain_Sitting);
+		}
+		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto capsule = dynamic_cast<Capsule*>(e.pCoObj))
 		{

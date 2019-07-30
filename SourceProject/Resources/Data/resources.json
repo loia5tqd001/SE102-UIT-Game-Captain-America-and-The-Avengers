@@ -55,6 +55,8 @@
 	
 	[          35,            11,      256,     368,              32,               16,         1,            0], // BreakableLedge_Intact
 	[          36,            11,      176,     384,              64,               16,         1,            0], // BreakableLedge_Seperated
+	[          37,            11,      296,     368,              32,               16,         1,            0], // MovingLedge
+	
 	
 	[          40,            11,      240,     384,              16,               16,         1,            0], // Bunker_Idle_0
 	[          41,            11,      256,     384,              16,               16,         1,            0], // Bunker_Idle_1

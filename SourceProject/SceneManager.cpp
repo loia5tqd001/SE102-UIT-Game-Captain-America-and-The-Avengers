@@ -51,6 +51,7 @@ void SceneManager::LoadResources()
 	checkpoints[5] = CheckPoint{ Scene::Pittsburgh, Vector2{ 816.0f, 628.0f } };
 	checkpoints[6] = CheckPoint{ Scene::Pittsburgh, Vector2{ 720.0f, 852.0f }, true };
 	checkpoints[7] = CheckPoint{ Scene::RedAlert };
+	checkpoints[8] = CheckPoint{ Scene::Pittsburgh, Vector2{ 784.0f, 300.0f } }; // to test moving ledges
 }
 
 void SceneManager::SetScene(Scene scene)
@@ -167,6 +168,7 @@ void SceneManager::OnKeyDown(BYTE keyCode)
 		case VK_NUMPAD5: GoToCheckPoint(checkpoints[5]); break;
 		case VK_NUMPAD6: GoToCheckPoint(checkpoints[6]); break;
 		case VK_NUMPAD7: GoToCheckPoint(checkpoints[7]); break;
+		case VK_NUMPAD8: GoToCheckPoint(checkpoints[8]); break;
 
 		case 'M':
 			ToggleMuteMode();

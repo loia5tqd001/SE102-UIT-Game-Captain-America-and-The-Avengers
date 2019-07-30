@@ -148,7 +148,7 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 		else if (dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
-
+			return;
 		}
 		else if (dynamic_cast<BreakableLedge*>(e.pCoObj))
 		{
@@ -176,6 +176,10 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 			else {
 				cap.CollideWithPassableObjects(dt, e);
 			}
+		}
+		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
 		}
 	}
 }

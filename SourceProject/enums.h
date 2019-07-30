@@ -59,6 +59,7 @@ enum class SpriteId
 
 	BreakableLedge_Intact           = 35,
 	BreakableLedge_Separated        = 36,
+	MovingLedge                     = 37,
 
 	Bunker_Idle_0                   = 40,
 	Bunker_Idle_1                   = 41,
@@ -179,6 +180,7 @@ enum class ClassId
 	Capsule              =  11,
 	Bunker               =  12,
 	BreakableLedge       =  13,
+	MovingLedgeUpdater   =  14,
 
 	// moving objects: being spawned
 	EnemyGun             =  100,
@@ -239,6 +241,9 @@ enum class State
 
 	BreakableLedge_Intact,
 	BreakableLedge_Separated,
+
+	MovingLedge_Moving,
+	MovingLedge_Stop,
 
 	Captain_Standing,
 	Captain_Walking,
