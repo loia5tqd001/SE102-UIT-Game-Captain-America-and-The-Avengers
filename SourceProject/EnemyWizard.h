@@ -13,13 +13,14 @@ private:
 	static constexpr float MIN_POS_X = 20.0f;
 	static constexpr float LIGHT_POS_X = 50.0f;
 	static constexpr float LIGHT_POS_Y = 57.0f;
-	static constexpr Behaviors ACTIONS_LIST[15] = 
+	static constexpr Behaviors ACTIONS_LIST[18] = 
 	{ 
-	  Behaviors::EnemyWizard_FlyingShoot , Behaviors::EnemyWizard_GroundShoot  , Behaviors::EnemyWizard_GroundShoot,
-	  Behaviors::EnemyWizard_TurnOffLight, Behaviors::EnemyWizard_FlyBackCorner, Behaviors::EnemyWizard_RunToCap,
-	  Behaviors::EnemyWizard_GroundShoot , Behaviors::EnemyWizard_Jump         , Behaviors::EnemyWizard_FlyBackCorner,
-	  Behaviors::EnemyWizard_FlyingShoot , Behaviors::EnemyWizard_RunToCap     , Behaviors::EnemyWizard_Jump,
-	  Behaviors::EnemyWizard_FlyBackCorner, Behaviors::EnemyWizard_GroundShoot  , Behaviors::EnemyWizard_FlyBackCorner
+	  Behaviors::EnemyWizard_FlyingShoot  , Behaviors::EnemyWizard_GroundShoot  , Behaviors::EnemyWizard_GroundShoot,
+	  Behaviors::EnemyWizard_TurnOffLight , Behaviors::EnemyWizard_FlyBackCorner, Behaviors::EnemyWizard_RunToCap,
+	  Behaviors::EnemyWizard_GroundShoot  , Behaviors::EnemyWizard_Jump         , Behaviors::EnemyWizard_FlyBackCorner,
+	  Behaviors::EnemyWizard_FlyingShoot  , Behaviors::EnemyWizard_RunToCap     , Behaviors::EnemyWizard_Jump,
+	  Behaviors::EnemyWizard_FlyBackCorner, Behaviors::EnemyWizard_GroundShoot  , Behaviors::EnemyWizard_FlyBackCorner,
+	  Behaviors::EnemyWizard_RunToCap     , Behaviors::EnemyWizard_RunToCap     , Behaviors::EnemyWizard_FlyBackCorner
 	};
 
 	Captain& cap;

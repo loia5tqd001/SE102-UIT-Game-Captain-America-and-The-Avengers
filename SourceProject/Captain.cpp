@@ -343,8 +343,6 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	ignoreUpdate = false;
 	HandleHitBox(dt, coObjects);
 
-	Debug::Out(pos.x, pos.y);
-
 	OnFlashing();
 	shield->UpdateByCapState(curState, pos);
 	shield->Update(dt, coObjects);

@@ -413,7 +413,8 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 		if (enter) {
 			if (pos.y > GROUND) pos.y = GROUND - 1;
 			enter = false;
-			if (nx > 0) return true;
+			//if (nx > 0) return true;
+			if (pos.x < LIGHT_POS_X) return true;
 		}
 		if (pos.y <= GROUND && pos.y >= ROOF && pos.x >= LIGHT_POS_X) {
 			if (!moveToLight)
@@ -491,7 +492,6 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 				return true; //case
 			}
 		}
-		Debug::Out(counterRunOutTime);
 		if (counterRunOutTime > 3.0f)
 		{
 			return true;
@@ -541,7 +541,6 @@ void EnemyWizard::Action()
 		}
 		if (counterAction < ActionsLength - 1) counterAction++;
 		else counterAction = 0;
-		Debug::Out(counterAction);
 		SetState(TranferState);
 	}
 }

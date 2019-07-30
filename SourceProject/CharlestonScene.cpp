@@ -4,8 +4,6 @@
 #include "BulletEnemyGun.h"
 #include "EnemyRocket.h"
 #include "BulletEnemyRocket.h"
-#include "EnemyFly.h"
-#include "EnemyWizard.h"
 
 static auto& cam = Camera::Instance();
 static auto& wnd = Window::Instance();
@@ -46,6 +44,8 @@ void CharlestonScene::Update(float dt)
 	cam.ClampWithin(map->GetWorldBoundary());
 
 }
+#include "ElectricBat.h"
+#include "EnemyFly.h"
 
 void CharlestonScene::Draw()
 {	
@@ -84,6 +84,17 @@ void CharlestonScene::Draw()
 		enemyFly.Update(GameTimer::Dt(), co);
 
 		enemyFly.Render();
+	}
+	if (1) // test ElectricBat
+	{
+		Data data;
+		data.Add("water-velocity", 16.9f);
+		data.Add("damage", 420);
+		static ElectricBat electricBat({ 50.0f, 260.0f }, grid.get(), cap.get());
+		std::vector<GameObject*> co;
+		electricBat.Update(GameTimer::Dt(), co);
+
+		electricBat.Render();
 	}
 }
 

@@ -97,6 +97,12 @@ enum class SpriteId
 	BulletEnemyFly_CrossUp = 70,
 	BulletEnemyFly_CrossDown = 71,
 
+	ElectricBat_Sleep = 72,
+	ElectricBat_StartFly = 73,
+	ElectricBat_EndFly = 74,
+	ElectricBat_FlyAttack = 75,
+	ElectricBat_Fly = 76,
+
 	Captain_Standing = 100,
 	Captain_Walking = 101,
 	Captain_Jump = 102,
@@ -275,6 +281,12 @@ enum class State
 
 	EnemyFly_Fly,
 	EnemyFly_Falling,
+
+	ElectricBat_Sleep,
+	ElectricBat_StartFly,
+	ElectricBat_EndFly,
+	ElectricBat_FlyAttack,
+	ElectricBat_Fly,
 
 	BulletEnemyFly_Up,
 	BulletEnemyFly_Down,

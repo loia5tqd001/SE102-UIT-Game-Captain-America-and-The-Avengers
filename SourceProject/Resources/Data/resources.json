@@ -99,7 +99,7 @@
 	[          72,            11,      114,     224,               8,               16,         1,            0], //ElectricBat_Sleep
 	[          73,            11,      134,     224,              23,               16,         2,            6], //ElectricBat_StartFly
 	[          74,            11,      163,     224,              23,               16,         2,          -52], //ElectricBat_EndFly
-	[          75,            11,      218,     224,              28,               38,         2,            3], //ElectricBat_FlyAttack
+	[          75,            11,      218,     224,              38,               16,         2,            0], //ElectricBat_FlyAttack
 	[          76,            11,      226,     224,              24,               16,         2,          -56], //ElectricBat_Fly
 
 	[         100,            10,      357,      11,              22,               45,         1,            0], //Captain_Standing,

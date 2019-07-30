@@ -6,8 +6,8 @@ class EnemyFly : public Enemy
 	static constexpr float MOVING_SPEED = 50.0f;
 	static constexpr float FALLING_SPEED = 100.0f;
 	static constexpr float FALLING_TIME = 20.0f;
-	static constexpr float HOR_DISTANCE = 8000.0f;
-	static constexpr float VER_DISTANCE = 3000.0f;
+	static constexpr float HOR_DISTANCE = 130.0f;
+	static constexpr float VER_DISTANCE = 60.0f;
 
 	Vector2 spawnPos;
 	Captain *cap;
