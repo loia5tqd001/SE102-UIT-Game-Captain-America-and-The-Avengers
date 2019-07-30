@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CaptainJumping.h"
-
+#include"BulletDynamite.h"
 
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
@@ -276,6 +276,10 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 				cap.SetState(State::Captain_Injured);
 				setAnotherState = true;
 				return;
+			}
+			else if (dynamic_cast<BulletDynamite*>(e.pCoObj))
+			{
+				cap.CollideWithPassableObjects(dt, e);
 			}
 		}
 		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedge*>(e.pCoObj))

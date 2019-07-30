@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CaptainSpinning.h"
 #include "BulletEnemyRocket.h"
-
+#include"BulletDynamite.h"
 
 
 void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
@@ -144,6 +144,11 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 				SetAnotherState = true;
 				//TODO: case BulletEnemyFlying
 			}
+			else if (dynamic_cast<BulletDynamite*>(e.pCoObj))
+			{
+				cap.CollideWithPassableObjects(dt, e);
+			}
+
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{

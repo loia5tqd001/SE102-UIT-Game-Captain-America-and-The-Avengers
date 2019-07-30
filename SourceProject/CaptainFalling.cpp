@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CaptainFalling.h"
 #include "MovingLedgeUpdater.h"
+#include"BulletDynamite.h"
 
 void CaptainFalling::HandleNoCollisions(Captain & cap, float dt)
 {
@@ -12,7 +13,7 @@ void CaptainFalling::Enter(Captain & cap, State fromState, Data && data)
 {
 	//Todo: Check if Cap is already on the ground or brick or something, switch to another state immediately
 	cap.vel.y = FALL_SPEED_VER_MIN;
-
+	key = KeyControls::Default;
 	if (fromState == State::Captain_Spinning || fromState == State::Captain_Jumping || fromState == State::Captain_Kicking) {
 		isKicked = data.Get<bool>(IS_KICKED);
 	}
@@ -54,29 +55,31 @@ void CaptainFalling::OnKeyUp(Captain & cap, BYTE keyCode)
 
 void CaptainFalling::OnKeyDown(Captain & cap, BYTE keyCode)
 {
+
 	if (keyCode == setting.Get(KeyControls::Left))
 	{
-		if (cap.vel.x >= 0)
+		//Handle buffer
+		if (key == KeyControls::Right || key == KeyControls::Default)
 		{
-			cap.vel.x = -FALL_SPEED_HOR;
-			cap.nx = -1;
+			key = KeyControls::Left;
+			return;
 		}
 	}
 
 	if (keyCode == setting.Get(KeyControls::Right))
 	{
-		if (cap.vel.x <= 0)
+		if (key == KeyControls::Left || key == KeyControls::Default)
 		{
-			cap.vel.x = FALL_SPEED_HOR;
-			cap.nx = 1;
+			key = KeyControls::Right;
+			return;
 		}
 	}
+
 	if (!isKicked)
 	{
 		if (keyCode == setting.Get(KeyControls::Attack))
 		{
-			isKicked = true;
-			cap.SetState(State::Captain_Kicking);
+			key = KeyControls::Attack;
 		}
 	}
 
@@ -84,16 +87,39 @@ void CaptainFalling::OnKeyDown(Captain & cap, BYTE keyCode)
 
 void CaptainFalling::Update(Captain & cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
+	switch (key)
 	{
-		cap.vel.x = -MOVING_HOR;
-		cap.nx = -1;
-	}
-	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
-	{
-		cap.vel.x = +MOVING_HOR;
+	case KeyControls::Left:
+		if (cap.vel.x >= 0)
+		{
+			cap.vel.x = -MOVING_HOR;
+			cap.nx = -1;
+			break;
+
+	case KeyControls::Right:
+		cap.vel.x = MOVING_HOR;
 		cap.nx = 1;
+		break;
+
+	case KeyControls::Attack:
+		isKicked = true;
+		cap.SetState(State::Captain_Kicking);
+		return;
+	default:
+		break;
+		}
 	}
+	//if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
+	//{
+	//	cap.vel.x = -MOVING_HOR;
+	//	cap.nx = -1;
+	//}
+	//if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
+	//{
+	//	cap.vel.x = +MOVING_HOR;
+	//	cap.nx = 1;
+	//}
+
 	if (cap.vel.y < FALL_SPEED_VER_MAX)
 	{
 		cap.vel.y += GRAVITY * 2.5 * dt;// dt;
@@ -102,6 +128,7 @@ void CaptainFalling::Update(Captain & cap, float dt, const std::vector<GameObjec
 	HandleCollisions(cap, dt, coObjects);
 	//Endtesting
 }
+
 
 void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector<GameObject*>& coObjects)
 {
@@ -116,6 +143,8 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 	cap.pos.x += min_tx * cap.vel.x * dt;
 	cap.pos.y += min_ty * cap.vel.y * dt;
 
+	int a = coEvents.size();
+	Debug::out("Number of coObj: %d\n", a);
 	for (auto&e : coEvents)
 	{
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
@@ -137,6 +166,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 		{
 			ledge->OnCollideWithCap();
 			cap.SetState(State::Captain_Sitting);
+			//Debug::out("Line 139\n");
 		}
 		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 		{
@@ -194,8 +224,11 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 				break;
 
 			case ClassId::RigidBlock:
-				if (e.ny < 0) {
+				if (e.ny < 0)
+				{
 					cap.SetState(State::Captain_Sitting);
+					//Debug::out("Line 198\n");
+					//Debug::out("Info: nx = %f | ny = %f|t = %f\n", e.nx, e.ny, e.t);
 					return;
 				}
 				else if (e.ny > 0) {
@@ -228,6 +261,11 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 				bullet->HitCaptain();
 				cap.SetState(State::Captain_Injured);
 			}
+			else if (dynamic_cast<BulletDynamite*>(e.pCoObj))
+			{
+				cap.CollideWithPassableObjects(dt, e);
+			}
+
 		}
 	}
 }

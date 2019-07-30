@@ -9,7 +9,7 @@ DynamiteNapalm::DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 
 	animations.emplace(State::DynamiteNapalm_FallFromTheSky, Animation(SpriteId::DynamiteNapalm_FallFromTheSky));
 	animations.emplace(State::DynamiteNapalm_Standing, Animation(SpriteId::DynamiteNapalm_Standing, 1.0f));
 	animations.emplace(State::DynamiteNapalm_Intact_Running, Animation(SpriteId::DynamiteNapalm_Intact_Running, 0.2f));
-	animations.emplace(State::DynamiteNapalm_ThrowDynamite, Animation(SpriteId::DynamiteNapalm_ThrowDynamite, 1.0f));
+	animations.emplace(State::DynamiteNapalm_ThrowDynamite, Animation(SpriteId::DynamiteNapalm_ThrowDynamite, 1.5f));
 	animations.emplace(State::DynamiteNapalm_Intact_Shooting, Animation(SpriteId::DynamiteNapalm_Intact_Shooting, 0.2f));
 	animations.emplace(State::DynamiteNapalm_Intact_Injure, Animation(SpriteId::DynamiteNapalm_Intact_Injure, 0.1f));
 	animations.emplace(State::DynamiteNapalm_Headless_Standing, Animation(SpriteId::DynamiteNapalm_Headless_Standing, 1.0f));
@@ -121,53 +121,57 @@ void DynamiteNapalm::SetState(State state)
 	}
 	VisibleObject::SetState(state);
 
-	switch (curState)
+	if (false)
 	{
-	case State::Invisible:
-		Debug::out("Invisible\n");
+		switch (curState)
+		{
+		case State::Invisible:
+			Debug::out("Invisible\n");
 
-		break;
-	case State::Destroyed:
-		Debug::out("Destroyed\n");
+			break;
+		case State::Destroyed:
+			Debug::out("Destroyed\n");
 
-		break;
-	case State::DynamiteNapalm_Standing:
-		Debug::out("DynamiteNapalm_Standing\n");
-		break;
-	case State::DynamiteNapalm_Intact_Running:
-		Debug::out("DynamiteNapalm_Intact_Running\n");
+			break;
+		case State::DynamiteNapalm_Standing:
+			Debug::out("DynamiteNapalm_Standing\n");
+			break;
+		case State::DynamiteNapalm_Intact_Running:
+			Debug::out("DynamiteNapalm_Intact_Running\n");
 
-		break;
-	case State::DynamiteNapalm_ThrowDynamite:
-		Debug::out("DynamiteNapalm_ThrowDynamite\n");
+			break;
+		case State::DynamiteNapalm_ThrowDynamite:
+			Debug::out("DynamiteNapalm_ThrowDynamite\n");
 
-		break;
-	case State::DynamiteNapalm_Intact_Shooting:
-		Debug::out("DynamiteNapalm_Intact_Shooting\n");
+			break;
+		case State::DynamiteNapalm_Intact_Shooting:
+			Debug::out("DynamiteNapalm_Intact_Shooting\n");
 
-		break;
-	case State::DynamiteNapalm_Intact_Injure:
-		Debug::out("DynamiteNapalm_Intact_Injure\n");
+			break;
+		case State::DynamiteNapalm_Intact_Injure:
+			Debug::out("DynamiteNapalm_Intact_Injure\n");
 
-		break;
-	case State::DynamiteNapalm_Headless_Standing:
-		Debug::out("DynamiteNapalm_Headless_Standing\n");
+			break;
+		case State::DynamiteNapalm_Headless_Standing:
+			Debug::out("DynamiteNapalm_Headless_Standing\n");
 
-		break;
-	case State::DynamiteNapalm_Headless_Running_Shooting:
-		Debug::out("DynamiteNapalm_Headless_Running_Shooting\n");
+			break;
+		case State::DynamiteNapalm_Headless_Running_Shooting:
+			Debug::out("DynamiteNapalm_Headless_Running_Shooting\n");
 
-		break;
-	case State::DynamiteNapalm_BeforeExplode:
-		Debug::out("DynamiteNapalm_BeforeExplode\n");
+			break;
+		case State::DynamiteNapalm_BeforeExplode:
+			Debug::out("DynamiteNapalm_BeforeExplode\n");
 
-		break;
-	case State::NotExist:
-		Debug::out("NotExist\n");
+			break;
+		case State::NotExist:
+			Debug::out("NotExist\n");
 
-		break;
-	default:
-		break;
+			break;
+		default:
+			break;
+		}
+
 	}
 }
 
@@ -415,6 +419,60 @@ void DynamiteNapalm::SpawnFireBullet()
 
 bool DynamiteNapalm::CanTakeDamage()
 {
+	//FOR DEBUGGING
+	if (true)
+	{
+		Debug::out("Take damage state:\n");
+		switch (curState)
+		{
+		case State::Invisible:
+			Debug::out("Invisible\n");
+
+			break;
+		case State::Destroyed:
+			Debug::out("Destroyed\n");
+
+			break;
+		case State::DynamiteNapalm_Standing:
+			Debug::out("DynamiteNapalm_Standing\n");
+			break;
+		case State::DynamiteNapalm_Intact_Running:
+			Debug::out("DynamiteNapalm_Intact_Running\n");
+
+			break;
+		case State::DynamiteNapalm_ThrowDynamite:
+			Debug::out("DynamiteNapalm_ThrowDynamite\n");
+
+			break;
+		case State::DynamiteNapalm_Intact_Shooting:
+			Debug::out("DynamiteNapalm_Intact_Shooting\n");
+
+			break;
+		case State::DynamiteNapalm_Intact_Injure:
+			Debug::out("DynamiteNapalm_Intact_Injure\n");
+
+			break;
+		case State::DynamiteNapalm_Headless_Standing:
+			Debug::out("DynamiteNapalm_Headless_Standing\n");
+
+			break;
+		case State::DynamiteNapalm_Headless_Running_Shooting:
+			Debug::out("DynamiteNapalm_Headless_Running_Shooting\n");
+
+			break;
+		case State::DynamiteNapalm_BeforeExplode:
+			Debug::out("DynamiteNapalm_BeforeExplode\n");
+
+			break;
+		case State::NotExist:
+			Debug::out("NotExist\n");
+
+			break;
+		default:
+			break;
+		}
+	}
+	
 	switch (curState)
 	{
 	case State::DynamiteNapalm_Headless_Running_Shooting:
@@ -422,5 +480,75 @@ bool DynamiteNapalm::CanTakeDamage()
 		return true;
 	default:
 		return false;
+	}
+}
+
+void DynamiteNapalm::TakeDamage(int damage)
+{
+	if (CanTakeDamage())
+	{
+#pragma region --FOR-DEBUGGING--
+		if (true)
+		{
+			Debug::out("Take damage state:\n");
+			switch (curState)
+			{
+			case State::Invisible:
+				Debug::out("Invisible\n");
+
+				break;
+			case State::Destroyed:
+				Debug::out("Destroyed\n");
+
+				break;
+			case State::DynamiteNapalm_Standing:
+				Debug::out("DynamiteNapalm_Standing\n");
+				break;
+			case State::DynamiteNapalm_Intact_Running:
+				Debug::out("DynamiteNapalm_Intact_Running\n");
+
+				break;
+			case State::DynamiteNapalm_ThrowDynamite:
+				Debug::out("DynamiteNapalm_ThrowDynamite\n");
+
+				break;
+			case State::DynamiteNapalm_Intact_Shooting:
+				Debug::out("DynamiteNapalm_Intact_Shooting\n");
+
+				break;
+			case State::DynamiteNapalm_Intact_Injure:
+				Debug::out("DynamiteNapalm_Intact_Injure\n");
+
+				break;
+			case State::DynamiteNapalm_Headless_Standing:
+				Debug::out("DynamiteNapalm_Headless_Standing\n");
+
+				break;
+			case State::DynamiteNapalm_Headless_Running_Shooting:
+				Debug::out("DynamiteNapalm_Headless_Running_Shooting\n");
+
+				break;
+			case State::DynamiteNapalm_BeforeExplode:
+				Debug::out("DynamiteNapalm_BeforeExplode\n");
+
+				break;
+			case State::NotExist:
+				Debug::out("NotExist\n");
+
+				break;
+			default:
+				break;
+			}
+		}
+#pragma endregion
+		Enemy::TakeDamage(damage);
+	}
+}
+
+void DynamiteNapalm::TakeDinamiteDamage(int damage)
+{
+	if (curState==State::DynamiteNapalm_ThrowDynamite&&animations.at(curState).GetCurFrameIndex()==0)
+	{
+		Enemy::TakeDamage(damage);
 	}
 }

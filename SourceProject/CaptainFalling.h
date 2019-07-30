@@ -7,6 +7,7 @@ private:
 
 	bool isKicked = false;
 	bool FallingToClimbar = false;
+	KeyControls key = KeyControls::Default;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data = {}) override; // handle when change to this state
 	Data Exit(Captain& cap, State toState) override; // handle when change to other state

@@ -7,7 +7,7 @@ private:
 	std::unique_ptr<Map> map; 
 	std::unique_ptr<Grid> grid;
 	std::unique_ptr<Captain> cap;
-	std::unique_ptr<DynamiteNapalm> miniboss;
+	//std::unique_ptr<DynamiteNapalm> miniboss;
 public:
 	RedAlertScene();
 	void LoadResources () override;

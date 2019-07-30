@@ -35,7 +35,7 @@ public:
 	}
 
 	float GetDefaultHoldTime() { return holdTime; }
-
+	UINT GetCurFrameIndex() { return curFrame; }
 	bool IsDoneCycle(); // for some animation aimed to animate one cycle each call
 	Rect GetFrameSize(const Vector2& vtScale = { 1.0f, 1.0f }) const;
 

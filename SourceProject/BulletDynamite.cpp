@@ -2,7 +2,7 @@
 #include "BulletDynamite.h"
 
 
-BulletDynamite::BulletDynamite(int nx, Enemy *enemy, const Vector2& spawnPos, Vector2 vel,bool farTarget) :
+BulletDynamite::BulletDynamite(int nx, Enemy *enemy, const Vector2& spawnPos, Vector2 vel, bool farTarget) :
 	Bullet(State::DynamiteNapalm_Dynamite, 3, spawnPos, { nx * BULLET_MOVING, 0.0f }, nx, enemy)
 {
 	animations.emplace(State::DynamiteNapalm_Dynamite, Animation(SpriteId::DynamiteNapalm_Dynamite, 0.1f));
@@ -18,7 +18,7 @@ BulletDynamite::BulletDynamite(int nx, Enemy *enemy, const Vector2& spawnPos, Ve
 
 void BulletDynamite::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (holdtime<TIME_TO_THROW)
+	if (holdtime < TIME_TO_THROW)
 	{
 		holdtime += dt;
 		if (triggered)
@@ -29,11 +29,6 @@ void BulletDynamite::Update(float dt, const std::vector<GameObject*>& coObjects)
 		return;
 	}
 
-	if (triggered)
-	{
-		SetState(State::Explode);
-	}
-
 	if (curState == State::Explode)
 	{
 		if (animations.at(curState).IsDoneCycle())
@@ -41,14 +36,15 @@ void BulletDynamite::Update(float dt, const std::vector<GameObject*>& coObjects)
 			SetState(State::Destroyed);
 			if (triggered)
 			{
-				enemy->TakeDamage(4);
+				auto boss = dynamic_cast<DynamiteNapalm*>(enemy);
+				boss->TakeDinamiteDamage(4);
 			}
 			return;
 		}
-		else
-		{
-			goto label1;
-		}
+		vel.x = 0;
+		vel.y = 0;
+		animations.at(curState).Update(dt);
+		return;
 	}
 
 	holdtime += dt;
@@ -56,7 +52,7 @@ void BulletDynamite::Update(float dt, const std::vector<GameObject*>& coObjects)
 	vel.y = (holdtime - TIME_TO_THROW) * Gravity - Speed * sin(pi / 180 * Alpha);
 
 	HandleCollisions(dt, coObjects);
-	label1: animations.at(curState).Update(dt);
+	animations.at(curState).Update(dt);
 }
 
 RectF BulletDynamite::GetBBox() const
@@ -81,19 +77,15 @@ void BulletDynamite::HandleCollisions(float dt, const std::vector<GameObject*>& 
 
 	for (auto&e : coEvents)
 	{
-		if (auto cap = dynamic_cast<Captain*>(e.pCoObj))
-		{
-			SetState(State::Explode);
-		}
-		else if (auto block = dynamic_cast<Block*>(e.pCoObj))
+		if (auto block = dynamic_cast<Block*>(e.pCoObj))
 		{
 			switch (block->GetType())
 			{
 			case ClassId::RigidBlock:
 			{
-				if(e.ny!=0)
+				if (e.ny != 0)
 					SetState(State::Explode);
-				if (e.nx!=0)
+				if (e.nx != 0)
 				{
 					this->nx = -this->nx;
 				}
@@ -102,7 +94,32 @@ void BulletDynamite::HandleCollisions(float dt, const std::vector<GameObject*>& 
 				break;
 			}
 		}
+		else if (dynamic_cast<Enemy*>(e.pCoObj))
+		{
+			pos.x += vel.x*dt;
+			pos.y += vel.y*dt;
+		}
+		else
+			AssertUnreachable();
 	}
+}
+
+void BulletDynamite::Trigger()
+{
+	if (holdtime < TIME_TO_THROW)
+	{
+		triggered = true;
+	}
+	
+	vel.x = 0;
+	vel.y = 0;
+	SetState(State::Explode);
+}
+
+void BulletDynamite::HitCaptain()
+{
+	vel = Vector2{ 0,0 };
+	Trigger();
 }
 
 inline void BulletDynamite::Target(bool isFar)

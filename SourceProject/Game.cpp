@@ -68,7 +68,7 @@ void Game::InitGame()
 	wnd.InitWindow();
 	InitDirectDevice();
 	sceneManager.LoadResources();
-	sceneManager.SetScene(Scene::Charleston);
+	sceneManager.SetScene(Scene::Pittsburgh);
 }
 
 void Game::InitDirectDevice()

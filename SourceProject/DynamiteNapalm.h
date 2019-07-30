@@ -20,10 +20,11 @@ private:
 	bool onTheGround = false;
 
 	float holdingDistance = 0.0f;
-	float maxDistance_IntactRunning = 50.0f;
+	float maxDistance_IntactRunning = 100.0f;
 	int numFireBulletFired = 0;
 	float holdTime = TIME_TO_HEADLESS_SHOOT; //Shoot immediately
 	bool OnBehavior(Behaviors behavior, float dt);
+	bool CanTakeDamage();
 public:
 	DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap);
 	void SetState(State state) override;
@@ -31,6 +32,7 @@ public:
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 	void SpawnDynamite();
 	void SpawnFireBullet();
-	bool CanTakeDamage();
+	void TakeDamage(int damage) override;
+	void TakeDinamiteDamage(int damage);
 };
 

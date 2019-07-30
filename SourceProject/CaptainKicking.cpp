@@ -283,6 +283,11 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 				cap.SetState(State::Captain_Injured);
 				SetAnotherState = true;
 			}
+			else if (dynamic_cast<BulletDynamite*>(e.pCoObj))
+			{
+				cap.CollideWithPassableObjects(dt, e);
+			}
+
 		}
 		else if (dynamic_cast<MovingLedge*>(e.pCoObj)) 
 		{

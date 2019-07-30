@@ -354,7 +354,13 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 
 			if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 			{
-				enemy->TakeDamage(1);
+				if (auto dynamiteNapalm = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
+				{
+					//if (dynamiteNapalm->CanTakeDamage())
+						dynamiteNapalm->TakeDamage(1);
+				}
+				else
+					enemy->TakeDamage(1);
 			}
 			else if (auto capsule = dynamic_cast<Capsule*>(e.pCoObj))
 			{
