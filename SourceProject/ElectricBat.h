@@ -17,5 +17,6 @@ public:
 	ElectricBat(Vector2 spawnPos, Grid* grid, Captain *cap);
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	void TakeDamage(int damage) override;
+	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 };
 

@@ -4,11 +4,11 @@
 #include "BulletEnemyWizard.h"
 
 EnemyWizard::EnemyWizard(Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap) :
-	Enemy(behavior, behaviorData,State::EnemyWizard_Stand, 20, spawnPos, grid),
+	Enemy(behavior, behaviorData,State::EnemyWizard_Stand, 25, spawnPos, grid),
 	cap(cap)
 {
 	animations.emplace(State::EnemyWizard_BeforeDefeated, Animation(SpriteId::EnemyWizard_BeforeDefeated, 0.2f));
-	animations.emplace(State::EnemyWizard_Defeated, Animation(SpriteId::EnemyWizard_Defeated, 50.0f));
+	animations.emplace(State::EnemyWizard_Defeated, Animation(SpriteId::EnemyWizard_Defeated, 5.0f));
 	animations.emplace(State::EnemyWizard_Laught, Animation(SpriteId::EnemyWizard_Laught, 0.3f));
 	animations.emplace(State::EnemyWizard_FlyDown, Animation(SpriteId::EnemyWizard_FlyDown, 0.6f));
 	animations.emplace(State::EnemyWizard_FlyUp, Animation(SpriteId::EnemyWizard_FlyUp, 0.6f));
@@ -25,7 +25,6 @@ EnemyWizard::EnemyWizard(Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Cap
 
 void EnemyWizard::SpawnBullet()
 {
-	if (isFlashing) return;
 	if (this->curState == State::EnemyWizard_ShootBullet) {
 		Vector2 bulletPos = pos + Vector2{ 34.0f, 11.0f };
 		Vector2 bulletVel;
@@ -41,7 +40,6 @@ void EnemyWizard::SpawnBullet()
 
 void EnemyWizard::SpawnBulletFire()
 {
-	if (isFlashing) return;
 	if (this->curState == State::EnemyWizard_ShootWhenFly) {
 		const auto bulletPos = pos + Vector2{ 23.0f, 31.0f };
 		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(nx, bulletPos, true, this));
@@ -68,6 +66,7 @@ void EnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
 	UpdateAnimation(dt);
 	//
 	HandleCollisions(dt, coObjects);
+	//OnFlashing();
 }
 
 void EnemyWizard::SetState(State state)
@@ -152,7 +151,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			return false;
 		}
 		else {
-			SetState(State::Destroyed);
+			//SetState(State::Destroyed);
 		}
 	}
 	assert(pos.x >= MIN_POS_X - 50 && pos.x <= MAX_POS_X + 50); //warning!!!
@@ -169,7 +168,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			else {
 				SetState(State::EnemyWizard_Flying);
 			}
-			if (nx <0 && cap.GetPos().x < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x > pos.x)
+			if (nx <0 && cap.GetPos().x - 10 < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x - 10 > pos.x)
 			{
 				if (!checkShotOnce) {
 					SetState(State::EnemyWizard_ShootWhenFly);
@@ -327,7 +326,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 					else {
 						SetState(State::EnemyWizard_Flying);
 					}
-					if (nx < 0 && cap.GetPos().x < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x > pos.x)
+					if (nx < 0 && cap.GetPos().x -10 < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x - 10 > pos.x)
 					{
 						if (!checkShotOnce) {
 							SetState(State::EnemyWizard_ShootWhenFly);
@@ -642,9 +641,28 @@ void EnemyWizard::TakeDamage(int damage)
 	if (health <= 0)
 	{
 		SetState(State::EnemyWizard_BeforeDefeated);
+		//timeFlashing = 4.0f;
+		//nFrameToRender = 1;
+		//nFrameToUnrender = 1;
+		OnFlashing(true);
 	}
 	else 
 	{
 		OnFlashing(true);
 	}
+}
+
+void EnemyWizard::Render() const
+{
+	if (SceneManager::Instance().GetCurScene().isDark)
+	{
+		if (shouldDrawImage && !DebugDraw::IsInDeepDebug())
+		{
+			const auto drawablePosition = Camera::Instance().GetPositionInViewPort(pos);
+			animations.at(curState).Render(drawablePosition, { (float)nx, 1.0f }, Colors::Black); // draw object's actual image
+		}
+
+		RenderBoundingBox(); // draw object's bounding box for better debugging
+	}
+	else Enemy::Render();
 }

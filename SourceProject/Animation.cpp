@@ -41,9 +41,9 @@ void Animation::EraseCusFrameHoldTime(UINT frameNumber)
 		return;
 }
 
-void Animation::Render(const Vector2& pos, const Vector2& vtScale, int alpha) const
+void Animation::Render(const Vector2& pos, const Vector2& vtScale, D3DCOLOR color) const
 {
-	sprite.Draw(pos, curFrame, vtScale, alpha);
+	sprite.Draw(pos, curFrame, vtScale, color);
 }
 
 bool Animation::IsDoneCycle()

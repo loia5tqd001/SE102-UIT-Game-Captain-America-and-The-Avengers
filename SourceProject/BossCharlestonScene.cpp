@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "BossCharlestonScene.h"
-#include "EnemyWizard.h"
 #include "BulletEnemyWizard.h"
 
 static auto& cam = Camera::Instance();
@@ -13,7 +12,8 @@ void BossCharlestonScene::Beginning(float dt)
 	if (counterBegin > 12.0f)
 	{
 		if (checkSpawnOnce == 1) {
-			grid->SpawnObject(std::make_unique<EnemyWizard>(Vector2{ 220.0f, 0.0f }, Vector2{ 0 , 0 }, -1, grid.get(), *cap.get()));
+			wizard = std::make_shared<EnemyWizard>(Vector2{ 220.0f, 0.0f }, Vector2{ 0 , 0 }, -1, grid.get(), *cap.get());
+			grid->SpawnObject(wizard);
 			checkSpawnOnce--;
 		}
 	}
@@ -36,6 +36,17 @@ void BossCharlestonScene::Beginning(float dt)
 		if (checkSpawnOnce == 4) {
 			grid->SpawnObject(std::make_unique<BulletEnemyWizard>(-1, Vector2{ 240,160 }, Vector2{ -BulletEnemyWizard::GetXSpeed(),0.0f }, nullptr));
 			checkSpawnOnce--;
+		}
+	}
+}
+
+void BossCharlestonScene::Ending(float dt)
+{
+	if (!wizard) return;
+	if (wizard->isDefeated()) {
+		counterEnd += dt;
+		if (counterEnd > 3.0f) {
+			SceneManager::Instance().GoNextScene();
 		}
 	}
 }
@@ -68,6 +79,7 @@ void BossCharlestonScene::Update(float dt)
 	cam.ClampWithin( mapDark->GetWorldBoundary() );
 
 	Beginning(dt);
+	Ending(dt);
 }
 
 void BossCharlestonScene::Draw()

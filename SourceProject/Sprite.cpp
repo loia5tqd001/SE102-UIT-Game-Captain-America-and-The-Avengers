@@ -18,10 +18,10 @@ Sprite::Sprite(TextureId texture, const std::vector<Rect>& frames) :
 {
 }
 
-void Sprite::Draw(const Vector2& pos, UINT frameIndex, const Vector2& vtScale, int alpha) const
+void Sprite::Draw(const Vector2& pos, UINT frameIndex, const Vector2& vtScale, D3DCOLOR color) const
 {
 	assert(frameIndex <= frames.size());
-	Game::Instance().Draw(pos, texture, frames[frameIndex], vtScale, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	Game::Instance().Draw(pos, texture, frames[frameIndex], vtScale, color);
 }
 
 Rect Sprite::GetFrameSize(UINT frameIndex, const Vector2 & vtScale) const

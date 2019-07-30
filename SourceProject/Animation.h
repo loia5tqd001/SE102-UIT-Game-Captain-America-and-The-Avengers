@@ -27,7 +27,7 @@ public:
 
 	void EraseCusFrameHoldTime(UINT frameNumber);
 
-	void Render(const Vector2& pos, const Vector2& vtScale = { 1.0f, 1.0f }, int alpha = 255) const;
+	void Render(const Vector2& pos, const Vector2& vtScale = { 1.0f, 1.0f }, D3DCOLOR color = Colors::White) const;
 
 	float GetCurFrameHoldTime()
 	{

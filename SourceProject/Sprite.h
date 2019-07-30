@@ -15,7 +15,7 @@ public:
 	UINT GetNumberOfFrames() const { return (UINT)frames.size(); }
 	Rect GetFrameSize(UINT frameIndex, const Vector2& vtScale = { 1.0f, 1.0f }) const;
 
-	void Draw(const Vector2& pos, UINT frameIndex = 0, const Vector2& vtScale = { 1.0f, 1.0f }, int alpha = 255) const;
+	void Draw(const Vector2& pos, UINT frameIndex = 0, const Vector2& vtScale = { 1.0f, 1.0f }, D3DCOLOR color = Colors::White) const;
 
 };
 

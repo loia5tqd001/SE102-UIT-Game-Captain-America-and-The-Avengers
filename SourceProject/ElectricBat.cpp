@@ -251,6 +251,8 @@ void ElectricBat::Update(float dt, const std::vector<GameObject*>& coObjects)
 	pos.y += vel.y*dt;
 
 	animations.at(curState).Update(dt);
+
+	HandleCollisions(dt, coObjects);
 }
 
 void ElectricBat::TakeDamage(int damage)
@@ -266,3 +268,26 @@ void ElectricBat::TakeDamage(int damage)
 		OnFlashing(true);
 	}
 }
+
+void ElectricBat::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
+{
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	float _, __, ___, ____;
+
+	if (coEvents.size()) CollisionDetector::FilterCollisionEvents(coEvents, _, __, ___, ____);
+
+	for (auto& e : coEvents)
+	{
+		if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
+
+			switch (block->GetType())
+			{
+			case ClassId::RigidBlock:
+				TakeDamage(health);
+				return;
+			}
+		}
+	}
+}
+
+

@@ -38,5 +38,7 @@ public:
 	void testing(Window &win); //only use for testing
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 	void TakeDamage(int damage) override;
+	void Render() const override;
+	bool isDefeated() { return health <= 0; }
 };
 
