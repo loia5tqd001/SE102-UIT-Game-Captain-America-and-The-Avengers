@@ -8,8 +8,8 @@ private:
 	static constexpr auto RUNNING_SPEED = 80.0f;
 	static constexpr auto RUNNING_BEFORE_DEAD_SPEED = 1.2f*RUNNING_SPEED;
 	static constexpr auto NUM_FIRE_BULLET = 2;
-	static constexpr auto DEFAULT_HEALTH = 4;
-	static constexpr auto maxHealthHeadless = 5;
+	static constexpr auto DEFAULT_HEALTH = 20;
+	static constexpr auto maxHealthHeadless = 8;
 	static constexpr auto TIME_TO_HEADLESS_SHOOT = 1.5f;
 	static constexpr auto FAR_DISTANCE = 70.0f;
 
@@ -18,9 +18,11 @@ private:
 	Captain& cap;
 	float posXDesination;
 	bool onTheGround = false;
-
+	State beforeFlashingState = State::NotExist;
+	Behaviors beforeFlashingBehavior = Behaviors::EnemyFly_Stupid;
+	float injureTime = 0.0f;
 	float holdingDistance = 0.0f;
-	float maxDistance_IntactRunning = 100.0f;
+	float maxDistance_IntactRunning = 120.0f;
 	int numFireBulletFired = 0;
 	float holdTime = TIME_TO_HEADLESS_SHOOT; //Shoot immediately
 	bool OnBehavior(Behaviors behavior, float dt);

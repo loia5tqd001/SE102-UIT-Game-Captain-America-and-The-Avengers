@@ -7,6 +7,8 @@ private:
 	std::unique_ptr<Map> map; 
 	std::unique_ptr<Grid> grid;
 	std::unique_ptr<Captain> cap;
+
+	bool bossIsDestroyed = false;
 	//std::unique_ptr<DynamiteNapalm> miniboss;
 public:
 	RedAlertScene();

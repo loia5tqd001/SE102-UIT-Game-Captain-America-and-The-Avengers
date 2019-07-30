@@ -29,6 +29,7 @@ public:
 
 	void Render(const Vector2& pos, const Vector2& vtScale = { 1.0f, 1.0f }, D3DCOLOR color = Colors::White) const;
 
+	void Reset() { holdingTime = 0.0f;curFrame = 0u; }
 	float GetCurFrameHoldTime()
 	{
 		return GetFrameHoldTime(curFrame);

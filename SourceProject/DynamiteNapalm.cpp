@@ -25,10 +25,24 @@ DynamiteNapalm::DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 
 
 void DynamiteNapalm::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	if (curState == State::Destroyed)
+	{
+		SceneManager::Instance().GoNextScene();
+	}
 	if (curState == State::DynamiteNapalm_BeforeExplode)
 		nx = -nx;
 
 	static Behaviors curBehavior = Behaviors::DynamiteNapalm_Fall;
+
+	if (isFlashing&&
+		curState!=State::DynamiteNapalm_Headless_Running_Shooting&&
+		curState!=State::DynamiteNapalm_BeforeExplode&&
+		curState!=State::DynamiteNapalm_Intact_Injure
+		)
+	{
+			beforeFlashingState = curState;
+		SetState(State::DynamiteNapalm_Intact_Injure);
+	}
 
 	if (OnBehavior(curBehavior, dt))
 	{
@@ -187,7 +201,21 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 
 
 	case Behaviors::DynamiteNapalm_Throw:
-		if (curState == State::DynamiteNapalm_Standing)
+		if (curState == State::DynamiteNapalm_Intact_Injure)
+		{
+			if (animations.at(curState).IsDoneCycle())
+			{
+				return false;
+			}
+			else
+			{
+				animations.at(State::DynamiteNapalm_ThrowDynamite).Reset();
+				dynamiteThrown = false;
+				return true;
+			}
+
+		}
+		else if (curState == State::DynamiteNapalm_Standing)
 		{
 			if (cap.GetPos().x < pos.x)
 			{
@@ -233,7 +261,15 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 
 
 	case Behaviors::DynamiteNapalm_Shoot:
-		if (curState == State::DynamiteNapalm_Standing)
+		if (curState == State::DynamiteNapalm_Intact_Injure)
+		{
+			if (animations.at(curState).IsDoneCycle())
+			{
+				SetState(beforeFlashingState);
+			}
+			return false;
+		}
+		else if (curState == State::DynamiteNapalm_Standing)
 		{
 			if (health <= maxHealthHeadless)
 			{
@@ -265,7 +301,15 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 
 
 	case Behaviors::DynamiteNapalm_Run:
-		if (curState == State::DynamiteNapalm_Standing)
+		if (curState == State::DynamiteNapalm_Intact_Injure)
+		{
+			if (animations.at(curState).IsDoneCycle())
+			{
+				SetState(beforeFlashingState);
+			}
+			return false;
+		}
+		else if (curState == State::DynamiteNapalm_Standing)
 		{
 			if (!animations.at(curState).IsDoneCycle())
 			{
@@ -472,7 +516,7 @@ bool DynamiteNapalm::CanTakeDamage()
 			break;
 		}
 	}
-	
+
 	switch (curState)
 	{
 	case State::DynamiteNapalm_Headless_Running_Shooting:
@@ -548,7 +592,7 @@ void DynamiteNapalm::TakeDamage(int damage)
 
 void DynamiteNapalm::TakeDinamiteDamage(int damage)
 {
-	if (curState==State::DynamiteNapalm_ThrowDynamite&&animations.at(curState).GetCurFrameIndex()==0)
+	if (curState == State::DynamiteNapalm_ThrowDynamite&&animations.at(curState).GetCurFrameIndex() == 0)
 	{
 		Enemy::TakeDamage(damage);
 	}

@@ -19,18 +19,27 @@ void RedAlertScene::LoadResources()
 	grid = std::make_unique<Grid>(root);
 	cap = std::make_unique<Captain>(Vector2{ 32.0f, 196.0f - 45.0f }, grid.get());
 	grid->SpawnObject(std::make_unique<DynamiteNapalm>(Behaviors::DynamiteNapalm_Fall, Data{}, Vector2{ 180,10 }, Vector2{ 0,0 }, -1, grid.get(), *cap.get()));
-	//miniboss = std::make_unique<DynamiteNapalm>(Behaviors::DynamiteNapalm_Fall, Data{}, Vector2{ 180,0 }, Vector2{ 0,0 }, -1, grid.get(), *cap.get());
 }
 
 
 
 void RedAlertScene::Update(float dt)
 {
+	bossIsDestroyed = true;
 	map->UpdateAnimatedTiles(dt);
 	grid->UpdateCells();
 	for (auto& obj : grid->GetObjectsInViewPort())
-		obj->Update(dt,grid->GetObjectsInViewPort());
-	//miniboss->Update(dt, grid->GetObjectsInViewPort());
+	{
+		if (bossIsDestroyed&&dynamic_cast<DynamiteNapalm*>(obj))
+		{
+			bossIsDestroyed = false;
+		}
+		obj->Update(dt, grid->GetObjectsInViewPort());
+	}
+	if (bossIsDestroyed)
+	{
+		SceneManager::Instance().GoNextScene();
+	}
 	cap->Update(dt, grid->GetObjectsInViewPort());
 	cap->ClampWithin(map->GetWorldBoundary().Trim(16.0f, 0.0f, 16.0f, 44.0f));
 	cam.ClampWithin(map->GetWorldBoundary());
@@ -38,10 +47,9 @@ void RedAlertScene::Update(float dt)
 
 void RedAlertScene::Draw()
 {
-	//map->Render();
+	map->Render();
 	for (auto& obj : grid->GetObjectsInViewPort())
 		obj->Render();
-	//miniboss->Render();
 	cap->Render();
 	grid->RenderCells();
 }
