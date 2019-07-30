@@ -44,8 +44,6 @@ void CharlestonScene::Update(float dt)
 	cam.ClampWithin(map->GetWorldBoundary());
 
 }
-#include "ElectricBat.h"
-#include "EnemyFly.h"
 
 void CharlestonScene::Draw()
 {	
@@ -71,31 +69,6 @@ void CharlestonScene::Draw()
 
 	grid->RenderCells();
 	
-
-	#pragma region _TESTING_
-
-	if (0) // test EnemyFly
-	{
-		Data data;
-		data.Add("water-velocity", 16.9f);
-		data.Add("damage", 420);
-		static EnemyFly enemyFly({ 50.0f, 260.0f }, grid.get(), cap.get());
-		std::vector<GameObject*> co;
-		enemyFly.Update(GameTimer::Dt(), co);
-
-		enemyFly.Render();
-	}
-	if (1) // test ElectricBat
-	{
-		Data data;
-		data.Add("water-velocity", 16.9f);
-		data.Add("damage", 420);
-		static ElectricBat electricBat({ 50.0f, 260.0f }, grid.get(), cap.get());
-		std::vector<GameObject*> co;
-		electricBat.Update(GameTimer::Dt(), co);
-
-		electricBat.Render();
-	}
 }
 
 void CharlestonScene::OnKeyDown(BYTE keyCode)

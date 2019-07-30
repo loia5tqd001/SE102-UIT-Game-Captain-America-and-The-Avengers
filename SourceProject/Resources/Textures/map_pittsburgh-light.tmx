@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="81">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="85">
  <tileset firstgid="1" name="map_pittsburgh-light_bank.png" tilewidth="16" tileheight="16" tilecount="110" columns="11">
   <image source="8. TileMapPittsburghLight.png" width="176" height="160"/>
  </tileset>
@@ -165,6 +165,10 @@
   <object id="65" name="4.enemyFly" x="32" y="736" width="28" height="37"/>
   <object id="67" name="5.fly(15)" x="734" y="16" width="16" height="181"/>
   <object id="66" name="5.enemyFly" x="613" y="32" width="28" height="37"/>
+  <object id="81" name="6.bat(17)" x="784" y="192" width="242" height="240"/>
+  <object id="84" name="6.bat" x="892" y="321" width="8" height="16"/>
+  <object id="82" name="7.bat(17)" x="640" y="192" width="384" height="208"/>
+  <object id="83" name="7.bat" x="788" y="266" width="8" height="16"/>
  </objectgroup>
  <objectgroup id="10" name="AmbushTrigger(classid=10)" locked="1">
   <object id="54" name="[256,720,512,960]" x="256" y="720" width="256" height="240" visible="0"/>

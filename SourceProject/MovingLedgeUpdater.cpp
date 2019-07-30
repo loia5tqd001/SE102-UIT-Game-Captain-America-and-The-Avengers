@@ -10,7 +10,7 @@ MovingLedgeUpdater::MovingLedgeUpdater(Vector2 pos, UINT w, UINT h, Grid* grid) 
 	grid->SpawnObject(circle);
 	grid->SpawnObject(diagonal);
 	grid->SpawnObject(horizontal);
-	bboxColor = Colors::MyPoisonGreen;
+	bboxColor = Colors::Updater;
 }
 
 void MovingLedgeUpdater::Update(float dt, const std::vector<GameObject*>& coObjects)

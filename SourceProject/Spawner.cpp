@@ -3,6 +3,7 @@
 #include "EnemyGun.h"
 #include "EnemyRocket.h"
 #include "EnemyFly.h"
+#include "ElectricBat.h"
 
 Spawner::Spawner(Vector2 pos, UINT w, UINT h, Behaviors behav, Vector2 objSpawnPos, int expectCapNx, Data&& data, Grid* grid) :
 	InvisibleObject(pos, w, h),
@@ -16,6 +17,10 @@ Spawner::Spawner(Vector2 pos, UINT w, UINT h, Behaviors behav, Vector2 objSpawnP
 	{
 		readyToSpawn = false;
 		bboxColor = Colors::OneWayTunnel;
+	}
+	if (behav == Behaviors::ElectricBat_Stupid)
+	{
+		bboxColor = Colors::Battt;
 	}
 }
 
@@ -63,6 +68,10 @@ void Spawner::OnCollideWithCap(Captain* cap)
 
 			case Behaviors::EnemyFly_Stupid:
 				enemy = std::make_shared<EnemyFly>(objSpawnPos, grid, cap);
+				break;
+
+			case Behaviors::ElectricBat_Stupid:
+				enemy = std::make_shared<ElectricBat>(objSpawnPos, grid, cap);
 				break;
 
 			default:

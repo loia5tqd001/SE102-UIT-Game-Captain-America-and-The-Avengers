@@ -331,6 +331,8 @@ enum class Behaviors // for enemy, moving ledges
 
 	EnemyFly_Stupid = 15,
 
+	ElectricBat_Stupid = 17,
+
 	EnemyWizard_FlyingShoot = 20,
 	EnemyWizard_GroundShoot = 21,
 	EnemyWizard_Jump = 22,

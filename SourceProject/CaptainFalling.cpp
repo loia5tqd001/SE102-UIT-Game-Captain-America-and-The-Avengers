@@ -13,6 +13,8 @@ void CaptainFalling::Enter(Captain & cap, State fromState, Data && data)
 {
 	//Todo: Check if Cap is already on the ground or brick or something, switch to another state immediately
 	cap.vel.y = FALL_SPEED_VER_MIN;
+	if (fromState == State::Captain_Tackle)
+		cap.vel.x = 0.0f;
 	key = KeyControls::Default;
 	if (fromState == State::Captain_Spinning || fromState == State::Captain_Jumping || fromState == State::Captain_Kicking) {
 		isKicked = data.Get<bool>(IS_KICKED);

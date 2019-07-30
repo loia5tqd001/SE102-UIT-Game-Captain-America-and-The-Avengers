@@ -12,4 +12,6 @@ struct Colors
 	static constexpr auto White                = D3DCOLOR_XRGB(255, 255, 255);
 	static constexpr auto Black                = D3DCOLOR_XRGB(0  ,   0,   0);
 	static constexpr auto DarkTransparentBlack = D3DCOLOR_ARGB(220,   0,   0,   0);
+	static constexpr auto Battt                = D3DCOLOR_ARGB(60,   255,  200,   255);
+	static constexpr auto Updater              = D3DCOLOR_ARGB(100,  111,  255,   255);
 };
