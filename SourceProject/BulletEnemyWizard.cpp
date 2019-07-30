@@ -27,3 +27,9 @@ RectF BulletEnemyWizard::GetBBox() const
 {
 	return VisibleObject::GetBBox();
 }
+
+void BulletEnemyWizard::Reflect()
+{
+	vel.x = -vel.x/sqrt(2);
+	vel.y = std::abs(vel.x);
+}

@@ -3,13 +3,13 @@
 #include "BulletFireEnemyWizard.h"
 #include "BulletEnemyWizard.h"
 
-EnemyWizard::EnemyWizard(Behaviors behavior, Data&& behaviorData, Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap) :
-	Enemy(behavior, behaviorData,State::EnemyWizard_Stand, 2, spawnPos, grid),
+EnemyWizard::EnemyWizard(Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap) :
+	Enemy(behavior, behaviorData,State::EnemyWizard_Stand, 20, spawnPos, grid),
 	cap(cap)
 {
 	animations.emplace(State::EnemyWizard_BeforeDefeated, Animation(SpriteId::EnemyWizard_BeforeDefeated, 0.2f));
-	animations.emplace(State::EnemyWizard_Defeated, Animation(SpriteId::EnemyWizard_Defeated, 0.25f));
-	animations.emplace(State::EnemyWizard_DefeatedCaptain, Animation(SpriteId::EnemyWizard_DefeatedCaptain, 0.3f));
+	animations.emplace(State::EnemyWizard_Defeated, Animation(SpriteId::EnemyWizard_Defeated, 50.0f));
+	animations.emplace(State::EnemyWizard_Laught, Animation(SpriteId::EnemyWizard_Laught, 0.3f));
 	animations.emplace(State::EnemyWizard_FlyDown, Animation(SpriteId::EnemyWizard_FlyDown, 0.6f));
 	animations.emplace(State::EnemyWizard_FlyUp, Animation(SpriteId::EnemyWizard_FlyUp, 0.6f));
 	animations.emplace(State::EnemyWizard_Flying, Animation(SpriteId::EnemyWizard_FlyDown, 0.6f));
@@ -26,13 +26,8 @@ EnemyWizard::EnemyWizard(Behaviors behavior, Data&& behaviorData, Vector2 spawnP
 void EnemyWizard::SpawnBullet()
 {
 	if (isFlashing) return;
-	/*static float shootCounter = 0.0f;
-	shootCounter += GameTimer::Dt();
-	if (shootCounter < 0.09f) return;*/
 	if (this->curState == State::EnemyWizard_ShootBullet) {
 		Vector2 bulletPos = pos + Vector2{ 34.0f, 11.0f };
-		//if (nx < 0) GameObject::FlipPosXToLeft(bulletPos.x, pos.x, GetWidth(), );
-		//caculate vel.y
 		Vector2 bulletVel;
 		bulletVel.x = nx * BulletEnemyWizard::GetXSpeed();
 		bulletVel.y = - std::abs(bulletPos.y - (cap.GetPos().y + 10.0f)) / std::abs(bulletPos.x - cap.GetPos().x) * abs(bulletVel.x);
@@ -61,52 +56,13 @@ void EnemyWizard::SpawnBulletFire()
 
 void EnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	//TODO: net nx base on cap pos
-	//if(cap->GetPos().x > pos.x) nx = 1; else nx = -1; 
-
+	/*if (curState == State::EnemyWizard_Defeated) return;*/
 	//regular update
 	pos.x += vel.x*dt;
 	pos.y += vel.y*dt;
 
-	static Behaviors curBehavior = Behaviors::EnemyWizard_FlyingShoot;
-
+	//running action list
 	Action();
-	//if (Onbehaviors(curBehavior))
-	//{
-	//	if (curBehavior == Behaviors::EnemyWizard_FlyingShoot) {
-	//		SetState(State::EnemyWizard_Stand);
-	//		curBehavior = Behaviors::EnemyWizard_GroundShoot;
-	//	}
-	//	else if (curBehavior == Behaviors::EnemyWizard_GroundShoot) {
-	//		SetState(State::EnemyWizard_FlyUp);
-	//		curBehavior = Behaviors::EnemyWizard_Jump;
-	//	}
-	//	else if (curBehavior == Behaviors::EnemyWizard_Jump) {
-	//		SetState(State::EnemyWizard_FlyUp);
-	//		curBehavior = Behaviors::EnemyWizard_RunToCap;
-	//	}
-	//	else if (curBehavior == Behaviors::EnemyWizard_RunToCap) {
-	//		SetState(State::EnemyWizard_FlyUp);
-	//		curBehavior = Behaviors::EnemyWizard_FlyBackCorner;
-	//	}
-	//	else if (curBehavior == Behaviors::EnemyWizard_FlyBackCorner) {
-	//		SetState(State::EnemyWizard_Walking);
-	//		curBehavior = Behaviors::EnemyWizard_FlyingShoot;
-	//	}
-	//}
-	//
-	//if (animations.at(State::EnemyWizard_ShootBullet).IsDoneCycle())
-	//{
-	//	SetState(State::EnemyWizard_Stand);
-	//}
-	//else if (animations.at(State::EnemyWizard_ShootBulletFire).IsDoneCycle())
-	//{
-	//	SetState(State::EnemyWizard_Stand);
-	//}
-	//else if (animations.at(State::EnemyWizard_ShootWhenFly).IsDoneCycle())
-	//{
-	//	SetState(State::EnemyWizard_Flying);
-	//}
 
 	//update animations
 	UpdateAnimation(dt);
@@ -161,11 +117,44 @@ void EnemyWizard::SetState(State state)
 		vel.x = WALKING_SPEED*nx;
 		vel.y = 0;
 		break;
+	case State::EnemyWizard_Laught:
+		vel.x = 0;
+		vel.y = 0;
+		break;
 	}
 }
 
 bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current behavior is done
 {
+	if (curState == State::EnemyWizard_BeforeDefeated)
+	{
+		if (!animations.at(State::EnemyWizard_BeforeDefeated).IsDoneCycle()) {
+			if (pos.y <= GROUND + 8) {
+				vel.y = FALLING_SPEED;
+			}
+			else {
+				pos.y = GROUND + 8;
+			}
+			return false;
+		}
+		else {
+			SetState(State::EnemyWizard_Defeated);
+		}
+	}
+	if (curState == State::EnemyWizard_Defeated) {
+		if (!animations.at(State::EnemyWizard_Defeated).IsDoneCycle()) {
+			if (pos.y <= GROUND + 25) {
+				vel.y = FALLING_SPEED;
+			}
+			else {
+				pos.y = GROUND + 25;
+			}
+			return false;
+		}
+		else {
+			SetState(State::Destroyed);
+		}
+	}
 	assert(pos.x >= MIN_POS_X - 50 && pos.x <= MAX_POS_X + 50); //warning!!!
 	assert(pos.y >= ROOF - 50 && pos.y <= GROUND + 50); //warning!!!
 	static bool checkShotOnce = false;
@@ -213,9 +202,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			}
 			else
 			{
-				/*vel.x = -abs(vel.x);*/
-				//if (pos.y > ROOF)
-				//	SetState(State::EnemyWizard_FlyUp);
+
 			}
 		}
 		else if (pos.x < MIN_POS_X)
@@ -237,9 +224,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 				}
 			}
 			else {
-				//vel.x = abs(vel.x);
-				//if (pos.y > ROOF)
-				//	SetState(State::EnemyWizard_FlyUp);
+
 			}
 		}
 		if (counterFly > 0) {
@@ -497,6 +482,15 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			return true;
 		}
 	}
+	else if (behavior == Behaviors::EnemyWizard_Laught) {
+		static float counter = 0.0f;
+		counter += GameTimer::Dt();
+		if (counter > 1.0f) {
+			counter = 0;
+			return true;
+		}
+		SetState(State::EnemyWizard_Laught);
+	}
 	return false;
 }
 
@@ -534,6 +528,9 @@ void EnemyWizard::Action()
 			TranferState = State::EnemyWizard_Walking;
 			break;
 		case Behaviors::EnemyWizard_TurnOffLight:
+			TranferState = State::EnemyWizard_Stand;
+			break;
+		case Behaviors::EnemyWizard_Laught:
 			TranferState = State::EnemyWizard_Stand;
 			break;
 		default:
@@ -629,4 +626,20 @@ void EnemyWizard::testing(Window &win)
 	}	
 	if (win.IsKeyPressed('B'))
 		TakeDamage(1);
+}
+
+void EnemyWizard::TakeDamage(int damage)
+{
+	assert(damage > 0);
+	if (curState == State::EnemyWizard_Defeated) return;
+
+	health -= damage;
+	//SetState(State::EnemyWizard_BeforeDefeated);
+	if (health <= 0)
+	{
+		SetState(State::EnemyWizard_BeforeDefeated);
+	}
+	else {
+		OnFlashing(true);
+	}
 }

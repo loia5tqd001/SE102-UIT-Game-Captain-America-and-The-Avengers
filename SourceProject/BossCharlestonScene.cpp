@@ -20,6 +20,8 @@ void BossCharlestonScene::LoadResources()
 	mapLight = std::make_unique<Map>( root["light"] );
 	grid = std::make_unique<Grid>( root );
 	cap = std::make_unique<Captain>( Vector2{ 32.0f, 197.0f - 45.0f },grid.get()) ;
+	grid->SpawnObject(std::make_unique<EnemyWizard>(Vector2{ 31.0f, 9.0f }, Vector2{0 , 0}, 1, grid.get(), *cap.get())) ;
+	//wizard = new EnemyWizard(Vector2{ 31.0f, 9.0f }, Vector2{ 0 , 0 }, 1, grid.get(), *cap.get());
 }
 
 void BossCharlestonScene::Update(float dt)
@@ -42,17 +44,17 @@ void BossCharlestonScene::Draw()
 	grid->RenderCells();
 
 #pragma region testing
-	if (1) // test EnemyWizard
-	{
-		Data data;
-		data.Add("water-velocity", 16.9f);
-		data.Add("damage", 420);
-		static EnemyWizard enemyWizard(Behaviors::EnemyRocket_ShootCross, std::move(data), { 31.0f, 9.0f }, {}, 1, grid.get(), *cap.get());
-		std::vector<GameObject*> co;
-		enemyWizard.Update(GameTimer::Dt(), co);
+	//if (1) // test EnemyWizard
+	//{
+	//	Data data;
+	//	data.Add("water-velocity", 16.9f);
+	//	data.Add("damage", 420);
+	//	static EnemyWizard enemyWizard( { 31.0f, 9.0f }, {}, 1, grid.get(), *cap.get());
+	//	std::vector<GameObject*> co;
+	//	enemyWizard.Update(GameTimer::Dt(), co);
 
-		enemyWizard.Render();
-	}
+	//	enemyWizard.Render();
+	//}
 #pragma endregion
 
 }

@@ -3,6 +3,7 @@
 //#include "Enemy.h"
 #include "BulletEnemyGun.h"
 #include"BulletDynamite.h"
+#include "BulletEnemyWizard.h"
 //#include "EnemyGun.h"
 //#include "EnemyRocket.h"
 
@@ -395,6 +396,14 @@ void Shield::HandleStraightCollison(float dt, const std::vector<GameObject*>& co
 			if (auto bullet = dynamic_cast<BulletEnemyGun*>(e.pCoObj)) //
 			{
 				if (nx > 0 && e.nx < 0.0f || nx <0 && e.nx > 0.0f)
+				{
+					bullet->Reflect();
+					Sounds::PlayAt(SoundId::ShieldCollide);
+				}
+			}
+			else if (auto bullet = dynamic_cast<BulletEnemyWizard*>(e.pCoObj))
+			{
+				if (e.nx < 0.0f && this->nx > 0 || e.nx > 0.0f && this->nx < 0)
 				{
 					bullet->Reflect();
 					Sounds::PlayAt(SoundId::ShieldCollide);

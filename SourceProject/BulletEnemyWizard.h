@@ -13,6 +13,7 @@ public:
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	RectF GetBBox() const override;
 	static float GetXSpeed(){ return BULLET_MOVING; }
+	void Reflect();
 };
 
 
