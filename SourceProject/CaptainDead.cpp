@@ -37,7 +37,7 @@ void CaptainDead::Update(Captain& cap, float dt, const std::vector<GameObject*>&
 void CaptainDead::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
-
+	if (coEvents.size() == 0) return;
 	float min_tx, min_ty, nx, ny;
 	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 

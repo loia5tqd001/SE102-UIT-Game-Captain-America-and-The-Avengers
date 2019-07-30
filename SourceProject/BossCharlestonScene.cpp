@@ -1,8 +1,44 @@
 #include "pch.h"
 #include "BossCharlestonScene.h"
 #include "EnemyWizard.h"
+#include "BulletEnemyWizard.h"
 
 static auto& cam = Camera::Instance();
+
+void BossCharlestonScene::Beginning(float dt)
+{
+	if (counterBegin > 13.0f) return;
+	counterBegin += dt;
+	static int checkSpawnOnce = 4;
+	if (counterBegin > 12.0f)
+	{
+		if (checkSpawnOnce == 1) {
+			grid->SpawnObject(std::make_unique<EnemyWizard>(Vector2{ 220.0f, 0.0f }, Vector2{ 0 , 0 }, -1, grid.get(), *cap.get()));
+			checkSpawnOnce--;
+		}
+	}
+	else if (counterBegin > 9.0f)
+	{
+		if (checkSpawnOnce == 2) {
+			grid->SpawnObject(std::make_unique<BulletEnemyWizard>(-1, Vector2{ 230,160 }, Vector2{ -BulletEnemyWizard::GetXSpeed(), 0.0f }, nullptr));
+			checkSpawnOnce--;
+		}
+	}
+	else if (counterBegin > 6.0f)
+	{
+		if (checkSpawnOnce == 3) {
+			grid->SpawnObject(std::make_unique<BulletEnemyWizard>(1, Vector2{ 0,160 }, Vector2{ BulletEnemyWizard::GetXSpeed(), 0.0f }, nullptr));
+			checkSpawnOnce--;
+		}
+	}
+	else if (counterBegin > 3.0f)
+	{
+		if (checkSpawnOnce == 4) {
+			grid->SpawnObject(std::make_unique<BulletEnemyWizard>(-1, Vector2{ 240,160 }, Vector2{ -BulletEnemyWizard::GetXSpeed(),0.0f }, nullptr));
+			checkSpawnOnce--;
+		}
+	}
+}
 
 BossCharlestonScene::BossCharlestonScene()
 {
@@ -20,8 +56,6 @@ void BossCharlestonScene::LoadResources()
 	mapLight = std::make_unique<Map>( root["light"] );
 	grid = std::make_unique<Grid>( root );
 	cap = std::make_unique<Captain>( Vector2{ 32.0f, 197.0f - 45.0f },grid.get()) ;
-	grid->SpawnObject(std::make_unique<EnemyWizard>(Vector2{ 31.0f, 9.0f }, Vector2{0 , 0}, 1, grid.get(), *cap.get())) ;
-	//wizard = new EnemyWizard(Vector2{ 31.0f, 9.0f }, Vector2{ 0 , 0 }, 1, grid.get(), *cap.get());
 }
 
 void BossCharlestonScene::Update(float dt)
@@ -32,6 +66,8 @@ void BossCharlestonScene::Update(float dt)
 	cap->Update(dt, grid->GetObjectsInViewPort());
 	cap->ClampWithin( mapDark->GetWorldBoundary().Trim(16.0f, 15.0f, 16.0f, 43.0f) );
 	cam.ClampWithin( mapDark->GetWorldBoundary() );
+
+	Beginning(dt);
 }
 
 void BossCharlestonScene::Draw()
@@ -42,21 +78,6 @@ void BossCharlestonScene::Draw()
 		obj->Render();
 	cap->Render();
 	grid->RenderCells();
-
-#pragma region testing
-	//if (1) // test EnemyWizard
-	//{
-	//	Data data;
-	//	data.Add("water-velocity", 16.9f);
-	//	data.Add("damage", 420);
-	//	static EnemyWizard enemyWizard( { 31.0f, 9.0f }, {}, 1, grid.get(), *cap.get());
-	//	std::vector<GameObject*> co;
-	//	enemyWizard.Update(GameTimer::Dt(), co);
-
-	//	enemyWizard.Render();
-	//}
-#pragma endregion
-
 }
 
 void BossCharlestonScene::OnKeyUp(BYTE keyCode)

@@ -9,7 +9,9 @@ BulletEnemyWizard::BulletEnemyWizard(int nx, const Vector2& spawnPos, Vector2& v
 	animations.emplace(State::BulletEnemyWizard_Horizontal, Animation(SpriteId::BulletEnemyWizard_Horizontal, 0.1f));
 	animations.emplace(State::BulletEnemyWizard_SemiCross, Animation(SpriteId::BulletEnemyWizard_SemiCross, 0.1f));
 
-	if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth()); // this code is critical
+	if (enemy != nullptr) {
+		if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth()); // this code is critical
+	}
 }
 
 void BulletEnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjects)
@@ -20,6 +22,22 @@ void BulletEnemyWizard::Update(float dt, const std::vector<GameObject*>& coObjec
 	else curState = State::BulletEnemyWizard_Horizontal;
 	pos.y += vel.y * dt;
 	pos.x += vel.x * dt;
+
+	if (isReflected)
+	{
+		holdtime += dt;
+		if (holdtime > 0.8f) SetState(State::Destroyed);
+		if (pos.y < GROUND) {
+			vel.x = - nx * BULLET_MOVING/sqrt(2);
+			vel.y += GRAVITY;
+		}
+		else {
+			pos.y = GROUND;
+			vel.y = 0;
+			vel.x = 0;
+		}
+	}
+
 	animations.at(curState).Update(dt);
 }
 
@@ -30,6 +48,7 @@ RectF BulletEnemyWizard::GetBBox() const
 
 void BulletEnemyWizard::Reflect()
 {
-	vel.x = -vel.x/sqrt(2);
-	vel.y = std::abs(vel.x);
+	isReflected = true;
+	vel.x = -nx * BULLET_MOVING/sqrt(2);
+	vel.y = -100;
 }

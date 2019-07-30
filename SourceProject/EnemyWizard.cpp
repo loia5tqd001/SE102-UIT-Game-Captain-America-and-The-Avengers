@@ -501,6 +501,10 @@ void EnemyWizard::Action()
 	static State TranferState = State::EnemyWizard_Stand;
 	if (Onbehaviors(ACTIONS_LIST[counterAction]))
 	{
+		if (cap.isDead()){
+			SetState(State::EnemyWizard_Laught);
+			return;
+		}
 		static Behaviors nextBehavior = ACTIONS_LIST[counterAction + 1];
 		if (counterAction < ActionsLength - 1)
 		{

@@ -52,5 +52,6 @@ public:
 	void Render() const override;
 	RectF GetBBox() const override;
 	RectF GetHitBox() const override;
+	bool isDead() { return health.Get() <= 0; };
 };
 

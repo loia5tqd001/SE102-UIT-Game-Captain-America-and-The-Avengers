@@ -6,6 +6,11 @@ class BulletEnemyWizard :
 {
 private:
 	static constexpr float BULLET_MOVING = 150.0f;
+	static constexpr float GRAVITY = 15.0f;
+	static constexpr float GROUND = 195.0f;
+
+	bool isReflected = false;
+	float holdtime = 0;
 
 public:
 	BulletEnemyWizard(int nx, const Vector2& spawnPos, Vector2& vel, Enemy *enemy);
