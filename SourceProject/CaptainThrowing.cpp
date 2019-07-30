@@ -12,7 +12,7 @@ void CaptainThrowing::Enter(Captain& cap, State fromState, Data&& data)
 		   fromState == State::Captain_Standing);
 	assert(cap.shieldOn);
 	Sounds::PlayAt(SoundId::ShieldThrow);
-	cap.vel.y = 0;
+	cap.vel.y = GRAVITY;
 	cap.vel.x = 0;
 	cap.shield->ThrowAway();
 }
@@ -61,6 +61,21 @@ void CaptainThrowing::HandleCollisions(Captain& cap, float dt, const std::vector
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 
+	if (coEvents.size() == 0)
+	{
+		cap.pos.x += cap.vel.x * dt;
+		cap.pos.y += cap.vel.y * dt;
+		return;
+	}
+
+	float min_tx, min_ty, nx, ny;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
+
+	if (coEvents.size() == 0) return;
+
+	cap.pos.x += min_tx * cap.vel.x * dt;
+	cap.pos.y += min_ty * cap.vel.y * dt;
+
 	for (auto& e : coEvents)
 	{
 		if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
@@ -103,6 +118,11 @@ void CaptainThrowing::HandleCollisions(Captain& cap, float dt, const std::vector
 		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
 		{
 			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
+		{
+			cap.vel = movingLedge->GetVelocity();
+			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 		}
 	}
 }

@@ -37,7 +37,6 @@ void CaptainFallToWater::Update(Captain& cap, float dt, const std::vector<GameOb
 {
 	if (cap.animations.at(cap.curState).IsDoneCycle())
 	{
-		Debug::Out("DoneCycle");
 		cap.SetState(State::Captain_Swimming);
 		return;
 	}

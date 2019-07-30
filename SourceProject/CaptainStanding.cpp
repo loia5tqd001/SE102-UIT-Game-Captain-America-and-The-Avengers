@@ -50,7 +50,9 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
-	cap.vel.x = 0.0f;
+	if (!isOnMovingLedge)
+		cap.vel.x = 0.0f;
+
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Down)))
 	{
 		cap.SetState(State::Captain_Sitting);
@@ -100,6 +102,7 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	isOnGround = false;
+	isOnMovingLedge = false;
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
 	{
@@ -157,6 +160,9 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
 		{
 			isOnGround = true;
+			isOnMovingLedge = true;
+			cap.vel = movingLedge->GetVelocity();
+			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 		}
 		else if (auto breakableLedge = dynamic_cast<BreakableLedge*>(e.pCoObj))
 		{

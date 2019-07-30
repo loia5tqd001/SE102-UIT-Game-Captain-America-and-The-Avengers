@@ -7,6 +7,7 @@ class CaptainWalking : public CaptainState
 private:
 	bool isToSittingTackle = false;
 	bool isOnGround;
+	Vector2 onMovingLedgeSpeed;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

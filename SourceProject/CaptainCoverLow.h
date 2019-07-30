@@ -7,6 +7,7 @@ class CaptainCoverLow : public CaptainState
 	static constexpr auto MOVE_HOR = 50.0f;
 
 	bool isOnGround = false;
+	bool isOnMovingLedge = false;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

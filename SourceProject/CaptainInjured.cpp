@@ -213,6 +213,11 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 			cap.CollideWithPassableObjects(dt, e);
 			return;
 		}
+		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
+		{
+			cap.vel = movingLedge->GetVelocity();
+			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
+		}
 	}
 
 

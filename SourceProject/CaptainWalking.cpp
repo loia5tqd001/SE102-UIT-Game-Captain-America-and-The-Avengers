@@ -66,6 +66,7 @@ void CaptainWalking::Update(Captain& cap, float dt, const std::vector<GameObject
 {
 	cap.vel.x = cap.nx * WALKING_SPEED;
 	cap.vel.y = 100.0f;
+	cap.vel += onMovingLedgeSpeed;
 
 	auto kControlDir = cap.nx > 0 ? KeyControls::Right : KeyControls::Left;
 	if (!wnd.IsKeyPressed(setting.Get(kControlDir)))
@@ -81,6 +82,7 @@ void CaptainWalking::Update(Captain& cap, float dt, const std::vector<GameObject
 
 void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	onMovingLedgeSpeed = {};
 	isOnGround = false;
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
@@ -143,6 +145,7 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 		else if (auto ledge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
 			if (e.ny != 0) isOnGround = true;
+			onMovingLedgeSpeed = ledge->GetVelocity();
 		}
 		else if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
 

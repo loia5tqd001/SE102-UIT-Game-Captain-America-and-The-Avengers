@@ -146,9 +146,10 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 		{
 			//AssertUnreachable();
 		}
-		else if (dynamic_cast<MovingLedge*>(e.pCoObj))
+		else if (auto ledge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
-			return;
+			cap.vel = ledge->GetVelocity();
+			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 		}
 		else if (dynamic_cast<BreakableLedge*>(e.pCoObj))
 		{

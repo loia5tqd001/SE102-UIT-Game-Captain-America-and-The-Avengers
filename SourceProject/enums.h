@@ -245,6 +245,7 @@ enum class State
 
 	MovingLedge_Moving,
 	MovingLedge_Stop,
+	MovingLedge_Stall, // stop by updater due to being out of viewport
 
 	Captain_Standing,
 	Captain_Walking,

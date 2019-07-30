@@ -7,6 +7,7 @@ class CaptainStanding : public CaptainState
 private:
 	bool isToSittingTackle = false;
 	bool isOnGround = false;
+	bool isOnMovingLedge = false;
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;

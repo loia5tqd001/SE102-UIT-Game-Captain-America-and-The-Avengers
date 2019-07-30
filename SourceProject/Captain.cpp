@@ -152,8 +152,6 @@ void Captain::SetState(State state)
 
 	
 #if 1
-	auto capbox = GetBBox();
-	Debug::Out(capbox.left);
 	switch (state)
 	{
 	case State::Invisible:

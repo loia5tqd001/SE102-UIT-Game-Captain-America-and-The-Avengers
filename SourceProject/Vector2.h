@@ -39,5 +39,9 @@ struct Vector2 : public D3DXVECTOR2
 	{
 		return { x * n, y * n };
 	}
+	Vector2 operator-() const
+	{
+		return Vector2{ -x, -y };
+	}
 };
 

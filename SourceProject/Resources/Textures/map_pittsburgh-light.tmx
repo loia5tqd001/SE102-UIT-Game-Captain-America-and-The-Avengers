@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="73">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="64" height="76" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="81">
  <tileset firstgid="1" name="map_pittsburgh-light_bank.png" tilewidth="16" tileheight="16" tilecount="110" columns="11">
   <image source="8. TileMapPittsburghLight.png" width="176" height="160"/>
  </tileset>
@@ -143,6 +143,16 @@
   <object id="70" x="304" y="677" width="48" height="171"/>
   <object id="71" x="352" y="677" width="64" height="91"/>
   <object id="72" x="416" y="677" width="96" height="171"/>
+ </objectgroup>
+ <objectgroup color="#55aaff" id="12" name="MovingLedgeUpdater(classid=14)">
+  <object id="73" name="Hor-RightMost" x="704" y="424" width="32" height="16"/>
+  <object id="76" name="Hor-LeftMost" x="616" y="424" width="32" height="16"/>
+  <object id="74" name="Dia-TopMost" x="680" y="495" width="32" height="16"/>
+  <object id="77" name="Dia-BotMost" x="632" y="548" width="32" height="16"/>
+  <object id="75" name="Cir-RightMost" x="632" y="614" width="32" height="16"/>
+  <object id="78" name="Cir-LeftMost" x="528" y="614" width="32" height="16"/>
+  <object id="79" name="Cir-TopMost" x="579" y="583" width="32" height="16"/>
+  <object id="80" name="Cir-BotMost" x="579" y="642" width="32" height="16"/>
  </objectgroup>
  <objectgroup color="#0000ff" id="11" name="Spawners(classid=9)">
   <object id="61" name="1.gun-shootfast(1)" x="461" y="16" width="16" height="181"/>

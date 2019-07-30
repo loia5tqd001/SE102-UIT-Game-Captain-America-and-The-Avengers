@@ -15,8 +15,8 @@ public:
 	};
 	void SetPos(const Vector2& p) { pos = p; }
 
-	Vector2 GetPos      () const;
-	Vector2 GetVelocity () const;
+	virtual Vector2 GetPos      () const;
+	virtual Vector2 GetVelocity () const;
 
 	virtual void ClampWithin(const RectF& theBox);
 	virtual void RenderBoundingBox() const; // draw bounding box for better debugging

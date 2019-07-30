@@ -1,31 +1,114 @@
 #include "pch.h"
 #include "MovingLedge.h"
-#define PI 3.14159265
 
 MovingLedge::MovingLedge(Vector2 pos, Behaviors behavior) :
-	VisibleObject(State::MovingLedge_Stop, pos),
+	VisibleObject(State::MovingLedge_Stall, pos),
 	behavior(behavior)
 {
 	animations.emplace(State::MovingLedge_Stop, Animation(SpriteId::MovingLedge, 0.15f));
 	animations.emplace(State::MovingLedge_Moving, Animation(SpriteId::MovingLedge, 0.05f));
+	animations.emplace(State::MovingLedge_Stall, Animation(SpriteId::MovingLedge));
 }
 
 void MovingLedge::OnCircleMoving(float dt)
 {
-	//eclipse(580,612) 30 52
-	static int counter = 0;
-	static float x = 52*cos(counter / 10 * dt);
-	static float y = 30*cos(counter / 10 * dt - PI / 4);
-	pos.x = 580 + x;
-	pos.y = 612 + y;
+	if (curState == State::MovingLedge_Stall)
+	{
+		SetState(State::MovingLedge_Moving);
+	}
+	else if (curState == State::MovingLedge_Moving)
+	{
+		static constexpr auto PI = 3.14159265f;
+		static constexpr auto omega = 1.5f;
+		static auto holdTime = 0.0f;
+		static auto lastPos = pos;
+
+		holdTime += dt;
+		pos.x = 580.0f + 52.0f * cos( omega * holdTime);
+		pos.y = 680.0f + 40.0f * cos( omega * holdTime - PI / 2.0f);
+
+		// calculate for handling collision:
+		vel.x = (pos.x - lastPos.x) / dt;
+		vel.y = (pos.y - lastPos.y) / dt;
+		lastPos = pos;
+	}
 }
 
 void MovingLedge::OnDiagonalMoving(float dt)
 {
+	static const auto TOP_MOST = Vector2{ 680.0f, 495.0f }; // top most position
+	static const auto BOTTOM_MOST = Vector2{ 630.0f, 615.0f };
+	static const auto ORIGINAL_SPEED = Vector2{ -25.0f, 60.0f } * 1.64f;
+
+	if (curState == State::MovingLedge_Stall)
+	{
+		vel = ORIGINAL_SPEED;
+		SetState(State::MovingLedge_Stop);
+	}
+	else if (curState == State::MovingLedge_Moving)
+	{
+		pos.x += vel.x * dt;
+		pos.y += vel.y * dt;
+		if (pos.y <= TOP_MOST.y)
+		{
+			pos = TOP_MOST;
+			SetState(State::MovingLedge_Stop);
+		}
+		else if (pos.y >= BOTTOM_MOST.y)
+		{
+			pos = BOTTOM_MOST;
+			SetState(State::MovingLedge_Stop);
+		}
+	}
+	else if (curState == State::MovingLedge_Stop)
+	{
+		static auto timeStopped = 0.0f;
+		timeStopped += dt;
+		if (timeStopped >= 0.4f)
+		{
+			timeStopped = 0.0f;
+			SetState(State::MovingLedge_Moving);
+			vel = -vel;
+		}
+	}
 }
 
 void MovingLedge::OnHorizontalMoving(float dt)
 {
+	static constexpr auto LEFT_MOST = 616.0f;
+	static constexpr auto RIGHT_MOST = 714.0f;
+	static const auto ORIGINAL_SPEED = Vector2{ -80.0f, 0.0f };
+
+	if (curState == State::MovingLedge_Stall)
+	{
+		vel = ORIGINAL_SPEED;
+		SetState(State::MovingLedge_Stop);
+	}
+	else if (curState == State::MovingLedge_Moving)
+	{
+		pos.x += vel.x * dt;
+		if (pos.x <= LEFT_MOST)
+		{
+			pos.x = LEFT_MOST;
+			SetState(State::MovingLedge_Stop);
+		}
+		else if (pos.x >= RIGHT_MOST)
+		{
+			pos.x = RIGHT_MOST;
+			SetState(State::MovingLedge_Stop);
+		}
+	}
+	else if (curState == State::MovingLedge_Stop)
+	{
+		static auto timeStopped = 0.0f;
+		timeStopped += dt;
+		if (timeStopped >= 0.4f)
+		{
+			timeStopped = 0.0f;
+			SetState(State::MovingLedge_Moving);
+			vel = -vel;
+		}
+	}
 }
 
 void MovingLedge::UpdateByUpdater(float dt)
@@ -44,4 +127,15 @@ void MovingLedge::UpdateByUpdater(float dt)
 	{
 		OnHorizontalMoving(dt);
 	}
+}
+
+Vector2 MovingLedge::GetVelocity() const
+{
+	if (curState == State::MovingLedge_Moving) return vel;
+	else return {};
+}
+
+RectF MovingLedge::GetBBox() const
+{
+	return VisibleObject::GetBBox().Trim(0.0f, 5.0f, 0.0f, 0.0f);
 }

@@ -15,11 +15,6 @@ MovingLedgeUpdater::MovingLedgeUpdater(Vector2 pos, UINT w, UINT h, Grid* grid) 
 
 void MovingLedgeUpdater::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	// add ledges to grid if they're removed from grid and currently in viewport, unique() means only updater holds the ledge, the grid doesn't
-	//if ( circle    .unique() && circle    ->IsInViewPort() ) grid->SpawnObject(circle);
-	//if ( diagonal  .unique() && diagonal  ->IsInViewPort() ) grid->SpawnObject(diagonal);
-	//if ( horizontal.unique() && horizontal->IsInViewPort() ) grid->SpawnObject(horizontal);
-
 	// update 3 ledges synchronously
 	circle->UpdateByUpdater(dt);
 	diagonal->UpdateByUpdater(dt);
@@ -28,7 +23,7 @@ void MovingLedgeUpdater::Update(float dt, const std::vector<GameObject*>& coObje
 
 void MovingLedgeUpdater::OnOutOfViewPort()
 {
-	circle->SetPos(DEFAULT_POS_CIRCLE);
-	diagonal->SetPos(DEFAULT_POS_DIAGONAL);
-	horizontal->SetPos(DEFAULT_POS_HORIZONTAL);
+	circle->SetPos(DEFAULT_POS_CIRCLE), circle->SetState(State::MovingLedge_Stall);
+	diagonal->SetPos(DEFAULT_POS_DIAGONAL), diagonal->SetState(State::MovingLedge_Stall);
+	horizontal->SetPos(DEFAULT_POS_HORIZONTAL), horizontal->SetState(State::MovingLedge_Stall);
 }

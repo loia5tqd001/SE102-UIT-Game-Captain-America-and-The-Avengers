@@ -7,7 +7,7 @@
 void CaptainSitPunching::Enter(Captain& cap, State fromState, Data&& data)
 {
 	assert(fromState == State::Captain_Sitting || fromState == State::Captain_CoverLow);
-	cap.vel.y = 0;
+	cap.vel.y = GRAVITY;
 	cap.vel.x = 0;
 
 	// adjust position due to difference between sitting witdh and sitpunching width
@@ -59,11 +59,20 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 
+	if (coEvents.size() == 0)
+	{
+		cap.pos.x += cap.vel.x * dt;
+		cap.pos.y += cap.vel.y * dt;
+		return;
+	}
+
 	float min_tx, min_ty, nx, ny;
+	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
 
 	if (coEvents.size() == 0) return;
-	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
-	if (coEvents.size() == 0) return;
+
+	cap.pos.x += min_tx * cap.vel.x * dt;
+	cap.pos.y += min_ty * cap.vel.y * dt;
 
 	for (auto& e : coEvents)
 	{
@@ -121,6 +130,11 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
 		{
 			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
+		{
+			cap.vel = movingLedge->GetVelocity();
+			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 		}
 	}
 }

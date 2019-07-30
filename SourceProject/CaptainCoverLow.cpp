@@ -44,7 +44,8 @@ void CaptainCoverLow::OnKeyDown(Captain& cap, BYTE keyCode)
 void CaptainCoverLow::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	HandleCollisions(cap, dt, coObjects);
-	cap.vel.x = 0.0f;
+	if (!isOnMovingLedge)
+		cap.vel.x = 0.0f;
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
 		cap.nx = -1;
@@ -66,6 +67,7 @@ void CaptainCoverLow::Update(Captain& cap, float dt, const std::vector<GameObjec
 void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	//isOnGround = false; We should do this, but it'll cause wrong sound, why?
+	isOnMovingLedge = false;
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
 	{
@@ -190,6 +192,13 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
 		{
 			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
+		{
+			isOnGround = true;
+			isOnMovingLedge = true;
+			cap.vel = movingLedge->GetVelocity();
+			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 		}
 	}
 }
