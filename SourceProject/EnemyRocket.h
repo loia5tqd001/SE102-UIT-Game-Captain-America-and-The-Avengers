@@ -20,6 +20,10 @@ private:
 	bool isInJumpBackNForth = true;
 	bool DogdeShield = false;
 
+	// for back and forth jump
+	float bnf_accelerator = 0.2f;
+	int bnf_dirY = -1;
+
     int dirYJump = -1;
 	float accelerator = 0.2f;
 	float groundPosY = 0;

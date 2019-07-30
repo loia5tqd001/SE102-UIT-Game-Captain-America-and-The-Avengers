@@ -16,6 +16,7 @@ void CaptainInjured::Enter(Captain& cap, State fromState, Data&& data)
 	cap.vel.x = INJURE_FALL_SPEED * cap.nx*-1.0f;
 	cap.vel.y = FALL_SPEED_VER;
 	posxWhenGotInjure = cap.pos.x;
+	posyWhenGotInjure = cap.pos.y;
 	holdingDistance = 0.0f;
 }
 
@@ -53,6 +54,7 @@ void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject
 
 void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	holdingDistance += std::abs(cap.vel.x*dt);
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0) 
 	{ 
@@ -105,15 +107,11 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 	//	}
 	//}
 
-	if (holdingDistance<=INJURE_DISTANCE)
-	{
-		holdingDistance += std::abs(cap.vel.x*dt);
-	}
-	else
-	{
-		cap.SetState(State::Captain_Standing);
-		return;
-	}
+	//if (holdingDistance>INJURE_DISTANCE)
+	//{
+	//	cap.SetState(State::Captain_Standing);
+	//	return;
+	//}
 
 	cap.pos.x += min_tx * cap.vel.x * dt;
 	cap.pos.y += min_ty * cap.vel.y * dt;
@@ -153,6 +151,9 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 			switch (block->GetType())
 			{
 			case ClassId::PassableLedge:
+				if (holdingDistance>INJURE_DISTANCE)
+					cap.SetState(State::Captain_Standing);
+				return;
 				if (pendingSwitchState == State::Captain_Dead)
 				{
 					cap.SetState(State::Captain_Dead);
@@ -189,7 +190,14 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 				cap.CollideWithPassableObjects(dt, e);
 				break;
 			case ClassId::RigidBlock:
-				break;
+				if (holdingDistance > INJURE_DISTANCE)
+				{
+					if (cap.pos.y - posyWhenGotInjure > 100.0f)
+						cap.SetState(State::Captain_Sitting);
+					else
+						cap.SetState(State::Captain_Standing);
+				}
+				return;
 
 			default:
 				AssertUnreachable();

@@ -22,5 +22,6 @@ public:
 	RectF GetBBox() const override;
 	virtual void TakeDamage(int damage);
 	float GetPosX() { return pos.x; }
+	bool IsInViewPort() const { return GetBBox().IsIntersect(Camera::Instance().GetBBox()); }
 };
 

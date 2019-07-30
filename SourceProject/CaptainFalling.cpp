@@ -198,7 +198,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 					cap.SetState(State::Captain_Sitting);
 					return;
 				}
-				else {
+				else if (e.ny > 0) {
 					cap.vel.y = +FALL_SPEED_VER;
 				}
 				break;
@@ -209,7 +209,8 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 		}
 		else if (auto ledge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
-			cap.SetState(State::Captain_Sitting);
+			if (e.ny < 0)
+				cap.SetState(State::Captain_Sitting);
 		}
 		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
 		{

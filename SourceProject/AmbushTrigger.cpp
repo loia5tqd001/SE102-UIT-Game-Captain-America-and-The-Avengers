@@ -40,7 +40,8 @@ void AmbushTrigger::OnCollideWithCap(Captain* cap)
 	for (auto& o : grid->GetObjectsInViewPort()) 
 	{
 		if (auto enemy = dynamic_cast<Enemy*>(o)) {
-			enemy->SetState(State::Explode);
+			if (enemy->IsInViewPort())
+				enemy->SetState(State::Explode);
 		}
 		else if (auto spawner = dynamic_cast<Spawner*>(o)) {
 			spawner->SetActive(false);

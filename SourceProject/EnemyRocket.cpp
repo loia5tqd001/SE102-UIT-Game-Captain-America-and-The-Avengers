@@ -93,32 +93,30 @@ void EnemyRocket::BackAndForthJump()
 {
 	static constexpr float JUMP_HOR = 20.0f;
 	static constexpr float GRAVITY = 140.0f;
-	static float accelerator = 0.2f;
-	static int dirY = -1;
-	
+
 	vel.x = -JUMP_HOR;// * GameTimer::Dt();
-	if (dirY == -1) // jump up
+	if (bnf_dirY == -1) // jump up
 	{
 		//Debug::Out("acc", accelerator);
 		pos.y -= GRAVITY * GameTimer::Dt();// - accelerator;
 		if (pos.y < 270.0f) { // 270 is the highest position of jump
-			dirY = 0;
+			bnf_dirY = 0;
 		}
 	}
-	else if (dirY == 0) // kinda holding in the air
+	else if (bnf_dirY == 0) // kinda holding in the air
 	{
-		accelerator += 0.01f * GameTimer::Dt();
+		bnf_accelerator += 0.01f * GameTimer::Dt();
 		if (pos.y > 275.0f) {
-			pos.y -= GRAVITY * GameTimer::Dt() * 0.2f - accelerator;
+			pos.y -= GRAVITY * GameTimer::Dt() * 0.2f - bnf_accelerator;
 		} else if (pos.y < 270.0f) {
-			pos.y += GRAVITY * GameTimer::Dt() * 0.2f - accelerator;
+			pos.y += GRAVITY * GameTimer::Dt() * 0.2f - bnf_accelerator;
 		} else {
-			dirY = 1; // falling
+			bnf_dirY = 1; // falling
 		}
 	}
 	else // falling
 	{
-		pos.y += GRAVITY * GameTimer::Dt() + accelerator;
+		pos.y += GRAVITY * GameTimer::Dt() + bnf_accelerator;
 		if (pos.y + GetHeight() >= 437.0f) // 437 is the ground
 		{
 			pos.y = 437.0f - GetHeight(); 
