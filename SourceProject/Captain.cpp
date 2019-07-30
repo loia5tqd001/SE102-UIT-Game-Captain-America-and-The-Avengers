@@ -150,78 +150,80 @@ void Captain::SetState(State state)
 	VisibleObject::SetState(state); // NOTE: when changing state height will always anchor to low point (sitting)
 	currentState->Enter(*this, oldState, std::move(exitData));
 	shield->UpdateByCapState(this->curState, this->pos);
-	//For debuging
-	if (false)
+
+	
+#if 1
+	auto capbox = GetBBox();
+	Debug::Out(capbox.left);
+	switch (state)
 	{
-		switch (state)
-		{
-		case State::Invisible:
-			Debug::out("Cap.SetState(State::Invisible)\n");
-			break;
-		case State::Destroyed:
-			Debug::out("Cap.SetState(State::Destroyed)\n");
-			break;
-		case State::Captain_Standing:
-			Debug::out("Cap.SetState(State::Captain_Standing)\n");
-			break;
-		case State::Captain_Walking:
-			Debug::out("Cap.SetState(State::Captain_Walking)\n");
-			break;
-		case State::Captain_Jumping:
-			Debug::out("Cap.SetState(State::Captain_Jumping)\n");
-			break;
-		case State::Captain_Falling:
-			Debug::out("Cap.SetState(State::Captain_Falling)\n");
-			break;
-		case State::Captain_Kicking:
-			Debug::out("Cap.SetState(State::Captain_Kicking)\n");
-			break;
-		case State::Captain_Spinning:
-			Debug::out("Cap.SetState(State::Captain_Spinning)\n");
-			break;
-		case State::Captain_Throwing:
-			Debug::out("Cap.SetState(State::Captain_Throwing)\n");
-			break;
-		case State::Captain_Tackle:
-			Debug::out("Cap.SetState(State::Captain_Tackle)\n");
-			break;
-		case State::Captain_Punching:
-			Debug::out("Cap.SetState(State::Captain_Punching)\n");
-			break;
-		case State::Captain_Sitting:
-			Debug::out("Cap.SetState(State::Captain_Sitting)\n");
-			break;
-		case State::Captain_SitPunching:
-			Debug::out("Cap.SetState(State::Captain_SitPunching)\n");
-			break;
-		case State::Captain_CoverTop:
-			Debug::out("Cap.SetState(State::Captain_CoverTop)\n");
-			break;
-		case State::Captain_CoverLow:
-			Debug::out("Cap.SetState(State::Captain_CoverLow)\n");
-			break;
-		case State::Captain_FallToWater:
-			Debug::out("Cap.SetState(State::Captain_FallToWater)\n");
-			break;
-		case State::Captain_InWater:
-			Debug::out("Cap.SetState(State::Captain_InWater)\n");
-			break;
-		case State::Captain_Swimming:
-			Debug::out("Cap.SetState(State::Captain_Swimming)\n");
-			break;
-		case State::Captain_Climbing:
-			Debug::out("Cap.SetState(State::Captain_Climbing)\n");
-			break;
-		case State::Captain_Injured:
-			Debug::out("Cap.SetState(State::Captain_Injured)\n");
-			break;
-		case State::Captain_Dead:
-			Debug::out("Cap.SetState(State::Captain_Dead)\n");
-			break;
-		default:
-			break;
-		}
+	case State::Invisible:
+		Debug::out("Cap.SetState(State::Invisible)\n");
+		break;
+	case State::Destroyed:
+		Debug::out("Cap.SetState(State::Destroyed)\n");
+		break;
+	case State::Captain_Standing:
+		Debug::out("Cap.SetState(State::Captain_Standing)\n");
+		break;
+	case State::Captain_Walking:
+		Debug::out("Cap.SetState(State::Captain_Walking)\n");
+		break;
+	case State::Captain_Jumping:
+		Debug::out("Cap.SetState(State::Captain_Jumping)\n");
+		break;
+	case State::Captain_Falling:
+		Debug::out("Cap.SetState(State::Captain_Falling)\n");
+		break;
+	case State::Captain_Kicking:
+		Debug::out("Cap.SetState(State::Captain_Kicking)\n");
+		break;
+	case State::Captain_Spinning:
+		Debug::out("Cap.SetState(State::Captain_Spinning)\n");
+		break;
+	case State::Captain_Throwing:
+		Debug::out("Cap.SetState(State::Captain_Throwing)\n");
+		break;
+	case State::Captain_Tackle:
+		Debug::out("Cap.SetState(State::Captain_Tackle)\n");
+		break;
+	case State::Captain_Punching:
+		Debug::out("Cap.SetState(State::Captain_Punching)\n");
+		break;
+	case State::Captain_Sitting:
+		Debug::out("Cap.SetState(State::Captain_Sitting)\n");
+		break;
+	case State::Captain_SitPunching:
+		Debug::out("Cap.SetState(State::Captain_SitPunching)\n");
+		break;
+	case State::Captain_CoverTop:
+		Debug::out("Cap.SetState(State::Captain_CoverTop)\n");
+		break;
+	case State::Captain_CoverLow:
+		Debug::out("Cap.SetState(State::Captain_CoverLow)\n");
+		break;
+	case State::Captain_FallToWater:
+		Debug::out("Cap.SetState(State::Captain_FallToWater)\n");
+		break;
+	case State::Captain_InWater:
+		Debug::out("Cap.SetState(State::Captain_InWater)\n");
+		break;
+	case State::Captain_Swimming:
+		Debug::out("Cap.SetState(State::Captain_Swimming)\n");
+		break;
+	case State::Captain_Climbing:
+		Debug::out("Cap.SetState(State::Captain_Climbing)\n");
+		break;
+	case State::Captain_Injured:
+		Debug::out("Cap.SetState(State::Captain_Injured)\n");
+		break;
+	case State::Captain_Dead:
+		Debug::out("Cap.SetState(State::Captain_Dead)\n");
+		break;
+	default:
+		break;
 	}
+#endif
 	setStateMutex = 1;
 }
 
