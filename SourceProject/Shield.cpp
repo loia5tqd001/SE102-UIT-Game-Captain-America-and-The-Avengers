@@ -154,8 +154,9 @@ void Shield::ThrowAway()
 
 void Shield::UpdateByCapState(State capState, Vector2 capPos)
 {
-	if (isOnCaptain) {
-
+	if (isOnCaptain) 
+	{
+		vel = cap.GetVelocity();
 		if (capState == State::Captain_Standing)
 		{
 			pos.x = capPos.x + 18;
