@@ -202,6 +202,7 @@
     <ClCompile Include="CaptainCoverLow.cpp" />
     <ClCompile Include="CaptainCoverTop.cpp" />
     <ClCompile Include="CaptainDead.cpp" />
+    <ClCompile Include="CaptainElectricShock.cpp" />
     <ClCompile Include="CaptainFalling.cpp" />
     <ClCompile Include="CaptainFallToWater.cpp" />
     <ClCompile Include="CaptainHealth.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="CaptainCoverLow.h" />
     <ClInclude Include="CaptainCoverTop.h" />
     <ClInclude Include="CaptainDead.h" />
+    <ClInclude Include="CaptainElectricShock.h" />
     <ClInclude Include="CaptainFalling.h" />
     <ClInclude Include="CaptainFallToWater.h" />
     <ClInclude Include="CaptainHealth.h" />

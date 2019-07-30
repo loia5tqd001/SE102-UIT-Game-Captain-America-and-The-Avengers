@@ -639,7 +639,8 @@ void EnemyWizard::TakeDamage(int damage)
 	{
 		SetState(State::EnemyWizard_BeforeDefeated);
 	}
-	else {
+	else 
+	{
 		OnFlashing(true);
 	}
 }

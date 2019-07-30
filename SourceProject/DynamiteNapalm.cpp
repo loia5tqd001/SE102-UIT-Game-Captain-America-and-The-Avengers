@@ -386,7 +386,7 @@ void DynamiteNapalm::SpawnDynamite()
 
 void DynamiteNapalm::SpawnFireBullet()
 {
-	if (isFlashing) return;
+	/*if (isFlashing) return;
 	if (curState == State::DynamiteNapalm_Intact_Shooting)
 	{
 		if (nx == 1)
@@ -414,7 +414,7 @@ void DynamiteNapalm::SpawnFireBullet()
 			const auto bulletPos = pos + Vector2{ width, 5 };
 			grid->SpawnObject(std::make_unique<BulletFireDynamiteNapalm>(this->nx, this, bulletPos));
 		}
-	}
+	}*/
 }
 
 bool DynamiteNapalm::CanTakeDamage()
@@ -542,6 +542,7 @@ void DynamiteNapalm::TakeDamage(int damage)
 		}
 #pragma endregion
 		Enemy::TakeDamage(damage);
+		Debug::out("Damage taken: %d", damage);
 	}
 }
 

@@ -61,5 +61,9 @@ protected:
 
 	static constexpr auto COLLISION_OBJECT = "COLLISION_OBJECT";
 	static constexpr auto CLIMBBAR = "CLIMBBAR";
+
+	static constexpr auto ELECTRIC_SHOCK_TIME = 1.5f;
+
+	static constexpr auto ELECTRIC_SHOCK = "ELECTRIC-SHOCK";
 };
 

@@ -123,6 +123,7 @@ enum class SpriteId
 	Captain_FallToWater = 116,
 	Captain_InWater = 117,
 	Captain_CoverLow = 118,
+	Captain_ElectricShock = 119,
 
 	DynamiteNapalm_FallFromTheSky = 200,
 	DynamiteNapalm_Standing = 201,
@@ -264,6 +265,7 @@ enum class State
 	Captain_Climbing,
 	Captain_Injured, // when being attacked at the side (left or right)
 	Captain_Dead,
+	CaptainElectricShock,
 
 
 	EnemyWizard_Walking,

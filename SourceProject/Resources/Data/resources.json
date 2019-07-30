@@ -123,6 +123,7 @@
 	[         116,            10,      202,     251,              16,               12,         3,            7], //Captain_FallToWater
 	[         117,            10,      330,     248,              16,                7,         3,            4], //Captain_InWater
 	[         118,            10,        9,      83,              21,               27,         1,            0], //Captain_CoverLow
+	[119, 10, 208, 187, 32, 45, 2, 8], //Captain_ElectricShock
 
 	[         200,            13,      314,      24,              28,               46,         1,            0], //DynamiteNapalm_FallFromTheSky
 	[         201,            13,      202,      29,              30,               43,         1,            0], //DynamiteNapalm_Standing

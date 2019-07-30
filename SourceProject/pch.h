@@ -101,6 +101,7 @@
 #include "CaptainInjured.h"
 #include "CaptainDead.h"
 #include "CaptainFalling.h"
+#include"CaptainElectricShock.h"
 #include "Captain.h"
 #include "DynamiteNapalm.h"
 

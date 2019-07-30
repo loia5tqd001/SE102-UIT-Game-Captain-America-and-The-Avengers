@@ -165,6 +165,14 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 		{
 			enemy->TakeDamage(1);
+			if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
+			{
+				if (mini->CanCauseElectricShock())
+				{
+					cap.SetState(State::CaptainElectricShock);
+					return;
+				}
+			}
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj)) {

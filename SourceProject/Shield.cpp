@@ -122,11 +122,14 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 				trans.x *= ratio;
 				trans.y *= ratio;
 
+				//Save pos.y before update pos.y base on pos.y
+				float posyBackup = pos.y;
+
 				pos.x += nx * SPEED*dt;
 				vel.x = nx * SPEED;
-				vel.y = trans.y;
 				pos.y += trans.y;
-
+				//Caculate vel.y with pos before and after
+				vel.y = (pos.y - posyBackup) / dt;
 				HandleCaptainCollison(dt, coObjects); //distance = 0
 			}
 		}

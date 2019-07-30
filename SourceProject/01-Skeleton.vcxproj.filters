@@ -312,6 +312,9 @@
     <ClCompile Include="MovingLedgeUpdater.cpp">
       <Filter>Development\Objects\Blocks</Filter>
     </ClCompile>
+    <ClCompile Include="CaptainElectricShock.cpp">
+      <Filter>Development\Objects\Captain\D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -589,6 +592,9 @@
     </ClInclude>
     <ClInclude Include="MovingLedgeUpdater.h">
       <Filter>Development\Objects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptainElectricShock.h">
+      <Filter>Development\Objects\Captain\D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

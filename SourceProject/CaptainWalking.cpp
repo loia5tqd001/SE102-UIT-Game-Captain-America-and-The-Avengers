@@ -121,7 +121,16 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 			if (cap.isFlashing) { // undamagable
 				cap.CollideWithPassableObjects(dt, e);
 			}
-			else {
+			else 
+			{
+				if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
+				{
+					if (mini->CanCauseElectricShock())
+					{
+						cap.SetState(State::CaptainElectricShock);
+						return;
+					}
+				}
 				cap.SetState(State::Captain_Injured);
 				cap.health.Subtract(1);
 				enemy->TakeDamage(1);

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Captain.h"
-
+#include"DynamiteNapalm.h"
 static auto& setting = Settings::Instance();
 static auto& wnd = Window::Instance();
 
@@ -31,6 +31,7 @@ Captain::Captain(const Vector2& pos, Grid* ogrid)
 	animations.emplace(State::Captain_InWater, Animation(SpriteId::Captain_InWater, 0.2f));
 	animations.emplace(State::Captain_Spinning, Animation(SpriteId::Captain_Spin, 0.13f));
 	animations.emplace(State::Captain_CoverLow, Animation(SpriteId::Captain_CoverLow, 0.1f));
+	animations.emplace(State::CaptainElectricShock, Animation(SpriteId::Captain_ElectricShock,0.1f));
 
 	animations.at(State::Captain_Tackle).SetCusFrameHoldTime(0, 0.05f);
 
@@ -117,9 +118,6 @@ void Captain::OnKeyUp(BYTE keyCode)
 
 void Captain::SetState(State state)
 {
-	if (setStateMutex == 0)
-		return;
-	setStateMutex = 0;
 	prePhasingState = curState;
 
 	auto exitData = currentState->Exit(*this, state);
@@ -144,6 +142,7 @@ void Captain::SetState(State state)
 	case State::Captain_Climbing: currentState = &stateClimbing; break;
 	case State::Captain_Injured: currentState = &stateInjured; break;
 	case State::Captain_Dead: currentState = &stateDead; break;
+	case State::CaptainElectricShock:currentState = &stateElectricShock;break;
 	}
 
 	const auto oldState = curState;
@@ -224,7 +223,6 @@ void Captain::SetState(State state)
 		break;
 	}
 #endif
-	setStateMutex = 1;
 }
 
 void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
@@ -236,9 +234,20 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 		{
 			if (auto enemy = dynamic_cast<Enemy*>(obj))
 			{
-				if (isFlashing) return;
+				if (isFlashing)
+					return;
 				enemy->TakeDamage(1);
 				this->health.Subtract(1);
+				if (curState == State::CaptainElectricShock)
+					return;
+				else if (auto dynamite = dynamic_cast<DynamiteNapalm*>(obj))
+				{
+					if (dynamite->CanCauseElectricShock())
+					{
+						SetState(State::CaptainElectricShock);
+						continue;
+					}
+				}
 				SetState(State::Captain_Injured);
 			}
 			else if (auto bullet = dynamic_cast<Bullet*>(obj))

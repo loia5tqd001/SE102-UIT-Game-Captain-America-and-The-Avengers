@@ -70,6 +70,14 @@ void CaptainThrowing::HandleCollisions(Captain& cap, float dt, const std::vector
 				if (auto bullet = dynamic_cast<BulletEnemyRocket*>(e.pCoObj));
 				cap.health.Subtract(bullet->GetDamage());
 				bullet->HitCaptain();
+				if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
+				{
+					if (mini->CanCauseElectricShock())
+					{
+						cap.SetState(State::CaptainElectricShock);
+						return;
+					}
+				}
 				cap.SetState(State::Captain_Injured);
 				//TODO: case BulletEnemyFlying
 			}

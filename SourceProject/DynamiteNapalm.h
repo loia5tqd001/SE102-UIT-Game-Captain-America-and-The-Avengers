@@ -8,7 +8,7 @@ private:
 	static constexpr auto RUNNING_SPEED = 80.0f;
 	static constexpr auto RUNNING_BEFORE_DEAD_SPEED = 1.2f*RUNNING_SPEED;
 	static constexpr auto NUM_FIRE_BULLET = 2;
-	static constexpr auto DEFAULT_HEALTH = 15;
+	static constexpr auto DEFAULT_HEALTH = 4;
 	static constexpr auto maxHealthHeadless = 5;
 	static constexpr auto TIME_TO_HEADLESS_SHOOT = 1.5f;
 	static constexpr auto FAR_DISTANCE = 70.0f;
@@ -34,5 +34,6 @@ public:
 	void SpawnFireBullet();
 	void TakeDamage(int damage) override;
 	void TakeDinamiteDamage(int damage);
+	bool CanCauseElectricShock() { return (curState == State::DynamiteNapalm_Headless_Running_Shooting); }
 };
 

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CaptainStanding.h"
-
+#include"DynamiteNapalm.h"
 
 
 void CaptainStanding::Enter(Captain& cap, State fromState, Data&& data)
@@ -176,7 +176,15 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 			{
 				cap.health.Subtract(1);
 				enemy->TakeDamage(1);
-				cap.SetState(State::Captain_Injured);
+				if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
+				{
+					if (mini->CanCauseElectricShock())
+					{
+						cap.SetState(State::CaptainElectricShock);
+						return;
+					}
+				}
+					cap.SetState(State::Captain_Injured);
 			}
 			else {
 				cap.CollideWithPassableObjects(dt, e);
