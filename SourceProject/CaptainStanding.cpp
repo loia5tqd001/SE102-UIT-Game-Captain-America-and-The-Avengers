@@ -161,11 +161,15 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 		}
 		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
 		{
+			auto mv = movingLedge->GetVelocity();
+			Debug::Out("==InCaptainStand:", mv.x, mv.y);
+
 			if (e.ny < 0)
 			{
 				isOnGround = true;
 				isOnMovingLedge = true;
 				cap.vel = movingLedge->GetVelocity();
+				//Debug::Out("InCaptainStand:", cap.vel.x, cap.vel.y);
 				cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 			}
 		}

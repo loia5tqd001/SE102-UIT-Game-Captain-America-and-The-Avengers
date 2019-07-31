@@ -261,6 +261,13 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 					}
 				}
 			}
+			else if (auto ledge = dynamic_cast<MovingLedge*>(obj))
+			{
+				//if (vel.y > 0.0f)
+				//{
+				//	pos.y = ledge->GetPos().y - GetHeight();
+				//}
+			}
 			else if (auto bullet = dynamic_cast<Bullet*>(obj))
 			{
 				if (isFlashing) return;
@@ -313,8 +320,7 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 				{
 					pos = posBeforePhasing - vel * dt;
 
-
-
+#pragma region abc
 					// Don't care about these stuff below
 
 					//Vector2 deltaS = pos - posBeforePhasing;
@@ -354,8 +360,9 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 					//	//Todo: Handle this 
 					//}
 					//pos = absoluteLimitPoint;
+#pragma endregion 
 				}
-			}
+			}				
 		}
 	posBeforePhasing = pos;
 	
@@ -390,7 +397,6 @@ void Captain::HandleHitBox(float dt, const std::vector<GameObject*>& coObjects)
 			{
 				enemy->TakeDamage(1);
 			}
-			// NOTE: I think we should handle keydown for switch
 			else if (auto block = dynamic_cast<Block*>(obj))
 			{
 				if (block->GetType() == ClassId::Switch)
