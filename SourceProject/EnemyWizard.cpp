@@ -168,7 +168,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			else {
 				SetState(State::EnemyWizard_Flying);
 			}
-			if (nx <0 && cap.GetPos().x - 10 < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x - 10 > pos.x)
+			if (nx <0 && cap.GetPos().x - 20 < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x - 20 > pos.x)
 			{
 				if (!checkShotOnce) {
 					SetState(State::EnemyWizard_ShootWhenFly);
@@ -326,7 +326,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 					else {
 						SetState(State::EnemyWizard_Flying);
 					}
-					if (nx < 0 && cap.GetPos().x -10 < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x - 10 > pos.x)
+					if (nx < 0 && cap.GetPos().x -20 < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x - 20 > pos.x)
 					{
 						if (!checkShotOnce) {
 							SetState(State::EnemyWizard_ShootWhenFly);
