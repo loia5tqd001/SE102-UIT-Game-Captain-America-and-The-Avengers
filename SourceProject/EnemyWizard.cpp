@@ -81,6 +81,10 @@ void EnemyWizard::SetState(State state)
 		vel.y = 0;
 		break;
 	case State::EnemyWizard_Defeated:
+		OnFlashing(true);
+		timeFlashing = 4.0f;
+		nFrameToRender = 1;
+		nFrameToUnrender = 1;
 		vel.x = 0; 
 		vel.x = 0;
 		break;
