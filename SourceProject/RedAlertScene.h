@@ -9,7 +9,7 @@ private:
 	std::unique_ptr<Captain> cap;
 
 	bool bossIsDestroyed = false;
-	//std::unique_ptr<DynamiteNapalm> miniboss;
+	float holdTime = 0.0f;
 public:
 	RedAlertScene();
 	void LoadResources () override;
