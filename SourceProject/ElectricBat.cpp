@@ -106,6 +106,8 @@ bool ElectricBat::OnState(State state)
 	//if (curState != state) SetState(state);
 	static float countHorDistance = 0;
 	static float countVerDistance = 0;
+	static float countHorDistanceA = 0;
+	static float countVerDistanceA = 0;
 	switch (state)
 	{
 	case State::ElectricBat_Sleep:
@@ -173,46 +175,47 @@ bool ElectricBat::OnState(State state)
 		if (pos.x > cap->GetPos().x) nx = -1;
 		else nx = 1;
 
-		if (std::abs(countHorDistance) < HOR_DISTANCE)
+		if (std::abs(countHorDistanceA) < HOR_DISTANCE)
 		{
-			if (countHorDistance >= 0) {
-				countHorDistance += MOVING_SPEED * GameTimer::Dt();
-				vel.x = MOVING_SPEED;
+			if (countHorDistanceA >= 0) {
+				countHorDistanceA += MOVING_SPEED * GameTimer::Dt();
+				vel.x = -MOVING_SPEED;
 				vel.y = 0;
 			}
 			else {
-				countHorDistance -= MOVING_SPEED * GameTimer::Dt();
-				vel.x = -MOVING_SPEED;
+				countHorDistanceA -= MOVING_SPEED * GameTimer::Dt();
+				vel.x = MOVING_SPEED;
 				vel.y = 0;
 			}
 		}
 		else
 		{
-			if (std::abs(countVerDistance) < VER_DISTANCE)
+			if (std::abs(countVerDistanceA) < VER_DISTANCE)
 			{
-				if (countVerDistance >= 0) {
-					countVerDistance += MOVING_SPEED * GameTimer::Dt();
-					vel.y = MOVING_SPEED;
+				if (countVerDistanceA >= 0) {
+					countVerDistanceA += MOVING_SPEED * GameTimer::Dt();
+					vel.y = +MOVING_SPEED;
 					vel.x = 0;
 				}
 				else {
-					countVerDistance -= MOVING_SPEED * GameTimer::Dt();
+					countVerDistanceA -= MOVING_SPEED * GameTimer::Dt();
 					vel.y = -MOVING_SPEED;
 					vel.x = 0;
-					return true;
+					//return true;
 				}
 			}
 			else
 			{
-				if (countHorDistance > 0 && countVerDistance > 0)
+				if (countHorDistanceA > 0 && countVerDistanceA > 0)
 				{
-					countHorDistance = -1;
-					countVerDistance = -1;
+					countHorDistanceA = -1;
+					countVerDistanceA = -1;
 				}
 				else
 				{
-					countHorDistance = 1;
-					countVerDistance = 1;
+					countHorDistanceA = 1;
+					countVerDistanceA = 1;
+					return true;
 				}
 			}
 		}
