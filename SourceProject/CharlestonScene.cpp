@@ -68,18 +68,6 @@ void CharlestonScene::Draw()
 	for (auto& obj : layer4) obj->Render();
 
 	grid->RenderCells();
-	
-	if (1) // test ElectricBat
-	{
-		Data data;
-		data.Add("water-velocity", 16.9f);
-		data.Add("damage", 420);
-		static ElectricBat electricBat({ 50.0f, 260.0f }, grid.get(), cap.get());
-		std::vector<GameObject*> co;
-		electricBat.Update(GameTimer::Dt(), co);
-
-		electricBat.Render();
-	}
 }
 
 void CharlestonScene::OnKeyDown(BYTE keyCode)

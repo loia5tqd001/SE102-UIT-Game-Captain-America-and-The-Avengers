@@ -13,17 +13,15 @@ ElectricBat::ElectricBat(Vector2 spawnPos, Grid * grid, Captain * cap)
 
 	this->cap = cap;
 	curState = State::ElectricBat_Sleep;
+	SpawnPos = pos;
 }
 
 void ElectricBat::OnAction()
 {
-	static const Vector2 SpawnPos = pos;
-	static bool finishCycle = false;
 	float distanceToCap = sqrt(abs(cap->GetPos().x - pos.x)*abs(cap->GetPos().x - pos.x) + abs(cap->GetPos().y - pos.y)*abs(cap->GetPos().y - pos.y));
 	if (distanceToCap < DETECT_CAPTAIN_DISTANCE)
 	{
 		finishCycle = false;
-		static int counterFly = 0;
 		if (OnState(curState))
 		{
 			switch (curState)
@@ -62,7 +60,6 @@ void ElectricBat::OnAction()
 	else
 	{
 		if (!finishCycle) {
-			static int counterFly = 0;
 			if (OnState(curState))
 			{
 				switch (curState)
@@ -265,7 +262,7 @@ void ElectricBat::TakeDamage(int damage)
 
 void ElectricBat::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
 {
-	/*auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
 	float _, __, ___, ____;
 
 	if (coEvents.size()) CollisionDetector::FilterCollisionEvents(coEvents, _, __, ___, ____);
@@ -281,7 +278,7 @@ void ElectricBat::HandleCollisions(float dt, const std::vector<GameObject*>& coO
 				return;
 			}
 		}
-	}*/
+	}
 }
 
 

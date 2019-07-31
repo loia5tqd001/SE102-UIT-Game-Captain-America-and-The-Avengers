@@ -4,16 +4,19 @@ class ElectricBat :
 	public Enemy
 {
 private:
-	static constexpr float HOR_DISTANCE = 80.0f;
+	static constexpr float HOR_DISTANCE = 60.0f;
 	static constexpr float VER_DISTANCE = 40.0f;
 	static constexpr float DETECT_CAPTAIN_DISTANCE = 90.0f;
-	static constexpr float MOVING_SPEED = 110.0f;
+	static constexpr float MOVING_SPEED = 100.0f;
 
 	Captain *cap;
 	float countHorDistance = 0;
 	float countVerDistance = 0;
 	float countHorDistanceA = 0;
 	float countVerDistanceA = 0;
+	Vector2 SpawnPos;
+	bool finishCycle = false;
+	int counterFly = 0;
 
 	void OnAction();
 	bool OnState(State state);
