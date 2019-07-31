@@ -29,13 +29,13 @@ private:
 	Captain& cap;
 	bool Onbehaviors(Behaviors behavior);
 	void Action();
+	void UpdateAnimation(float dt) override;
 public:
 	EnemyWizard(Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap);
 	void SetState(State state) override;
 	void SpawnBullet();
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	void SpawnBulletFire();
-	void testing(Window &win); //only use for testing
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 	void TakeDamage(int damage) override;
 	void Render() const override;

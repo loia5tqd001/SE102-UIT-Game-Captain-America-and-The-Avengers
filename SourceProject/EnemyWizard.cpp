@@ -76,7 +76,8 @@ void EnemyWizard::SetState(State state)
 	switch (state)
 	{
 	case State::EnemyWizard_BeforeDefeated:
-		vel.x = -nx * FALL_BACK; 
+		if (health >0) vel.x = -nx * FALL_BACK/3; 
+		else vel.x = -nx * FALL_BACK;
 		vel.y = 0;
 		break;
 	case State::EnemyWizard_Defeated:
@@ -137,7 +138,13 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			return false;
 		}
 		else {
-			SetState(State::EnemyWizard_Defeated);
+			if (health>0){
+				//SetState(State::EnemyWizard_Defeated);
+				return true;
+			}
+			else {
+				SetState(State::EnemyWizard_Defeated);
+			}
 		}
 	}
 	if (curState == State::EnemyWizard_Defeated) {
@@ -545,6 +552,14 @@ void EnemyWizard::Action()
 	}
 }
 
+void EnemyWizard::UpdateAnimation(float dt)
+{
+	if (isFlashing)
+		OnFlashing();
+
+	animations.at(curState).Update(dt);
+}
+
 void EnemyWizard::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
 {
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
@@ -585,59 +600,15 @@ void EnemyWizard::HandleCollisions(float dt, const std::vector<GameObject*>& coO
 		}
 	}
 }
-static float groundPosY = 390.0f; // testing ground pos.y
-void EnemyWizard::testing(Window &win)
-{	
-	if (win.IsKeyPressed(VK_UP))
-		this->SetState(State::EnemyWizard_FlyUp);
-	else if (win.IsKeyPressed(VK_DOWN))
-	{
-		if (pos.y < groundPosY)
-			this->SetState(State::EnemyWizard_FlyDown);
-		else
-			this->SetState(State::EnemyWizard_Stand);
-	}
-	else if (win.IsKeyPressed(VK_LEFT))
-	{
-		nx = -1;
-		if (pos.y < groundPosY)
-			this->SetState(State::EnemyWizard_Flying);
-		else
-			this->SetState(State::EnemyWizard_Walking);
-	}
-	else if (win.IsKeyPressed(VK_RIGHT))
-	{
-		nx = 1;
-		if (pos.y < groundPosY)
-			this->SetState(State::EnemyWizard_Flying);
-		else
-			this->SetState(State::EnemyWizard_Walking);
-	}
-	if (win.IsKeyPressed('J')) // in real data we shoot base on cap pos if shoot vertical
-	{
-		if (curState == State::EnemyWizard_Flying || curState == State::EnemyWizard_FlyUp || curState == State::EnemyWizard_FlyDown)
-			this->SetState(State::EnemyWizard_ShootWhenFly);
-		else
-			this->SetState(State::EnemyWizard_ShootBullet);
-		SpawnBulletFire();
-	}
-	else if (win.IsKeyPressed('K')) // we always shoot base on cap pos
-	{
-		if (curState != State::EnemyWizard_Flying && curState != State::EnemyWizard_FlyUp && curState != State::EnemyWizard_FlyDown)
-			this->SetState(State::EnemyWizard_ShootBullet);
-		SpawnBullet();
-	}	
-	if (win.IsKeyPressed('B'))
-		TakeDamage(1);
-}
 
 void EnemyWizard::TakeDamage(int damage)
 {
 	assert(damage > 0);
+	if (isFlashing) return;
 	if (curState == State::EnemyWizard_Defeated) return;
-
+	Debug::Out(health);
 	health -= damage;
-	//SetState(State::EnemyWizard_BeforeDefeated);
+	if (/*pos.x >= GROUND && vel.x == 0 && */vel.y == 0 && curState!=State::EnemyWizard_ShootWhenFly && curState != State::EnemyWizard_Flying) SetState(State::EnemyWizard_BeforeDefeated);
 	if (health <= 0)
 	{
 		SetState(State::EnemyWizard_BeforeDefeated);
