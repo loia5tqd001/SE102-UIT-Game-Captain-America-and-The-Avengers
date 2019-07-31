@@ -25,7 +25,7 @@ void MovingLedge::OnCircleMoving(float dt)
 
 		holdTime += dt;
 		pos.x = 580.0f + 52.0f * cos( omega * holdTime);
-		pos.y = 680.0f + 35.0f * cos( omega * holdTime - PI / 2.0f);
+		pos.y = 690.0f + 35.0f * cos( omega * holdTime - PI / 2.0f);
 
 		// calculate for handling collision:
 		vel.x = (pos.x - lastPos.x) / dt;

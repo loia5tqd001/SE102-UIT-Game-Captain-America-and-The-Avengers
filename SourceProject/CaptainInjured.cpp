@@ -121,7 +121,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 	{
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
 		{
-			//spawner->OnCollideWithCap();
+			spawner->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
 			return;
 		}
@@ -215,7 +215,8 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
 		{
-			cap.SetState(State::Captain_Standing);
+			if (e.ny < 0)
+				cap.SetState(State::Captain_Standing);
 		}
 	}
 

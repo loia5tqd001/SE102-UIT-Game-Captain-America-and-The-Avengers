@@ -76,7 +76,12 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 
 	for (auto& e : coEvents)
 	{
-	    if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
+		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
+		{
+			spawner->OnCollideWithCap(&cap);
+			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
+		}
+		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
 		{
 			if (!cap.isFlashing)
 			{

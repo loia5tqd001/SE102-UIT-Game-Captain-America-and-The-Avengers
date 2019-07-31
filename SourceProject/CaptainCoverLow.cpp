@@ -91,7 +91,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 			spawner->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
 		}
-		if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
+		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
 		{
 			if (!cap.isFlashing)
 			{

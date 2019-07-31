@@ -138,9 +138,10 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 					//AssertUnreachable(); // sitting is don't move
 			}
 		}
-		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
+		else if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
 		{
-			//AssertUnreachable();
+			spawner->OnCollideWithCap(&cap);
+			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
@@ -148,8 +149,11 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 		else if (auto ledge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
-			cap.vel = ledge->GetVelocity();
-			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
+			if (e.ny < 0)
+			{
+				cap.vel = ledge->GetVelocity();
+				cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
+			}
 		}
 		else if (dynamic_cast<BreakableLedge*>(e.pCoObj))
 		{

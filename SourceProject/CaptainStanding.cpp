@@ -97,14 +97,14 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 	}
 
 	HandleCollisions(cap, dt, coObjects);
-	if (!isOnGround)
+	if (!isOnGround && !isOnMovingLedge)
 		cap.SetState(State::Captain_Falling);
 }
 
 void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	isOnGround = false;
-	isOnMovingLedge = false;
+
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
 	if (coEvents.size() == 0)
 	{
@@ -112,6 +112,7 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 		cap.pos.y += cap.vel.y * dt;
 		return;
 	}
+	isOnMovingLedge = false;
 
 	float min_tx, min_ty, nx, ny;
 	CollisionDetector::FilterCollisionEvents(coEvents, min_tx, min_ty, nx, ny);
@@ -151,8 +152,10 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 					AssertUnreachable();
 			}
 		}
-		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
+		else if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
 		{
+			spawner->OnCollideWithCap(&cap);
+			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{
@@ -161,15 +164,11 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 		}
 		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
 		{
-			auto mv = movingLedge->GetVelocity();
-			Debug::Out("==InCaptainStand:", mv.x, mv.y);
-
 			if (e.ny < 0)
 			{
 				isOnGround = true;
 				isOnMovingLedge = true;
 				cap.vel = movingLedge->GetVelocity();
-				//Debug::Out("InCaptainStand:", cap.vel.x, cap.vel.y);
 				cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 			}
 		}
@@ -199,6 +198,7 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 						return;
 					}
 				}
+				if (!isOnMovingLedge)
 					cap.SetState(State::Captain_Injured);
 			}
 			else {

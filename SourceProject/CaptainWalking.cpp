@@ -65,7 +65,7 @@ void CaptainWalking::OnKeyDown(Captain& cap, BYTE keyCode)
 void CaptainWalking::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	cap.vel.x = cap.nx * WALKING_SPEED;
-	cap.vel.y = 100.0f;
+	cap.vel.y = GRAVITY;
 	cap.vel += onMovingLedgeSpeed;
 
 	auto kControlDir = cap.nx > 0 ? KeyControls::Right : KeyControls::Left;
@@ -89,7 +89,6 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 	{
 		cap.pos.x += cap.vel.x * dt;
 		cap.pos.y += cap.vel.y * dt;
-		isOnGround = false;
 		return;
 	}
 
@@ -144,7 +143,8 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 		else if (auto ledge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
-			if (e.ny != 0) isOnGround = true;
+			Debug::Out("Fuck");
+			if (e.ny < 0) isOnGround = true;
 			onMovingLedgeSpeed = ledge->GetVelocity();
 		}
 		else if (auto block = dynamic_cast<Block*>(e.pCoObj)) {

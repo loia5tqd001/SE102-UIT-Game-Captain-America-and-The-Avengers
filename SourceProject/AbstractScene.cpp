@@ -36,10 +36,10 @@ void AbstractScene::SetPause(bool setpause)
 		{
 			if (AmbushTrigger::Instance()->GetState() == State::Ambush_Being)
 				Sounds::PlayLoop(SoundId::Ambush);
-			else
+			else 
 				Sounds::PlayLoop(GetBgMusic());
 		}
-		else
+		else if (HasMusic())
 		{
 			Sounds::PlayLoop(GetBgMusic());
 		}

@@ -263,10 +263,10 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 			}
 			else if (auto ledge = dynamic_cast<MovingLedge*>(obj))
 			{
-				//if (vel.y > 0.0f)
-				//{
-				//	pos.y = ledge->GetPos().y - GetHeight();
-				//}
+				if (vel.y > 0.0f)
+				{
+					pos.y = ledge->GetPos().y - GetHeight();
+				}
 			}
 			else if (auto bullet = dynamic_cast<Bullet*>(obj))
 			{

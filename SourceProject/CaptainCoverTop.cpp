@@ -134,6 +134,11 @@ void CaptainCoverTop::HandleCollisions(Captain& cap, float dt, const std::vector
 			cap.vel = movingLedge->GetVelocity();
 			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 		}
+		else if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
+		{
+			spawner->OnCollideWithCap(&cap);
+			cap.CollideWithPassableObjects(dt, e); // go the remaining distance
+		}
 	}
 }
 
