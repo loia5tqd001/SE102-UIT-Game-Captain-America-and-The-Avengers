@@ -1,4 +1,6 @@
 #include "pch.h"
+#include "PittsburghScene.h"
+#include "CharlestonScene.h"
 
 // Learn more about jsoncpp: https://github.com/open-source-parsers/jsoncpp
 Json::Value AbstractScene::GetRootJson(LPCSTR jsonPath)
@@ -30,10 +32,17 @@ void AbstractScene::SetPause(bool setpause)
 	// handle music for current main scene
 	if (isPause) Sounds::StopAll();
 	else {
-		if (AmbushTrigger::Instance()->GetState() == State::Ambush_Being)
-			Sounds::PlayLoop(SoundId::Ambush);
+		if (dynamic_cast<PittsburghScene*>(this) || dynamic_cast<CharlestonScene*>(this))
+		{
+			if (AmbushTrigger::Instance()->GetState() == State::Ambush_Being)
+				Sounds::PlayLoop(SoundId::Ambush);
+			else
+				Sounds::PlayLoop(GetBgMusic());
+		}
 		else
+		{
 			Sounds::PlayLoop(GetBgMusic());
+		}
 	}
 	
 }

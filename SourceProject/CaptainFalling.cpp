@@ -145,8 +145,7 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 	cap.pos.x += min_tx * cap.vel.x * dt;
 	cap.pos.y += min_ty * cap.vel.y * dt;
 
-	int a = coEvents.size();
-	Debug::out("Number of coObj: %d\n", a);
+
 	for (auto&e : coEvents)
 	{
 		if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
@@ -168,7 +167,6 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 		{
 			ledge->OnCollideWithCap();
 			cap.SetState(State::Captain_Sitting);
-			//Debug::out("Line 139\n");
 		}
 		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 		{

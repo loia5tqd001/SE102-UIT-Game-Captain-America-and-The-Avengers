@@ -60,13 +60,11 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 					countHorDistance += MOVING_SPEED*dt;
 					vel.x = MOVING_SPEED;
 					vel.y = 0;
-					Debug::Out(1);
 				}
 				else {
 					countHorDistance -= MOVING_SPEED*dt;
 					vel.x = -MOVING_SPEED;
 					vel.y = 0;
-					Debug::Out(2);
 				}
 			}
 			else
@@ -77,13 +75,11 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 						countVerDistance += MOVING_SPEED*dt;
 						vel.y = MOVING_SPEED;
 						vel.x = 0;
-						Debug::Out(3);
 					}
 					else {
 						countVerDistance -= MOVING_SPEED*dt;
 						vel.y = -MOVING_SPEED;
 						vel.x = 0;
-						Debug::Out(4);
 					}
 				}
 				else
@@ -98,7 +94,6 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 						countHorDistance = 1;
 						countVerDistance = 1;
 					}
-					Debug::Out(0);
 				}
 			}
 			break;

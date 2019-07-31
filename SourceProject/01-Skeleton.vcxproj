@@ -136,6 +136,7 @@
       <EnablePREfast>false</EnablePREfast>
       <WarningLevel>Level2</WarningLevel>
       <DisableSpecificWarnings>4566;26495;28251;28182;26495</DisableSpecificWarnings>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)NDEBUG</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -157,6 +158,7 @@
       <AdditionalIncludeDirectories>C:\Users\NguyễnHuỳnhLợi\Desktop\GameDevIntro\01-Skeleton\thirdpartylib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)NDEBUG</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

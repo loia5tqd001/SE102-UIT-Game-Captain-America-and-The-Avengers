@@ -129,13 +129,11 @@ bool ElectricBat::OnState(State state)
 				countHorDistance += MOVING_SPEED * GameTimer::Dt();
 				vel.x = MOVING_SPEED;
 				vel.y = 0;
-				Debug::Out(1);
 			}
 			else {
 				countHorDistance -= MOVING_SPEED * GameTimer::Dt();
 				vel.x = -MOVING_SPEED;
 				vel.y = 0;
-				Debug::Out(2);
 			}
 		}
 		else
@@ -146,13 +144,11 @@ bool ElectricBat::OnState(State state)
 					countVerDistance += MOVING_SPEED * GameTimer::Dt();
 					vel.y = MOVING_SPEED;
 					vel.x = 0;
-					Debug::Out(3);
 				}
 				else {
 					countVerDistance -= MOVING_SPEED * GameTimer::Dt();
 					vel.y = -MOVING_SPEED;
 					vel.x = 0;
-					Debug::Out(4);
 				}
 			}
 			else
@@ -169,7 +165,6 @@ bool ElectricBat::OnState(State state)
 					countVerDistance = 1;
 					return true;
 				}
-				Debug::Out(0);
 			}
 		}
 		break;
