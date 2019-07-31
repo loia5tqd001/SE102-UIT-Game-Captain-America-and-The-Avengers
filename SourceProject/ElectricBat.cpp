@@ -104,10 +104,6 @@ void ElectricBat::OnAction()
 bool ElectricBat::OnState(State state)
 {
 	//if (curState != state) SetState(state);
-	static float countHorDistance = 0;
-	static float countVerDistance = 0;
-	static float countHorDistanceA = 0;
-	static float countVerDistanceA = 0;
 	switch (state)
 	{
 	case State::ElectricBat_Sleep:
@@ -194,7 +190,7 @@ bool ElectricBat::OnState(State state)
 			{
 				if (countVerDistanceA >= 0) {
 					countVerDistanceA += MOVING_SPEED * GameTimer::Dt();
-					vel.y = +MOVING_SPEED;
+					vel.y = MOVING_SPEED;
 					vel.x = 0;
 				}
 				else {
@@ -269,7 +265,7 @@ void ElectricBat::TakeDamage(int damage)
 
 void ElectricBat::HandleCollisions(float dt, const std::vector<GameObject*>& coObjects)
 {
-	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
+	/*auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
 	float _, __, ___, ____;
 
 	if (coEvents.size()) CollisionDetector::FilterCollisionEvents(coEvents, _, __, ___, ____);
@@ -285,7 +281,7 @@ void ElectricBat::HandleCollisions(float dt, const std::vector<GameObject*>& coO
 				return;
 			}
 		}
-	}
+	}*/
 }
 
 
