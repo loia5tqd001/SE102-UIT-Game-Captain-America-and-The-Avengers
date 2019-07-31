@@ -4,7 +4,7 @@
 #include "BulletEnemyWizard.h"
 
 EnemyWizard::EnemyWizard(Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap) :
-	Enemy(behavior, behaviorData,State::EnemyWizard_Stand, 1000, spawnPos, grid),
+	Enemy(behavior, behaviorData,State::EnemyWizard_Stand, 20, spawnPos, grid),
 	cap(cap)
 {
 	animations.emplace(State::EnemyWizard_BeforeDefeated, Animation(SpriteId::EnemyWizard_BeforeDefeated, 0.2f));
@@ -405,7 +405,11 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			if (pos.y > GROUND) pos.y = GROUND - 1;
 			enter = false;
 			//if (nx > 0) return true;
-			if (pos.x < LIGHT_POS_X) return true;
+			if (pos.x < LIGHT_POS_X) {
+				moveToLight = false;
+				enter = true;
+				return true;
+			}
 		}
 		if (pos.y <= GROUND && pos.y >= ROOF && pos.x >= LIGHT_POS_X) {
 			if (!moveToLight)
@@ -437,6 +441,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			}
 			else {
 				enter = false;
+				moveToLight = false;
 				return true;
 			}
 		}
@@ -444,7 +449,8 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 		{
 			moveToLight = true;
 			if (pos.y >= LIGHT_POS_Y) {
-				pos.y = LIGHT_POS_Y;
+				if (pos.y - LIGHT_POS_Y < 5)
+					pos.y = LIGHT_POS_Y;
 				nx = 1;
 				static bool isTurned = false;
 				if (!isTurned)
@@ -456,6 +462,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 				{
 					if (animations.at(State::EnemyWizard_ShootBullet).IsDoneCycle()) {
 						isTurned = false;
+						moveToLight = false;
 						enter = false;
 						SceneManager::Instance().GetCurScene().ToggleLight();
 						return true;
@@ -470,11 +477,13 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			}
 			if (pos.y > GROUND) {
 				enter = false;
+				moveToLight = false;
 				return true; //case
 			}
 		}
 		if (counterRunOutTime > 3.0f)
 		{
+			moveToLight = false;
 			enter = false;
 			return true;
 		}
