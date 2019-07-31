@@ -12,7 +12,7 @@ class SceneManager
 private:
 	std::unique_ptr<AbstractScene> curScene;
 	Settings& settingScene = Settings::Instance();
-	CheckPoint checkpoints[8];
+	CheckPoint checkpoints[10];
 
 public:
 	void ToggleMuteMode() const;

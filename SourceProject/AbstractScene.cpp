@@ -27,11 +27,15 @@ void AbstractScene::SetPause(bool setpause)
 	if (isDoingTransitionScene) return;
 	isPause = setpause;
 
-	if (HasMusic()) // handle music for current main scene
-	{
-		if (isPause) Sounds::StopAt(GetBgMusic());
-		else         Sounds::PlayLoop(GetBgMusic());
+	// handle music for current main scene
+	if (isPause) Sounds::StopAll();
+	else {
+		if (AmbushTrigger::Instance()->GetState() == State::Ambush_Being)
+			Sounds::PlayLoop(SoundId::Ambush);
+		else
+			Sounds::PlayLoop(GetBgMusic());
 	}
+	
 }
 
 // My teammates, you don't have to understand this, see how it's used!

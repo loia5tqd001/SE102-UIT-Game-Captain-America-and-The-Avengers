@@ -43,6 +43,9 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
+# TileMapEditor
+*.tmx
+
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
 
