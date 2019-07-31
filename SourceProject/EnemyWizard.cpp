@@ -4,7 +4,7 @@
 #include "BulletEnemyWizard.h"
 
 EnemyWizard::EnemyWizard(Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap) :
-	Enemy(behavior, behaviorData,State::EnemyWizard_Stand, 25, spawnPos, grid),
+	Enemy(behavior, behaviorData,State::EnemyWizard_Stand, 1000, spawnPos, grid),
 	cap(cap)
 {
 	animations.emplace(State::EnemyWizard_BeforeDefeated, Animation(SpriteId::EnemyWizard_BeforeDefeated, 0.2f));
@@ -418,6 +418,9 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 					return false;
 				}
 				else {
+					if (pos.x < LIGHT_POS_X) {
+						int a = 0;
+					}
 					SetState(State::EnemyWizard_Flying);
 				}
 				if (nx < 0 && cap.GetPos().x < pos.x && cap.GetPos().x + cap.GetWidth() > pos.x || nx > 0 && cap.GetPos().x - cap.GetWidth() < pos.x && cap.GetPos().x > pos.x)
@@ -433,21 +436,8 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 				}
 			}
 			else {
-				/*nx = 1;
-				if (pos.y >= LIGHT_POS_X) {
-					if (curState != State::EnemyWizard_ShootBullet || !animations.at(State::EnemyWizard_ShootBullet).IsDoneCycle())
-					{
-						SetState(State::EnemyWizard_ShootBullet);
-					}
-					else
-					{
-						enter = false;
-						return true;
-					}
-				}
-				else {
-					SetState(State::EnemyWizard_Walking);
-				}*/
+				enter = false;
+				return true;
 			}
 		}
 		else if (pos.x <= LIGHT_POS_X)
@@ -485,6 +475,7 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 		}
 		if (counterRunOutTime > 3.0f)
 		{
+			enter = false;
 			return true;
 		}
 	}
@@ -508,8 +499,10 @@ void EnemyWizard::Action()
 	if (Onbehaviors(ACTIONS_LIST[counterAction]))
 	{
 		if (cap.isDead()){
-			SetState(State::EnemyWizard_Laught);
-			return;
+			if (vel.y = 0) {
+				SetState(State::EnemyWizard_Laught);
+				return;
+			}
 		}
 		static Behaviors nextBehavior = ACTIONS_LIST[counterAction + 1];
 		if (counterAction < ActionsLength - 1)
@@ -520,6 +513,7 @@ void EnemyWizard::Action()
 		{
 			nextBehavior = ACTIONS_LIST[0];
 		}
+		curBehavior = nextBehavior;
 		switch (nextBehavior)
 		{
 		case Behaviors::EnemyWizard_FlyBackCorner:
@@ -608,7 +602,10 @@ void EnemyWizard::TakeDamage(int damage)
 	if (curState == State::EnemyWizard_Defeated) return;
 	Debug::Out(health);
 	health -= damage;
-	if (/*pos.x >= GROUND && vel.x == 0 && */vel.y == 0 && curState!=State::EnemyWizard_ShootWhenFly && curState != State::EnemyWizard_Flying) SetState(State::EnemyWizard_BeforeDefeated);
+	if (/*pos.x >= GROUND && vel.x == 0 && */vel.y == 0 && 
+		curState!=State::EnemyWizard_ShootWhenFly && curState != State::EnemyWizard_Flying && 
+		curBehavior != Behaviors::EnemyWizard_GroundShoot && curBehavior != Behaviors::EnemyWizard_TurnOffLight) 
+			SetState(State::EnemyWizard_BeforeDefeated );
 	if (health <= 0)
 	{
 		SetState(State::EnemyWizard_BeforeDefeated);

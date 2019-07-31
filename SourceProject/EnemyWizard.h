@@ -27,6 +27,7 @@ private:
 	};
 
 	Captain& cap;
+	Behaviors curBehavior = Behaviors::EnemyWizard_FlyingShoot;
 	bool Onbehaviors(Behaviors behavior);
 	void Action();
 	void UpdateAnimation(float dt) override;
