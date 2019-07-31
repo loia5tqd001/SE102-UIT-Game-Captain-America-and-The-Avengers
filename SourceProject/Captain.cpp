@@ -235,19 +235,29 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 			{
 				if (isFlashing)
 					return;
-				enemy->TakeDamage(1);
-				this->health.Subtract(1);
-				if (curState == State::CaptainElectricShock)
-					return;
-				else if (auto dynamite = dynamic_cast<DynamiteNapalm*>(obj))
-				{
-					if (dynamite->CanCauseElectricShock())
+				if (curState != State::Captain_Tackle) {
+					enemy->TakeDamage(1);
+					this->health.Subtract(1);
+					if (curState == State::CaptainElectricShock)
+						return;
+					else if (auto dynamite = dynamic_cast<DynamiteNapalm*>(obj))
 					{
-						SetState(State::CaptainElectricShock);
-						continue;
+						if (dynamite->CanCauseElectricShock())
+						{
+							SetState(State::CaptainElectricShock);
+							continue;
+						}
+					}
+					SetState(State::Captain_Injured);
+				}
+				else {
+					if (auto dynamite = dynamic_cast<DynamiteNapalm*>(obj)) {
+						//nothing
+					}
+					else {
+						enemy->TakeDamage(3);
 					}
 				}
-				SetState(State::Captain_Injured);
 			}
 			else if (auto bullet = dynamic_cast<Bullet*>(obj))
 			{
