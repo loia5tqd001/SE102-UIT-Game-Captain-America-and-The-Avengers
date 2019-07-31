@@ -44,7 +44,6 @@ void CharlestonScene::Update(float dt)
 	cam.ClampWithin(map->GetWorldBoundary());
 
 }
-#include"ElectricBat.h"
 void CharlestonScene::Draw()
 {	
 	map->Render(); // layer0

@@ -127,6 +127,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 					if (e.ny < 0 || e.nx != 0)
 					{
 						enemy->TakeDamage(3);
+						cap.CollideWithPassableObjects(dt, e);
 					}
 					else
 					{
