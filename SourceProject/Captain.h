@@ -31,12 +31,13 @@ private:
 	State phasingState;
 	bool shieldOn = true;
 	bool ignoreUpdate = false;
+	Vector2 posBeforePhasing = Vector2{ -1,-1 };
 	std::unique_ptr<Shield> shield;
 	CaptainHealth& health = CaptainHealth::Instance();
 	KeyControls lastKeyDown, lastKeyUp;
 	std::chrono::steady_clock::time_point timeLastKeyDown, timeLastKeyUp;
 
-	void PrecheckAABB(const std::vector<GameObject*>& coObjects); // return true if there's AABB collision with enemy and bullet already
+	void PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt); // return true if there's AABB collision with enemy and bullet already
 	void CollideWithPassableObjects(float dt, const CollisionEvent& e);
 	void HandleHitBox(float dt,  const std::vector<GameObject*>& coObjects);
 

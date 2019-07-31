@@ -31,7 +31,7 @@ Captain::Captain(const Vector2& pos, Grid* ogrid)
 	animations.emplace(State::Captain_InWater, Animation(SpriteId::Captain_InWater, 0.2f));
 	animations.emplace(State::Captain_Spinning, Animation(SpriteId::Captain_Spin, 0.13f));
 	animations.emplace(State::Captain_CoverLow, Animation(SpriteId::Captain_CoverLow, 0.1f));
-	animations.emplace(State::CaptainElectricShock, Animation(SpriteId::Captain_ElectricShock,0.1f));
+	animations.emplace(State::CaptainElectricShock, Animation(SpriteId::Captain_ElectricShock, 0.1f));
 
 	animations.at(State::Captain_Tackle).SetCusFrameHoldTime(0, 0.05f);
 
@@ -127,7 +127,7 @@ void Captain::SetState(State state)
 	case State::Captain_Walking: currentState = &stateWalking; break;
 	case State::Captain_Jumping: currentState = &stateJumping; break;
 	case State::Captain_Falling: currentState = &stateFalling; break;
-	case State::Captain_Kicking: currentState = &stateKicking; PrecheckAABB(grid->GetObjectsInViewPort()); break;
+	case State::Captain_Kicking: currentState = &stateKicking; break;
 	case State::Captain_Spinning: currentState = &stateSpinning; break;
 	case State::Captain_Throwing: currentState = &stateThrowing; break;
 	case State::Captain_Tackle: currentState = &stateTackle; break;
@@ -150,7 +150,7 @@ void Captain::SetState(State state)
 	currentState->Enter(*this, oldState, std::move(exitData));
 	shield->UpdateByCapState(this->curState, this->pos);
 
-	
+
 #if 1
 	switch (state)
 	{
@@ -223,9 +223,10 @@ void Captain::SetState(State state)
 #endif
 }
 
-void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
+void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 {
 	const auto capBbox = GetBBox();
+	Vector2 absoluteLimitPoint = pos;
 
 	for (auto& obj : coObjects)
 		if (capBbox.IsIntersect(obj->GetBBox()))
@@ -296,9 +297,56 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects)
 						SceneManager::Instance().GetCurScene().Teleport();
 					}
 				}
+				else if (block->GetType() == ClassId::RigidBlock)
+				{
+					pos = posBeforePhasing - vel * dt;
+
+
+
+					// Don't care about these stuff below
+
+					//Vector2 deltaS = pos - posBeforePhasing;
+
+					////Phuong trinh duong thang
+					////DeltaS dong thoi la vector chi phuong
+					////deltaS.y(x - pos.x) - deltaS.x(y - pos.x) = 0
+
+					//Vector2 limitPoint = { -1,-1 };
+
+					//if (deltaS.x != 0)
+					//{
+					//	if (vel.x < 0)
+					//	{
+					//		limitPoint.x = block->GetPos().x + block->GetWidth() + 1;
+					//		//Right Edge
+					//		limitPoint.y = deltaS.y*(limitPoint.x - pos.x) / deltaS.x + pos.x;
+
+					//		if (limitPoint.x > absoluteLimitPoint.x)
+					//		{
+					//			absoluteLimitPoint = limitPoint;
+					//		}
+					//	}
+					//	else
+					//	{
+					//		//Left Edge
+					//		limitPoint.x = block->GetPos().x - 1.0f*GetWidth() - 1;
+					//		limitPoint.y = deltaS.y*(limitPoint.x - pos.x) / deltaS.x + pos.x;
+					//		if (limitPoint.x < absoluteLimitPoint.x)
+					//		{
+					//			absoluteLimitPoint = limitPoint;
+					//		}
+					//	}
+					//}
+					//else
+					//{
+					//	//Todo: Handle this 
+					//}
+					//pos = absoluteLimitPoint;
+				}
 			}
 		}
-
+	posBeforePhasing = pos;
+	
 }
 
 void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
@@ -347,7 +395,7 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	animations.at(curState).Update(dt);
 
-	PrecheckAABB(coObjects);
+	PrecheckAABB(coObjects, dt);
 	if (!ignoreUpdate) currentState->Update(*this, dt, coObjects);
 	ignoreUpdate = false;
 	HandleHitBox(dt, coObjects);
