@@ -3,7 +3,7 @@
 
 
 BulletEnemyWizard::BulletEnemyWizard(int nx, const Vector2& spawnPos, Vector2& vel,Enemy *enemy) :
-	Bullet(State::BulletEnemyWizard_Horizontal, 4, spawnPos, vel, nx, enemy)
+	Bullet(State::BulletEnemyWizard_Horizontal, 3, spawnPos, vel, nx, enemy)
 {
 	animations.emplace(State::BulletEnemyWizard_Cross, Animation(SpriteId::BulletEnemyWizard_Cross, 0.1f));
 	animations.emplace(State::BulletEnemyWizard_Horizontal, Animation(SpriteId::BulletEnemyWizard_Horizontal, 0.1f));

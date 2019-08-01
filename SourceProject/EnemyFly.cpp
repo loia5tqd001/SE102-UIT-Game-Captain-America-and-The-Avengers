@@ -3,7 +3,7 @@
 #include "BulletEnemyFly.h"
 
 EnemyFly::EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap) :
-	Enemy(behavior, std::move(behaviorData), State::EnemyFly_Fly, 2, spawnPos, grid)
+	Enemy(behavior, std::move(behaviorData), State::EnemyFly_Fly, 5, spawnPos, grid)
 {
 	animations.emplace(State::EnemyFly_Fly, Animation(SpriteId::EnemyFly_Fly, 0.1f));
 	animations.emplace(State::EnemyFly_Falling, Animation(SpriteId::EnemyFly_Fly, 0.06f));

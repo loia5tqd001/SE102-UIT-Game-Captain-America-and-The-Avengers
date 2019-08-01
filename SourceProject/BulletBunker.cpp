@@ -50,3 +50,9 @@ void BulletBunker::HitCaptain()
 {
 	SetState(State::Destroyed);
 }
+
+void BulletBunker::Reflect()
+{
+	vel.y = -vel.y;
+	vel.x = -vel.x;
+}

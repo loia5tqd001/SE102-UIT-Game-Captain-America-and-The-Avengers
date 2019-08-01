@@ -8,5 +8,6 @@ public:
 
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	void HitCaptain() override;
+	void Reflect();
 };
 

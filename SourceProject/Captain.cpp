@@ -421,13 +421,11 @@ void Captain::HandleHitBox(float dt, const std::vector<GameObject*>& coObjects)
 void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	animations.at(curState).Update(dt);
-
 	PrecheckAABB(coObjects, dt);
 	if (!ignoreUpdate) currentState->Update(*this, dt, coObjects);
+	shield->Update(dt, coObjects);
 	ignoreUpdate = false;
 	HandleHitBox(dt, coObjects);
 
 	OnFlashing();
-	shield->UpdateByCapState(curState, pos);
-	shield->Update(dt, coObjects);
 }

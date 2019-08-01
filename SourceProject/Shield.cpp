@@ -4,6 +4,7 @@
 #include "BulletEnemyGun.h"
 #include"BulletDynamite.h"
 #include "BulletEnemyWizard.h"
+#include "BulletBunker.h"
 //#include "EnemyGun.h"
 //#include "EnemyRocket.h"
 
@@ -22,8 +23,10 @@ Shield::Shield(Captain& cap) :
 
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (isOnCaptain)
+	if (isOnCaptain) {
+		vel = cap.GetVelocity();
 		nx = cap.GetNx();// get nx to flip posx
+	}
 
 	switch (curState)
 	{
@@ -156,7 +159,6 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 {
 	if (isOnCaptain) 
 	{
-		vel = cap.GetVelocity();
 		if (capState == State::Captain_Standing)
 		{
 			pos.x = capPos.x + 18;
@@ -349,6 +351,14 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
 			}
+			if (auto bullet = dynamic_cast<BulletBunker*>(e.pCoObj))
+			{
+				if (e.ny > 0.0f)
+				{
+					bullet->Reflect();
+					Sounds::PlayAt(SoundId::ShieldCollide);
+				}
+			}
 		}
 	}
 	else //cause damage to enemy
@@ -405,7 +415,15 @@ void Shield::HandleStraightCollison(float dt, const std::vector<GameObject*>& co
 					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
 			}
-			else if (auto bullet = dynamic_cast<BulletEnemyWizard*>(e.pCoObj))
+			if (auto bullet = dynamic_cast<BulletEnemyWizard*>(e.pCoObj))
+			{
+				if (e.nx < 0.0f && this->nx > 0 || e.nx > 0.0f && this->nx < 0)
+				{
+					bullet->Reflect();
+					Sounds::PlayAt(SoundId::ShieldCollide);
+				}
+			}
+			if (auto bullet = dynamic_cast<BulletBunker*>(e.pCoObj))
 			{
 				if (e.nx < 0.0f && this->nx > 0 || e.nx > 0.0f && this->nx < 0)
 				{
@@ -427,18 +445,26 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 		{
 			const CollisionEvent& e = coEvents[i];
 
-			if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj)) //
-			{
-				if (e.ny > 0.0f)
-				{
-					enemy->TakeDamage(3);
-				}
-			}
-			else if (auto block = dynamic_cast<Block*>(e.pCoObj))
+			//if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj)) //
+			//{
+			//	if (e.ny > 0.0f)
+			//	{
+			//		enemy->TakeDamage(3);
+			//	}
+			//}
+		    if (auto block = dynamic_cast<Block*>(e.pCoObj))
 			{
 				if (block->GetType() == ClassId::PassableLedge ||
 					block->GetType() == ClassId::RigidBlock)
 				{
+					Sounds::PlayAt(SoundId::ShieldCollide);
+				}
+			}
+			else if (auto bullet = dynamic_cast<BulletBunker*>(e.pCoObj))
+			{
+				if (e.ny < 0.0f)
+				{
+					bullet->Reflect();
 					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
 			}
