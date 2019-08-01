@@ -13,7 +13,7 @@ private:
 	static constexpr float MAX_POS_X = 210.0f;
 	static constexpr float MIN_POS_X = 20.0f;
 	static constexpr float LIGHT_POS_X = 50.0f;
-	static constexpr float LIGHT_POS_Y = 57.0f;
+	static constexpr float LIGHT_POS_Y = 50.0f;
 	static constexpr Behaviors ACTIONS_LIST[21] = 
 	{ 
 	  Behaviors::EnemyWizard_FlyingShoot  , Behaviors::EnemyWizard_GroundShoot  , Behaviors::EnemyWizard_Laught,
