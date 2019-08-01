@@ -49,7 +49,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 	}
 	case State::Shield_Straight:
 	{
-		UpdateByCapState(cap.GetState(), cap.GetPos());
+		UpdateByCapState(cap.GetState(), cap.GetPos(), dt);
 		HandleStraightCollison(dt, coObjects);
 		break;
 	}
@@ -155,9 +155,20 @@ void Shield::ThrowAway()
 	}
 }
 
-void Shield::UpdateByCapState(State capState, Vector2 capPos)
+void Shield::SetVelocity(const Vector2 & vel)
 {
-	if (isOnCaptain) 
+	this->vel = vel;
+}
+
+void Shield::UpdateByCapState(State capState, Vector2 capPos, float dt)
+{
+	Vector2 posBackup = Vector2{ -1,-1 };
+	if (dt != -1.0f)
+	{
+		posBackup = pos;
+	}
+
+	if (isOnCaptain)
 	{
 		if (capState == State::Captain_Standing)
 		{
@@ -269,6 +280,13 @@ void Shield::UpdateByCapState(State capState, Vector2 capPos)
 		{
 			flipPosx(); //case that captain turn left
 		}
+
+		if (dt != -1.0f)
+		{
+			vel = pos - posBackup;
+			vel.x /= dt;
+			vel.y /= dt;
+		}
 	}
 }
 void Shield::flipPosx()
@@ -372,7 +390,7 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 				if (auto dynamiteNapalm = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
 				{
 					//if (dynamiteNapalm->CanTakeDamage())
-						dynamiteNapalm->TakeDamage(1);
+					dynamiteNapalm->TakeDamage(1);
 				}
 				else
 					enemy->TakeDamage(1);
@@ -452,7 +470,7 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 			//		enemy->TakeDamage(3);
 			//	}
 			//}
-		    if (auto block = dynamic_cast<Block*>(e.pCoObj))
+			if (auto block = dynamic_cast<Block*>(e.pCoObj))
 			{
 				if (block->GetType() == ClassId::PassableLedge ||
 					block->GetType() == ClassId::RigidBlock)

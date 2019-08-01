@@ -20,9 +20,10 @@ private:
 	void HandleCaptainCollison(float dt, const std::vector<GameObject*>& coObjects); //with cap
 public:
 	Shield(Captain& cap);
-	void UpdateByCapState(State capState, Vector2 capPos);
+	void UpdateByCapState(State capState, Vector2 capPos, float dt = -1.0f);
 	void Update(float dt, const std::vector<GameObject*>& coObjects = {});
 	void ThrowAway();
+	void SetVelocity(const Vector2 &vel);
 	RectF GetBBox() const override;
 };
 

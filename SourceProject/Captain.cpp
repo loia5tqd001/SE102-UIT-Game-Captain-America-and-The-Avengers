@@ -149,9 +149,8 @@ void Captain::SetState(State state)
 	const auto oldState = curState;
 	VisibleObject::SetState(state); // NOTE: when changing state height will always anchor to low point (sitting)
 	currentState->Enter(*this, oldState, std::move(exitData));
-	shield->UpdateByCapState(this->curState, this->pos);
-
-
+	//shield->UpdateByCapState(this->curState, this->pos);
+	
 #if 0
 	switch (state)
 	{

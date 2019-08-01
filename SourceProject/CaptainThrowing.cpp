@@ -30,10 +30,6 @@ void CaptainThrowing::OnKeyDown(Captain& cap, BYTE keyCode)
 {
 	if (keyCode == setting.Get(KeyControls::Jump))
 	{
-		if (!cap.animations.at(cap.curState).IsDoneCycle())
-		{
-			cap.shield->UpdateByCapState(cap.GetState(), cap.GetPos());
-		}
 		cap.SetState(State::Captain_Jumping);
 		return;
 	}
