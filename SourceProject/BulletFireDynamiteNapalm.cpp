@@ -7,6 +7,7 @@ BulletFireDynamiteNapalm::BulletFireDynamiteNapalm(int nx, Enemy *enemy, const V
 {
 	animations.emplace(State::DynamiteNapalm_FireBullet, Animation(SpriteId::DynamiteNapalm_FireBullet, 0.1f));
 	if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth());
+	Sounds::PlayAt(SoundId::BulletLazer);
 }
 
 void BulletFireDynamiteNapalm::Update(float dt, const std::vector<GameObject*>& coObjects)

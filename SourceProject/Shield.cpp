@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "Shield.h"
-//#include "Enemy.h"
 #include "BulletEnemyGun.h"
-#include"BulletDynamite.h"
+#include "BulletDynamite.h"
 #include "BulletEnemyWizard.h"
 #include "BulletBunker.h"
 //#include "EnemyGun.h"
@@ -351,16 +350,13 @@ void Shield::HandleSideCollison(float dt, const std::vector<GameObject*>& coObje
 
 void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
-	//Debug::Out("inhere size:" ,coObjects.size());
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
 	if (coEvents.size() == 0) return;
 
 	if (isOnCaptain) //deflect bullet, this is use for bulletenemyboss
 	{   //TODO: change this to bulletenemyboss
-		for (UINT i = 0; i < coEvents.size(); i++)
+		for (auto& e : coEvents)
 		{
-			const CollisionEvent& e = coEvents[i];
-
 			if (auto bullet = dynamic_cast<BulletEnemyGun*>(e.pCoObj)) //
 			{
 				if (e.ny > 0.0f)
@@ -381,19 +377,18 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 	}
 	else //cause damage to enemy
 	{
-		for (UINT i = 0; i < coEvents.size(); i++)
+		for (auto& e : coEvents)
 		{
-			const CollisionEvent& e = coEvents[i];
-
 			if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 			{
-				if (auto dynamiteNapalm = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
-				{
-					//if (dynamiteNapalm->CanTakeDamage())
-					dynamiteNapalm->TakeDamage(1);
-				}
-				else
-					enemy->TakeDamage(1);
+				enemy->TakeDamage(1);
+				//if (auto dynamiteNapalm = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
+				//{
+				//	//if (dynamiteNapalm->CanTakeDamage())
+				//		dynamiteNapalm->TakeDamage(1);
+				//}
+				//else
+				//	enemy->TakeDamage(1);
 			}
 			else if (auto capsule = dynamic_cast<Capsule*>(e.pCoObj))
 			{

@@ -26,6 +26,9 @@ void CharlestonScene::LoadResources()
 	grid = std::make_unique<Grid>( root );
 	cap = std::make_unique<Captain>( Vector2{ 14.0f, 391.0f }, grid.get() ) ;
 	cam.SetMainCharacter(cap.get());
+
+	cam.FollowMainCharacter(); // first follow main character here to avoid flickering
+	cam.ClampWithin(map->GetWorldBoundary());
 }
 
 void CharlestonScene::Update(float dt)

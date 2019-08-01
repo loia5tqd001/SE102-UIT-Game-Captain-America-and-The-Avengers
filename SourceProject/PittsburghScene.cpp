@@ -24,6 +24,7 @@ void PittsburghScene::LoadResources()
 	cap = std::make_unique<Captain>( Vector2{ 32.0f, 197.0f - 45.0f },grid.get()) ;
 	//cap = std::make_unique<Captain>( Vector2{ 792.0f, 390.0f },grid.get()) ;
 	cam.SetMainCharacter(cap.get());
+	ClampCaptainAndCamera();
 }
 
 void PittsburghScene::Update(float dt)
