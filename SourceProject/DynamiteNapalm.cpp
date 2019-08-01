@@ -140,7 +140,7 @@ void DynamiteNapalm::Update(float dt, const std::vector<GameObject*>& coObjects)
 			{
 				curBehavior = Behaviors::DynamiteNapalm_Run;
 			}
-			
+
 			//Switch state when being too weak
 			if (health <= maxHealthHeadless)
 			{
@@ -183,9 +183,13 @@ void DynamiteNapalm::SetState(State state)
 		break;
 	case State::DynamiteNapalm_ThrowDynamite:
 	case State::DynamiteNapalm_Intact_Shooting:
-	case State::DynamiteNapalm_Intact_Injure:
 	case State::DynamiteNapalm_Headless_Standing:
 	case State::DynamiteNapalm_BeforeExplode:
+		vel.x = 0.0f;
+		vel.y = 0.0f;
+		break;
+	case State::DynamiteNapalm_Intact_Injure:
+		holdTimeInjure = 0.0f;
 		vel.x = 0.0f;
 		vel.y = 0.0f;
 		break;
@@ -223,14 +227,17 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 
 		if (curState == State::DynamiteNapalm_Intact_Injure)
 		{
-			if (animations.at(curState).IsDoneCycle())
+			if (holdTimeInjure > INJURE_TIME)
 			{
 				animations.at(State::DynamiteNapalm_ThrowDynamite).Reset();
 				dynamiteThrown = false;
 				return true;
 			}
 			else
+			{
+				holdTimeInjure += dt;
 				return false;
+			}
 		}
 		else if (curState == State::DynamiteNapalm_Standing)
 		{
@@ -281,7 +288,7 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 		if (curState == State::DynamiteNapalm_Intact_Injure)
 		{
 			Debug::out("DynamiteNapalm_Intact_Injure at DynamiteNapalm_Shoot\n");
-			if (animations.at(curState).IsDoneCycle())
+			if (holdTimeInjure > INJURE_TIME)
 			{
 				SetState(State::DynamiteNapalm_Standing);
 			}
@@ -376,14 +383,14 @@ bool DynamiteNapalm::OnBehavior(Behaviors behavior, float dt)
 		}
 		else if (curState == State::DynamiteNapalm_Headless_Running_Shooting)
 		{
-			if (holdTime < TIME_TO_HEADLESS_SHOOT)
+			if (holdTimeHeadlessStanding < TIME_TO_HEADLESS_SHOOT)
 			{
-				holdTime += dt;
+				holdTimeHeadlessStanding += dt;
 			}
 			else
 			{
 				SpawnFireBullet();
-				holdTime -= TIME_TO_HEADLESS_SHOOT;
+				holdTimeHeadlessStanding -= TIME_TO_HEADLESS_SHOOT;
 			}
 			if (health <= 0)
 			{

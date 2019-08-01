@@ -12,7 +12,7 @@ private:
 	static constexpr auto maxHealthHeadless = 8;
 	static constexpr auto TIME_TO_HEADLESS_SHOOT = 1.5f;
 	static constexpr auto FAR_DISTANCE = 70.0f;
-
+	static constexpr auto INJURE_TIME = 0.6f;
 
 	bool dynamiteThrown = false;
 	Captain& cap;
@@ -20,11 +20,11 @@ private:
 	bool onTheGround = false;
 	State beforeFlashingState = State::NotExist;
 	Behaviors beforeFlashingBehavior = Behaviors::EnemyFly_Stupid;
-	float injureTime = 0.0f;
 	float holdingDistance = 0.0f;
 	float maxDistance_IntactRunning = 120.0f;
 	int numFireBulletFired = 0;
-	float holdTime = TIME_TO_HEADLESS_SHOOT; //Shoot immediately
+	float holdTimeHeadlessStanding = TIME_TO_HEADLESS_SHOOT; //Shoot immediately
+	float holdTimeInjure;
 	bool OnBehavior(Behaviors behavior, float dt);
 	bool CanTakeDamage();
 public:
