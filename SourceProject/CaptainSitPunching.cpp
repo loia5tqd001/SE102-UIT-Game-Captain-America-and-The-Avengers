@@ -99,7 +99,6 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 			else {
 				if (nx * e.nx < 0)
 				{
-					enemy->TakeDamage(1);
 					if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
 					{
 						if (mini->CanCauseElectricShock())
@@ -111,8 +110,6 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 				}
 				else
 				{
-					enemy->TakeDamage(1);
-					cap.health.Subtract(1);
 					if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
 					{
 						if (mini->CanCauseElectricShock())

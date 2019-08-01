@@ -72,11 +72,9 @@ void CaptainPunching::HandleCollisions(Captain& cap, float dt, const std::vector
 		{
 			if (!cap.isFlashing)
 			{
-				if (auto bullet = dynamic_cast<BulletEnemyRocket*>(e.pCoObj));
 				cap.health.Subtract(bullet->GetDamage());
 				bullet->HitCaptain();
 				cap.SetState(State::Captain_Injured);
-				//TODO: case BulletEnemyFlying
 			}
 		}
 		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
@@ -88,7 +86,6 @@ void CaptainPunching::HandleCollisions(Captain& cap, float dt, const std::vector
 			{
 				if (nx * e.nx < 0)
 				{
-					enemy->TakeDamage(1);
 					if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
 					{
 						if (mini->CanCauseElectricShock())
@@ -100,8 +97,6 @@ void CaptainPunching::HandleCollisions(Captain& cap, float dt, const std::vector
 				}
 				else
 				{
-					cap.health.Subtract(1);
-					enemy->TakeDamage(1);
 					if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
 					{
 						if (mini->CanCauseElectricShock())

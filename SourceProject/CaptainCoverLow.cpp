@@ -119,7 +119,6 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 			else {
 				if (isOnGround)
 				{				
-					cap.health.Subtract(1);
 					cap.SetState(State::Captain_Injured);
 					enemy->TakeDamage(1);
 				}

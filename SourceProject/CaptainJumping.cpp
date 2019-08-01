@@ -217,7 +217,6 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 			}
 			else 
 			{
-				cap.health.Subtract(1);
 				setAnotherState = true;
 				enemy->TakeDamage(1);
 				if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))

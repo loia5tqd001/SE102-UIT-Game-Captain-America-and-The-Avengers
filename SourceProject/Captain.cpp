@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Captain.h"
 #include"DynamiteNapalm.h"
+#include "BulletDynamite.h"
 static auto& setting = Settings::Instance();
 static auto& wnd = Window::Instance();
 
@@ -395,7 +396,12 @@ void Captain::HandleHitBox(float dt, const std::vector<GameObject*>& coObjects)
 			}
 			else if (auto enemy = dynamic_cast<Enemy*>(obj))
 			{
-				enemy->TakeDamage(1);
+				if (curState == State::Captain_Kicking)
+					enemy->TakeDamage(3);
+				else if (curState == State::Captain_Punching)
+					enemy->TakeDamage(2);
+				else if (curState == State::Captain_SitPunching)
+					enemy->TakeDamage(2);
 			}
 			else if (auto block = dynamic_cast<Block*>(obj))
 			{
@@ -404,7 +410,10 @@ void Captain::HandleHitBox(float dt, const std::vector<GameObject*>& coObjects)
 					SceneManager::Instance().GetCurScene().ToggleLight();
 				}
 			}
-			// else if oil barrel in Red Alert ...
+			else if (auto barrel = dynamic_cast<BulletDynamite*>(obj))
+			{
+				barrel->Trigger();
+			}
 		}
 
 }
