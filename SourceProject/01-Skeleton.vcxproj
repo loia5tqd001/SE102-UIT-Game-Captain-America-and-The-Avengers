@@ -188,6 +188,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BossCharlestonScene.cpp" />
     <ClCompile Include="BreakableLedge.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletBunker.cpp" />
     <ClCompile Include="BulletDynamite.cpp" />
     <ClCompile Include="BulletEnemyFly.cpp" />

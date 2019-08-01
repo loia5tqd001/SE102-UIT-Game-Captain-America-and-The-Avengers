@@ -2,18 +2,13 @@
 #include "BulletDynamite.h"
 
 
-BulletDynamite::BulletDynamite(int nx, Enemy *enemy, const Vector2& spawnPos, Vector2 vel, bool farTarget) :
+BulletDynamite::BulletDynamite(int nx, Enemy *enemy, const Vector2& spawnPos, Vector2 vel, int farLevel) :
 	Bullet(State::DynamiteNapalm_Dynamite, 3, spawnPos, { nx * BULLET_MOVING, 0.0f }, nx, enemy)
 {
 	animations.emplace(State::DynamiteNapalm_Dynamite, Animation(SpriteId::DynamiteNapalm_Dynamite, 0.1f));
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.2f));
 	if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth());
-	if (farTarget)
-	{
-		Target(true);
-	}
-	else
-		Target(false);
+	Target(farLevel);
 }
 
 void BulletDynamite::Update(float dt, const std::vector<GameObject*>& coObjects)
@@ -50,6 +45,7 @@ void BulletDynamite::Update(float dt, const std::vector<GameObject*>& coObjects)
 	holdtime += dt;
 	vel.x = nx * Speed * cos(pi / 180 * Alpha);
 	vel.y = (holdtime - TIME_TO_THROW) * Gravity - Speed * sin(pi / 180 * Alpha);
+
 
 	HandleCollisions(dt, coObjects);
 	animations.at(curState).Update(dt);
@@ -122,16 +118,26 @@ void BulletDynamite::HitCaptain()
 	Trigger();
 }
 
-inline void BulletDynamite::Target(bool isFar)
+inline void BulletDynamite::Target(int farLevel)
 {
-	if (isFar)
+	if (farLevel == 3)
 	{
-		Alpha = 75.0f;
-		Speed = 320.0f;
+		Alpha = 70.0f;
+		Speed = 331.92f;
+	}
+	else if(farLevel == 2)
+	{
+		Alpha = 70.0f;
+		Speed = 287.45f;
+	}
+	else if(farLevel == 1)
+	{
+		Alpha = 70.0f;
+		Speed = 234.7f;
 	}
 	else
 	{
-		Alpha = 75.0f;
-		Speed = 150.0f;
+		Alpha = 70.0f;
+		Speed = 165.96f;
 	}
 }

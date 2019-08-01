@@ -1,5 +1,6 @@
 #pragma once
 #include "Bullet.h"
+
 class BulletDynamite : public Bullet
 {
 private:
@@ -13,9 +14,9 @@ private:
 	bool triggered = false;
 	float holdtime = 0.0f;
 
-	inline void Target(bool isFar);
+	inline void Target(int farLevel);
 public:
-	BulletDynamite(int nx, Enemy *enemy, const Vector2& spawnPos, Vector2 vel = { BULLET_MOVING, 0.0f }, bool farTarget = true);
+	BulletDynamite(int nx, Enemy *enemy, const Vector2& spawnPos, Vector2 vel = { BULLET_MOVING, 0.0f }, int farLevel = 4);
 	void Update(float dt, const std::vector<GameObject*>& coObjects) override;
 	RectF GetBBox() const override;
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);

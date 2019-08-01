@@ -20,7 +20,10 @@ void Enemy::UpdateAnimation(float dt)
 	if (isFlashing)
 		OnFlashing();
 
-	animations.at(curState).Update(dt);
+	if (curState!=State::DynamiteNapalm_Intact_Injure||curState==State::DynamiteNapalm_Intact_Injure&&!animations.at(curState).IsDoneCycle())
+	{
+		animations.at(curState).Update(dt);
+	}
 
 	if (animations.at(beforeExplode).IsDoneCycle())
 	{

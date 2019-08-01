@@ -46,11 +46,14 @@ void Animation::Render(const Vector2& pos, const Vector2& vtScale, D3DCOLOR colo
 	sprite.Draw(pos, curFrame, vtScale, color);
 }
 
-bool Animation::IsDoneCycle()
+bool Animation::IsDoneCycle(bool resetCurFrame)
 {
 	if (!doneCycle) return false;
-	doneCycle = false, holdingTime = 0.0f, curFrame = 0;
-
+	doneCycle = false, holdingTime = 0.0f;
+	if (resetCurFrame)
+	{
+		curFrame = 0;
+	}
 	return true;	
 }
 

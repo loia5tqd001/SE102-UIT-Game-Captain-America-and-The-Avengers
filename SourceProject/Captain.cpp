@@ -152,7 +152,7 @@ void Captain::SetState(State state)
 	shield->UpdateByCapState(this->curState, this->pos);
 
 
-#if 1
+#if 0
 	switch (state)
 	{
 	case State::Invisible:

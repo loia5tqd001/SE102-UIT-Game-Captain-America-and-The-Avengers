@@ -16,6 +16,11 @@ public:
 	}
 
 	inline int GetDamage() const { return damage; }
-	virtual void HitCaptain() {}; //override this if explode
+	virtual void HitCaptain() 
+	{
+		SetState(State::Destroyed);
+	}; //override this if explode
+
+
 };
 
