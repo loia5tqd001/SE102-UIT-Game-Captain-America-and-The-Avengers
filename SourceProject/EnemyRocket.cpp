@@ -288,6 +288,7 @@ void EnemyRocket::SetState(State state)
 void EnemyRocket::SpawnRocket()
 {
 	if (isFlashing) return;
+	if (curState == State::Explode || curState == State::EnemyRocket_BeforeExplode) return;
 	if (curState == State::EnemyRocket_Sitting)
 	{
 		auto bulletPos = pos + Vector2{ 20.0f, 2.0f };
@@ -306,7 +307,7 @@ void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	UpdateAnimation(dt);
 
-	if (curState == State::Explode) return;
+	if (curState == State::Explode || curState == State::EnemyRocket_BeforeExplode) return;
 	switch (behavior)
 	{
 		case Behaviors::EnemyRocket_ShootStraight:

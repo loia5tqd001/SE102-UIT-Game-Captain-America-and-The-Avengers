@@ -16,7 +16,7 @@ void BreakableLedge::Update(float dt, const std::vector<GameObject*>& coObjects)
 	if (curState != State::BreakableLedge_Separated)
 	{
 		std::chrono::duration<float> duration = std::chrono::steady_clock::now() - seperatedTime;
-		if (duration.count() > 0.3f)
+		if (duration.count() > 0.16f)
 		{
 			SetState(State::BreakableLedge_Separated);
 		}
@@ -37,7 +37,8 @@ void BreakableLedge::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 RectF BreakableLedge::GetBBox() const
 {
-	if (curState == State::BreakableLedge_Intact) return VisibleObject::GetBBox();
+	if (curState == State::BreakableLedge_Intact) 
+		return VisibleObject::GetBBox().Trim(0.0f, 4.0f, 0.0f, 0.0f);
 	else return {};
 }
 

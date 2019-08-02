@@ -315,7 +315,9 @@
     <ClCompile Include="CaptainElectricShock.cpp">
       <Filter>Development\Objects\Captain\D</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Development\Objects\Bullets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

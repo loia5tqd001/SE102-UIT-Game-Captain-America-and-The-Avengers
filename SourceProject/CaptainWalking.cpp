@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CaptainWalking.h"
-
+#include "ElectricBat.h"
 
 
 void CaptainWalking::Enter(Captain& cap, State fromState, Data&& data)
@@ -66,7 +66,7 @@ void CaptainWalking::Update(Captain& cap, float dt, const std::vector<GameObject
 {
 	cap.vel.x = cap.nx * WALKING_SPEED;
 	cap.vel.y = GRAVITY;
-	cap.vel += onMovingLedgeSpeed;
+	cap.vel += onMovingLedgeSpeed * 0.5f;
 
 	auto kControlDir = cap.nx > 0 ? KeyControls::Right : KeyControls::Left;
 	if (!wnd.IsKeyPressed(setting.Get(kControlDir)))
@@ -132,6 +132,14 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 						return;
 					}
 				}
+				else if (auto bat = dynamic_cast<ElectricBat*>(e.pCoObj))
+				{
+					if (bat->GetState() == State::ElectricBat_FlyAttack)
+					{
+						cap.SetState(State::CaptainElectricShock);
+						return;
+					}
+				}
 				cap.SetState(State::Captain_Injured);
 				cap.health.Subtract(1);
 				enemy->TakeDamage(1);
@@ -143,7 +151,6 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 		else if (auto ledge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
-			Debug::Out("Fuck");
 			if (e.ny < 0) isOnGround = true;
 			onMovingLedgeSpeed = ledge->GetVelocity();
 		}

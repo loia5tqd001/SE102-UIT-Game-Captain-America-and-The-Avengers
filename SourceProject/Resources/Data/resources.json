@@ -70,8 +70,6 @@
 	[          49,            11,      373,     389,               6,                6,         1,            0], // Bullet_Bunker
 	
 	
-	
-
 	[          50,            12,      144,      19,              31,               45,         3,            1], //EnemyWizard_Walking,
 	[          51,            12,      280,      16,              23,               48,         1,            0], //EnemyWizard_Stand,
 	[          52,            12,      107,      16,              29,               41,         1,            0], //EnemyWizard_BeforeDefeated,
@@ -123,7 +121,7 @@
 	[         116,            10,      202,     251,              16,               12,         3,            7], //Captain_FallToWater
 	[         117,            10,      330,     248,              16,                7,         3,            4], //Captain_InWater
 	[         118,            10,        9,      83,              21,               27,         1,            0], //Captain_CoverLow
-	[119, 10, 208, 187, 32, 45, 2, 8], //Captain_ElectricShock
+	[         119,            10,      208,     187,              32,               45,         2,            8], //Captain_ElectricShock
 
 	[         200,            13,      314,      24,              28,               46,         1,            0], //DynamiteNapalm_FallFromTheSky
 	[         201,            13,      202,      29,              30,               43,         1,            0], //DynamiteNapalm_Standing
@@ -132,9 +130,6 @@
 	[         204,            13,      266,      29,              38,               43,         1,            0], //DynamiteNapalm_Intact_Shooting
 
 	[         205,            13,      143,      80,              30,               48,         2,            1], //DynamiteNapalm_Intact_Injure
-
-
-
 
 	[         206,            13,      348,      93,              24,               35,         1,            0], //DynamiteNapalm_Headless_Standing
 	[         207,            13,      220,      87,              35,               41,         3,            1], //DynamiteNapalm_Headless_Running_Shooting

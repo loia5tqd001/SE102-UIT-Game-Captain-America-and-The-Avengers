@@ -130,7 +130,7 @@ void EnemyGun::OnBehaviorAmbush()
 void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	UpdateAnimation(dt);
-	if (curState == State::Explode) return;
+	if (curState == State::Explode || curState == State::EnemyGun_BeforeExplode) return;
 
 	switch (behavior)
 	{
@@ -179,6 +179,7 @@ void EnemyGun::SetState(State state)
 void EnemyGun::SpawnBullet() 
 {
 	if (isFlashing) return;
+	if (curState == State::Explode || curState == State::EnemyGun_BeforeExplode) return;
 	if (curState == State::EnemyGun_Sitting)
 	{
 		const auto bulletPos = pos + Vector2{ 24.0f, 11.0f };

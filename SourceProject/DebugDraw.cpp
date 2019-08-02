@@ -82,5 +82,5 @@ void DebugDraw::DrawCrt()
 	if (!isDrawCrt || isInDebugMode) return;
 
 	static const Sprite crtSprite = { TextureId::CrtEffect, Window::Instance().GetWindowFrame() };
-	crtSprite.Draw( { 0.0f, 0.0f }, 0, { 1.0f, 1.0f }, 100 );
+	crtSprite.Draw( {}, 0u, { 1.0f, 1.0f }, D3DCOLOR_ARGB(100,255,255,255) );
 }

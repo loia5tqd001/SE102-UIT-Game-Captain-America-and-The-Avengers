@@ -34,7 +34,7 @@ Captain::Captain(const Vector2& pos, Grid* ogrid)
 	animations.emplace(State::Captain_CoverLow, Animation(SpriteId::Captain_CoverLow, 0.1f));
 	animations.emplace(State::CaptainElectricShock, Animation(SpriteId::Captain_ElectricShock, 0.1f));
 
-	animations.at(State::Captain_Tackle).SetCusFrameHoldTime(0, 0.05f);
+	animations.at(State::Captain_Tackle).SetCusFrameHoldTime(0, 0.055f);
 
 	shield = std::make_unique<Shield>(*this);
 
@@ -267,6 +267,10 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 				{
 					pos.y = ledge->GetPos().y - GetHeight();
 				}
+			}
+			else if (auto spawner = dynamic_cast<Spawner*>(obj))
+			{
+				spawner->OnCollideWithCap(this);
 			}
 			else if (auto bullet = dynamic_cast<Bullet*>(obj))
 			{

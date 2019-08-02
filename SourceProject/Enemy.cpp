@@ -20,7 +20,8 @@ void Enemy::UpdateAnimation(float dt)
 	if (isFlashing)
 		OnFlashing();
 
-	if (curState!=State::DynamiteNapalm_Intact_Injure||curState==State::DynamiteNapalm_Intact_Injure&&!animations.at(curState).IsDoneCycle())
+	if (curState!=State::DynamiteNapalm_Intact_Injure||
+		(curState==State::DynamiteNapalm_Intact_Injure&&!animations.at(curState).IsDoneCycle()))
 	{
 		animations.at(curState).Update(dt);
 	}
@@ -39,6 +40,8 @@ void Enemy::UpdateAnimation(float dt)
 RectF Enemy::GetBBox() const
 {
 	if (curState == State::Explode) return{};
+	if (curState == State::EnemyGun_BeforeExplode) return {};
+	if (curState == State::EnemyRocket_BeforeExplode) return {};
 	return VisibleObject::GetBBox();
 }
 
