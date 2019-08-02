@@ -167,7 +167,6 @@ enum class ClassId
 {
 	Captain              =   0,
 
-	// static objects: load from json
 	RigidBlock           =   1,
 	Water                =   2,
 	PassableLedge        =   3,
@@ -181,11 +180,7 @@ enum class ClassId
 	Capsule              =  11,
 	Bunker               =  12,
 	BreakableLedge       =  13,
-	MovingLedgeUpdater   =  14,
-
-	// moving objects: being spawned
-	EnemyGun             =  100,
-	EnemyRocket          =  101,
+	MovingLedgeUpdater   =  14
 };
 
 enum class State
