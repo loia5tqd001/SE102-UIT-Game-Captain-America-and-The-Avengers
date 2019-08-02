@@ -22,8 +22,9 @@ Shield::Shield(Captain& cap) :
 
 void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	if (isOnCaptain) {
-		vel = cap.GetVelocity();
+	if (isOnCaptain)
+	{
+		//vel = cap.GetVelocity(); //Changed by Dung
 		nx = cap.GetNx();// get nx to flip posx
 	}
 
@@ -49,6 +50,7 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 	case State::Shield_Straight:
 	{
 		UpdateByCapState(cap.GetState(), cap.GetPos(), dt);
+		PrecheckAABB(dt, coObjects);
 		HandleStraightCollison(dt, coObjects);
 		break;
 	}
@@ -141,6 +143,50 @@ void Shield::Update(float dt, const std::vector<GameObject*>& coObjects)
 	}
 	default:
 		break;
+	}
+}
+
+void Shield::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
+{
+	auto shieldBox = this->GetBBox();
+	for (auto &o : coObjects)
+	{
+		auto objBox = o->GetBBox();
+		if (shieldBox.IsIntersect(objBox))
+		{
+			if (auto bullet = dynamic_cast<BulletEnemyGun*>(o))
+			{
+				//Debug::out("Shield PrecheckAABB Detected phasing object\n");
+				if (bullet->GetVelocity().x*nx < 0)
+				{
+					if (bullet->GetPos().x > this->GetPos().x)
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x + GetWidth() + 1,bullet->GetPos().y });
+					}
+					else
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x - bullet->GetWidth() - 1 ,bullet->GetPos().y });
+					}
+					bullet->Reflect();
+				}
+			}
+			else if (auto bullet = dynamic_cast<BulletEnemyWizard*>(o))
+			{
+				//Debug::out("Shield PrecheckAABB Detected phasing object\n");
+				if (bullet->GetVelocity().x*nx < 0)
+				{
+					if (bullet->GetPos().x > this->GetPos().x)
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x + GetWidth() + 1,bullet->GetPos().y });
+					}
+					else
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x - bullet->GetWidth() - 1 ,bullet->GetPos().y });
+					}
+					bullet->Reflect();
+				}
+			}
+		}
 	}
 }
 

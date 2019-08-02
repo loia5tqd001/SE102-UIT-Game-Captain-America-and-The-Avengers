@@ -150,7 +150,7 @@ void Captain::SetState(State state)
 	VisibleObject::SetState(state); // NOTE: when changing state height will always anchor to low point (sitting)
 	currentState->Enter(*this, oldState, std::move(exitData));
 	//shield->UpdateByCapState(this->curState, this->pos);
-	
+
 #if 0
 	switch (state)
 	{
@@ -362,10 +362,10 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 					//pos = absoluteLimitPoint;
 #pragma endregion 
 				}
-			}				
+			}
 		}
 	posBeforePhasing = pos;
-	
+
 }
 
 void Captain::CollideWithPassableObjects(float dt, const CollisionEvent& e)
@@ -427,4 +427,9 @@ void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 	HandleHitBox(dt, coObjects);
 
 	OnFlashing();
+
+	if (curState == State::Captain_Injured&&vel.x*shield->GetNx() < 0 && !isFlashing)
+	{
+		Debug::out("Collision Fail\n");
+	}
 }
