@@ -23,7 +23,7 @@ void BulletEnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 		curState = State::Destroyed;
 		return;
 	}
-	counterExplode += GameTimer::Dt();
+	counterExplode += dt;
 	if (counterExplode >= MAX_TIME_TILL_EXPLODE) {
 		SetState(State::Explode);
 		vel = { 0.0f , 0.0f };

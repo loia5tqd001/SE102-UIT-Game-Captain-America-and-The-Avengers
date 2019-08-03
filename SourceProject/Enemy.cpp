@@ -39,6 +39,7 @@ void Enemy::UpdateAnimation(float dt)
 
 RectF Enemy::GetBBox() const
 {
+	if (curState == State::Destroyed) return {};
 	if (curState == State::Explode) return{};
 	if (curState == State::EnemyGun_BeforeExplode) return {};
 	if (curState == State::EnemyRocket_BeforeExplode) return {};

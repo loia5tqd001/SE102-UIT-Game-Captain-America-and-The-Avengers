@@ -14,8 +14,7 @@
 	[10, "Resources\\Textures\\10. Captain.png"                       , [  0,183,107] ],
 	[11, "Resources\\Textures\\11. Enemies.png"                       , [  0,116,145] ],
 	[12, "Resources\\Textures\\12. Wizard.png"                        , [  0,166, 81] ],
-	[13, "Resources\\Textures\\13. Dynamite.png"                      , [  0, 91,127] ],
-	[14, "Resources\\Textures\\14. CaptainSpin.png"                   , [  0,183,107] ]
+	[13, "Resources\\Textures\\13. Dynamite.png"                      , [  0, 91,127] ]
 ],
 
   "sprites": [
@@ -116,9 +115,7 @@
 	[         104,            10,      164,      28,              24,               28,         1,            0], //Captain_Sitting
 	[         109,            10,      128,      85,              38,               27,         2,            2], //Captain_SitPunch
 	[         110,            10,       38,      79,              39,               29,         2,            1], //Captain_Smash
-	//[         111,            10,       10,      52,              23,               23,         4,            1], //Captain_Spin
-	//[         111,            10,       68,      28,              20,               20,         2,           17], //Captain_Spin
-    [         111,            14,        0,       0,              20,               20,         4,            0], //Captain_Spin
+	[         111,            10,       10,      52,              23,               23,         4,            1], //Captain_Spin
 	[         112,            10,       32,     120,              20,               56,         3,            4], //Captain_Climb
 	[         113,            10,      169,     192,              29,               38,         1,            0], //Captain_Injure
 	[         114,            10,       88,     209,              26,               23,         1,            0], //Captain_Die

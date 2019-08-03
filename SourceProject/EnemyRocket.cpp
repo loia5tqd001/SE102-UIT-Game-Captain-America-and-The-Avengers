@@ -307,7 +307,7 @@ void EnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	UpdateAnimation(dt);
 
-	if (curState == State::Explode || curState == State::EnemyRocket_BeforeExplode) return;
+	if (curState == State::Explode) return;
 	switch (behavior)
 	{
 		case Behaviors::EnemyRocket_ShootStraight:

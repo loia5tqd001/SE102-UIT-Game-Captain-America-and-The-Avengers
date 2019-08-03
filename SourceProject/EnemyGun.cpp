@@ -130,7 +130,7 @@ void EnemyGun::OnBehaviorAmbush()
 void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	UpdateAnimation(dt);
-	if (curState == State::Explode || curState == State::EnemyGun_BeforeExplode) return;
+	if (curState == State::Explode) return;
 
 	switch (behavior)
 	{
