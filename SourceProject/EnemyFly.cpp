@@ -47,7 +47,7 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 	{
 		case State::EnemyFly_Fly:
 		{
-			//the code below stimulate its cycle, i put it rectangle to easy
+			//the code below stimulate its cycle
 
 			if (pos.x > cap->GetPos().x) nx = -1;
 			else nx = 1;

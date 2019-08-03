@@ -16,6 +16,7 @@ enum class TextureId
 	Enemies                     = 11,
 	Wizard                      = 12,
 	Dynamite                    = 13,
+	CaptainSpin = 14,
 };
 
 enum class SpriteId

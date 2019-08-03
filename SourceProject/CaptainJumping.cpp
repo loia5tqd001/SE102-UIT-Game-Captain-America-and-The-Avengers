@@ -13,6 +13,12 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 	//    || fromState == State::Captain_Kicking  || fromState == State::Captain_FallToWater
 	//    || fromState == State::Captain_Injured);
 	// it's almost all of Captain states, why do we need those above anyway?
+	if (fromState == State::Captain_InWater || fromState == State::Captain_Swimming) {
+		isFromWater = true;
+	}
+	else {
+		isFromWater = false;
+	}
 
 	cap.vel.x = 0.0f; // avoid wind blowing phenomenon when jump from water
 	cap.vel.y = 0.0f;
@@ -71,6 +77,7 @@ Data CaptainJumping::Exit(Captain& cap, State toState)
 	data.Add(IS_KICKED, isKicked);
 	data.Add(SPIN_TIME_DOWN, 0.0f);
 	data.Add(SPIN_TIME_UP, 0.0f);
+	data.Add(IS_JUMP_FROM_WATER, isFromWater);
 	return std::move(data);
 }
 

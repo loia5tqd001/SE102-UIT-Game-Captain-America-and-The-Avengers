@@ -27,6 +27,7 @@ protected:
 	static constexpr auto IS_TO_SIT_TACKLE = "is-to-sit-tackle";
 	static constexpr auto SPIN_TIME_UP = "spin-up-time-counter";
 	static constexpr auto SPIN_TIME_DOWN = "spin-down-time-counter";
+	static constexpr auto IS_JUMP_FROM_WATER = "is-jump-from-water";
 
 	static constexpr float WATER_FLOW_SPEED = -20.0f;
 	static constexpr float CAP_SWIMMING_SPEED = 50.0f;
@@ -42,7 +43,7 @@ protected:
 	static constexpr auto JUMP_SPEED_HOR = MOVING_HOR;
 	static constexpr auto GRAVITY = 550.0f;
 
-	static constexpr auto MAX_JUMP_HEIGHT = 83.0f;
+	static constexpr auto MAX_JUMP_HEIGHT = 80.0f;
 	static constexpr auto MIN_JUMP_HEIGHT = 35.0f;
 
 	static constexpr auto FALL_SPEED_VER = 190.0f;
@@ -55,7 +56,7 @@ protected:
 
 	static constexpr auto SPIN_SPEED_VER = 120.0f;
 	static constexpr auto SPIN_SPEED_HOR = JUMP_SPEED_HOR;
-	static constexpr auto TIME_KEEP_SPIN = 0.16f;
+	static constexpr auto TIME_KEEP_SPIN = 0.18f;
 
 	static constexpr auto WATER_LEVEL = 454.0f;
 

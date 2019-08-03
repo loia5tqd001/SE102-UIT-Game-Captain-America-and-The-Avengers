@@ -15,6 +15,7 @@ void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 		isJumpReleased = data.Get<bool>(IS_JUMP_RELEASED);
 		JumpHeightRealCounter = data.Get<float>(JUMP_HEIGHT_RealCounter);
 		JumpHeightNeedCounter = data.Get<float>(JUMP_HEIGHT_NeedCounter);
+		isJumpFromWater = data.Get<bool>(IS_JUMP_FROM_WATER);
 	}
 	if (fromState == State::Captain_Spinning)
 	{
@@ -36,6 +37,7 @@ Data CaptainKicking::Exit(Captain& cap, State toState)
 	case State::Captain_Spinning:
 		data.Add(SPIN_TIME_DOWN, timeDown);
 		data.Add(SPIN_TIME_UP, timeUp);
+		data.Add(IS_JUMP_FROM_WATER, isJumpFromWater);
 		break;
 	}
 	data.Add(IS_JUMP_RELEASED, isJumpReleased);

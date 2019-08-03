@@ -13,6 +13,8 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 	beginnx = cap.nx;
 
 	isKicked = data.Get<bool>(IS_KICKED);
+	if (data.Get<bool>(IS_JUMP_FROM_WATER))
+		cap.SetState(State::Captain_Falling);
 	if (isKicked)
 	{
 		if (fromState == State::Captain_Kicking || fromState == State::Captain_Jumping) {
@@ -25,7 +27,8 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 		timeUp = 0;
 		timeDown = 0;
 	}
-	Sounds::PlayAt(SoundId::Spinning);
+	if (!data.Get<bool>(IS_JUMP_FROM_WATER))
+		Sounds::PlayAt(SoundId::Spinning);
 }
 
 Data CaptainSpinning::Exit(Captain& cap, State toState)
@@ -34,6 +37,7 @@ Data CaptainSpinning::Exit(Captain& cap, State toState)
 	data.Add(IS_KICKED, isKicked);
 	data.Add(SPIN_TIME_DOWN, timeDown);
 	data.Add(SPIN_TIME_UP, timeUp);
+	data.Add(IS_JUMP_FROM_WATER, false);
 	return std::move(data);
 }
 
@@ -62,7 +66,6 @@ void CaptainSpinning::Update(Captain& cap, float dt, const std::vector<GameObjec
 	if (counterTimeFlip >= 0.15f)
 	{
 		counterTimeFlip = 0;
-		cap.nx = -cap.nx;
 	}
 	else counterTimeFlip += GameTimer::Dt();
 	cap.animations.at(cap.curState).Update(dt);

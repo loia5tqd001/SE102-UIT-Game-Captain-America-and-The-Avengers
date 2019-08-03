@@ -8,6 +8,7 @@ private:
 	float JumpHeightRealCounter = 0;
 	float JumpHeightNeedCounter = MIN_JUMP_HEIGHT;
 	bool isKicked = false;
+	bool isFromWater = false;
 
 	bool setAnotherState = false;
 	bool ignoreUpdate = false;

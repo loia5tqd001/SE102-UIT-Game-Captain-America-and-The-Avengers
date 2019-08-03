@@ -11,6 +11,7 @@ private:
 	float timeUp = 0;
 	float timeDown = 0;
 	bool isKicked = true;
+	bool isJumpFromWater = false;
 
 	bool SetAnotherState = false; //To end Update after Handle collision
 	
