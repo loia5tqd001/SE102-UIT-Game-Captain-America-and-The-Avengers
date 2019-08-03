@@ -35,6 +35,7 @@ public:
 	void SpawnDynamite();
 	void SpawnFireBullet();
 	void TakeDamage(int damage) override;
+	RectF GetBBox() const override;
 	void TakeDinamiteDamage(int damage);
 	bool CanCauseElectricShock() { return (curState == State::DynamiteNapalm_Headless_Running_Shooting); }
 };

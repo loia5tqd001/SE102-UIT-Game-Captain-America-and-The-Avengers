@@ -647,3 +647,8 @@ void EnemyWizard::Render() const
 	}
 	else Enemy::Render();
 }
+
+RectF EnemyWizard::GetBBox() const
+{
+	return VisibleObject::GetBBox().Trim(GetWidth() / 2.0f - 3, 0, GetWidth() / 2.0f - 3, 0);
+}

@@ -400,11 +400,11 @@ void Captain::HandleHitBox(float dt, const std::vector<GameObject*>& coObjects)
 			else if (auto enemy = dynamic_cast<Enemy*>(obj))
 			{
 				if (curState == State::Captain_Kicking)
-					enemy->TakeDamage(3);
+					enemy->TakeDamage(1);
 				else if (curState == State::Captain_Punching)
-					enemy->TakeDamage(2);
+					enemy->TakeDamage(1);
 				else if (curState == State::Captain_SitPunching)
-					enemy->TakeDamage(2);
+					enemy->TakeDamage(1);
 			}
 			else if (auto block = dynamic_cast<Block*>(obj))
 			{

@@ -19,11 +19,6 @@ public:
 		return std::any_cast<T>( data.at(property) );
 	}
 
-	inline auto Check(const std::string& property) const
-	{
-		return (data.count(property) == 1);
-	}
-
 	inline int Count(const std::string& property) const
 	{
 		return data.count(property);

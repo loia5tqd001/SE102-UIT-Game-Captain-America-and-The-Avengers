@@ -4,7 +4,7 @@
 #include "BulletEnemyGun.h"
 
 EnemyGun::EnemyGun(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
-	Enemy(behavior, Data{}, State::EnemyGun_BeforeExplode, 1, spawnPos, grid),
+	Enemy(behavior, Data{}, State::EnemyGun_BeforeExplode, 2, spawnPos, grid),
 	cap(cap)
 {
 	animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode, 0.2f));

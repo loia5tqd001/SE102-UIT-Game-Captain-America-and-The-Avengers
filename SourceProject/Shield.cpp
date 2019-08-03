@@ -427,7 +427,7 @@ void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObject
 		{
 			if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
 			{
-				enemy->TakeDamage(1);
+				enemy->TakeDamage(2);
 				//if (auto dynamiteNapalm = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
 				//{
 				//	//if (dynamiteNapalm->CanTakeDamage())

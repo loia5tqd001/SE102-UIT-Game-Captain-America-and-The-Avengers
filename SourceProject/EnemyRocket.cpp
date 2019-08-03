@@ -5,7 +5,7 @@
 #include "CharlestonScene.h"
 
 EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
-	Enemy(behavior, Data{}, State::EnemyRocket_BeforeExplode, 2, spawnPos, grid),
+	Enemy(behavior, Data{}, State::EnemyRocket_BeforeExplode, 3, spawnPos, grid),
 	cap(cap)
 {
 	animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode, 0.2f));

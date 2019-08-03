@@ -56,6 +56,8 @@
 	[          35,            11,      256,     368,              32,               16,         1,            0], // BreakableLedge_Intact
 	[          36,            11,      176,     384,              64,               16,         1,            0], // BreakableLedge_Seperated
 	[          37,            11,      296,     368,              32,               16,         1,            0], // MovingLedge
+	[          38,            11,      337,     368,               6,               10,         2,            0], // FireTail_Vertical
+	[          39,            11,      352,     372,               8,                8,         2,            0], // FireTail_Horizontal
 	
 	
 	[          40,            11,      240,     384,              16,               16,         1,            0], // Bunker_Idle_0
@@ -113,7 +115,7 @@
 	[         104,            10,      164,      28,              24,               28,         1,            0], //Captain_Sitting
 	[         109,            10,      128,      85,              38,               27,         2,            2], //Captain_SitPunch
 	[         110,            10,       38,      79,              39,               29,         2,            1], //Captain_Smash
-	[         111,            10,       68,      28,              20,               20,         2,           17], //Captain_Spin
+	[         111,            10,       10,      52,              23,               23,         4,            1], //Captain_Spin
 	[         112,            10,       32,     120,              20,               56,         3,            4], //Captain_Climb
 	[         113,            10,      169,     192,              29,               38,         1,            0], //Captain_Injure
 	[         114,            10,       88,     209,              26,               23,         1,            0], //Captain_Die

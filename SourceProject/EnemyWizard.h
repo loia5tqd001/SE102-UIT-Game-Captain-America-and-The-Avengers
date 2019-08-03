@@ -41,6 +41,7 @@ public:
 	void HandleCollisions(float dt, const std::vector<GameObject*>& coObjects);
 	void TakeDamage(int damage) override;
 	void Render() const override;
+	RectF GetBBox() const override;
 	bool isDefeated() { return health <= 0; }
 };
 

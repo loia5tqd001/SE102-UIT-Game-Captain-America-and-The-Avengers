@@ -60,6 +60,8 @@ enum class SpriteId
 	BreakableLedge_Intact           = 35,
 	BreakableLedge_Separated        = 36,
 	MovingLedge                     = 37,
+	FireTail_Ver                    = 38,
+	FireTail_Hor                    = 39,
 
 	Bunker_Idle_0                   = 40,
 	Bunker_Idle_1                   = 41,

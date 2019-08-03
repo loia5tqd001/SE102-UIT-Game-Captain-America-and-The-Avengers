@@ -8,6 +8,14 @@ MovingLedge::MovingLedge(Vector2 pos, Behaviors behavior) :
 	animations.emplace(State::MovingLedge_Stop, Animation(SpriteId::MovingLedge, 0.15f));
 	animations.emplace(State::MovingLedge_Moving, Animation(SpriteId::MovingLedge, 0.05f));
 	animations.emplace(State::MovingLedge_Stall, Animation(SpriteId::MovingLedge));
+
+	if (behavior == Behaviors::MovingLedge_Horizontal) {
+		firetails.emplace_back(SpriteId::FireTail_Hor, 0.15f);
+		firetails.emplace_back(SpriteId::Invisible);
+	} else {
+		firetails.emplace_back(SpriteId::FireTail_Hor, 0.1f);
+		firetails.emplace_back(SpriteId::FireTail_Ver, 0.1f);
+	}
 }
 
 void MovingLedge::OnCircleMoving(float dt)
@@ -114,6 +122,8 @@ void MovingLedge::OnHorizontalMoving(float dt)
 void MovingLedge::UpdateByUpdater(float dt)
 {
 	animations.at(curState).Update(dt);
+	firetails.at(FireTail::Hor).Update(dt);
+	firetails.at(FireTail::Ver).Update(dt);
 
 	if (behavior == Behaviors::MovingLedge_Circle)
 	{
@@ -138,4 +148,37 @@ Vector2 MovingLedge::GetVelocity() const
 RectF MovingLedge::GetBBox() const
 {
 	return VisibleObject::GetBBox().Trim(0.0f, 5.0f, 0.0f, 0.0f);
+}
+
+void MovingLedge::Render() const
+{
+	VisibleObject::Render();
+
+	// render firetail:
+	if (!DebugDraw::IsInDeepDebug()) 
+	{
+		const auto getVel = GetVelocity();
+		const auto movingLedgeDrawPos = Camera::Instance().GetPositionInViewPort( pos );
+
+		// draw horizontal firetail:
+		if (getVel.x < 0)
+		{
+			const auto drawPos = movingLedgeDrawPos + Vector2{ 31.0f, 4.0f };
+			firetails.at(FireTail::Hor).Render(drawPos, { -1.0f, 1.0f });
+		}
+		else if (getVel.x > 0)
+		{
+			const auto drawPos = movingLedgeDrawPos + Vector2{ -7.0f, 4.0f };
+			firetails.at(FireTail::Hor).Render(drawPos, { 1.0f, 1.0f });
+		}
+
+		// draw vertical firetail:
+		if (getVel.y != 0)
+		{
+			const auto drawPos1 = movingLedgeDrawPos + Vector2{ 5.0f, 16.0f };
+			const auto drawPos2 = movingLedgeDrawPos + Vector2{ 21.0f, 16.0f };
+			firetails.at(FireTail::Ver).Render(drawPos1);
+			firetails.at(FireTail::Ver).Render(drawPos2);
+		}
+	}
 }

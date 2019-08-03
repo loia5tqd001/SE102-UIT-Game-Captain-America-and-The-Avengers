@@ -4,6 +4,8 @@ class MovingLedge : public VisibleObject
 {
 private:
 	Behaviors behavior;
+	std::vector<Animation> firetails;
+	enum FireTail { Hor = 0, Ver = 1 };
 
 	void OnCircleMoving(float dt);
 	void OnDiagonalMoving(float dt);
@@ -15,5 +17,6 @@ public:
 	void OnOutOfViewPort() override {} // override to not set to destroyed
 	Vector2 GetVelocity() const override;
 	RectF GetBBox() const override;
+	void Render() const override;
 };
 

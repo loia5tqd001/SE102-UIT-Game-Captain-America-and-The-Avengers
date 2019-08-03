@@ -624,6 +624,11 @@ void DynamiteNapalm::TakeDamage(int damage)
 	}
 }
 
+RectF DynamiteNapalm::GetBBox() const
+{
+	return VisibleObject::GetBBox().Trim(GetWidth() / 2.0f - 3, 0, GetWidth() / 2.0f - 3, 0);
+}
+
 void DynamiteNapalm::TakeDinamiteDamage(int damage)
 {
 	if (curState == State::DynamiteNapalm_ThrowDynamite&&animations.at(curState).GetCurFrameIndex() == 0)
