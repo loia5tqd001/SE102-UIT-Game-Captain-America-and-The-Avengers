@@ -130,6 +130,11 @@ void BulletEnemyFly::SetAnimationByVel()
 
 void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 {
+	counterTimeFlyStraight += GameTimer::Dt();
+	if (counterTimeFlyStraight < TIME_FLY_STRAIGHT) {
+		return;
+	}
+
 	if (curState == State::Explode || curState == State::Destroyed) return;
 	float dx = x - pos.x;
 	float dy = y - pos.y;
@@ -150,11 +155,13 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 			vel.x += MIN_CHANGE_VELX_PER_FRAME;
 		}
 		else if (vel.x < 0 && vel.y >= 0) {
-			vel.x += MIN_CHANGE_VELX_PER_FRAME;
+			vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 		}
 		else if (vel.x >= 0 && vel.y >= 0) {
+			if (counterExplode > MIN_TIME_TILL_EXPLODE) {
 			SetState( State::Explode );
 			vel = { 0.0f, 0.0f };
+			}
 			return;
 		}
 	}
@@ -174,8 +181,10 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 			}
 		}
 		else if (vel.x < 0 && vel.y >= 0) {
-			SetState(State::Explode);
-			vel = { 0.0f, 0.0f };
+			if (counterExplode > MIN_TIME_TILL_EXPLODE) {
+				SetState(State::Explode);
+				vel = { 0.0f, 0.0f };
+			}
 			return;
 		}
 		else if (vel.x >= 0 && vel.y >= 0) {
@@ -188,8 +197,10 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 			vel.x -= MIN_CHANGE_VELX_PER_FRAME;
 		}
 		else if (vel.x >= 0 && vel.y < 0) {
-			SetState(State::Explode);
-			vel = { 0.0f, 0.0f };
+			if (counterExplode > MIN_TIME_TILL_EXPLODE) {
+				SetState(State::Explode);
+				vel = { 0.0f, 0.0f };
+			}
 			return;
 		}
 		else if (vel.x < 0 && vel.y >= 0) {
@@ -217,8 +228,10 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 	else if (dx >= 0 && dy >= 0) {
 		if (vel.x < 0 && vel.y < 0)
 		{
-			//SetState(State::Explode);
-			vel = { 0.0f, 0.0f };
+			if (counterExplode > MIN_TIME_TILL_EXPLODE) {
+				SetState(State::Explode);
+				vel = { 0.0f, 0.0f };
+			}
 			return;
 		}
 		else if (vel.x >= 0 && vel.y < 0) {

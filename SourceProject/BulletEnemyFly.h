@@ -3,11 +3,14 @@
 class BulletEnemyFly :
 	public Bullet
 {
-	static constexpr float BULLET_MOVING = 130.0f;
+	static constexpr float BULLET_MOVING = 140.0f;
+	static constexpr float TIME_FLY_STRAIGHT = 0.3f;
 	static constexpr float MIN_CHANGE_VELX_PER_FRAME = 5.0f;
-	static constexpr float MAX_TIME_TILL_EXPLODE = 2.5f;
+	static constexpr float MAX_TIME_TILL_EXPLODE = 2.0f;
+	static constexpr float MIN_TIME_TILL_EXPLODE = 1.3f;
 	Captain *cap;
-	float counterExplode = 0;
+	float counterExplode = 0.0f;
+	float counterTimeFlyStraight = 0.0f;
 	void SetAnimationByVel();
 	void CalculateVelByCapPos(float capx, float capy);
 	void UpdateVelYbyVelX(float velx);

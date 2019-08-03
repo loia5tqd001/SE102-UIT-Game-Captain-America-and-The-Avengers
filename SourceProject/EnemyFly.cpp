@@ -5,7 +5,7 @@
 EnemyFly::EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap) :
 	Enemy(behavior, std::move(behaviorData), State::EnemyFly_Fly, 2, spawnPos, grid)
 {
-	animations.emplace(State::EnemyFly_Fly, Animation(SpriteId::EnemyFly_Fly, 0.1f));
+	animations.emplace(State::EnemyFly_Fly, Animation(SpriteId::EnemyFly_Fly, 0.08f));
 	animations.emplace(State::EnemyFly_Falling, Animation(SpriteId::EnemyFly_Fly, 0.06f));
 
 	//EnemyFly_BeforeExplode need many cycle, we use time counter for this, not default BeforeExplode
@@ -18,6 +18,11 @@ EnemyFly::EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap) :
 
 void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
+	SpawnBullet();
+
+	animations.at(curState).Update(dt);
+	OnFlashing();
+
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
 	float _, __, ___, ____;
 
@@ -41,13 +46,12 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 		}
 	}
 
-	SpawnBullet();
-
 	switch (curState)
 	{
 		case State::EnemyFly_Fly:
 		{
 			//the code below stimulate its cycle
+			//if (counterStopShoot > 0 && counterStopShoot < 0.5f) return;
 
 			if (pos.x > cap->GetPos().x) nx = -1;
 			else nx = 1;
@@ -120,21 +124,26 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 			break;
 		}
 	}
-	animations.at(curState).Update(dt);
-	OnFlashing();
 }
 
 void EnemyFly::SpawnBullet()
 {
 	if (pos.y > cap->GetPos().y) return;
 	counterSpawnBullet += GameTimer::Dt();
-	if (counterSpawnBullet >= 4.0f) {
-		const auto bulletPos = pos + Vector2{ 24.0f, 10.0f };
-		if (cap->GetPos().y > pos.y) {
-			grid->SpawnObject(std::make_unique<BulletEnemyFly>(nx, this, bulletPos, cap));
-			Sounds::PlayAt(SoundId::BulletNormal);
-			counterSpawnBullet = 0;
+	if (counterSpawnBullet >= 2.5f) {
+		counterStopShoot += GameTimer::Dt();
+		if (counterStopShoot >= 0.5f) 
+		{
+			const auto bulletPos = pos + Vector2{ 24.0f, 10.0f };
+			if (cap->GetPos().y > pos.y) {
+				grid->SpawnObject(std::make_unique<BulletEnemyFly>(nx, this, bulletPos, cap));
+				Sounds::PlayAt(SoundId::BulletNormal);
+				counterSpawnBullet = 0;
+				counterStopShoot = 0;
+			}
 		}
+		//vel.x = 0;
+		//vel.y = 0;
 	}
 }
 
