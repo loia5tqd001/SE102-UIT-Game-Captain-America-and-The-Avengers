@@ -4,11 +4,11 @@
 BulletEnemyFly::BulletEnemyFly(int nx, Enemy * enemy, const Vector2 & spawnPos, Captain *cap)
 	: Bullet(State::BulletEnemyFly_Hor, 1, spawnPos, { 0,0 }, nx, enemy)
 {
-	animations.emplace(State::BulletEnemyFly_Hor, Animation(SpriteId::BulletEnemyFly_Hor, 0.05f));
-	animations.emplace(State::BulletEnemyFly_CrossDown, Animation(SpriteId::BulletEnemyFly_CrossDown, 0.05f));
-	animations.emplace(State::BulletEnemyFly_CrossUp, Animation(SpriteId::BulletEnemyFly_CrossUp, 0.05f));
-	animations.emplace(State::BulletEnemyFly_Up, Animation(SpriteId::BulletEnemyFly_Up, 0.05f));
-	animations.emplace(State::BulletEnemyFly_Down, Animation(SpriteId::BulletEnemyFly_Down, 0.05f));
+	animations.emplace(State::BulletEnemyFly_Hor, Animation(SpriteId::BulletEnemyFly_Hor, 0.08f));
+	animations.emplace(State::BulletEnemyFly_CrossDown, Animation(SpriteId::BulletEnemyFly_CrossDown, 0.08f));
+	animations.emplace(State::BulletEnemyFly_CrossUp, Animation(SpriteId::BulletEnemyFly_CrossUp, 0.08f));
+	animations.emplace(State::BulletEnemyFly_Up, Animation(SpriteId::BulletEnemyFly_Up, 0.08f));
+	animations.emplace(State::BulletEnemyFly_Down, Animation(SpriteId::BulletEnemyFly_Down, 0.08f));
 	animations.emplace(State::Explode, Animation(SpriteId::Explode, 0.1f));
 
 	if (nx < 0) GameObject::FlipPosXToLeft(pos.x, enemy->GetPosX(), this->GetWidth(), enemy->GetWidth()); // this code is critical
@@ -217,7 +217,7 @@ void BulletEnemyFly::CalculateVelByCapPos(float x, float y)
 	else if (dx >= 0 && dy >= 0) {
 		if (vel.x < 0 && vel.y < 0)
 		{
-			SetState(State::Explode);
+			//SetState(State::Explode);
 			vel = { 0.0f, 0.0f };
 			return;
 		}

@@ -93,11 +93,11 @@
 	
 	[          66,            11,      120,     131,              28,               37,         2,          228], //EnemyFly_Fly
 	
-	[          67,            11,      278,     192,               5,                8,         1,            0], //BulletEnemyFly_Up,
-	[          68,            11,      214,     192,               5,                8,         1,            0], //BulletEnemyFly_Down,
-	[          69,            11,      244,     193,               8,                5,         1,            0], //BulletEnemyFly_Hor,
-	[          70,            11,      260,     192,               8,                8,         1,            0], //BulletEnemyFly_CrossUp,
-	[          71,            11,      228,     192,               8,                8,         1,            0], //BulletEnemyFly_CrossDown,
+	[          67,            11,      186,     192,               7,               15,         2,            0], //BulletEnemyFly_Up,
+	[          68,            11,      172,     192,               7,               15,         2,            0], //BulletEnemyFly_Down,
+	[          69,            11,      200,     197,              15,                7,         2,            0], //BulletEnemyFly_Hor,
+	[          70,            11,      231,     195,              13,               13,         2,            0], //BulletEnemyFly_CrossUp,
+	[          71,            11,      257,     191,              13,               13,         2,            0], //BulletEnemyFly_CrossDown,
 	
 	[          72,            11,      114,     224,               8,               16,         1,            0], //ElectricBat_Sleep
 	[          73,            11,      134,     224,              23,               16,         2,            6], //ElectricBat_StartFly
