@@ -1,0 +1,200 @@
+Total Warnings: 191
+
+PREFER FORWARD DECLARATION
+BossCharlestonScene.h:3: 'EnemyWizard.h' does not need to be #included; use a forward declaration instead
+BossCharlestonScene.h:3: 'EnemyWizard.h' does not need to be #included; use a forward declaration instead
+BossCharlestonScene.h:3: 'EnemyWizard.h' does not need to be #included; use a forward declaration instead
+MovingLedgeUpdater.h:2: 'MovingLedge.h' does not need to be #included; use a forward declaration instead
+MovingLedgeUpdater.h:2: 'MovingLedge.h' does not need to be #included; use a forward declaration instead
+
+DOES NOT NEED #INCLUDE
+EnemyGun.h:2: 'Counter.h' does not need to be #included
+EnemyRocket.h:2: 'Counter.h' does not need to be #included
+RectF.h:2: 'Rect.h' does not need to be #included
+pch.h:4: 'resource.h' does not need to be #included
+pch.h:32: 'DebugOut.h' does not need to be #included
+pch.h:33: 'Colors.h' does not need to be #included
+pch.h:34: 'RectF.h' does not need to be #included
+pch.h:35: 'MyException.h' does not need to be #included
+pch.h:36: 'GameTimer.h' does not need to be #included
+pch.h:37: 'Random.h' does not need to be #included
+pch.h:38: 'Utils.h' does not need to be #included
+pch.h:39: 'Data.h' does not need to be #included
+pch.h:42: 'enums.h' does not need to be #included
+pch.h:43: 'Textures.h' does not need to be #included
+pch.h:44: 'Font.h' does not need to be #included
+pch.h:45: 'KeyCodeFonts.h' does not need to be #included
+pch.h:46: 'Sounds.h' does not need to be #included
+pch.h:47: 'Sprite.h' does not need to be #included
+pch.h:48: 'Sprites.h' does not need to be #included
+pch.h:49: 'Animation.h' does not need to be #included
+pch.h:52: 'GameObject.h' does not need to be #included
+pch.h:53: 'VisibleObject.h' does not need to be #included
+pch.h:54: 'InvisibleObject.h' does not need to be #included
+pch.h:57: 'Collision.h' does not need to be #included
+pch.h:58: 'Window.h' does not need to be #included
+pch.h:59: 'Game.h' does not need to be #included
+pch.h:60: 'Camera.h' does not need to be #included
+pch.h:61: 'Grid.h' does not need to be #included
+pch.h:62: 'Map.h' does not need to be #included
+pch.h:63: 'Settings.h' does not need to be #included
+pch.h:64: 'DebugDraw.h' does not need to be #included
+pch.h:65: 'AbstractScene.h' does not need to be #included
+pch.h:66: 'SceneManager.h' does not need to be #included
+pch.h:69: 'CaptainHealth.h' does not need to be #included
+pch.h:70: 'ExitSign.h' does not need to be #included
+pch.h:71: 'Capsule.h' does not need to be #included
+pch.h:72: 'Item.h' does not need to be #included
+pch.h:74: 'Block.h' does not need to be #included
+pch.h:75: 'Spawner.h' does not need to be #included
+pch.h:76: 'AmbushTrigger.h' does not need to be #included
+pch.h:77: 'BreakableLedge.h' does not need to be #included
+pch.h:78: 'MovingLedgeUpdater.h' does not need to be #included
+pch.h:80: 'Enemy.h' does not need to be #included
+pch.h:81: 'Bullet.h' does not need to be #included
+pch.h:83: 'Shield.h' does not need to be #included
+pch.h:85: 'CaptainStanding.h' does not need to be #included
+pch.h:86: 'CaptainWalking.h' does not need to be #included
+pch.h:87: 'CaptainJumping.h' does not need to be #included
+pch.h:88: 'CaptainKicking.h' does not need to be #included
+pch.h:89: 'CaptainSpinning.h' does not need to be #included
+pch.h:90: 'CaptainThrowing.h' does not need to be #included
+pch.h:91: 'CaptainTackle.h' does not need to be #included
+pch.h:92: 'CaptainPunching.h' does not need to be #included
+pch.h:93: 'CaptainSitting.h' does not need to be #included
+pch.h:94: 'CaptainSitPunching.h' does not need to be #included
+pch.h:95: 'CaptainCoverTop.h' does not need to be #included
+pch.h:96: 'CaptainCoverLow.h' does not need to be #included
+pch.h:97: 'CaptainFallToWater.h' does not need to be #included
+pch.h:98: 'CaptainInWater.h' does not need to be #included
+pch.h:99: 'CaptainSwimming.h' does not need to be #included
+pch.h:100: 'CaptainClimbing.h' does not need to be #included
+pch.h:101: 'CaptainInjured.h' does not need to be #included
+pch.h:102: 'CaptainDead.h' does not need to be #included
+pch.h:103: 'CaptainFalling.h' does not need to be #included
+pch.h:104: 'CaptainElectricShock.h' does not need to be #included
+pch.h:105: 'Captain.h' does not need to be #included
+pch.h:106: 'DynamiteNapalm.h' does not need to be #included
+
+STATIC DATA
+AbstractScene.cpp:54: static data 'timeRemain'
+AbstractScene.cpp:83: static data 'lastToggle'
+AmbushTrigger.cpp:7: static data 'sceneManger'
+AmbushTrigger.cpp:8: static data 'AmbushTrigger::instance'
+AmbushTrigger.h:21: static data 'instance'
+AmbushTrigger.h:21: static data 'instance'
+BossCharlestonScene.cpp:5: static data 'cam'
+BossCharlestonScene.cpp:11: static data 'checkSpawnOnce'
+Camera.cpp:130: static data 'instance'
+Captain.cpp:5: static data 'setting'
+Captain.cpp:6: static data 'wnd'
+CaptainHealth.cpp:28: static data 'sprite'
+CaptainHealth.cpp:33: static data 'nRenderFrame'
+CaptainHealth.cpp:56: static data 'instance'
+CharlestonScene.cpp:8: static data 'cam'
+CharlestonScene.cpp:9: static data 'wnd'
+CharlestonScene.cpp:10: static data 'ambush'
+DebugDraw.cpp:3: static data 'DebugDraw::isInDebugMode'
+DebugDraw.cpp:4: static data 'DebugDraw::isDrawCrt'
+DebugDraw.cpp:5: static data 'DebugDraw::fontDraw'
+DebugDraw.h:6: static data 'isInDebugMode'
+DebugDraw.h:7: static data 'isDrawCrt'
+DebugDraw.h:8: static data 'fontDraw'
+DebugDraw.h:8: static data 'fontDraw'
+DynamiteNapalm.cpp:32: static data 'curBehavior'
+EnemyWizard.cpp:170: static data 'checkShotOnce'
+EnemyWizard.cpp:171: static data 'counterFly'
+EnemyWizard.cpp:247: static data 'counterState'
+EnemyWizard.cpp:248: static data 'Bullets'
+EnemyWizard.cpp:249: static data 'counterRunOutTime'
+EnemyWizard.cpp:299: static data 'runVerX'
+EnemyWizard.cpp:300: static data 'runVerY'
+EnemyWizard.cpp:301: static data 'isJumped'
+EnemyWizard.cpp:302: static data 'counter'
+EnemyWizard.cpp:326: static data 'isFlyDown'
+EnemyWizard.cpp:392: static data 'runCounter'
+EnemyWizard.cpp:404: static data 'counterRunOutTime'
+EnemyWizard.cpp:405: static data 'moveToLight'
+EnemyWizard.cpp:406: static data 'enter'
+EnemyWizard.cpp:459: static data 'isTurned'
+EnemyWizard.cpp:496: static data 'counter'
+EnemyWizard.cpp:510: static data 'counterAction'
+EnemyWizard.cpp:511: static data 'TranferState'
+EnemyWizard.cpp:520: static data 'nextBehavior'
+ExitSign.cpp:19: static data 'sprite'
+ExitSign.cpp:28: static data 'count'
+ExitSign.cpp:29: static data 'shouldDraw'
+ExitSign.cpp:37: static data 'drawablePos'
+ExitSign.cpp:51: static data 'instance'
+ExitSign.cpp:51: static data 'instance'
+Font.cpp:34: static data 'rect'
+Font.cpp:34: static data 'rect'
+Game.cpp:3: static data 'wnd'
+Game.cpp:4: static data 'sceneManager'
+Game.cpp:8: static data 'instance'
+Game.cpp:46: static data 'oldMt'
+Game.cpp:46: static data 'oldMt'
+GameTimer.h:16: static data 'instance'
+GameTimer.h:21: static data 'timePassed'
+GameTimer.h:22: static data 'nFramesPassed'
+GameTimer.h:22: static data 'nFramesPassed'
+Grid.cpp:4: static data 'cam'
+Grid.cpp:191: static data 'os'
+Grid.cpp:191: static data 'os'
+Grid.cpp:191: static data 'os'
+KeyCodeFonts.cpp:3: static data 'KeyCodeFonts::texture'
+KeyCodeFonts.cpp:4: static data 'KeyCodeFonts::keyCodeFontDictionary'
+KeyCodeFonts.cpp:39: static data 'lastWidth'
+KeyCodeFonts.h:7: static data 'texture'
+KeyCodeFonts.h:8: static data 'keyCodeFontDictionary'
+KeyCodeFonts.h:8: static data 'keyCodeFontDictionary'
+MovingLedge.cpp:31: static data 'holdTime'
+MovingLedge.cpp:32: static data 'lastPos'
+MovingLedge.cpp:73: static data 'timeStopped'
+MovingLedge.cpp:111: static data 'timeStopped'
+PittsburghScene.cpp:5: static data 'cam'
+PittsburghScene.cpp:6: static data 'wnd'
+Random.h:15: static data 'instance'
+RedAlertScene.cpp:4: static data 'cam'
+RedAlertScene.cpp:4: static data 'cam'
+SceneManager.cpp:187: static data 'instance'
+SceneManager.cpp:187: static data 'instance'
+Settings.cpp:180: static data 'instance'
+Shield.cpp:102: static data 'flagDistance'
+Shield.cpp:103: static data 'turnBack'
+Shield.cpp:103: static data 'turnBack'
+Sounds.cpp:3: static data 'Sounds::isMute'
+Sounds.cpp:4: static data 'Sounds::liVolume'
+Sounds.cpp:5: static data 'Sounds::displayTimeRemain'
+Sounds.cpp:6: static data 'Sounds::dsound'
+Sounds.cpp:7: static data 'Sounds::soundDictionary'
+Sounds.cpp:13: static data 'timePressed'
+Sounds.cpp:117: static data 'wnd'
+Sounds.cpp:133: static data 'texture'
+Sounds.h:6: static data 'isMute'
+Sounds.h:7: static data 'liVolume'
+Sounds.h:8: static data 'displayTimeRemain'
+Sounds.h:9: static data 'dsound'
+Sounds.h:10: static data 'soundDictionary'
+Sounds.h:10: static data 'soundDictionary'
+Sounds.h:10: static data 'soundDictionary'
+Sprites.cpp:3: static data 'Sprites::spriteDictionary'
+Sprites.cpp:18: static data 'frame'
+Sprites.h:6: static data 'spriteDictionary'
+Sprites.h:6: static data 'spriteDictionary'
+Textures.cpp:3: static data 'Textures::textureDictionary'
+Textures.h:6: static data 'textureDictionary'
+Textures.h:6: static data 'textureDictionary'
+Window.cpp:75: static data 'msg'
+Window.cpp:87: static data 'oss'
+Window.cpp:94: static data 'instance'
+
+MISC
+
+CharlestonScene.cpp:9: unused variable 'wnd'
+CharlestonScene.cpp:10: unused variable 'ambush'
+CharlestonScene.cpp:10: unused variable 'ambush'
+CharlestonScene.cpp:10: unused variable 'ambush'
+PittsburghScene.cpp:6: unused variable 'wnd'
+WinMain.cpp:5: 'WinMain' not found in any directly #included header
+WinMain.cpp:5: 'WinMain' not found in any directly #included header
