@@ -4,9 +4,9 @@
 
 void CaptainElectricShock::Enter(Captain& cap, State fromState, Data&& data)
 {
+	if (cap.health.Get() <= 0) cap.SetState(State::Captain_Dead);
 	cap.isFlashing = true;
 	cap.vel.x = 0;
-	Debug::out("Enter electric shock\n");
 }
 
 Data CaptainElectricShock::Exit(Captain& cap, State toState)

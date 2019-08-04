@@ -5,9 +5,9 @@ float ElectricTrap::deltaTime = 0.0f;
 float ElectricTrap::holdingTime = 0.0f;
 State ElectricTrap::syncState = State::NotExist;
 
-ElectricTrap::ElectricTrap(State initState, Vector2 pos) :VisibleObject(State::ElectricTrap_Active, pos)
+ElectricTrap::ElectricTrap(Vector2 pos) : VisibleObject(State::ElectricTrap_Active, pos)
 {
-	animations.emplace(State::ElectricTrap_Active, Animation(SpriteId::ElectricTrap_Active, 0.1f));
+	animations.emplace(State::ElectricTrap_Active, Animation(SpriteId::ElectricTrap_Active, 0.04f));
 	animations.emplace(State::Invisible, Animation(SpriteId::Invisible, sleepTime));
 }
 
@@ -50,4 +50,10 @@ void ElectricTrap::Update(float dt, const std::vector<GameObject*>& coObjects)
 		animations.at(curState).Update(deltaTime);
 		countUpdateTime = 0;
 	}
+}
+
+RectF ElectricTrap::GetBBox() const
+{
+	if (curState == State::ElectricTrap_Active) return VisibleObject::GetBBox();
+	else return {};
 }

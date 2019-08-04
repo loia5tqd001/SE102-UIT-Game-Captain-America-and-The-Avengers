@@ -318,7 +318,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Development\Objects\Bullets</Filter>
     </ClCompile>
-    <ClCompile Include="ElectricTrap.cpp" />
+    <ClCompile Include="ElectricTrap.cpp">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -600,7 +602,9 @@
     <ClInclude Include="CaptainElectricShock.h">
       <Filter>Development\Objects\Captain\D</Filter>
     </ClInclude>
-    <ClInclude Include="ElectricTrap.h" />
+    <ClInclude Include="ElectricTrap.h">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameProject.rc">

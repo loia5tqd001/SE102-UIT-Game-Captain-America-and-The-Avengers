@@ -153,7 +153,7 @@ void Captain::SetState(State state)
 	currentState->Enter(*this, oldState, std::move(exitData));
 	//shield->UpdateByCapState(this->curState, this->pos);
 
-#if 1
+#if 0
 	switch (state)
 	{
 	case State::Invisible:
@@ -273,6 +273,14 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 					}
 				}
 			}
+			else if (auto trap = dynamic_cast<ElectricTrap*>(obj))
+			{
+				if (!isFlashing)
+				{
+					health.Subtract(3);
+					SetState(State::CaptainElectricShock);
+				}
+			}
 			else if (auto ledge = dynamic_cast<MovingLedge*>(obj))
 			{
 				if (vel.y > 0.0f)
@@ -381,14 +389,7 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 #pragma endregion 
 				}
 			}
-			else if (auto trap = dynamic_cast<ElectricTrap*>(obj))
-			{
-				if (!isFlashing&&curState != State::CaptainElectricShock&&trap->CanCauseElectricShock())
-				{
-					CaptainHealth::Instance().Set(0);
-					SetState(State::Captain_Injured);
-				}
-			}
+
 		}
 	posBeforePhasing = pos;
 

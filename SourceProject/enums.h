@@ -186,7 +186,8 @@ enum class ClassId
 	Capsule              =  11,
 	Bunker               =  12,
 	BreakableLedge       =  13,
-	MovingLedgeUpdater   =  14
+	MovingLedgeUpdater   =  14,
+	ElectricTrap         =  15
 };
 
 enum class State

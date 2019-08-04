@@ -227,17 +227,6 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 		{
 			cap.CollideWithPassableObjects(dt, e);
 		}
-		else if (auto trap = dynamic_cast<ElectricTrap*>(e.pCoObj))
-		{
-			if (cap.curState != State::CaptainElectricShock && !cap.isFlashing&&trap->CanCauseElectricShock())
-			{
-				CaptainHealth::Instance().Set(0);
-				cap.SetState(State::Captain_Injured);
-				cap.CollideWithPassableObjects(dt, e);
-			}
-			else
-				cap.CollideWithPassableObjects(dt, e);
-		}
 
 	}
 }

@@ -71,6 +71,10 @@ void Grid::LoadObjects(const Json::Value& grid)
 				object = ObjectFactory::Create<MovingLedgeUpdater>(jsonObj, this);
 				break;
 
+			case ClassId::ElectricTrap:
+				object = ObjectFactory::Create<ElectricTrap>(jsonObj, this);
+				break;
+
 			default:
 				ThrowMyException("Can't find class id:", classId);
 		}
