@@ -6,6 +6,7 @@
 void CaptainDead::Enter(Captain& cap, State fromState, Data&& data)
 {
 	Sounds::PlayAt(SoundId::Death);
+	cap.isFlashing = true;
 	cap.vel.x = 0.0f;
 	cap.vel.y = 50.0f;
 }
@@ -25,6 +26,15 @@ void CaptainDead::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainDead::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	if (cap.vel.x != 0)
+	{
+		cap.vel.x = 0;
+	}
+	if (cap.vel.y!=50.0f)
+	{
+		cap.vel.y = 50.0f;
+	}
+
 	if (cap.animations.at(cap.curState).IsDoneCycle())
 	{
 		sceneManager.GetCurScene().DoTransitionScene();

@@ -104,5 +104,5 @@
 #include"CaptainElectricShock.h"
 #include "Captain.h"
 #include "DynamiteNapalm.h"
-
+#include"ElectricTrap.h"
 

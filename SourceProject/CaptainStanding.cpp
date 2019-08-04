@@ -14,9 +14,9 @@ Data CaptainStanding::Exit(Captain& cap, State toState)
 {
 	switch (toState)
 	{
-		case State::Captain_Sitting:
-			data.Add(IS_TO_SIT_TACKLE, isToSittingTackle);
-			break;
+	case State::Captain_Sitting:
+		data.Add(IS_TO_SIT_TACKLE, isToSittingTackle);
+		break;
 	}
 
 	return std::move(data);
@@ -32,7 +32,7 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 
 	// if pressdown two time in a row in direction
 	if (setting.Get(kControlDir) == keyCode &&
-	    cap.lastKeyDown == kControlDir && cap.lastKeyUp == kControlDir)
+		cap.lastKeyDown == kControlDir && cap.lastKeyUp == kControlDir)
 	{
 		std::chrono::duration<float> duration = std::chrono::steady_clock::now() - cap.timeLastKeyDown;
 		if (duration.count() < 0.17f)
@@ -79,13 +79,13 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 	else
 	{
 		int dir = 0;
-		if (wnd.IsKeyPressed( setting.Get(KeyControls::Left) ))
+		if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 		{
-			dir --;
+			dir--;
 		}
-		if (wnd.IsKeyPressed( setting.Get(KeyControls::Right) ))
+		if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 		{
-			dir ++;
+			dir++;
 			cap.nx = 1;
 		}
 		if (dir != 0)
@@ -128,28 +128,28 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 
 			switch (block->GetType())
 			{
-				case ClassId::RigidBlock:
-				case ClassId::PassableLedge:
-					isOnGround = true;
-					break;
+			case ClassId::RigidBlock:
+			case ClassId::PassableLedge:
+				isOnGround = true;
+				break;
 
-				case ClassId::DamageBlock:
-					isOnGround = true;
-					cap.CollideWithPassableObjects(dt, e);
-					break;
+			case ClassId::DamageBlock:
+				isOnGround = true;
+				cap.CollideWithPassableObjects(dt, e);
+				break;
 
-				case ClassId::NextMap:
-				case ClassId::Switch:
-				case ClassId::Door:
-					cap.CollideWithPassableObjects(dt, e);
-					break;
+			case ClassId::NextMap:
+			case ClassId::Switch:
+			case ClassId::Door:
+				cap.CollideWithPassableObjects(dt, e);
+				break;
 
-				case ClassId::ClimbableBar:
-					cap.CollideWithPassableObjects(dt, e);
-					break;
-				case ClassId::Water:
-				default:
-					AssertUnreachable();
+			case ClassId::ClimbableBar:
+				cap.CollideWithPassableObjects(dt, e);
+				break;
+			case ClassId::Water:
+			default:
+				AssertUnreachable();
 			}
 		}
 		else if (auto spawner = dynamic_cast<Spawner*>(e.pCoObj))
@@ -162,7 +162,7 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 			ambush->OnCollideWithCap(&cap);
 			cap.CollideWithPassableObjects(dt, e);
 		}
-		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
+		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
 			if (e.ny < 0)
 			{
@@ -227,5 +227,17 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 		{
 			cap.CollideWithPassableObjects(dt, e);
 		}
+		else if (auto trap = dynamic_cast<ElectricTrap*>(e.pCoObj))
+		{
+			if (cap.curState != State::CaptainElectricShock && !cap.isFlashing&&trap->CanCauseElectricShock())
+			{
+				CaptainHealth::Instance().Set(0);
+				cap.SetState(State::Captain_Injured);
+				cap.CollideWithPassableObjects(dt, e);
+			}
+			else
+				cap.CollideWithPassableObjects(dt, e);
+		}
+
 	}
 }

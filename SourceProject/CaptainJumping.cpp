@@ -5,7 +5,7 @@
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
 	setAnotherState = false;
-	if (fromState != State::Captain_Kicking && fromState != State::Captain_FallToWater) { JumpSpeed = JUMP_SPEED_VER_MAX; acceleration = GRAVITY;}
+	if (fromState != State::Captain_Kicking && fromState != State::Captain_FallToWater) { JumpSpeed = JUMP_SPEED_VER_MAX; acceleration = GRAVITY; }
 	//assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
 	//	|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
 	//	|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
@@ -35,37 +35,38 @@ void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 		isJumpReleased = data.Get<bool>(IS_JUMP_RELEASED);
 	}
 	else {
-		 isKicked = false;
-		 isJumpReleased = false;
-		 JumpHeightRealCounter = 0;
-		 JumpHeightNeedCounter = MIN_JUMP_HEIGHT;
+		isKicked = false;
+		isJumpReleased = false;
+		JumpHeightRealCounter = 0;
+		JumpHeightNeedCounter = MIN_JUMP_HEIGHT;
 	}
 	switch (fromState)
 	{
-		case State::Captain_Climbing:
-			break;
-		case State::Captain_InWater:
-			break;
-		case State::Captain_CoverLow:
-			break;
-		case State::Captain_Swimming:
+	case State::Captain_Climbing:
+		break;
+	case State::Captain_InWater:
+		break;
+	case State::Captain_CoverLow:
+		break;
+	case State::Captain_Swimming:
+		cap.vel.y = -JUMP_SPEED_VER;
+		break;
+	case State::Captain_CoverTop:
+		break;
+	case State::Captain_Sitting:
+		break;
+	case State::Captain_Standing:
+		break;
+	case State::Captain_Walking:
+		if (cap.lastKeyDown == KeyControls::Down) {
+			cap.vel.y = JUMP_SPEED_VER;
+		}
+		else {
 			cap.vel.y = -JUMP_SPEED_VER;
-			break;
-		case State::Captain_CoverTop:
-			break;
-		case State::Captain_Sitting:
-			break;
-		case State::Captain_Standing:
-			break;
-		case State::Captain_Walking:
-			if (cap.lastKeyDown == KeyControls::Down) {
-				cap.vel.y = JUMP_SPEED_VER;
-			} else {
-				cap.vel.y = -JUMP_SPEED_VER;
-			}
-			break;
-		default:
-			break;
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -109,7 +110,7 @@ void CaptainJumping::OnKeyDown(Captain& cap, BYTE keyCode)
 			cap.nx = 1;
 		}
 	}
-		
+
 }
 
 void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -121,22 +122,22 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
 	{
-		cap.vel.x = - MOVING_HOR;
+		cap.vel.x = -MOVING_HOR;
 		cap.nx = -1;
 	}
 	if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
 	{
-		cap.vel.x = + MOVING_HOR;
+		cap.vel.x = +MOVING_HOR;
 		cap.nx = 1;
 	}
 	if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
 		if (!isJumpReleased) {
-			JumpHeightNeedCounter += (JumpSpeed -30) * dt;
+			JumpHeightNeedCounter += (JumpSpeed - 30) * dt;
 			cap.vel.y = -JumpSpeed;
-			JumpHeightRealCounter += JumpSpeed *dt;
+			JumpHeightRealCounter += JumpSpeed * dt;
 		}
 		else {
-		    if (JumpHeightRealCounter < JumpHeightNeedCounter*8.5f/10.0f)
+			if (JumpHeightRealCounter < JumpHeightNeedCounter*8.5f / 10.0f)
 			{
 				cap.vel.y = -JumpSpeed;
 				JumpHeightRealCounter += JumpSpeed * dt;
@@ -152,8 +153,8 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 				JumpHeightRealCounter += JumpSpeed / 3 * dt;
 			}
 			else if (JumpHeightRealCounter < JumpHeightNeedCounter) {
-				cap.vel.y = -JumpSpeed/4;
-				JumpHeightRealCounter += JumpSpeed/4 * dt;
+				cap.vel.y = -JumpSpeed / 4;
+				JumpHeightRealCounter += JumpSpeed / 4 * dt;
 			}
 			else
 			{
@@ -166,7 +167,7 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 		if (JumpHeightRealCounter < JumpHeightNeedCounter)
 		{
 			cap.vel.y = -JumpSpeed;
-			JumpHeightRealCounter += JumpSpeed *dt;
+			JumpHeightRealCounter += JumpSpeed * dt;
 		}
 		else
 		{
@@ -222,7 +223,7 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 			if (cap.isFlashing) { // undamagable
 				cap.CollideWithPassableObjects(dt, e);
 			}
-			else 
+			else
 			{
 				setAnotherState = true;
 				enemy->TakeDamage(1);
@@ -241,43 +242,43 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 
 			switch (block->GetType())
 			{
-				case ClassId::Water:
-					if (e.ny < 0) cap.SetState(State::Captain_FallToWater);
-					break;
+			case ClassId::Water:
+				if (e.ny < 0) cap.SetState(State::Captain_FallToWater);
+				break;
 
-				case ClassId::NextMap:
-					if (sceneManager.GetCurScene().canGoNextMap) 
-						sceneManager.GoNextScene();
-					else cap.CollideWithPassableObjects(dt, e);
-					break;
+			case ClassId::NextMap:
+				if (sceneManager.GetCurScene().canGoNextMap)
+					sceneManager.GoNextScene();
+				else cap.CollideWithPassableObjects(dt, e);
+				break;
 
-				case ClassId::Switch:
-				case ClassId::Door:
-					cap.CollideWithPassableObjects(dt, e);
-					break;
+			case ClassId::Switch:
+			case ClassId::Door:
+				cap.CollideWithPassableObjects(dt, e);
+				break;
 
-				case ClassId::ClimbableBar:
-					cap.CollideWithPassableObjects(dt, e);
-					break;
+			case ClassId::ClimbableBar:
+				cap.CollideWithPassableObjects(dt, e);
+				break;
 
-				case ClassId::DamageBlock:
-				case ClassId::PassableLedge:
-					cap.CollideWithPassableObjects(dt, e);
-					break;
+			case ClassId::DamageBlock:
+			case ClassId::PassableLedge:
+				cap.CollideWithPassableObjects(dt, e);
+				break;
 
-				case ClassId::RigidBlock:
-					if (e.ny < 0) {
-						cap.SetState(State::Captain_Sitting);
-						Sounds::PlayAt(SoundId::Grounding);
-					}
-					else if (e.ny > 0) {
-						cap.SetState(State::Captain_Falling);
-						break;
-					}
+			case ClassId::RigidBlock:
+				if (e.ny < 0) {
+					cap.SetState(State::Captain_Sitting);
+					Sounds::PlayAt(SoundId::Grounding);
+				}
+				else if (e.ny > 0) {
+					cap.SetState(State::Captain_Falling);
 					break;
+				}
+				break;
 
-				default:
-					AssertUnreachable();
+			default:
+				AssertUnreachable();
 			}
 		}
 		else if (dynamic_cast<Capsule*>(e.pCoObj)) {
@@ -308,5 +309,17 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 		{
 			cap.CollideWithPassableObjects(dt, e);
 		}
+		else if (auto trap = dynamic_cast<ElectricTrap*>(e.pCoObj))
+		{
+			if (cap.curState != State::CaptainElectricShock && !cap.isFlashing&&trap->CanCauseElectricShock())
+			{
+				CaptainHealth::Instance().Set(0);
+				cap.SetState(State::Captain_Injured);
+				cap.CollideWithPassableObjects(dt, e);
+			}
+			else
+				cap.CollideWithPassableObjects(dt, e);
+		}
+
 	}
 }

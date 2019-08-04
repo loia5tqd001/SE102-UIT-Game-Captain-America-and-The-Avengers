@@ -56,10 +56,10 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 {
 	holdingDistance += std::abs(cap.vel.x*dt);
 	auto coEvents = CollisionDetector::CalcPotentialCollisions(cap, coObjects, dt);
-	if (coEvents.size() == 0) 
-	{ 
-		HandleNoCollisions(cap, dt); 
-		return; 
+	if (coEvents.size() == 0)
+	{
+		HandleNoCollisions(cap, dt);
+		return;
 	}
 
 	float min_tx, min_ty, nx, ny;
@@ -76,7 +76,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		{
 			if (auto block = dynamic_cast<Block*>(e.pCoObj))
 			{
-				if (block->GetType() == ClassId::PassableLedge||block->GetType()==ClassId::RigidBlock)
+				if (block->GetType() == ClassId::PassableLedge || block->GetType() == ClassId::RigidBlock)
 				{
 					cap.SetState(State::Captain_Dead);
 					pendingSwitchState = State::NotExist;
@@ -151,7 +151,7 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 			switch (block->GetType())
 			{
 			case ClassId::PassableLedge:
-				if (holdingDistance>INJURE_DISTANCE)
+				if (holdingDistance > INJURE_DISTANCE)
 					cap.SetState(State::Captain_Standing);
 				return;
 				if (pendingSwitchState == State::Captain_Dead)
@@ -213,11 +213,16 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 			cap.CollideWithPassableObjects(dt, e);
 			return;
 		}
-		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
+		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
 			if (e.ny < 0)
 				cap.SetState(State::Captain_Standing);
 		}
+		else if (auto trap = dynamic_cast<ElectricTrap*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
+
 	}
 
 

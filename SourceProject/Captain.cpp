@@ -120,7 +120,7 @@ void Captain::OnKeyUp(BYTE keyCode)
 void Captain::SetState(State state)
 {
 	prePhasingState = curState;
-
+	
 	auto exitData = currentState->Exit(*this, state);
 	switch (state)
 	{
@@ -151,7 +151,7 @@ void Captain::SetState(State state)
 	currentState->Enter(*this, oldState, std::move(exitData));
 	//shield->UpdateByCapState(this->curState, this->pos);
 
-#if 0
+#if 1
 	switch (state)
 	{
 	case State::Invisible:
@@ -365,6 +365,14 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 					//}
 					//pos = absoluteLimitPoint;
 #pragma endregion 
+				}
+			}
+			else if (auto trap = dynamic_cast<ElectricTrap*>(obj))
+			{
+				if (!isFlashing&&curState != State::CaptainElectricShock&&trap->CanCauseElectricShock())
+				{
+					CaptainHealth::Instance().Set(0);
+					SetState(State::Captain_Injured);
 				}
 			}
 		}

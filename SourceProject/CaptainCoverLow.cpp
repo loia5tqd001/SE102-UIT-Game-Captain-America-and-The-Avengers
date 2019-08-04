@@ -33,7 +33,7 @@ void CaptainCoverLow::OnKeyDown(Captain& cap, BYTE keyCode)
 	{
 		if (!isOnGround)
 		{
-			cap.SetState(State::Captain_Kicking); 
+			cap.SetState(State::Captain_Kicking);
 			return;
 		}
 		else
@@ -118,7 +118,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 			}
 			else {
 				if (isOnGround)
-				{				
+				{
 					cap.SetState(State::Captain_Injured);
 					enemy->TakeDamage(1);
 				}
@@ -193,13 +193,25 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 		{
 			cap.CollideWithPassableObjects(dt, e);
 		}
-		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj)) 
+		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
 			isOnGround = true;
 			isOnMovingLedge = true;
 			cap.vel = movingLedge->GetVelocity();
 			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 		}
+		else if (auto trap = dynamic_cast<ElectricTrap*>(e.pCoObj))
+		{
+			if (cap.curState != State::CaptainElectricShock && !cap.isFlashing&&trap->CanCauseElectricShock())
+			{
+				CaptainHealth::Instance().Set(0);
+				cap.SetState(State::Captain_Injured);
+				cap.CollideWithPassableObjects(dt, e);
+			}
+			else
+				cap.CollideWithPassableObjects(dt, e);
+		}
+
 	}
 }
 

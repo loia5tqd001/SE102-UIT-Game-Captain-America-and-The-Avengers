@@ -138,6 +138,18 @@ void CaptainSitPunching::HandleCollisions(Captain& cap, float dt, const std::vec
 			cap.vel = movingLedge->GetVelocity();
 			cap.vel.y += GRAVITY; // to make Captain and moving ledge still collide
 		}
+		else if (auto trap = dynamic_cast<ElectricTrap*>(e.pCoObj))
+		{
+			if (cap.curState != State::CaptainElectricShock && !cap.isFlashing&&trap->CanCauseElectricShock())
+			{
+				CaptainHealth::Instance().Set(0);
+				cap.SetState(State::Captain_Injured);
+				cap.CollideWithPassableObjects(dt, e);
+			}
+			else
+				cap.CollideWithPassableObjects(dt, e);
+		}
+
 	}
 }
 
