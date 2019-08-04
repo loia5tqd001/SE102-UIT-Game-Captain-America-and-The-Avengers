@@ -35,7 +35,7 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 		cap.lastKeyDown == kControlDir && cap.lastKeyUp == kControlDir)
 	{
 		std::chrono::duration<float> duration = std::chrono::steady_clock::now() - cap.timeLastKeyDown;
-		if (duration.count() < 0.17f)
+		if (duration.count() < 0.17f && !isOnMovingLedge)
 		{
 			isToSittingTackle = true;
 			cap.SetState(State::Captain_Sitting);

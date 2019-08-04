@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "Captain.h"
-#include"DynamiteNapalm.h"
+#include "DynamiteNapalm.h"
 #include "BulletDynamite.h"
+#include "ElectricBat.h"
+
 static auto& setting = Settings::Instance();
 static auto& wnd = Window::Instance();
 
@@ -233,9 +235,19 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 		{
 			if (auto enemy = dynamic_cast<Enemy*>(obj))
 			{
-				if (isFlashing)
-					return;
-				if (curState != State::Captain_Tackle && curState != State::Captain_CoverLow) {
+				if (isFlashing) return;
+				if (curState != State::Captain_Tackle && curState != State::Captain_CoverLow)
+				{
+					if (auto bat = dynamic_cast<ElectricBat*>(obj))
+					{
+						if (bat->GetState() == State::ElectricBat_FlyAttack)
+						{
+							SetState(State::CaptainElectricShock);
+							health.Subtract(1);
+							return;
+						}
+					}
+
 					enemy->TakeDamage(1);
 					this->health.Subtract(1);
 					if (curState == State::CaptainElectricShock)
@@ -266,6 +278,8 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 				if (vel.y > 0.0f)
 				{
 					pos.y = ledge->GetPos().y - GetHeight();
+					if (auto standing = dynamic_cast<CaptainStanding*>(currentState))
+						standing->SetOnMovingLedge(true);
 				}
 			}
 			else if (auto spawner = dynamic_cast<Spawner*>(obj))

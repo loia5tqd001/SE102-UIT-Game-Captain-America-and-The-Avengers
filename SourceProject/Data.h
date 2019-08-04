@@ -19,7 +19,7 @@ public:
 		return std::any_cast<T>( data.at(property) );
 	}
 
-	inline int Count(const std::string& property) const
+	inline auto Count(const std::string& property) const
 	{
 		return data.count(property);
 	}

@@ -9,6 +9,7 @@ private:
 	bool isOnGround = false;
 	bool isOnMovingLedge = false;
 public:
+	void SetOnMovingLedge(bool is_on_moving_ledge) { isOnMovingLedge = is_on_moving_ledge; }
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;
 	void OnKeyUp(Captain& cap, BYTE keyCode) override;
