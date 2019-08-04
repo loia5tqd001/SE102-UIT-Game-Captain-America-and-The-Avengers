@@ -227,7 +227,6 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DynamiteNapalm.cpp" />
     <ClCompile Include="ElectricBat.cpp" />
-    <ClCompile Include="ElectricTrap.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyFly.cpp" />
     <ClCompile Include="EnemyGun.cpp" />
@@ -319,7 +318,6 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="DynamiteNapalm.h" />
     <ClInclude Include="ElectricBat.h" />
-    <ClInclude Include="ElectricTrap.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFly.h" />
     <ClInclude Include="EnemyGun.h" />

@@ -8,7 +8,7 @@ private:
 	//const Data behaviorData;
 	const int expectCapNx;
 	Grid* const grid;
-	std::shared_ptr<class Enemy> enemy = nullptr;
+	std::shared_ptr<class Enemy> enemy;
 	bool readyToSpawn = true;
 	bool isActive = true; // control by ambush trigger to stall spawner to spawn ambush soldiers
 

@@ -4,7 +4,6 @@
 #include "EnemyRocket.h"
 #include "EnemyFly.h"
 #include "ElectricBat.h"
-#include"ElectricTrap.h"
 
 Spawner::Spawner(Vector2 pos, UINT w, UINT h, Behaviors behav, Vector2 objSpawnPos, int expectCapNx, Data&& data, Grid* grid) :
 	InvisibleObject(pos, w, h),
@@ -26,8 +25,8 @@ Spawner::Spawner(Vector2 pos, UINT w, UINT h, Behaviors behav, Vector2 objSpawnP
 }
 
 void Spawner::Update(float dt, const std::vector<GameObject*>& coObjects)
-{
-	if (!enemy)
+{	
+	if (!enemy) 
 	{
 		if (readyToSpawn) // go spawn first!!
 		{
@@ -55,34 +54,29 @@ void Spawner::OnCollideWithCap(Captain* cap)
 	else {
 		switch (objectBehavior)
 		{
-		case Behaviors::EnemyGun_Shoot:
-		case Behaviors::EnemyGun_ShootFast:
-		case Behaviors::EnemyGun_RunOnly:
-			enemy = std::make_shared<EnemyGun>(objectBehavior, objSpawnPos, cap, grid);
-			break;
-
-		case Behaviors::EnemyRocket_ShootStraight:
-		case Behaviors::EnemyRocket_ShootCross:
-		case Behaviors::EnemyRocket_BackAndForth:
-			enemy = std::make_shared<EnemyRocket>(objectBehavior, objSpawnPos, cap, grid);
-			break;
-
-		case Behaviors::EnemyFly_Stupid:
-			enemy = std::make_shared<EnemyFly>(objSpawnPos, grid, cap);
-			break;
-
-		case Behaviors::ElectricBat_Stupid:
-			enemy = std::make_shared<ElectricBat>(objSpawnPos, grid, cap);
-			break;
-		case Behaviors::ElectricTrap_Activate:
-			if (enemy!=nullptr)
+			case Behaviors::EnemyGun_Shoot    : 
+			case Behaviors::EnemyGun_ShootFast: 
+			case Behaviors::EnemyGun_RunOnly  :
+				enemy = std::make_shared<EnemyGun>(objectBehavior, objSpawnPos, cap, grid);
 				break;
-			enemy = std::make_shared<ElectricTrap>(objSpawnPos, grid, State::ElectricTrap_Active);
-			break;
-		default:
-			ThrowMyException("Can't spawn enemy of behavior: ", (int)objectBehavior);
-		}
 
+			case Behaviors::EnemyRocket_ShootStraight :
+			case Behaviors::EnemyRocket_ShootCross    :
+			case Behaviors::EnemyRocket_BackAndForth  :
+				enemy = std::make_shared<EnemyRocket>(objectBehavior, objSpawnPos, cap, grid);
+				break;
+
+			case Behaviors::EnemyFly_Stupid:
+				enemy = std::make_shared<EnemyFly>(objSpawnPos, grid, cap);
+				break;
+
+			case Behaviors::ElectricBat_Stupid:
+				enemy = std::make_shared<ElectricBat>(objSpawnPos, grid, cap);
+				break;
+
+			default:
+				ThrowMyException("Can't spawn enemy of behavior: ", (int)objectBehavior);
+		}
 		grid->SpawnObject(enemy);
 		readyToSpawn = false;
 	}

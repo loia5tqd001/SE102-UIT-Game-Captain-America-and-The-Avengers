@@ -136,9 +136,7 @@
 	[         206,            13,      348,      93,              24,               35,         1,            0], //DynamiteNapalm_Headless_Standing
 	[         207,            13,      220,      87,              35,               41,         3,            1], //DynamiteNapalm_Headless_Running_Shooting
 	[         210,            13,      242,      43,              14,                7,         1,            0], //DynamiteNapalm_Fire_Bullet
-	[         211,            13,       48,      42,              22,               14,         1,            0],  //DynamiteNapalm_Bullet_Dynamite
-
-	[220,11,134,324,16,43,6,1] //ElectricTrap
+	[         211,            13,       48,      42,              22,               14,         1,            0]  //DynamiteNapalm_Bullet_Dynamite
   ],
 
   "sounds": [
