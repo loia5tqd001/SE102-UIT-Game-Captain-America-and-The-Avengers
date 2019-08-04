@@ -11,13 +11,16 @@
 <p align="center"><a href="https://www.youtube.com/watch?v=opvoS4-yUgg">Watch video demo</a></p>
 <p align="center"><a href="https://github.com/loia5tqd001/SE102-UIT-Game-Captain-America-and-The-Avengers/releases">Download executable zip file released</a></p>
 
+######
+<img src="Github/HotkeyDemo.gif" />
+
 ## **Hotkeys**
 | Key | Command |
 |-----|---------|
 | <kbd>Esc</kbd> | __setting keyboard & pause game__ |
 | <kbd>Ctrl</kbd> | __toggle debug mode__ | 
 | <kbd>Hold Shift</kbd> | __deep debug__ (_if already in debug mode_) |
-| <kbd>Alt</kbd> | __scanline effect__ (_if not already in debug mode_) |
+| <kbd>Alt</kbd> | __scanline effect__ (_if __not__ already in debug mode_) |
 | <kbd>Tab</kbd> | __toggle light__ (_in `Pittsburgh`, `Boss Charleston`_) |
 | <kbd>Enter</kbd> | __go next map__ |
 | <kbd>M</kbd> | __mute/unmute sound__ |
@@ -32,8 +35,49 @@
 | <kbd>NUMPAD 6</kbd> | __go to checkpoint 6__ (_`Pittsburgh`_) |
 | <kbd>NUMPAD 7</kbd> | __go to checkpoint 7__ (_`Red Alert`_) |
 
-####
-<img src="Github/HotkeyDemo.gif" />
+######
+<table style="width:100%">
+<tr>
+    <th> <p align="center">
+           <a href="https://youtu.be/opvoS4-yUgg?t=11"><img src="Github/checkpoint_0.gif"></a>
+           <br>Checkpoint 0: Charleston
+    </p> </th>
+    <th> <p align="center">
+           <a href="https://youtu.be/opvoS4-yUgg?t=101"><img src="Github/checkpoint_1.gif"></a>
+           <br>Checkpoint 1: Charleston
+    </p> </th>
+</tr>
+<tr>
+    <th> <p align="center">
+           <a href="https://youtu.be/opvoS4-yUgg?t=108"><img src="Github/checkpoint_2.gif"></a>
+           <br>Checkpoint 2: Charleston (Boss)
+    </p> </th>
+    <th> <p align="center">
+           <a href="https://youtu.be/opvoS4-yUgg?t=165"><img src="Github/checkpoint_3.gif"></a>
+           <br>Checkpoint 3: Pittsburgh
+    </p> </th>
+</tr>
+<tr>
+    <th> <p align="center">
+           <a href="https://youtu.be/opvoS4-yUgg?t=278"><img src="Github/checkpoint_4.gif"></a>
+           <br>Checkpoint 4: Pittsburgh
+    </p> </th>
+    <th> <p align="center">
+           <a href="https://youtu.be/opvoS4-yUgg?t=301"><img src="Github/checkpoint_5.gif"></a>
+           <br>Checkpoint 5: Pittsburgh
+    </p> </th>
+</tr>
+<tr>
+    <th> <p align="center">
+           <a href="https://youtu.be/opvoS4-yUgg?t=312"><img src="Github/checkpoint_6.gif"></a>
+           <br>Checkpoint 6: Pittsburgh
+    </p> </th>
+    <th> <p align="center">
+           <a href="https://youtu.be/opvoS4-yUgg?t=319"><img src="Github/checkpoint_7.gif"></a>
+           <br>Checkpoint 7: Red Alert
+    </p> </th>
+</tr>
+</table>
 
 ## **Controls**
 ### **Default Key Controls**
@@ -66,18 +110,13 @@
 | <kbd>Attack</kbd> | __punch__ (_if is not holding shield_) |
 | <kbd>Attack</kbd> | __sit-punch__ (_if is sitting_) |
 | <kbd>Attack</kbd> | __kick__ (_if is on the air_) |
-            
-## **Development Environment**
-* Visual Studio 2017
-* C++17
-* DirectX 9
 
 ## **References**
 * [Castlevania Game Project By NearHuscarl](https://github.com/NearHuscarl/Castlevania)
 * [My Framework](https://github.com/loia5tqd001/Game-FrameWork) _(for more references)_   
   
 ## **Credit**
-- Đồ án này tham khảo nhiều ý tưởng từ đồ án game của anh N PMCL2016.2. README này cũng đã __cố tình__ làm giống README của anh N như một lời tri ân. Nếu anh N có đọc được và thấy không hài lòng với việc này, cứ gửi yêu cầu và README này sẽ được gỡ bỏ.
+- Đồ án này tham khảo nhiều ý tưởng từ đồ án game của anh N PMCL2016.2. README này cũng đã __cố tình__ làm tương tự README của anh N như một lời tri ân. Nếu anh N có đọc được và thấy không hài lòng với việc này, cứ gửi yêu cầu và README này sẽ được gỡ bỏ.
 ---
 *"Mấy anh chị ở đây làm 3 4 tháng mà còn không xong cái game thì mấy bạn học lần đầu làm kiểu gì 4 tuần xong được cái game, rớt chắc rồi. Nếu mình biết trước mình đã khuyên không học rồi. Có học vượt gì đi nữa thì cũng không nên học lần đầu trong học kì hè, học kì nào cũng được nhưng miễn đừng là học kì hè. Thôi coi như đổi tiền lấy kinh nghiệm vậy ..."*
 :blush:
