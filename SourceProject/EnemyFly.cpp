@@ -7,6 +7,7 @@ EnemyFly::EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap) :
 {
 	animations.emplace(State::EnemyFly_Fly, Animation(SpriteId::EnemyFly_Fly, 0.08f));
 	animations.emplace(State::EnemyFly_Falling, Animation(SpriteId::EnemyFly_Fly, 0.06f));
+	animations.emplace(State::EnemyFly_Shoot, Animation(SpriteId::EnemyFly_Shoot, 0.13f));
 
 	//EnemyFly_BeforeExplode need many cycle, we use time counter for this, not default BeforeExplode
 	//The have to advoid exploxe
@@ -18,8 +19,6 @@ EnemyFly::EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap) :
 
 void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
-	SpawnBullet();
-
 	animations.at(curState).Update(dt);
 	OnFlashing();
 
@@ -52,6 +51,12 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 		{
 			//the code below stimulate its cycle
 			//if (counterStopShoot > 0 && counterStopShoot < 0.5f) return;
+			if (pos.y < cap->GetPos().y) {
+				counterSpawnBullet += GameTimer::Dt();
+				if (counterSpawnBullet >= 2.5f) {
+					SetState(State::EnemyFly_Shoot);
+				}
+			}
 
 			if (pos.x > cap->GetPos().x) nx = -1;
 			else nx = 1;
@@ -115,6 +120,16 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 			else SetState(State::Explode);
 			break;
 		}
+		case State::EnemyFly_Shoot:
+		{
+			vel.x = 0;
+			vel.y = 0;
+			if (animations.at(State::EnemyFly_Shoot).IsDoneCycle()) {
+				SpawnBullet();
+				SetState(State::EnemyFly_Fly);
+			}
+			break;
+		}
 		case State::Explode:
 		{
 			if (animations.at(curState).IsDoneCycle())
@@ -128,23 +143,23 @@ void EnemyFly::Update(float dt, const std::vector<GameObject*>& coObjects)
 
 void EnemyFly::SpawnBullet()
 {
-	if (pos.y > cap->GetPos().y) return;
-	counterSpawnBullet += GameTimer::Dt();
-	if (counterSpawnBullet >= 2.5f) {
-		counterStopShoot += GameTimer::Dt();
-		if (counterStopShoot >= 0.5f) 
-		{
-			const auto bulletPos = pos + Vector2{ 24.0f, 10.0f };
+	//if (pos.y > cap->GetPos().y) return;
+	//counterSpawnBullet += GameTimer::Dt();
+	//if (counterSpawnBullet >= 2.5f) {
+	//	counterStopShoot += GameTimer::Dt();
+	//	if (counterStopShoot >= 0.5f) 
+	//	{
+			const auto bulletPos = pos + Vector2{ 20.0f, 10.0f };
 			if (cap->GetPos().y > pos.y) {
 				grid->SpawnObject(std::make_unique<BulletEnemyFly>(nx, this, bulletPos, cap));
 				Sounds::PlayAt(SoundId::BulletNormal);
 				counterSpawnBullet = 0;
 				counterStopShoot = 0;
 			}
-		}
-		//vel.x = 0;
-		//vel.y = 0;
-	}
+	//	}
+	//	//vel.x = 0;
+	//	//vel.y = 0;
+	//}
 }
 
 void EnemyFly::TakeDamage(int damage)
