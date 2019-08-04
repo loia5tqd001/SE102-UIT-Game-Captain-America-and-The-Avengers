@@ -318,6 +318,7 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Development\Objects\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="ElectricTrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -599,6 +600,7 @@
     <ClInclude Include="CaptainElectricShock.h">
       <Filter>Development\Objects\Captain\D</Filter>
     </ClInclude>
+    <ClInclude Include="ElectricTrap.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GameProject.rc">

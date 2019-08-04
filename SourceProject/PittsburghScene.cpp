@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "PittsburghScene.h"
 #include "Bunker.h"
+#include"ElectricTrap.h"
 
 static auto& cam = Camera::Instance();
 static auto& wnd = Window::Instance();
@@ -22,6 +23,7 @@ void PittsburghScene::LoadResources()
 
 	grid = std::make_unique<Grid>( root );
 	cap = std::make_unique<Captain>( Vector2{ 32.0f, 197.0f - 45.0f },grid.get()) ;
+
 	//cap = std::make_unique<Captain>( Vector2{ 792.0f, 390.0f },grid.get()) ;
 	cam.SetMainCharacter(cap.get());
 	ClampCaptainAndCamera();

@@ -137,7 +137,9 @@ enum class SpriteId
 	DynamiteNapalm_Headless_Standing = 206,
 	DynamiteNapalm_Headless_Running_Shooting = 207,
 	DynamiteNapalm_FireBullet = 210,
-	DynamiteNapalm_Dynamite = 211
+	DynamiteNapalm_Dynamite = 211,
+
+	ElectricTrap = 220
 };
 
 enum class SoundId
@@ -312,6 +314,9 @@ enum class State
 	DynamiteNapalm_BeforeExplode,
 	DynamiteNapalm_FireBullet,
 	DynamiteNapalm_Dynamite,
+
+	ElectricTrap_Active,
+
 	NotExist //Use to initialize
 };
 
@@ -347,7 +352,11 @@ enum class Behaviors // for enemy, moving ledges
 
 	MovingLedge_Horizontal = 40,
 	MovingLedge_Diagonal = 41,
-	MovingLedge_Circle = 42
+	MovingLedge_Circle = 42,
+
+	ElectricTrap_Activate = 50,
+	
+	NotExists
 };
 
 enum class Scene
