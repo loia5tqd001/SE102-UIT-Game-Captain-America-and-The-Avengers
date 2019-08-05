@@ -39,42 +39,42 @@
 <table style="width:100%">
 <tr>
     <th> <p align="center">
-           <a href="https://youtu.be/opvoS4-yUgg?t=11"><img src="Github/checkpoint_0.gif"></a>
-           <br>Checkpoint 0: Charleston
+       <img src="Github/checkpoint_0.gif"><br>
+       <a href="https://youtu.be/opvoS4-yUgg?t=11">Checkpoint 0: Charleston</a>
     </p> </th>
     <th> <p align="center">
-           <a href="https://youtu.be/opvoS4-yUgg?t=101"><img src="Github/checkpoint_1.gif"></a>
-           <br>Checkpoint 1: Charleston
-    </p> </th>
-</tr>
-<tr>
-    <th> <p align="center">
-           <a href="https://youtu.be/opvoS4-yUgg?t=108"><img src="Github/checkpoint_2.gif"></a>
-           <br>Checkpoint 2: Charleston (Boss)
-    </p> </th>
-    <th> <p align="center">
-           <a href="https://youtu.be/opvoS4-yUgg?t=165"><img src="Github/checkpoint_3.gif"></a>
-           <br>Checkpoint 3: Pittsburgh
+       <img src="Github/checkpoint_1.gif"><br>
+       <a href="https://youtu.be/opvoS4-yUgg?t=101">Checkpoint 1: Charleston</a>
     </p> </th>
 </tr>
 <tr>
     <th> <p align="center">
-           <a href="https://youtu.be/opvoS4-yUgg?t=278"><img src="Github/checkpoint_4.gif"></a>
-           <br>Checkpoint 4: Pittsburgh
-    </p> </th>
+       <img src="Github/checkpoint_2.gif"><br>
+       <a href="https://youtu.be/opvoS4-yUgg?t=108">Checkpoint 2: Charleston (Boss)</a>
+    </p> </th>    
     <th> <p align="center">
-           <a href="https://youtu.be/opvoS4-yUgg?t=301"><img src="Github/checkpoint_5.gif"></a>
-           <br>Checkpoint 5: Pittsburgh
+       <img src="Github/checkpoint_3.gif"><br>
+       <a href="https://youtu.be/opvoS4-yUgg?t=165">Checkpoint 3: Pittsburgh</a>
     </p> </th>
 </tr>
 <tr>
     <th> <p align="center">
-           <a href="https://youtu.be/opvoS4-yUgg?t=312"><img src="Github/checkpoint_6.gif"></a>
-           <br>Checkpoint 6: Pittsburgh
-    </p> </th>
+       <img src="Github/checkpoint_4.gif"><br>
+       <a href="https://youtu.be/opvoS4-yUgg?t=278">Checkpoint 4: Pittsburgh</a>
+    </p> </th>    
     <th> <p align="center">
-           <a href="https://youtu.be/opvoS4-yUgg?t=319"><img src="Github/checkpoint_7.gif"></a>
-           <br>Checkpoint 7: Red Alert
+       <img src="Github/checkpoint_5.gif"><br>
+       <a href="https://youtu.be/opvoS4-yUgg?t=301">Checkpoint 5: Pittsburgh</a>
+    </p> </th>
+</tr>
+<tr>
+    <th> <p align="center">
+       <img src="Github/checkpoint_6.gif"><br>
+       <a href="https://youtu.be/opvoS4-yUgg?t=312">Checkpoint 6: Pittsburgh</a>
+    </p> </th>    
+    <th> <p align="center">
+       <img src="Github/checkpoint_7.gif"><br>
+       <a href="https://youtu.be/opvoS4-yUgg?t=319">Checkpoint 7: Red Alert</a>
     </p> </th>
 </tr>
 </table>
