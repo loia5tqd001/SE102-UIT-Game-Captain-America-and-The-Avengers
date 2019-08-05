@@ -7,7 +7,7 @@ EnemyFly::EnemyFly(Vector2 spawnPos, Grid* grid, Captain *cap) :
 {
 	animations.emplace(State::EnemyFly_Fly, Animation(SpriteId::EnemyFly_Fly, 0.08f));
 	animations.emplace(State::EnemyFly_Falling, Animation(SpriteId::EnemyFly_Fly, 0.06f));
-	animations.emplace(State::EnemyFly_Shoot, Animation(SpriteId::EnemyFly_Shoot, 0.13f));
+	animations.emplace(State::EnemyFly_Shoot, Animation(SpriteId::EnemyFly_Shoot, 0.1f));
 
 	//EnemyFly_BeforeExplode need many cycle, we use time counter for this, not default BeforeExplode
 	//The have to advoid exploxe
