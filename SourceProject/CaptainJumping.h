@@ -14,6 +14,7 @@ private:
 	bool ignoreUpdate = false;
 	float JumpSpeed = JUMP_SPEED_VER_MAX;
 	float acceleration = GRAVITY;
+	float maxJumpHeight; // depend on if jump from water or not
 
 public:
 	void Enter(Captain& cap, State fromState, Data&& data) override;

@@ -5,19 +5,15 @@
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
 	setAnotherState = false;
-	if (fromState != State::Captain_Kicking && fromState != State::Captain_FallToWater) { JumpSpeed = JUMP_SPEED_VER_MAX; acceleration = GRAVITY; }
-	//assert(fromState == State::Captain_Climbing || fromState == State::Captain_Throwing
-	//	|| fromState == State::Captain_CoverTop || fromState == State::Captain_Sitting 
-	//	|| fromState == State::Captain_Standing || fromState == State::Captain_Walking
-	//	|| fromState == State::Captain_InWater  || fromState == State::Captain_Swimming
-	//    || fromState == State::Captain_Kicking  || fromState == State::Captain_FallToWater
-	//    || fromState == State::Captain_Injured);
-	// it's almost all of Captain states, why do we need those above anyway?
+	if (fromState != State::Captain_FallToWater) { JumpSpeed = JUMP_SPEED_VER_MAX; acceleration = GRAVITY; }
+
 	if (fromState == State::Captain_InWater || fromState == State::Captain_Swimming) {
 		isFromWater = true;
+		maxJumpHeight = MAX_JUMP_HEIGHT * 0.75f;
 	}
 	else {
 		isFromWater = false;
+		maxJumpHeight = MAX_JUMP_HEIGHT;
 	}
 
 	cap.vel.x = 0.0f; // avoid wind blowing phenomenon when jump from water
@@ -130,7 +126,7 @@ void CaptainJumping::Update(Captain& cap, float dt, const std::vector<GameObject
 		cap.vel.x = +MOVING_HOR;
 		cap.nx = 1;
 	}
-	if (JumpHeightNeedCounter < MAX_JUMP_HEIGHT) {
+	if (JumpHeightNeedCounter < maxJumpHeight) {
 		if (!isJumpReleased) {
 			JumpHeightNeedCounter += (JumpSpeed - 30) * dt;
 			cap.vel.y = -JumpSpeed;

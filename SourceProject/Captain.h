@@ -54,6 +54,6 @@ public:
 	RectF GetBBox() const override;
 	RectF GetHitBox() const override;
 	bool isDead() { return health.Get() <= 0; };
-	float getDirectionWhenThrow() { if (curState == State::Captain_Throwing) return nx; else return 0; }
+	int getDirectionWhenThrow() { if (curState == State::Captain_Throwing) return nx; else return 0; }
 };
 

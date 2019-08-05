@@ -19,8 +19,8 @@ Bunker::Bunker(State initState, Vector2 spawnPos, Grid* grid) :
 
 void Bunker::SpawnBullet()
 {
-	static constexpr auto BULLET_SPEED = 100.0f;
-	static const auto SQRT_BULLET_SPEED = std::sqrtf(2.0f) * 50.0f;
+	static constexpr auto BULLET_SPEED = 150.0f;
+	static const auto SQRT_BULLET_SPEED = std::sqrtf(2.0f) * 75.0f;
 
 	auto posSpawn = pos + Vector2{ 5.0f, 5.0f }; // always spawn bullet at the center of bunker
 	Vector2 velSpawn;

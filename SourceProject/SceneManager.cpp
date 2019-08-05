@@ -56,11 +56,8 @@ void SceneManager::LoadResources()
 
 void SceneManager::SetScene(Scene scene)
 {
-	if (curScene && curScene->HasMusic())
-	{
-		Sounds::StopAt( curScene->GetBgMusic() );
-		ExitSign::Instance().ResetNewStage();
-	}
+	Sounds::StopAll();
+	ExitSign::Instance().ResetNewStage();
 
 	switch (scene)
 	{

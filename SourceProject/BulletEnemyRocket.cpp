@@ -33,8 +33,8 @@ void BulletEnemyRocket::Update(float dt, const std::vector<GameObject*>& coObjec
 	{
 		if (abs(vel.y) <= abs(vel.x) / 2) this->SetState(State::BulletEnemyRocket_Horizontal);
 		else this->SetState(State::BulletEnemyRocket_Cross);
-		durationUp += GameTimer::Dt();
-		if (durationUp >= 0.25)
+		durationUp += dt;
+		if (durationUp >= 0.25f)
 		{
 			vel.x = nx * BULLET_MOVING/sqrtf(2.0f);
 			vel.y = -abs(vel.x);

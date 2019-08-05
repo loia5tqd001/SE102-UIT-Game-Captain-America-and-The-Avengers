@@ -13,8 +13,11 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 	beginnx = cap.nx;
 
 	isKicked = data.Get<bool>(IS_KICKED);
-	if (data.Get<bool>(IS_JUMP_FROM_WATER))
+	if (data.Count(IS_JUMP_FROM_WATER) && data.Get<bool>(IS_JUMP_FROM_WATER))
 		cap.SetState(State::Captain_Falling);
+	else
+		Sounds::PlayAt(SoundId::Spinning);
+
 	if (isKicked)
 	{
 		if (fromState == State::Captain_Kicking || fromState == State::Captain_Jumping) {
@@ -25,10 +28,8 @@ void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 	else
 	{
 		timeUp = 0;
-		timeDown = 0;
+		timeDown = -TIME_KEEP_SPIN * 0.6f;
 	}
-	if (!data.Get<bool>(IS_JUMP_FROM_WATER))
-		Sounds::PlayAt(SoundId::Spinning);
 }
 
 Data CaptainSpinning::Exit(Captain& cap, State toState)

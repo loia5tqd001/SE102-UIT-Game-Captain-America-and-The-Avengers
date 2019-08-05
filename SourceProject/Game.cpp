@@ -117,12 +117,32 @@ void Game::Run()
 {
 	while (wnd.ProcessMessage())
 	{
+#ifdef DEBUG
 		GameTimer::BeginFrame();
 
 		sceneManager.Update(GameTimer::Dt());
 		Render();
 
 		wnd.SetTitleToFps();
+#else
+		try
+		{	
+			GameTimer::BeginFrame();
+
+			sceneManager.Update(GameTimer::Dt());
+			Render();
+
+			wnd.SetTitleToFps();
+		}
+		catch (const MyException& ex)
+		{
+			Window::ShowMessageBox(ex.what());
+		}
+		catch (...)
+		{
+			// ignore
+		}
+#endif
 	}
 }
 

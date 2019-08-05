@@ -168,6 +168,7 @@ void Shield::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
 						bullet->SetPos(Vector2{ this->GetPos().x - bullet->GetWidth() - 1 ,bullet->GetPos().y });
 					}
 					bullet->Reflect();
+					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
 			}
 			else if (auto bullet = dynamic_cast<BulletEnemyWizard*>(o))
@@ -184,6 +185,7 @@ void Shield::PrecheckAABB(float dt, const std::vector<GameObject*>& coObjects)
 						bullet->SetPos(Vector2{ this->GetPos().x - bullet->GetWidth() - 1 ,bullet->GetPos().y });
 					}
 					bullet->Reflect();
+					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
 			}
 		}
@@ -374,24 +376,6 @@ void Shield::HandleCaptainCollison(float dt, const std::vector<GameObject*>& coO
 
 void Shield::HandleSideCollison(float dt, const std::vector<GameObject*>& coObjects)
 {
-	auto coEvents = CollisionDetector::CalcPotentialCollisions(*this, coObjects, dt);
-	if (coEvents.size() == 0) return;
-	if (isOnCaptain) //deflect bullet
-	{
-		for (UINT i = 0; i < coEvents.size(); i++)
-		{
-			const CollisionEvent& e = coEvents[i];
-
-			if (auto bullet = dynamic_cast<BulletEnemyGun*>(e.pCoObj))
-			{
-				if (e.nx > 0.0f && this->nx > 0 || e.nx < 0.0f && this->nx < 0)
-				{
-					bullet->Reflect();
-					Sounds::PlayAt(SoundId::ShieldCollide);
-				}
-			}
-		}
-	}
 }
 
 void Shield::HandleUpCollison(float dt, const std::vector<GameObject*>& coObjects)
@@ -557,7 +541,8 @@ void Shield::HandleBottomCollison(float dt, const std::vector<GameObject*>& coOb
 
 RectF Shield::GetBBox() const
 {
-	//if (curState != State::Shield_Up) return VisibleObject::GetBBox();
+	if (curState != State::Shield_Straight) return VisibleObject::GetBBox();
+
 	if (nx < 0)
 		return VisibleObject::GetBBox().Trim((float)GetWidth() / 2 - 0.05f, 0, 0, 0);
 	else

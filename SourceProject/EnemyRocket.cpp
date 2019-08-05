@@ -12,8 +12,8 @@ EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Gri
 	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.09f));
 	if (behavior == Behaviors::EnemyRocket_BackAndForth)
 	{
-		animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.6f));
-		animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.6f));
+		animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.55f));
+		animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.55f));
 	}
 	else
 	{
@@ -33,7 +33,8 @@ EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Gri
 			break;
 		case Behaviors::EnemyRocket_BackAndForth:
 			isInJumpBackNForth = (pos.y + GetHeight() < 437.0f && pos.y > 200.0f);
-			SetState(State::EnemyRocket_Sitting);
+			if (isInJumpBackNForth) SetState(State::EnemyRocket_Sitting);
+			else SetState(State::EnemyRocket_Walking);
 			rocketType = 2;
 			break;
 		case Behaviors::EnemyRocket_Ambush:
@@ -126,63 +127,44 @@ void EnemyRocket::BackAndForthJump()
 	static constexpr float JUMP_HOR = 20.0f;
 	static constexpr float GRAVITY = 140.0f;
 
-	vel.x = -JUMP_HOR;// * GameTimer::Dt();
+	vel.x = -JUMP_HOR;
+
 	if (bnf_dirY == -1) // jump up
 	{
-		//Debug::Out("acc", accelerator);
-		pos.y -= GRAVITY * GameTimer::Dt();// - accelerator;
-		if (pos.y < 270.0f) { // 270 is the highest position of jump
+		pos.x += vel.x * GameTimer::Dt() * 2;
+		pos.y -= GRAVITY * GameTimer::Dt();
+		if (pos.y < 275.0f) // 270 is the highest position of jump
 			bnf_dirY = 0;
-		}
 	}
 	else if (bnf_dirY == 0) // kinda holding in the air
 	{
-		bnf_accelerator += 0.01f * GameTimer::Dt();
-		if (pos.y > 275.0f) {
-			pos.y -= GRAVITY * GameTimer::Dt() * 0.2f - bnf_accelerator;
-		} else if (pos.y < 270.0f) {
-			pos.y += GRAVITY * GameTimer::Dt() * 0.2f - bnf_accelerator;
-		} else {
+		bnf_accelerator += 1.0f * GameTimer::Dt();
+		pos.x += vel.x * GameTimer::Dt();
+		if (pos.y > 275.0f) 
+			pos.y -= GRAVITY * GameTimer::Dt() * 0.25f - bnf_accelerator;
+		else if (pos.y < 270.0f)
+			pos.y += GRAVITY * GameTimer::Dt() * 0.25f - bnf_accelerator;
+		else
 			bnf_dirY = 1; // falling
-		}
 	}
 	else // falling
 	{
+		pos.x += vel.x * GameTimer::Dt() * 2.0f;
 		pos.y += GRAVITY * GameTimer::Dt() + bnf_accelerator;
 		if (pos.y + GetHeight() >= 437.0f) // 437 is the ground
 		{
 			pos.y = 437.0f - GetHeight(); 
-			VisibleObject::SetState(State::EnemyRocket_Stand);
-			vel.x = 0.0f;
-
-			if (animations.at(State::EnemyRocket_Stand).IsDoneCycle()) {
-				VisibleObject::SetState(State::EnemyRocket_Sitting);
-			}
-			else if (animations.at(State::EnemyRocket_Sitting).IsDoneCycle()) {
-				//lastState = State::EnemyRocket_Walking;
-				//SetState(State::EnemyRocket_Stand);
-				//isLastForth = !isLastForth;
-				//isInJumpBackNForth = false;
-				//justShoot = false;//
-				justShoot = true;
-				SpawnRocket();
-				lastState = State::EnemyRocket_Sitting;
+			VisibleObject::SetState(State::EnemyRocket_Sitting);
+			if (animations.at(State::EnemyRocket_Sitting).IsDoneCycle())
+			{
+				lastState = State::EnemyRocket_Walking;
 				SetState(State::EnemyRocket_Stand);
 				justShoot = false;
 				isLastForth = !isLastForth;
 				isInJumpBackNForth = false;
-
-				//if (!justShoot) {
-				//	justShoot = true;
-				//}
-				//else {
-				//
-				//}
 			}
-
 		}
 	}
-	pos.x += vel.x * GameTimer::Dt();
 }
 
 void EnemyRocket::OnBehaviorBackAndForth()
@@ -194,7 +176,6 @@ void EnemyRocket::OnBehaviorBackAndForth()
 		BackAndForthJump();
 		return;
 	}
-
 
 	if (animations.at(curState).IsDoneCycle())
 	switch (curState)

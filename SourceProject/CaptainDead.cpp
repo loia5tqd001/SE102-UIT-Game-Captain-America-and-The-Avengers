@@ -6,6 +6,7 @@
 void CaptainDead::Enter(Captain& cap, State fromState, Data&& data)
 {
 	initialized = false;
+	Sounds::StopAll();
 	Sounds::PlayAt(SoundId::Death);
 	cap.isFlashing = true;
 	cap.vel.x = 0.0f;

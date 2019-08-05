@@ -10,7 +10,7 @@ MovingLedge::MovingLedge(Vector2 pos, Behaviors behavior) :
 	animations.emplace(State::MovingLedge_Stall, Animation(SpriteId::MovingLedge));
 
 	if (behavior == Behaviors::MovingLedge_Horizontal) {
-		firetails.emplace_back(SpriteId::FireTail_Hor, 0.15f);
+		firetails.emplace_back(SpriteId::FireTail_Hor, 0.065f);
 		firetails.emplace_back(SpriteId::Invisible);
 	} else {
 		firetails.emplace_back(SpriteId::FireTail_Hor, 0.1f);
@@ -27,13 +27,13 @@ void MovingLedge::OnCircleMoving(float dt)
 	else if (curState == State::MovingLedge_Moving)
 	{
 		static constexpr auto PI = 3.14159265f;
-		static constexpr auto omega = 1.5f;
+		static constexpr auto omega = 1.3f;
 		static auto holdTime = 0.0f;
 		static auto lastPos = pos;
 
 		holdTime += dt;
-		pos.x = 580.0f + 52.0f * cos( omega * holdTime);
-		pos.y = 690.0f + 35.0f * cos( omega * holdTime - PI / 2.0f);
+		pos.x = 583.0f + 50.0f * cos( omega * holdTime);
+		pos.y = 647.0f + 50.0f * cos( omega * holdTime - PI / 2.0f);
 
 		// calculate for handling collision:
 		vel.x = (pos.x - lastPos.x) / dt;
@@ -44,9 +44,9 @@ void MovingLedge::OnCircleMoving(float dt)
 
 void MovingLedge::OnDiagonalMoving(float dt)
 {
-	static const auto TOP_MOST = Vector2{ 680.0f, 495.0f }; // top most position
-	static const auto BOTTOM_MOST = Vector2{ 630.0f, 615.0f };
-	static const auto ORIGINAL_SPEED = Vector2{ -25.0f, 60.0f } * 1.64f;
+	static const auto TOP_MOST = Vector2{ 682.0f, 495.0f }; // top most position
+	static const auto BOTTOM_MOST = Vector2{ 632.0f, 545.0f };
+	static const auto ORIGINAL_SPEED = Vector2{ -45.0f, 45.0f };// * 1.64f;
 
 	if (curState == State::MovingLedge_Stall)
 	{
@@ -84,8 +84,8 @@ void MovingLedge::OnDiagonalMoving(float dt)
 void MovingLedge::OnHorizontalMoving(float dt)
 {
 	static constexpr auto LEFT_MOST = 616.0f;
-	static constexpr auto RIGHT_MOST = 714.0f;
-	static const auto ORIGINAL_SPEED = Vector2{ -80.0f, 0.0f };
+	static constexpr auto RIGHT_MOST = 699.0f;
+	static const auto ORIGINAL_SPEED = Vector2{ -120.0f, 0.0f };
 
 	if (curState == State::MovingLedge_Stall)
 	{
@@ -152,8 +152,6 @@ RectF MovingLedge::GetBBox() const
 
 void MovingLedge::Render() const
 {
-	VisibleObject::Render();
-
 	// render firetail:
 	if (!DebugDraw::IsInDeepDebug()) 
 	{
@@ -173,7 +171,7 @@ void MovingLedge::Render() const
 		}
 
 		// draw vertical firetail:
-		if (getVel.y != 0)
+		if (abs(getVel.y) >= 20.0f)
 		{
 			const auto drawPos1 = movingLedgeDrawPos + Vector2{ 5.0f, 16.0f };
 			const auto drawPos2 = movingLedgeDrawPos + Vector2{ 21.0f, 16.0f };
@@ -181,4 +179,7 @@ void MovingLedge::Render() const
 			firetails.at(FireTail::Ver).Render(drawPos2);
 		}
 	}
+
+	// render moving ledge itself
+	VisibleObject::Render();
 }

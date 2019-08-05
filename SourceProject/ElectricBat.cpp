@@ -250,6 +250,7 @@ void ElectricBat::TakeDamage(int damage)
 {
 	assert(damage > 0);
 	if (isFlashing) return; // has just being damaged and is flashing, don't be too evil, give me time to recover please
+	if (curState == State::ElectricBat_FlyAttack) return;
 
 	health -= damage;
 	if (health <= 0) {

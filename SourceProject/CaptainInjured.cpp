@@ -46,6 +46,7 @@ void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject
 		pendingSwitchState = State::Captain_Dead;
 	}
 
+	cap.vel.x = INJURE_FALL_SPEED * cap.nx*-1.0f; // I don't know why but this fix being stuck in Injured
 	HandleCollisions(cap, dt, coObjects);
 }
 

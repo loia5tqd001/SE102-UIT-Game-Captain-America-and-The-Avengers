@@ -3,7 +3,7 @@
 
 class CaptainWalking : public CaptainState
 {
-	static constexpr auto WALKING_SPEED = 65.0f;
+	static constexpr auto WALKING_SPEED = 70.0f;
 private:
 	bool isToSittingTackle = false;
 	bool isOnGround;

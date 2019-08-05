@@ -99,6 +99,7 @@ void CaptainCoverLow::HandleCollisions(Captain& cap, float dt, const std::vector
 				bullet->HitCaptain();
 				cap.SetState(State::Captain_Injured);
 			}
+			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto ambush = dynamic_cast<AmbushTrigger*>(e.pCoObj))
 		{

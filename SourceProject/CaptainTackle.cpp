@@ -45,7 +45,7 @@ void CaptainTackle::Update(Captain& cap, float dt, const std::vector<GameObject*
 		if (!wnd.IsKeyPressed(setting.Get(kControlDir)))
 		{
 			std::chrono::duration<float> duration = std::chrono::steady_clock::now() - cap.timeLastKeyUp;
-			if (duration.count() > 0.1f) {
+			if (duration.count() > 0.2f) {
 				cap.SetState(State::Captain_Standing);
 			}
 		}

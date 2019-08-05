@@ -56,7 +56,7 @@ protected:
 
 	static constexpr auto SPIN_SPEED_VER = 120.0f;
 	static constexpr auto SPIN_SPEED_HOR = JUMP_SPEED_HOR;
-	static constexpr auto TIME_KEEP_SPIN = 0.18f;
+	static constexpr auto TIME_KEEP_SPIN = 0.13f;
 
 	static constexpr auto WATER_LEVEL = 454.0f;
 

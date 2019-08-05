@@ -49,6 +49,6 @@ RectF BulletEnemyWizard::GetBBox() const
 void BulletEnemyWizard::Reflect()
 {
 	isReflected = true;
-	vel.x = -nx * BULLET_MOVING/sqrt(2);
+	vel.x = -nx * BULLET_MOVING/sqrtf(2.0f);
 	vel.y = -100;
 }
