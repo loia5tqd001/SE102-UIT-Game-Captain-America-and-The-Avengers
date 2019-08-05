@@ -42,6 +42,6 @@ public:
 	UINT GetCurFrameIndex() { return curFrame; }
 	bool IsDoneCycle(bool resetCurFrame = true); // for some animation aimed to animate one cycle each call
 	Rect GetFrameSize(const Vector2& vtScale = { 1.0f, 1.0f }) const;
-
+	float GetHoldingTime() { return holdingTime; }
 };
 

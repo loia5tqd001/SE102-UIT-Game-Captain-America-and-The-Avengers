@@ -470,6 +470,14 @@ void Shield::HandleStraightCollison(float dt, const std::vector<GameObject*>& co
 			{
 				if (nx > 0 && e.nx < 0.0f || nx <0 && e.nx > 0.0f)
 				{
+					if (bullet->GetPos().x > this->GetPos().x)
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x + GetWidth() + 1,bullet->GetPos().y });
+					}
+					else
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x - bullet->GetWidth() - 1 ,bullet->GetPos().y });
+					}
 					bullet->Reflect();
 					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
@@ -478,6 +486,14 @@ void Shield::HandleStraightCollison(float dt, const std::vector<GameObject*>& co
 			{
 				if (e.nx < 0.0f && this->nx > 0 || e.nx > 0.0f && this->nx < 0)
 				{
+					if (bullet->GetPos().x > this->GetPos().x)
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x + GetWidth() + 1,bullet->GetPos().y });
+					}
+					else
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x - bullet->GetWidth() - 1 ,bullet->GetPos().y });
+					}
 					bullet->Reflect();
 					Sounds::PlayAt(SoundId::ShieldCollide);
 				}
@@ -486,6 +502,14 @@ void Shield::HandleStraightCollison(float dt, const std::vector<GameObject*>& co
 			{
 				if (e.nx < 0.0f && this->nx > 0 || e.nx > 0.0f && this->nx < 0)
 				{
+					if (bullet->GetPos().x > this->GetPos().x)
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x + GetWidth() + 1,bullet->GetPos().y });
+					}
+					else
+					{
+						bullet->SetPos(Vector2{ this->GetPos().x - bullet->GetWidth() - 1 ,bullet->GetPos().y });
+					}
 					bullet->Reflect();
 					Sounds::PlayAt(SoundId::ShieldCollide);
 				}

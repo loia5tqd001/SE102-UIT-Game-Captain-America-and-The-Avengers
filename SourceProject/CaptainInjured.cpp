@@ -31,6 +31,11 @@ void CaptainInjured::OnKeyUp(Captain& cap, BYTE keyCode)
 
 void CaptainInjured::OnKeyDown(Captain& cap, BYTE keyCode)
 {
+	if (keyCode==VK_NUMPAD9)
+	{
+		CaptainHealth::Instance().Set(0);
+		pendingSwitchState = State::Captain_Dead;
+	}
 }
 
 void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -41,15 +46,7 @@ void CaptainInjured::Update(Captain& cap, float dt, const std::vector<GameObject
 		pendingSwitchState = State::Captain_Dead;
 	}
 
-	//Collision objects left
 	HandleCollisions(cap, dt, coObjects);
-	//NOTE:HACK
-	//the correct time is 10/40 = 0.25s right, if captain got injured more than this time means BUG, so i set this at 0.27
-	//if (maxTimeHold > 0.27f)
-	//{
-	//	cap.SetState(State::Captain_Falling);
-	//}
-	//else { maxTimeHold += GameTimer::Dt(); }
 }
 
 void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
@@ -224,7 +221,6 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		}
 
 	}
-
 
 }
 

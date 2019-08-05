@@ -4,9 +4,11 @@
 
 void CaptainElectricShock::Enter(Captain& cap, State fromState, Data&& data)
 {
-	if (cap.health.Get() <= 0) cap.SetState(State::Captain_Dead);
+	if (cap.health.Get() <= 0) 
+		cap.SetState(State::Captain_Dead);
 	cap.isFlashing = true;
-	cap.vel.x = 0;
+	cap.vel.x = 0.0f;
+	cap.vel.y = 100.0f;
 }
 
 Data CaptainElectricShock::Exit(Captain& cap, State toState)
@@ -52,7 +54,8 @@ void CaptainElectricShock::HandleCollisions(Captain& cap, float dt, const std::v
 
 	for (auto& e : coEvents)
 	{
-		if (auto block = dynamic_cast<Block*>(e.pCoObj)) {
+		if (auto block = dynamic_cast<Block*>(e.pCoObj)) 
+		{
 
 			switch (block->GetType())
 			{
@@ -75,6 +78,14 @@ void CaptainElectricShock::HandleCollisions(Captain& cap, float dt, const std::v
 			default:
 				AssertUnreachable();
 			}
+		}
+		else if (auto enemy = dynamic_cast<Enemy*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
 		}
 	}
 }

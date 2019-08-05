@@ -631,8 +631,14 @@ RectF DynamiteNapalm::GetBBox() const
 
 void DynamiteNapalm::TakeDinamiteDamage(int damage)
 {
-	if (curState == State::DynamiteNapalm_ThrowDynamite&&animations.at(curState).GetCurFrameIndex() == 0)
+	if (curState == State::DynamiteNapalm_ThrowDynamite/*&&animations.at(curState).GetCurFrameIndex() == 0*/)
 	{
+		if (animations.at(curState).GetCurFrameIndex() == 1 &&
+			animations.at(curState).GetHoldingTime() > 0.3f) //Set this one to increase time can be injure
+		{
+			return;
+		}
+		animations.at(State::DynamiteNapalm_Intact_Injure).Reset();
 		Enemy::TakeDamage(damage);
 	}
 }
