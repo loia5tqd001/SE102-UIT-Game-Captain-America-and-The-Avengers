@@ -1,6 +1,6 @@
 # **Đồ án Nhập môn Phát triển Game - SE102 UIT**
 
-* __Built by: Hei Dun Luv__ -  __`Hate and Love`__ 
+* __Built by: Hei Dun Luv__ - __`Hate and Love`__ 
   
     * 17520583 - Nguyễn Quang Huy
     * 17520372 - Đào Mạnh Dũng
@@ -35,7 +35,9 @@
 | <kbd>NUMPAD 6</kbd> | __go to checkpoint 6__ (_`Pittsburgh`_) |
 | <kbd>NUMPAD 7</kbd> | __go to checkpoint 7__ (_`Red Alert`_) |
 
-######
+###
+<details open>
+<summary><strong>Preview Checkpoints</strong></summary> <br>
 <table style="width:100%">
 <tr>
     <th> <p align="center">
@@ -78,6 +80,9 @@
     </p> </th>
 </tr>
 </table>
+</details>
+
+#####
 
 ## **Controls**
 ### **Default Key Controls**
@@ -116,7 +121,7 @@
 * [My Framework](https://github.com/loia5tqd001/Game-FrameWork) _(for more references)_   
   
 ## **Credit**
-- Đồ án này tham khảo nhiều ý tưởng từ đồ án game của anh N PMCL2016.2. README này cũng đã __cố tình__ làm tương tự README của anh N như một lời tri ân. Nếu anh N có đọc được và thấy không hài lòng với việc này, cứ gửi yêu cầu và README này sẽ được gỡ bỏ.
+- Đồ án này tham khảo nhiều ý tưởng từ đồ án game của anh N PMCL2016.2. README này cũng đã làm tương tự như README của anh N. Nếu anh N thấy không hài lòng với việc này, cứ gửi yêu cầu và README này sẽ được gỡ bỏ.
 ---
-*"Mấy anh chị ở đây làm 3 4 tháng mà còn không xong cái game thì mấy bạn học lần đầu làm kiểu gì 4 tuần xong được cái game, rớt chắc rồi. Nếu mình biết trước mình đã khuyên không học rồi. Có học vượt gì đi nữa thì cũng không nên học lần đầu trong học kì hè, học kì nào cũng được nhưng miễn đừng là học kì hè. Thôi coi như đổi tiền lấy kinh nghiệm vậy ..."*
+*"Mấy anh chị ở đây làm 3 4 tháng mà còn không xong cái game thì mấy bạn học lần đầu làm kiểu gì 4 tuần xong được cái game, rớt chắc rồi. Nếu mình biết trước mình đã khuyên không học. Có học vượt gì đi nữa thì cũng không nên học lần đầu trong học kì hè, học kì nào cũng được nhưng miễn đừng là học kì hè. Thôi coi như đổi tiền lấy kinh nghiệm vậy ..."*
 :blush:
