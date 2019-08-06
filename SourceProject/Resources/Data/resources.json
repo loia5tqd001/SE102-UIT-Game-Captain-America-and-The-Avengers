@@ -29,7 +29,7 @@
 	[           7,            11,      281,      66,              23,               46,         3,           9 ], // enemyrocket-walking
 	[           8,            11,      216,      72,              24,               40,         1,           0 ], // enemyrocket-before-explode
 	[           9,            11,      248,      81,              24,               31,         1,           0 ], // enemyrocket-sitting
-	[          10,            11,      171,      74,              15,                7,         2,           8 ], // enemyrocketBullet-Horizontal
+	[          10,            11,      171,      68,              15,               13,         2,           8 ], // enemyrocketBullet-Horizontal
 	[          11,            11,      168,      96,              12,               13,         2,          12 ], // enemyrocketBullet-Cross
 	[          12,            10,      245,     266,              30,               28,         2,           2 ], // explode
 

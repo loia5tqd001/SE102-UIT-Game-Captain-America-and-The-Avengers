@@ -50,10 +50,38 @@ void EnemyRocket::OnBehaviorShoot()
 
 	nx = cap->GetPos().x > pos.x ? 1 : -1;
 	// Walk -> Stand&Shoot -> Sit&Shoot-> Stand&Shoot -> Repeat
+	if (!jumpOnce) {
+		if (vel.x != 0) {
+			if (cap->IsShieldOn() == false && cap->getDirectionWhenThrow()*nx < 0) {
+				DogdeShield = true;
+			}
+			if (DogdeShield) {
+				if (dynamic_cast<CharlestonScene*>(&SceneManager::Instance().GetCurScene())) {
+					Jump(groundPosY, 60.0f);
+				}
+				else {
+					Jump(groundPosY, 33.0f);
+				}
+			}
+		}
+	}
 	if (animations.at(curState).IsDoneCycle())
 	switch (curState)
 	{
 		case State::EnemyRocket_Walking:
+			if (!jumpOnce) {
+				if (cap->IsShieldOn() == false && cap->getDirectionWhenThrow()) {
+					DogdeShield = true;
+				}
+				if (DogdeShield) {
+					if (dynamic_cast<CharlestonScene*>(&SceneManager::Instance().GetCurScene())) {
+						Jump(groundPosY, 60.0f);
+					}
+					else {
+						Jump(groundPosY, 33.0f);
+					}
+				}
+			}
 			if (++countWalkStep >= 4) 
 				SetState(State::EnemyRocket_Stand);
 			break;
@@ -70,6 +98,10 @@ void EnemyRocket::OnBehaviorShoot()
 			break;
 
 		case State::EnemyRocket_Sitting:
+			if (DogdeShield) {
+				Jump(groundPosY, 60.0f);
+				return;
+			}
 			if (!justShoot) {
 				SpawnRocket();
 				justShoot = true;
@@ -213,26 +245,30 @@ void EnemyRocket::OnBehaviorAmbush()
 		   curState == State::Explode ||
 		   curState == State::EnemyRocket_Sitting ||
 		   curState == State::Destroyed);
-	vel.x = 30.0f * nx;
-	if (cap->IsShieldOn() == false && dynamic_cast<CharlestonScene*>(&SceneManager::Instance().GetCurScene())) {
+	if (cap->IsShieldOn() == false && cap->getDirectionWhenThrow()*nx < 0 && cap->GetPos().x < pos.x) {
 		DogdeShield = true;
 	}
 	if (DogdeShield) {
-		Jump(groundPosY, 60.0f);
+		if (dynamic_cast<CharlestonScene*>(&SceneManager::Instance().GetCurScene())) {
+			Jump(groundPosY, 60.0f);
+		}
+		else {
+			Jump(groundPosY, 33.0f);
+		}
 	}
-	else
-	{
-		pos.x += vel.x * GameTimer::Dt(); //HACK: to slow, need another buff speed
-	}
+	//else
+	//{
+	//	pos.x += vel.x * GameTimer::Dt(); //HACK: to slow, need another buff speed
+	//}
 }
 void EnemyRocket::Jump(float posy, float height) //use this function in any height, just give it the ground pos and the height to jump
 {
 	if (health <= 0) return;
-	static constexpr float JUMP_HOR = 20.0f;
+	static constexpr float JUMP_HOR = 55.0f;
 	static constexpr float GRAVITY = 140.0f;
 
 	VisibleObject::SetState(State::EnemyRocket_Sitting);
-	vel.x = -JUMP_HOR;
+	vel.x = nx*JUMP_HOR;
 	if (dirYJump == -1) // jump up
 	{
 		pos.y -= GRAVITY * GameTimer::Dt();// - accelerator;
@@ -256,9 +292,11 @@ void EnemyRocket::Jump(float posy, float height) //use this function in any heig
 			pos.y = posy + 9;
 			VisibleObject::SetState(State::EnemyRocket_Walking);
 			DogdeShield = false;
+			jumpOnce = true;
+			vel.x = nx * WALKING_SPEED;
 		}
 	}
-	pos.x += vel.x * 2 * GameTimer::Dt();
+	//pos.x += vel.x * 2 * GameTimer::Dt();
 }
 
 void EnemyRocket::SetState(State state)
@@ -291,13 +329,13 @@ void EnemyRocket::SpawnRocket()
 	if (curState == State::Explode || curState == State::EnemyRocket_BeforeExplode) return;
 	if (curState == State::EnemyRocket_Sitting)
 	{
-		auto bulletPos = pos + Vector2{ 20.0f, 2.0f };
+		auto bulletPos = pos + Vector2{ 15.0f, -4.0f };
 		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, bulletPos));
 		Sounds::PlayAt(SoundId::BulletNormal);
 	}
 	else if (curState == State::EnemyRocket_Stand)
 	{
-		auto bulletPos = pos + Vector2{ 19.0f, 2.0f };
+		auto bulletPos = pos + Vector2{ 14.0f, -4.0f };
 		grid->SpawnObject(std::make_unique<BulletEnemyRocket>(nx, rocketType, this, bulletPos));
 		Sounds::PlayAt(SoundId::BulletNormal);
 	}

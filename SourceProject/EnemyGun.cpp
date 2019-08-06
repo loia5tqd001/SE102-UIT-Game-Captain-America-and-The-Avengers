@@ -2,13 +2,14 @@
 #include "EnemyGun.h"
 #include "Captain.h"
 #include "BulletEnemyGun.h"
+#include "CharlestonScene.h"
 
 EnemyGun::EnemyGun(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
 	Enemy(behavior, Data{}, State::EnemyGun_BeforeExplode, 2, spawnPos, grid),
 	cap(cap)
 {
 	animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode, 0.2f));
-
+	groundPosY = spawnPos.y;
 	if (behavior == Behaviors::EnemyGun_ShootFast) 
 	{
 		animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.13f));
@@ -90,10 +91,23 @@ void EnemyGun::OnBehaviorShoot()
 void EnemyGun::OnBehaviorRunOnly()
 {
 	assert(behavior == Behaviors::EnemyGun_RunOnly);
-	assert(curState == State::EnemyGun_Walking ||
+	/*assert(curState == State::EnemyGun_Walking ||
 	       curState == State::EnemyGun_BeforeExplode ||
 	       curState == State::Explode ||
-	       curState == State::Destroyed);
+	       curState == State::Destroyed);*/
+	if (!jumpOnce) {
+		if (cap->IsShieldOn() == false && cap->getDirectionWhenThrow()*nx<0) {
+			DogdeShield = true;
+		}
+		if (DogdeShield) {
+			if (dynamic_cast<CharlestonScene*>(&SceneManager::Instance().GetCurScene())) {
+				Jump(groundPosY, 60.0f);
+			}
+			else {
+				Jump(groundPosY, 36.0f);
+			}
+		}
+	}
 }
 
 void EnemyGun::OnBehaviorAmbush()
@@ -101,6 +115,19 @@ void EnemyGun::OnBehaviorAmbush()
 	assert(behavior == Behaviors::EnemyGun_Ambush);
 
 	// Walking Right -> Stand&Shoot -> Walking Right-> Repeat 
+	if (!jumpOnce) {
+		if (cap->IsShieldOn() == false && cap->getDirectionWhenThrow()*nx < 0 && cap->GetPos().x>pos.x) {
+			DogdeShield = true;
+		}
+		if (DogdeShield) {
+			if (dynamic_cast<CharlestonScene*>(&SceneManager::Instance().GetCurScene())) {
+				Jump(groundPosY, 60.0f);
+			}
+			else {
+				Jump(groundPosY, 36.0f);
+			}
+		}
+	}
 	if (animations.at(curState).IsDoneCycle())
 	switch (curState)
 	{
@@ -125,6 +152,46 @@ void EnemyGun::OnBehaviorAmbush()
 		default:
 			AssertUnreachable();
 	}
+}
+void EnemyGun::Jump(float posy, float height) //use this function in any height, just give it the ground pos and the height to jump
+{
+	if (health <= 0) return;
+	static constexpr float JUMP_HOR = 55.0f;
+	static constexpr float GRAVITY = 140.0f;
+
+	VisibleObject::SetState(State::EnemyGun_Sitting);
+	vel.x = nx*JUMP_HOR;
+
+	if (behavior == Behaviors::EnemyGun_RunOnly)
+		vel.x = nx * JUMP_HOR * 1.5;
+	if (dirYJump == -1) // jump up
+	{
+		pos.y -= GRAVITY * GameTimer::Dt();// - accelerator;
+		if (pos.y < posy - height) {
+			dirYJump = 0;
+		}
+	}
+	else if (dirYJump == 0) // kinda holding in the air
+	{
+		accelerator += 0.01f * GameTimer::Dt();
+		pos.y += GRAVITY * GameTimer::Dt();
+		if (pos.y > posy - height + 5) {
+			dirYJump = 1; // falling
+		}
+	}
+	else // falling
+	{
+		pos.y += GRAVITY * GameTimer::Dt() + accelerator;
+		if (pos.y >= posy + 5) //why 9? it is the different in 2 sprite
+		{
+			pos.y = posy + 5;
+			VisibleObject::SetState(State::EnemyGun_Walking);
+			DogdeShield = false;
+			jumpOnce = true;
+			vel.x = nx * WALKING_SPEED;
+		}
+	}
+	//pos.x += vel.x * 2 * GameTimer::Dt();
 }
 
 void EnemyGun::Update(float dt, const std::vector<GameObject*>& coObjects)

@@ -26,6 +26,7 @@ public:
 	void ThrowAway();
 	void SetVelocity(const Vector2 &vel);
 	RectF GetBBox() const override;
+	float GetVelX() { return vel.x; }
 };
 
 

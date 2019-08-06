@@ -25,6 +25,7 @@ Data CaptainFalling::Exit(Captain & cap, State toState)
 {
 	isKicked = false;
 	data.Add(IS_KICKED, isKicked);
+	data.Add(IS_JUMP_FROM_WATER, false);
 	return std::move(data);
 }
 
