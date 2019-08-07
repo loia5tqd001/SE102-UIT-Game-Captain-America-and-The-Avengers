@@ -3,6 +3,7 @@
 #include "DynamiteNapalm.h"
 #include "BulletDynamite.h"
 #include "ElectricBat.h"
+#include "Door.h"
 
 static auto& setting = Settings::Instance();
 static auto& wnd = Window::Instance();
@@ -309,6 +310,13 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 			{
 				spawner->OnCollideWithCap(this);
 			}
+			else if (auto door = dynamic_cast<Door*>(obj))
+			{
+				if (curState == State::Captain_Standing && wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
+				{
+					door->Open();
+				}
+			}
 			else if (auto block = dynamic_cast<Block*>(obj))
 			{
 				if (block->GetType() == ClassId::DamageBlock)
@@ -335,18 +343,11 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 						shield->UpdateByCapState(curState, pos);
 					}
 				}
-				else if (block->GetType() == ClassId::Door)
-				{
-					if (curState == State::Captain_Standing && wnd.IsKeyPressed(setting.Get(KeyControls::Up)))
-					{
-						SceneManager::Instance().GetCurScene().Teleport();
-					}
-				}
 				else if (block->GetType() == ClassId::RigidBlock)
 				{
 					pos = posBeforePhasing - vel * dt;
 
-#pragma region abc
+#pragma region ???
 					// Don't care about these stuff below
 
 					//Vector2 deltaS = pos - posBeforePhasing;
@@ -447,10 +448,15 @@ void Captain::HandleHitBox(float dt, const std::vector<GameObject*>& coObjects)
 void Captain::Update(float dt, const std::vector<GameObject*>& coObjects)
 {
 	animations.at(curState).Update(dt);
+
 	PrecheckAABB(coObjects, dt);
+
 	if (!ignoreUpdate) currentState->Update(*this, dt, coObjects);
+
 	shield->Update(dt, coObjects);
+
 	ignoreUpdate = false;
+
 	HandleHitBox(dt, coObjects);
 
 	OnFlashing();

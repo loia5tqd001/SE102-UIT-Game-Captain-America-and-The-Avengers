@@ -156,6 +156,10 @@ void CaptainTackle::HandleCollisions(Captain& cap, float dt, const std::vector<G
 		{
 			cap.CollideWithPassableObjects(dt, e);
 		}
+		else if (auto door = dynamic_cast<Door*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
 
 	}
 }

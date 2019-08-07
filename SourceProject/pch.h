@@ -70,7 +70,7 @@
 #include "ExitSign.h"
 #include "Capsule.h"
 #include "Item.h"
-
+#include "Door.h"
 #include "Block.h"
 #include "Spawner.h"
 #include "AmbushTrigger.h"
@@ -101,8 +101,8 @@
 #include "CaptainInjured.h"
 #include "CaptainDead.h"
 #include "CaptainFalling.h"
-#include"CaptainElectricShock.h"
+#include "CaptainElectricShock.h"
 #include "Captain.h"
 #include "DynamiteNapalm.h"
-#include"ElectricTrap.h"
+#include "ElectricTrap.h"
 

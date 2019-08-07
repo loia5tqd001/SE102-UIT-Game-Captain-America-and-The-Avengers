@@ -2,7 +2,6 @@
 #include "CaptainWalking.h"
 #include "ElectricBat.h"
 
-
 void CaptainWalking::Enter(Captain& cap, State fromState, Data&& data)
 {
 	cap.vel.x = cap.nx * WALKING_SPEED;
@@ -205,6 +204,10 @@ void CaptainWalking::HandleCollisions(Captain& cap, float dt, const std::vector<
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto trap = dynamic_cast<ElectricTrap*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto door = dynamic_cast<Door*>(e.pCoObj))
 		{
 			cap.CollideWithPassableObjects(dt, e);
 		}

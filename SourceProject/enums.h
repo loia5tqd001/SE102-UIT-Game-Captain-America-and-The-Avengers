@@ -53,6 +53,11 @@ enum class SpriteId
 	CapsuleIdle_NoBg                = 24,
 	CapsuleOpenning_NoBg            = 25,
 
+	DoorDarkIdle                    = 26,
+	DoorDarkOpenning                = 27,
+	DoorLightIdle                   = 28,
+	DoorLightOpenning               = 29,
+
 	Shield_Side                     = 30,
 	Shield_Straight                 = 31,
 	Shield_Down                     = 32,
@@ -167,6 +172,7 @@ enum class SoundId
 	Grounding        = 18,
 	Water            = 19,
 	Spinning         = 20,
+	DoorOpen         = Tackle,
 };
 
 enum class ClassId
@@ -241,6 +247,11 @@ enum class State
 	Bunker_Idle_7,
 	Bunker_Spin  ,
 	Bullet_Bunker,
+
+	DoorDarkIdle      ,
+	DoorDarkOpenning  ,
+	DoorLightIdle     ,
+	DoorLightOpenning ,
 
 	BreakableLedge_Intact,
 	BreakableLedge_Separated,

@@ -47,6 +47,11 @@
 	[          23,            10,      360,     304,              16,               16,         1,            0], // CapsuleOpenning
 	[          24,            10,      336,     320,              16,               16,         1,            0], // CapsuleIdle_NoBackground
 	[          25,            10,      360,     320,              16,               16,         1,            0], // CapsuleOpenning_NoBackground
+	
+	[          26,            10,      336,     256,              32,               48,         1,            0], // Door_DarkIdle
+	[          27,            10,      368,     256,              32,               48,         4,            0], // Door_DarkOpenning
+	[          28,            10,      336,     176,              32,               48,         1,            0], // Door_LightIdle
+	[          29,            10,      368,     176,              32,               48,         4,            0], // Door_LightOpenning
 
 	[          30,            10,      124,     272,              15,               16,         1,            0], // Shield_Side
 	[          31,            10,      107,     272,               7,               16,         1,            0], // Shield_Straight

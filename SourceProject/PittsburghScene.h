@@ -22,5 +22,7 @@ public:
 	void SetCapPos(Vector2 pos);
 	void Teleport() override;
 	void ClampCaptainAndCamera();
+
+	bool isPauseGameExceptDoor = false;
 };
 

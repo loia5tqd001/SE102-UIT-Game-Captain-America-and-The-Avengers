@@ -42,8 +42,11 @@ void Grid::LoadObjects(const Json::Value& grid)
 			case ClassId::DamageBlock   :  
 			case ClassId::Switch        :  
 			case ClassId::NextMap       :  
-			case ClassId::Door   		:
 				object = ObjectFactory::Create<Block>(jsonObj, this);
+				break;
+
+			case ClassId::Door:
+				object = ObjectFactory::Create<Door>(jsonObj, this);
 				break;
 
 			case ClassId::Capsule:

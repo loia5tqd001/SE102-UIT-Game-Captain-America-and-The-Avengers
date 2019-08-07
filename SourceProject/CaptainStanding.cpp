@@ -2,6 +2,7 @@
 #include "CaptainStanding.h"
 #include "DynamiteNapalm.h"
 #include "ElectricBat.h"
+#include "PittsburghScene.h"
 
 void CaptainStanding::Enter(Captain& cap, State fromState, Data&& data)
 {
@@ -28,6 +29,10 @@ void CaptainStanding::OnKeyUp(Captain& cap, BYTE keyCode)
 
 void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 {
+	// reject updating if door is openning in Pittsburgh
+	if (auto curScene = dynamic_cast<PittsburghScene*>(&SceneManager::Instance().GetCurScene()))
+		if (curScene->isPauseGameExceptDoor) return;
+
 	auto kControlDir = cap.nx > 0 ? KeyControls::Right : KeyControls::Left;
 
 	// if pressdown two time in a row in direction
@@ -50,6 +55,11 @@ void CaptainStanding::OnKeyDown(Captain& cap, BYTE keyCode)
 
 void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
+	// reject updating if door is openning in Pittsburgh
+	if (auto curScene = dynamic_cast<PittsburghScene*>(&SceneManager::Instance().GetCurScene()))
+		if (curScene->isPauseGameExceptDoor) return;
+
+
 	if (!isOnMovingLedge)
 	{
 		cap.vel.x = 0.0f;
@@ -79,12 +89,9 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 	else
 	{
 		int dir = 0;
-		if (wnd.IsKeyPressed(setting.Get(KeyControls::Left)))
-		{
+		if (wnd.IsKeyPressed(setting.Get(KeyControls::Left))) 
 			dir--;
-		}
-		if (wnd.IsKeyPressed(setting.Get(KeyControls::Right)))
-		{
+		if (wnd.IsKeyPressed(setting.Get(KeyControls::Right))) {
 			dir++;
 			cap.nx = 1;
 		}
@@ -224,6 +231,10 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 			}
 		}
 		else if (auto movingLedgeUpdater = dynamic_cast<MovingLedgeUpdater*>(e.pCoObj))
+		{
+			cap.CollideWithPassableObjects(dt, e);
+		}
+		else if (auto door = dynamic_cast<Door*>(e.pCoObj))
 		{
 			cap.CollideWithPassableObjects(dt, e);
 		}

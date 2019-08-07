@@ -321,6 +321,9 @@
     <ClCompile Include="ElectricTrap.cpp">
       <Filter>Development\Objects\Blocks</Filter>
     </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -603,6 +606,9 @@
       <Filter>Development\Objects\Captain\D</Filter>
     </ClInclude>
     <ClInclude Include="ElectricTrap.h">
+      <Filter>Development\Objects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
       <Filter>Development\Objects\Blocks</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "PittsburghScene.h"
+#include "Door.h"
 
 static auto& cam = Camera::Instance();
 static auto& wnd = Window::Instance();
@@ -28,6 +29,16 @@ void PittsburghScene::LoadResources()
 
 void PittsburghScene::Update(float dt)
 {
+	if (isPauseGameExceptDoor)
+	{
+		for (auto& obj : grid->GetObjectsInViewPort()) // update objects
+			if (dynamic_cast<Door*>(obj)) {
+				obj->Update(dt);
+				ClampCaptainAndCamera(); // to avoid glitch camera
+				return;
+			}
+	}
+
 	grid->UpdateCells(); 
 
 	for (auto& obj : grid->GetObjectsInViewPort()) // update objects
