@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CaptainCoverTop.h"
 #include "BulletEnemyRocket.h"
-
+#include"ElectricBat.h"
 
 void CaptainCoverTop::Enter(Captain& cap, State fromState, Data&& data)
 {
@@ -124,6 +124,15 @@ void CaptainCoverTop::HandleCollisions(Captain& cap, float dt, const std::vector
 						return;
 					}
 				}
+				else if (auto bat = dynamic_cast<ElectricBat*>(e.pCoObj))
+				{
+					if (bat->GetState() == State::ElectricBat_FlyAttack)
+					{
+						cap.SetState(State::CaptainElectricShock);
+						return;
+					}
+				}
+
 				cap.SetState(State::Captain_Injured);
 			}
 		}

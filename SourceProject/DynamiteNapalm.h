@@ -14,6 +14,8 @@ private:
 	static constexpr auto FAR_DISTANCE = 70.0f;
 	static constexpr auto INJURE_TIME = 0.6f;
 
+	Behaviors curBehavior;
+
 	bool dynamiteThrown = false;
 	Captain& cap;
 	float posXDesination;

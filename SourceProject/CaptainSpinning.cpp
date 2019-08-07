@@ -2,7 +2,7 @@
 #include "CaptainSpinning.h"
 #include "BulletEnemyRocket.h"
 #include"BulletDynamite.h"
-
+#include"ElectricBat.h"
 
 void CaptainSpinning::Enter(Captain& cap, State fromState, Data&& data)
 {
@@ -180,6 +180,15 @@ void CaptainSpinning::HandleCollisions(Captain& cap, float dt, const std::vector
 						return;
 					}
 				}
+				else if (auto bat = dynamic_cast<ElectricBat*>(e.pCoObj))
+				{
+					if (bat->GetState() == State::ElectricBat_FlyAttack)
+					{
+						cap.SetState(State::CaptainElectricShock);
+						return;
+					}
+				}
+
 				cap.SetState(State::Captain_Injured);
 				SetAnotherState = true;
 				enemy->TakeDamage(1);

@@ -26,7 +26,7 @@ void CaptainClimbing::ProcessInput(Captain& cap)
 		else
 		{
 			cap.nx = -1;
-			cap.pos.x = cap.pos.x + cap.GetBBox().GetWidth() / 2;
+			cap.pos.x = cap.pos.x + cap.GetBBox().GetWidth() / 2 + 3;
 		}
 	}
 
@@ -38,7 +38,7 @@ void CaptainClimbing::ProcessInput(Captain& cap)
 		}
 		else
 		{
-			cap.pos.x = cap.pos.x - cap.GetBBox().GetWidth() / 2;
+			cap.pos.x = cap.pos.x - cap.GetBBox().GetWidth() / 2 - 3;
 			cap.nx = 1;
 		}
 	}
@@ -48,6 +48,15 @@ void CaptainClimbing::ProcessInput(Captain& cap)
 
 void CaptainClimbing::Enter(Captain& cap, State fromState, Data&& data)
 {
+	if (data.Count(CLIMBBAR)==1)
+	{
+		climbBar = data.Get<Block*>(CLIMBBAR);
+		Utils::Clamp(cap.pos.x, climbBar->GetPos().x, climbBar->GetPos().x + climbBar->GetWidth()-cap.GetBBox().GetWidth());
+	}
+	else if (climbBar == nullptr)
+	{
+		AssertUnreachable();
+	}
 	//Todo: set position base on Jump Exit data
 	cap.vel.x = 0.0f;
 	cap.vel.y = 0.0f;
@@ -64,6 +73,7 @@ void CaptainClimbing::Enter(Captain& cap, State fromState, Data&& data)
 
 Data CaptainClimbing::Exit(Captain& cap, State toState)
 {
+	climbBar = nullptr;
 	return Data();
 }
 
@@ -93,6 +103,7 @@ void CaptainClimbing::OnKeyDown(Captain& cap, BYTE keyCode)
 void CaptainClimbing::Update(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)
 {
 	ProcessInput(cap);
+	//Utils::Clamp(cap.pos.x, climbBar->GetPos().x, climbBar->GetPos().x + climbBar->GetWidth());
 }
 
 void CaptainClimbing::HandleCollisions(Captain& cap, float dt, const std::vector<GameObject*>& coObjects)

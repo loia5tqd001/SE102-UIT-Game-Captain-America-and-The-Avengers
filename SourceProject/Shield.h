@@ -11,7 +11,6 @@ private:
 	void flipPosx();
 	float timeToThrow = 0.0f;
 	bool isMoved = false;
-
 	//TODO: write this later, after finishing the animation with captain
 	void HandleSideCollison(float dt, const std::vector<GameObject*>& coObjects);  //with bullet
 	void HandleUpCollison(float dt, const std::vector<GameObject*>& coObjects); //with bullet

@@ -18,6 +18,11 @@ void CaptainInjured::Enter(Captain& cap, State fromState, Data&& data)
 	posxWhenGotInjure = cap.pos.x;
 	posyWhenGotInjure = cap.pos.y;
 	holdingDistance = 0.0f;
+
+	if (fromState==State::Captain_Standing)
+	{
+		cap.vel.y += GRAVITY;
+	}
 }
 
 Data CaptainInjured::Exit(Captain& cap, State toState)
@@ -31,7 +36,7 @@ void CaptainInjured::OnKeyUp(Captain& cap, BYTE keyCode)
 
 void CaptainInjured::OnKeyDown(Captain& cap, BYTE keyCode)
 {
-	if (keyCode==VK_NUMPAD9)
+	if (keyCode == VK_NUMPAD9)
 	{
 		CaptainHealth::Instance().Set(0);
 		pendingSwitchState = State::Captain_Dead;
@@ -166,11 +171,18 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 				break;
 				//Todo: Upgrade this
 			case ClassId::ClimbableBar:
-				cap.CollideWithPassableObjects(dt, e);
-				//if (e.ny < 0)
-				//{
-				//	pendingSwitchState = State::Captain_Climbing;
-				//}
+				data.Add(CLIMBBAR, block);
+				cap.SetState(State::Captain_Climbing);
+				cap.pos.y = block->GetPos().y;
+				if (nx == -1 && cap.pos.x < block->GetPos().x)
+				{
+					cap.pos.x = block->GetPos().x;
+				}
+				else if (nx == 1 && cap.pos.x + cap.GetWidth() > block->GetPos().x + block->GetBBox().GetWidth())
+				{
+					cap.pos.x = block->GetPos().x + block->GetBBox().GetWidth() - cap.GetWidth();
+				}
+				cap.shield->UpdateByCapState(cap.curState, cap.pos);
 				break;
 			case ClassId::NextMap:
 				if (sceneManager.GetCurScene().canGoNextMap)
@@ -209,12 +221,14 @@ void CaptainInjured::HandleCollisions(Captain& cap, float dt, const std::vector<
 		else if (dynamic_cast<Bullet*>(e.pCoObj))
 		{
 			cap.CollideWithPassableObjects(dt, e);
-			return;
+			//return;
 		}
 		else if (auto movingLedge = dynamic_cast<MovingLedge*>(e.pCoObj))
 		{
 			if (e.ny < 0)
+			{
 				cap.SetState(State::Captain_Standing);
+			}
 		}
 		else if (auto trap = dynamic_cast<ElectricTrap*>(e.pCoObj))
 		{

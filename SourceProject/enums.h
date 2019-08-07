@@ -145,7 +145,17 @@ enum class SpriteId
 	DynamiteNapalm_FireBullet = 210,
 	DynamiteNapalm_Dynamite = 211,
 	
-	ElectricTrap_Active = 220
+	ElectricTrap_Active = 220,
+
+	EnemyGun_Stand_BW  = 1001,
+	EnemyGun_Walking_BW    = 1002,
+	EnemyGun_BeforeExplode_BW          = 1003,
+	EnemyGun_Sitting_BW      = 1004,
+
+	EnemyRocket_Stand_BW = 1006,
+	EnemyRocket_Walking_BW = 1007,
+	EnemyRocket_BeforeExplode_BW = 1008,
+	EnemyRocket_Sitting_BW = 1009
 };
 
 enum class SoundId

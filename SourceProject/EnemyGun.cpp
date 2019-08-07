@@ -3,32 +3,62 @@
 #include "Captain.h"
 #include "BulletEnemyGun.h"
 #include "CharlestonScene.h"
+#include"PittsburghScene.h"
 
 EnemyGun::EnemyGun(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
 	Enemy(behavior, Data{}, State::EnemyGun_BeforeExplode, 2, spawnPos, grid),
 	cap(cap)
 {
-	animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode, 0.2f));
-	groundPosY = spawnPos.y;
-	if (behavior == Behaviors::EnemyGun_ShootFast) 
+	if (typeid(SceneManager::Instance().GetCurScene()) == typeid(PittsburghScene{}))
 	{
-		animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.13f));
-		animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 0.5f));
+		animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode_BW, 0.2f));
+		groundPosY = spawnPos.y;
+		if (behavior == Behaviors::EnemyGun_ShootFast)
+		{
+			animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand_BW, 0.13f));
+			animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting_BW, 0.5f));
+		}
+		else
+		{
+			animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand_BW, 0.4f));
+			animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting_BW, 1.5f));
+		}
+		if (behavior == Behaviors::EnemyGun_RunOnly)
+		{
+			WALKING_SPEED *= 1.8f;
+			animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking_BW, 0.09f));
+		}
+		else
+		{
+			animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking_BW, 0.3f));
+		}
+
 	}
-	else 
+	else
 	{
-		animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.4f));
-		animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 1.5f));
+		animations.emplace(State::EnemyGun_BeforeExplode, Animation(SpriteId::EnemyGun_BeforeExplode, 0.2f));
+		groundPosY = spawnPos.y;
+		if (behavior == Behaviors::EnemyGun_ShootFast)
+		{
+			animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.13f));
+			animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 0.5f));
+		}
+		else
+		{
+			animations.emplace(State::EnemyGun_Stand, Animation(SpriteId::EnemyGun_Stand, 0.4f));
+			animations.emplace(State::EnemyGun_Sitting, Animation(SpriteId::EnemyGun_Sitting, 1.5f));
+		}
+		if (behavior == Behaviors::EnemyGun_RunOnly)
+		{
+			WALKING_SPEED *= 1.8f;
+			animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.09f));
+		}
+		else
+		{
+			animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.3f));
+		}
 	}
-	if (behavior == Behaviors::EnemyGun_RunOnly) 
-	{
-		WALKING_SPEED *= 1.8f;
-		animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.09f));
-	}
-	else 
-	{
-		animations.emplace(State::EnemyGun_Walking, Animation(SpriteId::EnemyGun_Walking, 0.3f));
-	}
+
 
 	if (behavior == Behaviors::EnemyGun_Ambush) nx = 1;
 	else nx = -cap->GetNx(); 

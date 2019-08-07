@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CaptainKicking.h"
 #include"BulletDynamite.h"
-
+#include"ElectricBat.h"
 
 void CaptainKicking::Enter(Captain& cap, State fromState, Data&& data)
 {
@@ -210,6 +210,14 @@ void CaptainKicking::HandleCollisions(Captain& cap, float dt, const std::vector<
 				if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
 				{
 					if (mini->CanCauseElectricShock())
+					{
+						cap.SetState(State::CaptainElectricShock);
+						return;
+					}
+				}
+				else if (auto bat = dynamic_cast<ElectricBat*>(e.pCoObj))
+				{
+					if (bat->GetState() == State::ElectricBat_FlyAttack)
 					{
 						cap.SetState(State::CaptainElectricShock);
 						return;

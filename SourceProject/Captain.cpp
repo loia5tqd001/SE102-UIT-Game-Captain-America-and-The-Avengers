@@ -38,7 +38,8 @@ Captain::Captain(const Vector2& pos, Grid* ogrid)
 	animations.emplace(State::CaptainElectricShock, Animation(SpriteId::Captain_ElectricShock, 0.1f));
 
 	animations.at(State::Captain_Tackle).SetCusFrameHoldTime(0, 0.055f);
-
+	animations.at(State::Captain_FallToWater).SetCusFrameHoldTime(0, 0.03f);
+	animations.at(State::Captain_FallToWater).SetCusFrameHoldTime(1, 0.03f);
 	shield = std::make_unique<Shield>(*this);
 
 	bboxColor = Colors::MyPoisonGreen;
@@ -123,7 +124,7 @@ void Captain::OnKeyUp(BYTE keyCode)
 void Captain::SetState(State state)
 {
 	prePhasingState = curState;
-	
+
 	auto exitData = currentState->Exit(*this, state);
 	switch (state)
 	{
@@ -154,7 +155,7 @@ void Captain::SetState(State state)
 	currentState->Enter(*this, oldState, std::move(exitData));
 	//shield->UpdateByCapState(this->curState, this->pos);
 
-#if 0
+#if 1
 	switch (state)
 	{
 	case State::Invisible:
@@ -327,7 +328,8 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 				}
 				else if (block->GetType() == ClassId::ClimbableBar)
 				{
-					if (curState != State::Captain_Falling) continue;
+					stateClimbing.SetClimbBar(block);
+					if (curState != State::Captain_Falling&&curState!=State::Captain_Spinning) continue;
 					else
 					{
 						SetState(State::Captain_Climbing);

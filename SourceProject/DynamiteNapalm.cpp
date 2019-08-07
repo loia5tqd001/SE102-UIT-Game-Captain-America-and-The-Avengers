@@ -4,7 +4,8 @@
 
 DynamiteNapalm::DynamiteNapalm(Behaviors behavior, Data&& behaviorData, Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Captain& cap) :
 	Enemy(behavior, behaviorData, State::DynamiteNapalm_FallFromTheSky, 2, spawnPos, grid),
-	cap(cap)
+	cap(cap),
+	curBehavior(Behaviors::DynamiteNapalm_Fall)
 {
 	animations.emplace(State::DynamiteNapalm_FallFromTheSky, Animation(SpriteId::DynamiteNapalm_FallFromTheSky));
 	animations.emplace(State::DynamiteNapalm_Standing, Animation(SpriteId::DynamiteNapalm_Standing, 1.0f));
@@ -28,8 +29,6 @@ void DynamiteNapalm::Update(float dt, const std::vector<GameObject*>& coObjects)
 	//Trembling before dead
 	if (curState == State::DynamiteNapalm_BeforeExplode)
 		nx = -nx;
-
-	static Behaviors curBehavior = Behaviors::DynamiteNapalm_Fall;
 
 	if (isFlashing&&
 		curState != State::DynamiteNapalm_Headless_Running_Shooting&&

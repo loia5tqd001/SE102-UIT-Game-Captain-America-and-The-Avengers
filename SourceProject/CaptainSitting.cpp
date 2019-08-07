@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CaptainSitting.h"
-
+#include"ElectricBat.h"
 
 void CaptainSitting::Enter(Captain& cap, State fromState, Data&& data)
 {
@@ -178,6 +178,15 @@ void CaptainSitting::HandleCollisions(Captain& cap, float dt, const std::vector<
 					return;
 				}
 			}
+			else if (auto bat = dynamic_cast<ElectricBat*>(e.pCoObj))
+			{
+				if (bat->GetState() == State::ElectricBat_FlyAttack)
+				{
+					cap.SetState(State::CaptainElectricShock);
+					return;
+				}
+			}
+
 			cap.CollideWithPassableObjects(dt, e);
 		}
 		else if (auto bullet = dynamic_cast<Bullet*>(e.pCoObj)) {

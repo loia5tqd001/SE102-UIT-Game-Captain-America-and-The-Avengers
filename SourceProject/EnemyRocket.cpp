@@ -3,23 +3,42 @@
 #include "Captain.h"
 #include "BulletEnemyRocket.h"
 #include "CharlestonScene.h"
-
+#include"PittsburghScene.h"
 EnemyRocket::EnemyRocket(Behaviors behavior, Vector2 spawnPos, Captain* cap, Grid* grid) :
 	Enemy(behavior, Data{}, State::EnemyRocket_BeforeExplode, 3, spawnPos, grid),
 	cap(cap)
 {
-	animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode, 0.2f));
-	animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.09f));
-	if (behavior == Behaviors::EnemyRocket_BackAndForth)
+	if (typeid(SceneManager::Instance().GetCurScene()) != typeid(PittsburghScene{}))
 	{
-		animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.55f));
-		animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.55f));
+		animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode, 0.2f));
+		animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking, 0.09f));
+		if (behavior == Behaviors::EnemyRocket_BackAndForth)
+		{
+			animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.55f));
+			animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.55f));
+		}
+		else
+		{
+			animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.75f));
+			animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.75f));
+		}
 	}
 	else
 	{
-		animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand, 0.75f));
-		animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting, 0.75f));
+		animations.emplace(State::EnemyRocket_BeforeExplode, Animation(SpriteId::EnemyRocket_BeforeExplode_BW, 0.2f));
+		animations.emplace(State::EnemyRocket_Walking, Animation(SpriteId::EnemyRocket_Walking_BW, 0.09f));
+		if (behavior == Behaviors::EnemyRocket_BackAndForth)
+		{
+			animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand_BW, 0.55f));
+			animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting_BW, 0.55f));
+		}
+		else
+		{
+			animations.emplace(State::EnemyRocket_Stand, Animation(SpriteId::EnemyRocket_Stand_BW, 0.75f));
+			animations.emplace(State::EnemyRocket_Sitting, Animation(SpriteId::EnemyRocket_Sitting_BW, 0.75f));
+		}
 	}
+
 	if (behavior == Behaviors::EnemyRocket_Ambush) nx = -1;
 	else nx = - cap->GetNx();
 	groundPosY = spawnPos.y;

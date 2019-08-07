@@ -126,7 +126,7 @@
 	[         113,            10,      169,     192,              29,               38,         1,            0], //Captain_Injure
 	[         114,            10,       88,     209,              26,               23,         1,            0], //Captain_Die
 	[         115,            10,       89,     244,              18,               12,         2,           13], //Captain_Swimming
-	[         116,            10,      202,     251,              16,               12,         3,            7], //Captain_FallToWater
+	[         116,            10,      151,     237,              32,               25,         5,            1], //Captain_FallToWater
 	[         117,            10,      330,     248,              16,                7,         3,            4], //Captain_InWater
 	[         118,            10,        9,      83,              21,               27,         1,            0], //Captain_CoverLow
 	[         119,            10,      208,     187,              32,               45,         2,            8], //Captain_ElectricShock
@@ -144,7 +144,19 @@
 	[         210,            13,      242,      43,              14,                7,         1,            0], //DynamiteNapalm_Fire_Bullet
 	[         211,            13,       48,      42,              22,               14,         1,            0], //DynamiteNapalm_Bullet_Dynamite
 	
-	[         220,            11,      134,     324,              16,               44,         6,            1]  //ElectricTrap_Active
+	[         220,            11,      134,     324,              16,               44,         6,            1],  //ElectricTrap_Active
+
+	[        1001,            11,      248,      413,              24,               43,         1,           0 ], // enemygun-stand
+	[        1002,            11,      280,      416,              24,               40,         3,           8 ], // enemygun-walking
+	[        1003,            11,      184,      424,              24,               32,         1,           0 ], // enemygun-before-explode
+	[        1004,            11,      216,      429,              24,               27,         1,           0 ], // enemygun-sitting
+
+	[        1006,            11,      281,      466,              23,               46,         1,           0 ], // enemyrocket-stand
+	[        1007,            11,      281,      466,              23,               46,         3,           9 ], // enemyrocket-walking
+	[        1008,            11,      216,      472,              24,               40,         1,           0 ], // enemyrocket-before-explode
+	[        1009,            11,      248,      481,              24,               31,         1,           0 ] // enemyrocket-sitting
+
+
   ],
 
   "sounds": [

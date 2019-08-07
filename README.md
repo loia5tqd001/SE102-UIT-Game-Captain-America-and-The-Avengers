@@ -122,6 +122,3 @@
   
 ## **Credit**
 - Đồ án này tham khảo nhiều ý tưởng từ đồ án game của anh N PMCL2016.2. README này cũng đã làm tương tự như README của anh N. Nếu anh N thấy không hài lòng với việc này, cứ gửi yêu cầu và README này sẽ được gỡ bỏ.
----
-*"Mấy anh chị ở đây làm 3 4 tháng mà còn không xong cái game thì mấy bạn học lần đầu làm kiểu gì 4 tuần xong được cái game, rớt chắc rồi. Nếu mình biết trước mình đã khuyên không học. Có học vượt gì đi nữa thì cũng không nên học lần đầu trong học kì hè, học kì nào cũng được nhưng miễn đừng là học kì hè. Thôi coi như đổi tiền lấy kinh nghiệm vậy ..."*
-:blush:

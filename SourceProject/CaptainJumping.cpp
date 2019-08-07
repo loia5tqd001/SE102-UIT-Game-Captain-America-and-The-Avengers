@@ -1,13 +1,14 @@
 #include "pch.h"
 #include "CaptainJumping.h"
 #include"BulletDynamite.h"
+#include"ElectricBat.h"
 
 void CaptainJumping::Enter(Captain& cap, State fromState, Data&& data)
 {
 	setAnotherState = false;
 	if (fromState != State::Captain_FallToWater) { JumpSpeed = JUMP_SPEED_VER_MAX; acceleration = GRAVITY; }
 
-	if (fromState == State::Captain_InWater || fromState == State::Captain_Swimming) {
+	if (fromState == State::Captain_InWater || fromState == State::Captain_Swimming||fromState==State::Captain_FallToWater) {
 		isFromWater = true;
 		maxJumpHeight = MAX_JUMP_HEIGHT * 0.75f;
 	}
@@ -226,6 +227,14 @@ void CaptainJumping::HandleCollisions(Captain& cap, float dt, const std::vector<
 				if (auto mini = dynamic_cast<DynamiteNapalm*>(e.pCoObj))
 				{
 					if (mini->CanCauseElectricShock())
+					{
+						cap.SetState(State::CaptainElectricShock);
+						return;
+					}
+				}
+				else if (auto bat = dynamic_cast<ElectricBat*>(e.pCoObj))
+				{
+					if (bat->GetState()==State::ElectricBat_FlyAttack)
 					{
 						cap.SetState(State::CaptainElectricShock);
 						return;

@@ -226,7 +226,8 @@ void CaptainStanding::HandleCollisions(Captain& cap, float dt, const std::vector
 				cap.health.Subtract(bullet->GetDamage());
 				cap.SetState(State::Captain_Injured);
 			}
-			else {
+			else 
+			{
 				cap.CollideWithPassableObjects(dt, e);
 			}
 		}

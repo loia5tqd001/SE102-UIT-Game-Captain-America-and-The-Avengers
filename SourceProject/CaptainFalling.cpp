@@ -2,6 +2,7 @@
 #include "CaptainFalling.h"
 #include "MovingLedgeUpdater.h"
 #include"BulletDynamite.h"
+#include"ElectricBat.h"
 
 void CaptainFalling::HandleNoCollisions(Captain & cap, float dt)
 {
@@ -187,6 +188,15 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 						return;
 					}
 				}
+				else if (auto bat = dynamic_cast<ElectricBat*>(e.pCoObj))
+				{
+					if (bat->GetState() == State::ElectricBat_FlyAttack)
+					{
+						cap.SetState(State::CaptainElectricShock);
+						return;
+					}
+				}
+
 				cap.SetState(State::Captain_Injured);
 			}
 		}
@@ -274,7 +284,6 @@ void CaptainFalling::HandleCollisions(Captain & cap, float dt, const std::vector
 			{
 				cap.CollideWithPassableObjects(dt, e);
 			}
-
 		}
 		else if (auto trap = dynamic_cast<ElectricTrap*>(e.pCoObj))
 		{
