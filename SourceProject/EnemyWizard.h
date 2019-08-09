@@ -5,12 +5,12 @@ class EnemyWizard : public Enemy
 {
 private:
 	static constexpr float WALKING_SPEED = 80.0f;
-	static constexpr float FLYING_SPEED = 150.0f;
+	static constexpr float FLYING_SPEED = 170.0f;
 	static constexpr float FALLING_SPEED = 100.0f;
 	static constexpr float FALL_BACK = 70.0f;
 	static constexpr float GROUND = 145.0f;
 	static constexpr float ROOF = 15.0f;
-	static constexpr float MAX_POS_X = 210.0f;
+	static constexpr float MAX_POS_X = 220.0f;
 	static constexpr float MIN_POS_X = 20.0f;
 	static constexpr float LIGHT_POS_X = 50.0f;
 	static constexpr float LIGHT_POS_Y = 50.0f;
@@ -28,6 +28,11 @@ private:
 	};
 
 	Captain& cap;
+	int counterAction = 0;
+	bool isTurned = false;
+	float counterRunOutTime = 0.0f;
+	bool moveToLight = false;
+	bool enter = true;
 	Behaviors curBehavior = Behaviors::EnemyWizard_FlyingShoot;
 	bool Onbehaviors(Behaviors behavior);
 	void Action();

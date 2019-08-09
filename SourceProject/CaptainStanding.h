@@ -8,8 +8,9 @@ private:
 	bool isToSittingTackle = false;
 	bool isOnGround = false;
 	bool isOnMovingLedge = false;
+	GameObject* movingLedge = nullptr;
 public:
-	void SetOnMovingLedge(bool is_on_moving_ledge) { isOnMovingLedge = is_on_moving_ledge; }
+	void SetOnMovingLedge(bool is_on_moving_ledge, GameObject* movingLedge = nullptr);
 	void Enter(Captain& cap, State fromState, Data&& data) override;
 	Data Exit(Captain& cap, State toState) override;
 	void OnKeyUp(Captain& cap, BYTE keyCode) override;

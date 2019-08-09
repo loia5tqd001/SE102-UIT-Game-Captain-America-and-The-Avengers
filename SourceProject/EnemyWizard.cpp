@@ -15,7 +15,7 @@ EnemyWizard::EnemyWizard(Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Cap
 	animations.emplace(State::EnemyWizard_Flying, Animation(SpriteId::EnemyWizard_FlyDown, 0.6f));
 	animations.emplace(State::EnemyWizard_ShootBullet, Animation(SpriteId::EnemyWizard_ShootBullet, 0.07f));
 	animations.emplace(State::EnemyWizard_ShootBulletFire, Animation(SpriteId::EnemyWizard_ShootBulletFire, 0.07f));
-	animations.emplace(State::EnemyWizard_ShootWhenFly, Animation(SpriteId::EnemyWizard_ShootWhenFly, 0.1f));
+	animations.emplace(State::EnemyWizard_ShootWhenFly, Animation(SpriteId::EnemyWizard_ShootWhenFly, 0.15f));
 	animations.emplace(State::EnemyWizard_Stand, Animation(SpriteId::EnemyWizard_Stand, 0.3f));
 	animations.emplace(State::EnemyWizard_Walking, Animation(SpriteId::EnemyWizard_Walking, 0.3f));
 
@@ -26,7 +26,7 @@ EnemyWizard::EnemyWizard(Vector2 spawnPos, Vector2 vel, int nx, Grid * grid, Cap
 void EnemyWizard::SpawnBullet()
 {
 	if (this->curState == State::EnemyWizard_ShootBullet) {
-		Vector2 bulletPos = pos + Vector2{ 34.0f, 11.0f };
+		Vector2 bulletPos = pos + Vector2{ 34.0f, 8.0f };
 		Vector2 bulletVel;
 		bulletVel.x = nx * BulletEnemyWizard::GetXSpeed();
 		bulletVel.y = - std::abs(bulletPos.y - (cap.GetPos().y + 10.0f)) / std::abs(bulletPos.x - cap.GetPos().x) * abs(bulletVel.x);
@@ -46,7 +46,7 @@ void EnemyWizard::SpawnBulletFire()
 		Sounds::PlayAt(SoundId::BulletLazer);
 	}
 	else if (this->curState == State::EnemyWizard_ShootBulletFire) {
-		const auto bulletPos = pos + Vector2{ 34.0f, 11.0f };
+		const auto bulletPos = pos + Vector2{ 34.0f, 8.0f };
 		grid->SpawnObject(std::make_unique<BulletFireEnemyWizard>(nx, bulletPos, false, this));
 		Sounds::PlayAt(SoundId::BulletLazer);
 	}
@@ -401,9 +401,6 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 	}
 	else if (behavior == Behaviors::EnemyWizard_TurnOffLight)
 	{
-		static float counterRunOutTime = 0.0f;
-		static bool moveToLight = false;
-		static bool enter = true;
 		counterRunOutTime += GameTimer::Dt();
 		if (enter) {
 			if (pos.y > GROUND) pos.y = GROUND - 1;
@@ -456,7 +453,6 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 				if (pos.y - LIGHT_POS_Y < 5)
 					pos.y = LIGHT_POS_Y;
 				nx = 1;
-				static bool isTurned = false;
 				if (!isTurned)
 				{
 					isTurned = true;
@@ -491,6 +487,8 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 			enter = false;
 			return true;
 		}
+		if (pos.x > MAX_POS_X) nx = -1;
+		if (pos.x < MIN_POS_X) nx = 1;
 	}
 	else if (behavior == Behaviors::EnemyWizard_Laught) {
 		static float counter = 0.0f;
@@ -507,7 +505,6 @@ bool EnemyWizard::Onbehaviors(Behaviors behavior) //return true when current beh
 void EnemyWizard::Action()
 {
 	static const int ActionsLength = sizeof(ACTIONS_LIST) / sizeof(ACTIONS_LIST[0]);
-	static int counterAction = 0;
 	static State TranferState = State::EnemyWizard_Stand;
 	if (Onbehaviors(ACTIONS_LIST[counterAction]))
 	{

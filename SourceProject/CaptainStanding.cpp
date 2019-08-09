@@ -4,6 +4,15 @@
 #include "ElectricBat.h"
 #include "PittsburghScene.h"
 
+void CaptainStanding::SetOnMovingLedge(bool is_on_moving_ledge, GameObject* movingLedge)
+{
+	isOnMovingLedge = is_on_moving_ledge; 
+	if (isOnMovingLedge) 
+		this->movingLedge = movingLedge;
+	else
+		movingLedge = nullptr;
+}
+
 void CaptainStanding::Enter(Captain& cap, State fromState, Data&& data)
 {
 	cap.vel.x;
@@ -104,6 +113,15 @@ void CaptainStanding::Update(Captain& cap, float dt, const std::vector<GameObjec
 	}
 
 	HandleCollisions(cap, dt, coObjects);
+
+	if (movingLedge != nullptr)
+	{
+		if (cap.pos.y - movingLedge->GetPos().y > -30.0f) // fix weird behavior on movingledge
+		{
+			movingLedge = nullptr;
+			isOnMovingLedge = false;
+		}
+	}
 	if (!isOnGround && !isOnMovingLedge)
 		cap.SetState(State::Captain_Falling);
 }

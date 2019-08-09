@@ -1,7 +1,7 @@
 #include "pch.h"
 
 bool                                Sounds::isMute            = false;
-float                               Sounds::liVolume          = 1.0f ;
+float                               Sounds::liVolume          = 0.5f ;
 float                               Sounds::displayTimeRemain = 0.0f ;
 CSoundManager                       Sounds::dsound                   ;
 std::unordered_map<SoundId, CSound> Sounds::soundDictionary          ;

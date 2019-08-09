@@ -6,9 +6,14 @@ static auto& cam = Camera::Instance();
 
 void BossCharlestonScene::Beginning(float dt)
 {
+	static int checkSpawnOnce = 4;
+	if (checkSpawnOnce == 0 && wizard == nullptr) {
+		checkSpawnOnce = 4;
+		counterBegin = 0.0f;
+		counterEnd = 0.0f;
+	}
 	if (counterBegin > 13.0f) return;
 	counterBegin += dt;
-	static int checkSpawnOnce = 4;
 	if (counterBegin > 12.0f)
 	{
 		if (checkSpawnOnce == 1) {

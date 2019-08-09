@@ -52,6 +52,7 @@ void SceneManager::LoadResources()
 	checkpoints[6] = CheckPoint{ Scene::Pittsburgh, Vector2{ 720.0f, 852.0f }, true };
 	checkpoints[7] = CheckPoint{ Scene::RedAlert };
 	checkpoints[8] = CheckPoint{ Scene::Pittsburgh, Vector2{ 784.0f, 300.0f } }; // to test moving ledges
+	checkpoints[9] = CheckPoint{ Scene::Pittsburgh, Vector2{ 100.0f, 20.0f } }; // get krystal ball
 }
 
 void SceneManager::SetScene(Scene scene)
@@ -166,6 +167,7 @@ void SceneManager::OnKeyDown(BYTE keyCode)
 		case VK_NUMPAD6: GoToCheckPoint(checkpoints[6]); break;
 		case VK_NUMPAD7: GoToCheckPoint(checkpoints[7]); break;
 		case VK_NUMPAD8: GoToCheckPoint(checkpoints[8]); break;
+		case VK_NUMPAD9: GoToCheckPoint(checkpoints[9]); break;
 
 		case 'M':
 			ToggleMuteMode();

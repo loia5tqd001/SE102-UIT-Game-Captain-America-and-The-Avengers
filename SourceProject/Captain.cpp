@@ -289,7 +289,7 @@ void Captain::PrecheckAABB(const std::vector<GameObject*>& coObjects, float dt)
 				{
 					pos.y = ledge->GetPos().y - GetHeight();
 					if (auto standing = dynamic_cast<CaptainStanding*>(currentState))
-						standing->SetOnMovingLedge(true);
+						standing->SetOnMovingLedge(true, ledge);
 				}
 			}
 			else if (auto spawner = dynamic_cast<Spawner*>(obj))
